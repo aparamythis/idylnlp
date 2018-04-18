@@ -21,6 +21,7 @@ import java.io.IOException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -30,13 +31,13 @@ import ai.idylnlp.nlp.translation.JoshuaTranslator;
 import ai.idylnlp.testing.markers.ExternalData;
 import ai.idylnlp.testing.markers.HighMemoryUsage;
 
-@Category(HighMemoryUsage.class)
 public class JoshuaTranslatorTest {
 
 	private static final Logger LOGGER = LogManager.getLogger(JoshuaTranslatorTest.class);
 	
 	private static final String TRAINING_DATA_PATH = System.getProperty("testDataPath");
 		
+	@Ignore
 	@Category({ExternalData.class, HighMemoryUsage.class})
 	@Test
 	public void translate() throws IOException {

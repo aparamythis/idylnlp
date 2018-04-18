@@ -2,7 +2,7 @@
 .cache
 bin/
 .settings/
-data/
+test-data/
 target/
 third_party_licenses/
 .classpath
@@ -11,9 +11,7 @@ dependency-reduced-pom.xml
 .cache-main
 .cache-tests
 *.log
-*.zip
 *.dl4j
-*.bin
 
 en-pos-maxent.bin
 en-sent.bin

@@ -81,6 +81,7 @@ public class DeepLearningDocumentClassifierTest {
 		
 	}
 	
+	@Ignore
 	@Category(ExternalData.class)
 	@Test
 	public void evaluate() throws DocumentClassifierException, IOException, DocumentModelTrainingException {

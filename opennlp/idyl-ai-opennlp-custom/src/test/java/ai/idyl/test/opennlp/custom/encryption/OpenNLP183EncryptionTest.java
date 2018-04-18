@@ -1,4 +1,4 @@
-package ai.idylnlp.test.opennlp.custom.encryption;
+package ai.idyl.test.opennlp.custom.encryption;
 
 import static org.junit.Assert.assertEquals;
 

@@ -22,6 +22,7 @@ import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
@@ -47,6 +48,7 @@ public class DeepLearningEntityRecognizerTest {
 	private static final String NETWORK = "network.zip";
 	private static final String VECTORS = "glove.6B.300d.glv";
 	
+	@Ignore
 	@Category(ExternalData.class)
 	@Test	
 	public void extract() throws Exception {

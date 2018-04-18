@@ -25,6 +25,8 @@ import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 
@@ -59,7 +61,9 @@ public class DeepLearningEntityModelOperationsTest {
 
 	private static final String TRAINING_DATA_PATH = System.getProperty("testDataPath");
 
+	@Ignore
 	@Category({ExternalData.class, HighMemoryUsage.class})
+	@Test
 	public void trainAndUseOpenNLPFormat() throws Exception {
 
 		DeepLearningTrainingDefinition definition = getSampleDefinition();

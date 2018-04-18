@@ -17,7 +17,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>ai.idyl</groupId>
-			<artifactId>mtnfog-opennlp-tools-${opennlp.tools.version}</artifactId>
+			<artifactId>idyl-ai-opennlp-tools-${opennlp.tools.version}</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

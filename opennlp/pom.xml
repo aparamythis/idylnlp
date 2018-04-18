@@ -10,7 +10,7 @@
 	<name>idyl-ai-opennlp</name>
 	<packaging>pom</packaging>
 	<modules>
-		<module>opennlp-tools-1.8.3</module>
+		<module>idyl-ai-opennlp-tools-1.8.3</module>
 		<module>idyl-ai-opennlp-custom</module>
 	</modules>
 </project>
