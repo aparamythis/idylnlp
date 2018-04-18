@@ -1,7 +1,6 @@
 language: java
-before_script:
-  - ./download-files.sh
 script:
+  - ./download-files.sh
   - mvn package
 jdk:
   - oraclejdk8
