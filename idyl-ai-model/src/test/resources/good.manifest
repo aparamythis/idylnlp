@@ -1,0 +1,11 @@
+# country model manifest
+# Copyright 2016 Mountain Fog, Inc.
+# Contact support@mtnfog.com or visit www.mtnfog.com for assistance.
+# This manifest is missing a model.id value.
+model.id=12345
+model.type=country
+model.filename=mtnfog-en-country-test.bin
+model.version=1.0
+language.code=en
+license.key=test
+encryption.key=idylami589012347

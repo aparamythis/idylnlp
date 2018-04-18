@@ -1,0 +1,4 @@
+About_IN 125_CD Euro_NNP ,_, I_PRP think_VBP ._.
+That_DT sounds_VBZ acceptable_JJ ._.
+Peter_NNP and_CC Mary_NNP bought_VBD a_DT new_JJ car_NN today_NN from_IN a_DT car_NN shop_NN in_IN San_NNP Francisco_NNP ._.
+Joe_NNP bought_VBD a_DT new_JJ car_NN in_IN a_DT store_NN in_IN New_NNP York_NNP ._.

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>idyl-ai-nlp</artifactId>
+		<groupId>ai.idyl</groupId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+	<packaging>pom</packaging>
+	<name>idyl-ai-nlp-language-detection</name>
+	<artifactId>idyl-ai-nlp-language-detection</artifactId>
+	<modules>
+		<module>idyl-ai-nlp-language-detection-tika</module>
+		<module>idyl-ai-nlp-language-detection-opennlp</module>
+	</modules>
+</project>

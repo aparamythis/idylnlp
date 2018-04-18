@@ -1,0 +1,1 @@
+<START:person> George Washington <END> was president of the united states .

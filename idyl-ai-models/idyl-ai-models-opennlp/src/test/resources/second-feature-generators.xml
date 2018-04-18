@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<generators>
+  <cache> 
+    <generators>
+      <window prevLength = "5" nextLength = "5">          
+        <tokenclass/>
+      </window>
+      <window prevLength = "5" nextLength = "5">                
+        <token/>
+      </window>
+      <definition/>  
+      <sentence begin="true" end="true"/>
+    </generators>
+  </cache> 
+</generators>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<trainingdefinition language="en" type="person">
+	<encryptionkey>enckey</encryptionkey>
+	<trainingdata file="" format="opennlp" annotations="ann.txt" />
+	<model file="" />
+	<algorithm>
+		<perceptron cutoff="1" iterations="1" threads="1" />
+	</algorithm>
+	<features>
+		<generators>
+			
+				<generators>
+					<window prevLength="2" nextLength="2">
+						<tokenclass />
+					</window>
+					<window prevLength="2" nextLength="2">
+						<token />
+					</window>
+					<definition />
+					<prevmap />
+					<bigram />
+					<sentence begin="true" end="true" />
+				</generators>
+
+		</generators>
+	</features>
+</trainingdefinition>

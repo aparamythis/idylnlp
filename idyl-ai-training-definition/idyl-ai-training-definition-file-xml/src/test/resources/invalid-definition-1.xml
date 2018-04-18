@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<trainingdefinition xmlns="http://www.mtnfog.com">
+	<language>en</language>
+	<type>person</type>
+	<encryptionkey>enckey</encryptionkey>
+	<trainingdata file="" format="opennlp" annotations="ann.txt" />
+	<model file="" />
+	<algorithm>
+		<perceptron cutoff="1" iterations="1" threads="1" />
+	</algorithm>
+	<features>
+		<generators>
+			<cache>
+
+			</cache>
+		</generators>
+	</features>
+</trainingdefinition>

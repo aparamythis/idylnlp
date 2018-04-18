@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>ai.idyl</groupId>
+		<artifactId>idyl-ai</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>idyl-ai-opennlp</artifactId>
+	<name>idyl-ai-opennlp</name>
+	<packaging>pom</packaging>
+	<modules>
+		<module>opennlp-tools-1.8.3</module>
+		<module>idyl-ai-opennlp-custom</module>
+	</modules>
+</project>

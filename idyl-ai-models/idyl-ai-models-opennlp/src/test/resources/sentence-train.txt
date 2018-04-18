@@ -1,0 +1,584 @@
+West Virginia became a state following the Wheeling Conventions of 1861, in which delegates from some Unionist counties of northwestern Virginia decided to break away from Virginia during the American Civil War, although they included many secessionist counties in the new state.
+West Virginia was admitted to the Union on June 20, 1863, and was a key Civil War border state.
+West Virginia was the only state to form by separating from a Confederate state, the first to separate from any state since Maine separated from Massachusetts, and was one of two states formed during the American Civil War (the other being Nevada).
+The Census Bureau and the Association of American Geographers classify West Virginia as part of the Southern United States.
+The northern panhandle extends adjacent to Pennsylvania and Ohio, with the West Virginia cities of Wheeling and Weirton just across the border from the Pittsburgh metropolitan area, while Bluefield is less than 70 miles (110 km) from North Carolina.
+Huntington in the southwest is close to the states of Ohio and Kentucky, while Martinsburg and Harpers Ferry in the Eastern Panhandle region are considered part of the Washington metropolitan area, in between the states of Maryland and Virginia.
+The unique position of West Virginia means that it is often included in several geographical regions, including the Mid-Atlantic, the Upland South, and the Southeastern United States.
+It is the only state that is entirely within the area served by the Appalachian Regional Commission; the area is commonly defined as "Appalachia".
+We are living in an Environment, where multiple Hardware Architectures and Multiple platforms presents.
+So it is very difficult to write, compile and link the same Application, for each platform and each Architecture separately.
+The Java Programming Language solves all the above problems.
+The Java programming language platform provides a portable, interpreted, high-performance, simple, object-oriented programming language and supporting run-time environment.
+Do not use manually entered hard line breaks within paragraphs when editing articles.
+Reasons for this include.
+
+If you want to indent a paragraph that includes single line breaks, you first have to remove them.
+If you want to make a list item out of a paragraph that includes single line breaks, you first have to remove them.
+If you want to turn a phrase that contains a line break into a link, or format it in bold or italics, you have to remove the line break first.
+Many readers expect line breaks only where there is a logical, semantic break.
+Line breaks in source text will make them pause and search for such a break, and be frustrated when there is none.
+The consequences of this Amendment to American society have been profound.
+First Amendment questions have been raised with regard to the separation of church and state; civil rights issues; pornography and obscenity; political speech and organizations; journalism and its restrictions; involuntary commitment laws; and many more.
+Text is no longer wrapped at the window edge of the text entry area, but where the author chose to make the linebreak.
+Thus, there will be a lot of whitespace within a paragraph, which may be considered a waste of space and visually distracting.
+The appearance of the article source text becomes different from the appearance of the rendered output; it therefore becomes harder to find a sentence of the rendered output in the source text.
+Since writers often think in terms of paragraphs, it makes sense to organize the text that way.
+Single line breaks in source texts may confuse new editors, who may think they are there for a special reason, and avoid editing these paragraphs because they fear to break something.
+Proponents of line breaks within paragraphs claim that they make diffs (the reports showing the differences between two revisions of an article) easier to read.
+The diff feature highlights the changes within each line break delimited block of text and provides unchanged text for additional context up to the third line break below and above that text.
+This usually means that it highlights the entire paragraph, and shows one paragraph above and below it for context.
+The changed characters are separately highlighted from the changed blocks in a different color.
+
+It is hard to see how individual line breaks help in any way in that comparison, since their only effect will be to reduce the amount of context provided when a line is changed.
+In fact, arbitrarily entered line breaks prevent the software from working correctly: instead of providing the context of a full paragraph, it only shows changes in individual lines of text, respecting not even sentence boundaries.
+One undeniable advantage of line breaks within paragraphs is that many Unix editors do not handle long lines well – they can either wrap characters at the screen boundary, wrap words at a fixed length, or not wrap at all.
+However, by this logic, line breaks would have to be entered at a fixed width, such as 80 characters, something which most proponents of the "use single line breaks" rule do not want and which, as seen above, completely breaks the diff context feature.
+Just inserting line breaks into some paragraphs will not make them easier to edit with these tools.
+Arguably, those who use editors which cannot handle long lines properly should just get better ones.
+Microsoft Notepad has had this functionality since its very first version, Gedit has it, vi supports it with the "set lbr" option, and every major graphical web browser has proper word wrapping even on Unix platforms.
+Amazon Elastic File System (Amazon EFS), which provides simple and scalable file storage in the AWS Cloud, now provides a simpler way for you to mount your file systems on EC2 instances.
+When mounting a file system, you can now use a regional DNS name rather than an AZ-specific DNS name.
+That means that you no longer need to be aware of which AZ your EC2 instances are in when providing a DNS name in your mount command.
+This feature is immediately available in the following regions: US East (N.
+Virginia), US East (Ohio), US West (Oregon), and EU (Ireland).
+To learn more about the simplified EFS experience, please consult the Amazon EFS documentation.
+As they rounded a bend in the path that ran beside the river, Lara recognized the silhouette of a fig tree atop a nearby hill.
+The weather was hot and the days were long.
+The fig tree was in full leaf, but not yet bearing fruit.
+Soon Lara spotted other landmarks—an outcropping of limestone beside the path that had a silhouette like a man’s face, a marshy spot beside the river where the waterfowl were easily startled, a tall tree that looked like a man with his arms upraised.
+They were drawing near to the place where there was an island in the river.
+The island was a good spot to make camp.
+They would sleep on the island tonight.
+Lara had been back and forth along the river path many times in her short life.
+Her people had not created the path—it had always been there, like the river—but their deerskin-shod feet and the wooden wheels of their handcarts kept the path well worn.
+Lara’s people were salt traders, and their livelihood took them on a continual journey.
+At the mouth of the river, the little group of half a dozen intermingled families gathered salt from the great salt beds beside the sea.
+They groomed and sifted the salt and loaded it into handcarts.
+When the carts were full, most of the group would stay behind, taking shelter amid rocks and simple lean-tos, while a band of fifteen or so of the heartier members set out on the path that ran alongside the river.
+With their precious cargo of salt, the travelers crossed the coastal lowlands and traveled toward the mountains.
+But Lara’s people never reached the mountaintops; they traveled only as far as the foothills.
+Many people lived in the forests and grassy meadows of the foothills, gathered in small villages.
+In return for salt, these people would give Lara’s people dried meat, animal skins, cloth spun from wool, clay pots, needles and scraping tools carved from bone, and little toys made of wood.
+Their bartering done, Lara and her people would travel back down the river path to the sea.
+The cycle would begin again.
+It had always been like this.
+Lara knew no other life.
+She traveled back and forth, up and down the river path.
+No single place was home.
+She liked the seaside, where there was always fish to eat, and the gentle lapping of the waves lulled her to sleep at night.
+
+She was less fond of the foothills, where the path grew steep, the nights could be cold, and views of great distances made her dizzy.
+She felt uneasy in the villages, and was often shy around strangers.
+The path itself was where she felt most at home.
+She loved the smell of the river on a hot day, and the croaking of frogs at night.
+Vines grew amid the lush foliage along the river, with berries that were good to eat.
+Even on the hottest day, sundown brought a cool breeze off the water, which sighed and sang amid the reeds and tall grasses.
+Of all the places along the path, the area they were approaching, with the island in the river, was Lara’s favorite.
+The terrain along this stretch of the river was mostly flat, but in the immediate vicinity of the island, the land on the sunrise side was like a rumpled cloth, with hills and ridges and valleys.
+Among Lara’s people, there was a wooden baby’s crib, suitable for strapping to a cart, that had been passed down for generations.
+The island was shaped like that crib, longer than it was wide and pointed at the upriver end, where the flow had eroded both banks.
+The island was like a crib, and the group of hills on the sunrise side of the river were like old women mantled in heavy cloaks gathered to have a look at the baby in the crib—that was how Lara’s father had once described the lay of the land.
+Larth spoke like that all the time, conjuring images of giants and monsters in the landscape.
+He could perceive the spirits, called numina, that dwelled in rocks and trees.
+Sometimes he could speak to them and hear what they had to say.
+The river was his oldest friend and told him where the fishing would be best.
+From whispers in the wind he could foretell the next day’s weather.
+Because of such skills, Larth was the leader of the group.
+"We’re close to the island, aren’t we, Papa?" said Lara.
+"How did you know?"
+"The hills.
+First we start to see the hills, off to the right.
+
+The hills grow bigger.
+And just before we come to the island, we can see the silhouette of that fig tree up there, along the crest of that hill."
+"Good girl!" said Larth, proud of his daughter’s memory and powers of observation.
+He was a strong, handsome man with flecks of gray in his black beard.
+His wife had borne several children, but all had died very young except Lara, the last, whom his wife had died bearing.
+Lara was very precious to him.
+Like her mother, she had golden hair.
+Now that she had reached the age of childbearing, Lara was beginning to display the fullness of a woman’s hips and breasts.
+It was Larth’s greatest wish that he might live to see his own grandchildren.
+Not every man lived that long, but Larth was hopeful.
+He had been healthy all his life, partly, he believed, because he had always been careful to show respect to the numina he encountered on his journeys.
+Respecting the numina was important.
+The numen of the river could suck a man under and drown him.
+The numen of a tree could trip a man with its roots, or drop a rotten branch on his head.
+Rocks could give way underfoot, chuckling with amusement at their own treachery.
+Even the sky, with a roar of fury, sometimes sent down fingers of fire that could roast a man like a rabbit on a spit, or worse, leave him alive but robbed of his senses.
+Larth had heard that the earth itself could open and swallow a man; though he had never actually seen such a thing, he nevertheless performed a ritual each morning, asking the earth’s permission before he went striding across it.
+"There’s something so special about this place," said Lara, gazing at the sparkling river to her left and then at the rocky, tree-spotted hills ahead and to her right.
+"How was it made? Who made it?"
+Larth frowned.
+The question made no sense to him.
+A place was never made, it simply was.
+Small features might change over time.
+Uprooted by a storm, a tree might fall into the river.
+A boulder might decide to tumble down the hillside.
+The numina that animated all things went about reshaping the landscape from day to day, but the essential things never changed, and had always existed: the river, the hills, the sky, the sun, the sea, the salt beds at the mouth of the river.
+He was trying to think of some way to express these thoughts to Lara, when a deer, drinking at the river, was startled by their approach.
+The deer bolted up the brushy bank and onto the path.
+Instead of running to safety, the creature stood and stared at them.
+As clearly as if the animal had whispered aloud, Larth heard the words "Eat me." The deer was offering herself.
+Larth turned to shout an order, but the most skilled hunter of the group, a youth called Po, was already in motion.
+Po ran forward, raised the sharpened stick he always carried and hurled it whistling through the air between Larth and Lara.
+A heartbeat later, the spear struck the deer’s breast with such force that the creature was knocked to the ground.
+Unable to rise, she thrashed her neck and flailed her long, slender legs.
+Po ran past Larth and Lara.
+When he reached the deer, he pulled the spear free and stabbed the creature again.
+The deer released a stifled noise, like a gasp, and stopped moving.
+There was a cheer from the group.
+Instead of yet another dinner of fish from the river, tonight there would be venison.
+The distance from the riverbank to the island was not great, but at this time of year—early summer—the river was too high to wade across.
+Lara’s people had long ago made simple rafts of branches lashed together with leather thongs, which they left on the riverbanks, repairing and replacing them as needed.
+When they last passed this way, there had been three rafts, all in good condition, left on the east bank.
+Two of the rafts were still there, but one was missing.
+
+"I see it! There—pulled up on the bank of the island, almost hidden among those leaves," said Po, whose eyes were sharp.
+"Someone must have used it to cross over."
+"Perhaps they’re still on the island," said Larth.
+He did not begrudge others the use of the rafts, and the island was large enough to share.
+Nonetheless, the situation required caution.
+He cupped his hands to his mouth and gave a shout.
+It was not long before a man appeared on the bank of the island.
+The man waved.
+"Do we know him?" said Larth, squinting.
+"I don’t think so," said Po.
+"He’s young—my age or younger, I’d say.
+He looks strong."
+"Very strong!" said Lara.
+Even from this distance, the young stranger’s brawniness was impressive.
+He wore a short tunic without sleeves, and Lara had never seen such arms on a man.
+Po, who was small and wiry, looked at Lara sidelong and frowned.
+"I’m not sure I like the look of this stranger."
+"Why not?" said Lara.
+"He’s smiling at us."
+In fact, the young man was smiling at Lara, and Lara alone.
+His name was Tarketios.
+Much more than that, Larth could not tell, for the stranger spoke a language which Larth did not recognize, in which each word seemed as long and convoluted as the man’s name.
+Understanding the deer had been easier than understanding the strange noises uttered by this man and his two companions! Even so, they seemed friendly, and the three of them presented no threat to the more numerous salt traders.
+Tarketios and his two older companions were skilled metalworkers from a region some two hundred miles to the north, where the hills were rich with iron, copper, and lead.
+They had been on a trading journey to the south and were returning home.
+Just as the river path carried Larth’s people from the seashore to the hills, so another path, perpendicular to the river, traversed the long coastal plain.
+Because the island provided an easy place to ford the river, it was here that the two paths intersected.
+On this occasion, the salt traders and the metal traders happened to arrive at the island on the same day.
+Now they met for the first time.
+The two groups made separate camps at opposite ends of the island.
+As a gesture of friendship, speaking with his hands, Larth invited Tarketios and the others to share the venison that night.
+As the hosts and their guests feasted around the roasting fire, Tarketios tried to explain something of his craft.
+Firelight glittered in Lara’s eyes as she watched Tarketios point at the flames and mime the act of hammering.
+Firelight danced across the flexing muscles of his arms and shoulders.
+When he smiled at her, his grin was like a boast.
+She had never seen teeth so white and so perfect.
+Po saw the looks the two exchanged and frowned.
+Lara’s father saw the same looks and smiled.
+The meal was over.
+The metal traders, after many gestures of gratitude for the venison, withdrew to their camp at the far side of the island.
+Before he disappeared into the shadows, Tarketios looked over his shoulder and gave Lara a parting grin.
+While the others settled down to sleep, Larth stayed awake a while longer, as was his habit.
+He liked to watch the fire.
+Like all other things, fire possessed a numen that sometimes communicated with him, showing him visions.
+
+As the last of the embers faded into darkness, Larth fell asleep.
+Larth blinked.
+The flames, which had dwindled to almost nothing, suddenly shot up again.
+Hot air rushed over his face.
+His eyes were seared by white flames brighter than the sun.
+Amid the dazzling brightness, he perceived a thing that levitated above the flames.
+It was a masculine member, disembodied but nonetheless rampant and upright.
+It bore wings, like a bird, and hovered in midair.
+Though it seemed to be made of flesh, it was impervious to the flames.
+Larth had seen the winged phallus before, always in such circumstances, when he stared at a fire and entered a dream state.
+He had even given it a name, or more precisely, the thing had planted its name in his mind: Fascinus.
+Fascinus was not like the numina that animated trees, stones, or rivers.
+Those numina existed without names.
+Each was bound to the object in which it resided, and there was little to differentiate one from another.
+When such numina spoke, they could not always be trusted.
+Sometimes they were friendly, but at other times they were mischievous or even hostile.
+Fascinus was different.
+It was unique.
+It existed in and of itself, without beginning or end.
+Clearly, from its form, it had something to do with life and the origin of life, yet it seemed to come from a place beyond this world, slipping for a few moments through a breach opened by the heat of the dancing flames.
+An appearance by Fascinus was always significant.
+The winged phallus never appeared without giving Larth an answer to a dilemma that had been troubling him, or planting an important new thought in his mind.
+The guidance given to him by Fascinus had never led Larth astray.
+Elsewhere, in distant lands—Greece, Israel, Egypt—men and women worshiped gods and goddesses.
+Those people made images of their gods, told stories about them, and worshiped them in temples.
+Larth had never met such people.
+He had never even heard of the lands where they lived, and he had never encountered or conceived of a god.
+The very concept of a deity such as those other men worshiped was unknown to Larth, but the closest thing to a god in his imagination and experience was Fascinus.
+With a start, he blinked again.
+The flames had died.
+In place of intolerable brightness there was only the darkness of a warm summer night lit by the faintest sliver of a moon.
+The air on his face was no longer hot but fresh and cool.
+Fascinus had vanished—but not without planting a thought in Larth’s mind.
+He hurried to the leafy bower beside the river where Lara liked to sleep, thinking to himself, It must be made so, because Fascinus says it must!
+He knelt beside her, but there was no need to wake her.
+She was already awake.
+"Papa? What is it?"
+"Go to him!"
+She did not need to ask for an explanation.
+It was what she had been yearning to do, lying restless and eager in the dark.
+"Are you sure, Papa?"
+"Fascinus," He did not finish the thought, but she understood.
+She had never seen Fascinus, but he had told her about it.
+
+Many times in the past, Fascinus had given guidance to her father.
+Now, once again, Fascinus had made its will known.
+The darkness did not deter her.
+She knew every twist and turn of every path on the little island.
+When she came to the metal trader’s camp, she found Tarketios lying in a leafy nook secluded from the others; she recognized him by his brawny silhouette.
+He was awake and waiting, just as she had been lying awake, waiting, when her father came to her.
+At her approach, Tarketios rose onto his elbows.
+He spoke her name in a whisper.
+There was a quiver of something like desperation in his voice; his neediness made her smile.
+She sighed and lowered herself beside him.
+By the faint moonlight, she saw that he wore an amulet of some sort, suspended from a strap of leather around his neck.
+Nestled amid the hair on his chest, the bit of shapeless metal seemed to capture and concentrate the faint moonlight, casting back a radiance brighter than the moon itself.
+His arms—the arms she had so admired earlier—reached out and closed around her in a surprisingly gentle embrace.
+His body was as warm and naked as her own, but much bigger and much harder.
+She wondered if Fascinus was with them in the darkness, for she seemed to feel the beating of wings between their legs as she was entered by the thing that gave origin to life.
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+Aenean commodo ligula eget dolor.
+Aenean massa.
+Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
+Nulla consequat massa quis enim.
+Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.
+In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.
+Nullam dictum felis eu pede mollis pretium.
+Integer tincidunt.
+Cras dapibus.
+Vivamus elementum semper nisi.
+Aenean vulputate eleifend tellus.
+Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.
+Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.
+Phasellus viverra nulla ut metus varius laoreet.
+Quisque rutrum.
+Aenean imperdiet.
+Etiam ultricies nisi vel augue.
+Curabitur ullamcorper ultricies nisi.
+Nam eget dui.
+Etiam rhoncus.
+Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum.
+Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem.
+Maecenas nec odio et ante tincidunt tempus.
+Donec vitae sapien ut libero venenatis faucibus.
+Nullam quis ante.
+Etiam sit amet orci eget eros faucibus tincidunt.
+
+Duis leo.
+Sed fringilla mauris sit amet nibh.
+Donec sodales sagittis magna.
+Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero.
+Fusce vulputate eleifend sapien.
+Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus.
+Nullam accumsan lorem in dui.
+Cras ultricies mi eu turpis hendrerit fringilla.
+Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia.
+Nam pretium turpis et arcu.
+Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum.
+Sed aliquam ultrices mauris.
+Integer ante arcu, accumsan a, consectetuer eget, posuere ut, mauris.
+Praesent adipiscing.
+Phasellus ullamcorper ipsum rutrum nunc.
+Nunc nonummy metus.
+Vestibulum volutpat pretium libero.
+Cras id dui.
+Aenean ut eros et nisl sagittis vestibulum.
+Nullam nulla eros, ultricies sit amet, nonummy id, imperdiet feugiat, pede.
+Sed lectus.
+Donec mollis hendrerit risus.
+Phasellus nec sem in justo pellentesque facilisis.
+Etiam imperdiet imperdiet orci.
+Nunc nec neque.
+Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi.
+Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo.
+Maecenas malesuada.
+Praesent congue erat at massa.
+Sed cursus turpis vitae tortor.
+Donec posuere vulputate arcu.
+Phasellus accumsan cursus velit.
+Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed aliquam, nisi quis porttitor congue, elit erat euismod orci, ac placerat dolor lectus quis orci.
+Phasellus consectetuer vestibulum elit.
+Aenean tellus metus, bibendum sed, posuere ac, mattis non, nunc.
+Vestibulum fringilla pede sit amet augue.
+In turpis.
+
+Pellentesque posuere.
+Praesent turpis.
+Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin urna dolor sagittis lacus.
+Donec elit libero, sodales nec, volutpat a, suscipit non, turpis.
+Nullam sagittis.
+Suspendisse pulvinar, augue ac venenatis condimentum, sem libero volutpat nibh, nec pellentesque velit pede quis nunc.
+Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce id purus.
+Ut varius tincidunt libero.
+Phasellus dolor.
+Maecenas vestibulum mollis diam.
+Pellentesque ut neque.
+Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+In dui magna, posuere eget, vestibulum et, tempor auctor, justo.
+In ac felis quis tortor malesuada pretium.
+Pellentesque auctor neque nec urna.
+Proin sapien ipsum, porta a, auctor quis, euismod ut, mi.
+Aenean viverra rhoncus pede.
+Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+Ut non enim eleifend felis pretium feugiat.
+Vivamus quis mi.
+Phasellus a est.
+Phasellus magna.
+In hac habitasse platea dictumst.
+Curabitur at lacus ac velit ornare lobortis.
+Curabitur a felis in nunc fringilla tristique.
+Morbi mattis ullamcorper velit.
+Phasellus gravida semper nisi.
+Nullam vel sem.
+Pellentesque libero tortor, tincidunt et, tincidunt eget, semper nec, quam.
+Sed hendrerit.
+Morbi ac felis.
+Nunc egestas, augue at pellentesque laoreet, felis eros vehicula leo, at malesuada velit leo quis pede.
+Donec interdum, metus et hendrerit aliquet, dolor diam sagittis ligula, eget egestas libero turpis vel mi.
+Nunc nulla.
+Fusce risus nisl, viverra et, tempor et, pretium in, sapien.
+Donec venenatis vulputate lorem.
+Morbi nec metus.
+
+Phasellus blandit leo ut odio.
+Maecenas ullamcorper, dui et placerat feugiat, eros pede varius nisi, condimentum viverra felis nunc et lorem.
+Sed magna purus, fermentum eu, tincidunt eu, varius ut, felis.
+In auctor lobortis lacus.
+Quisque libero metus, condimentum nec, tempor a, commodo mollis, magna.
+Vestibulum ullamcorper mauris at ligula.
+Fusce fermentum.
+Nullam cursus lacinia erat.
+Praesent blandit laoreet nibh.
+Fusce convallis metus id felis luctus adipiscing.
+ellentesque egestas, neque sit amet convallis pulvinar, justo nulla eleifend augue, ac auctor orci leo non est.
+Quisque id mi.
+Ut tincidunt tincidunt erat.
+tiam feugiat lorem non metus.
+Vestibulum dapibus nunc ac augue.
+Curabitur vestibulum aliquam leo.
+Praesent egestas neque eu enim.
+n hac habitasse platea dictumst.
+Fusce a quam.
+Etiam ut purus mattis mauris sodales aliquam.
+Curabitur nisi.
+Quisque malesuada placerat nisl.
+am ipsum risus, rutrum vitae, vestibulum eu, molestie vel, lacus.
+Sed augue ipsum, egestas nec, vestibulum et, malesuada adipiscing, dui.
+estibulum facilisis, purus nec pulvinar iaculis, ligula mi congue nunc, vitae euismod ligula urna in dolor.
+Mauris sollicitudin fermentum libero.
+raesent nonummy mi in odio.
+Nunc interdum lacus sit amet orci.
+estibulum rutrum, mi nec elementum vehicula, eros quam gravida nisl, id fringilla neque ante vel mi.
+Morbi mollis tellus ac sapien.
+hasellus volutpat, metus eget egestas mollis, lacus lacus blandit dui, id egestas quam mauris ut lacus.
+Fusce vel dui.
+Sed in libero ut nibh placerat accumsan.
+roin faucibus arcu quis ante.
+In consectetuer turpis ut velit.
+Nulla sit amet est.
+Praesent metus tellus, elementum eu, semper a, adipiscing nec, purus.
+
+ras risus ipsum, faucibus ut, ullamcorper id, varius ac, leo.
+Suspendisse feugiat.
+Suspendisse enim turpis, dictum sed, iaculis a, condimentum nec, nisi.
+raesent nec nisl a purus blandit viverra.
+Praesent ac massa at ligula laoreet iaculis.
+Nulla neque dolor, sagittis eget, iaculis quis, molestie non, velit.
+auris turpis nunc, blandit et, volutpat molestie, porta ut, ligula.
+Fusce pharetra convallis urna.
+Quisque ut nisi.
+onec mi odio, faucibus at, scelerisque quis, convallis in, nisi.
+Suspendisse non nisl sit amet velit hendrerit rutrum.
+Ut leo.
+Ut a nisl id ante tempus hendrerit.
+roin pretium, leo ac pellentesque mollis, felis nunc ultrices eros, sed gravida augue augue mollis justo.
+Suspendisse eu ligula.
+Nulla facilisi.
+Donec id justo.
+raesent porttitor, nulla vitae posuere iaculis, arcu nisl dignissim dolor, a pretium mi sem ut ipsum.
+Curabitur suscipit suscipit tellus.
+raesent vestibulum dapibus nibh.
+Etiam iaculis nunc ac metus.
+Ut id nisl quis enim dignissim sagittis.
+tiam sollicitudin, ipsum eu pulvinar rutrum, tellus ipsum laoreet sapien, quis venenatis ante odio sit amet eros.
+Proin magna.
+Duis vel nibh at velit scelerisque suscipit.
+Curabitur turpis.
+Vestibulum suscipit nulla quis orci.
+Fusce ac felis sit amet ligula pharetra condimentum.
+Maecenas egestas arcu quis ligula mattis placerat.
+Duis lobortis massa imperdiet quam.
+Suspendisse potenti.
+Pellentesque commodo eros a enim.
+Vestibulum turpis sem, aliquet eget, lobortis pellentesque, rutrum eu, nisl.
+Sed libero.
+Aliquam erat volutpat.
+Etiam vitae tortor.
+Morbi vestibulum volutpat enim.
+
+liquam eu nunc.
+Nunc sed turpis.
+Sed mollis, eros et ultrices tempus, mauris ipsum aliquam libero, non adipiscing dolor urna a orci.
+Nulla porta dolor.
+lass aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos.
+Pellentesque dapibus hendrerit tortor.
+Praesent egestas tristique nibh.
+Sed a libero.
+Cras varius.
+Donec vitae orci sed dolor rutrum auctor.
+Fusce egestas elit eget lorem.
+Suspendisse nisl elit, rhoncus eget, elementum ac, condimentum eget, diam.
+Nam at tortor in tellus interdum sagittis.
+Aliquam lobortis.
+Donec orci lectus, aliquam ut, faucibus non, euismod id, nulla.
+Curabitur blandit mollis lacus.
+Nam adipiscing.
+Vestibulum eu odio.
+Vivamus laoreet.
+Nullam tincidunt adipiscing enim.
+Phasellus tempus.
+Proin viverra, ligula sit amet ultrices semper, ligula arcu tristique sapien, a accumsan nisi mauris ac eros.
+Fusce neque.
+Suspendisse faucibus, nunc et pellentesque egestas, lacus ante convallis tellus, vitae iaculis lacus elit id tortor.
+Vivamus aliquet elit ac nisl.
+Fusce fermentum odio nec arcu.
+Vivamus euismod mauris.
+In ut quam vitae odio lacinia tincidunt.
+Praesent ut ligula non mi varius sagittis.
+Cras sagittis.
+Praesent ac sem eget est egestas volutpat.
+Vivamus consectetuer hendrerit lacus.
+Cras non dolor.
+Vivamus in erat ut urna cursus vestibulum.
+Fusce commodo aliquam arcu.
+Nam commodo suscipit quam.
+Quisque id odio.
+
+Praesent venenatis metus at tortor pulvinar varius.
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+Aenean commodo ligula eget dolor.
+Aenean massa.
+Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
+Nulla consequat massa quis enim.
+Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.
+In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.
+Nullam dictum felis eu pede mollis pretium.
+Integer tincidunt.
+Cras dapibus.
+Vivamus elementum semper nisi.
+Aenean vulputate eleifend tellus.
+Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.
+Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.
+Phasellus viverra nulla ut metus varius laoreet.
+Quisque rutrum.
+Aenean imperdiet.
+Etiam ultricies nisi vel augue.
+Curabitur ullamcorper ultricies nisi.
+Nam eget dui.
+Etiam rhoncus.
+Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum.
+Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem.
+Maecenas nec odio et ante tincidunt tempus.
+Donec vitae sapien ut libero venenatis faucibus.
+Nullam quis ante.
+Etiam sit amet orci eget eros faucibus tincidunt.
+Duis leo.
+
+Sed fringilla mauris sit amet nibh.
+Donec sodales sagittis magna.
+Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero.
+Fusce vulputate eleifend sapien.
+Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus.
+Nullam accumsan lorem in dui.
+Cras ultricies mi eu turpis hendrerit fringilla.
+Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia.
+Nam pretium turpis et arcu.
+Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum.
+Sed aliquam ultrices mauris.
+Integer ante arcu, accumsan a, consectetuer eget, posuere ut, mauris.
+Praesent adipiscing.
+Phasellus ullamcorper ipsum rutrum nunc.
+Nunc nonummy metus.
+Vestibulum volutpat pretium libero.
+Cras id dui.
+Aenean ut eros et nisl sagittis vestibulum.
+Nullam nulla eros, ultricies sit amet, nonummy id, imperdiet feugiat, pede.
+Sed lectus.
+Donec mollis hendrerit risus.
+Phasellus nec sem in justo pellentesque facilisis.
+Etiam imperdiet imperdiet orci.
+Nunc nec neque.
+Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi.
+Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo.
+Maecenas malesuada.
+Praesent congue erat at massa.
+Sed cursus turpis vitae tortor.
+Donec posuere vulputate arcu.
+Phasellus accumsan cursus velit.
+Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed aliquam, nisi quis porttitor congue, elit erat euismod orci, ac placerat dolor lectus quis orci.
+Phasellus consectetuer vestibulum elit.
+Aenean tellus metus, bibendum sed, posuere ac, mattis non, nunc.
+Vestibulum fringilla pede sit amet augue.
+In turpis.
+Pellentesque posuere.
+
+Praesent turpis.
+Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin urna dolor sagittis lacus.
+Donec elit libero, sodales nec, volutpat a, suscipit non, turpis.
+Nullam sagittis.
+Suspendisse pulvinar, augue ac venenatis condimentum, sem libero volutpat nibh, nec pellentesque velit pede quis nunc.
+Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce id purus.
+Ut varius tincidunt libero.
+Phasellus dolor.
+Maecenas vestibulum mollis diam.
+Pellentesque ut neque.
+Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+In dui magna, posuere eget, vestibulum et, tempor auctor, justo.
+In ac felis quis tortor malesuada pretium.
+Pellentesque auctor neque nec urna.
+Proin sapien ipsum, porta a, auctor quis, euismod ut, mi.
+Aenean viverra rhoncus pede.
+Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+Ut non enim eleifend felis pretium feugiat.
+Vivamus quis mi.
+Phasellus a est.
+Phasellus magna.
+In hac habitasse platea dictumst.
+Curabitur at lacus ac velit ornare lobortis.
+Curabitur a felis in nunc fringilla tristique.
+Morbi mattis ullamcorper velit.
+Phasellus gravida semper nisi.
+Nullam vel sem.
+Pellentesque libero tortor, tincidunt et, tincidunt eget, semper nec, quam.
+Sed hendrerit.
+Morbi ac felis.
+Nuclear power plants produce a lot of dangerous waste.
+You need to get lots of sleep.
+His boldness in business has won him lots of money, but cost him lots of friends.
+Taking lots of vitamin C can help prevent colds.
+
+My children like to drink weak tea with lots of milk and sugar in it.
+There are lots of job opportunities in this city.
+A lot of people in Quebec wear heavy fur coats.
+The new exhibit is getting lots of compliments from visitors
+She and her husband have a lot of serious problems.
+Lots of students are looking for good, used cars.
+Morocco has to import a lot of its food because of its climate.
+My son does a lot of sports.
+Living on the coast, we can buy lots of fresh fish.
+The room gets lots of sunlight.
+Carla has lots of friends.
+It'll take a lot of time.
+Tommy has a lot of job experience.
+They earn a lot of money.
+We drank a lot of cold water.
+My sister spends lots of money.
+They have lots of interesting ideas.
+We have seen a lot of changes in this company.
+The children made a lot of noise.
+A lot of people wanted to join the club.
+A lot of bad things happened yesterday.
