@@ -13,15 +13,26 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-package ai.idylnlp.model.nlp;
+package ai.idylnlp.test.model.entity;
 
-import java.util.Set;
+import static org.junit.Assert.*;
 
-import ai.idylnlp.model.entity.Entity;
+import java.util.Map;
 
-@FunctionalInterface
-public interface EntitySanitizer {
+import org.junit.Test;
 
-	public Set<Entity> sanitizeEntities(Set<Entity> entities);
+import ai.idylnlp.model.entity.EntityMetadata;
+
+public class EntityMetadataTest {
+
+	@Test
+	public void toMap() {
+		
+		Map<String, String> m = EntityMetadata.toMap(null);
+		
+		assertNotNull(m);
+		assertTrue(m.isEmpty());
+		
+	}
 	
 }

@@ -32,7 +32,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.google.gson.Gson;
-import com.mtnfog.entity.Entity;
+import ai.idylnlp.model.entity.Entity;
 import ai.idylnlp.opennlp.custom.model.DictionaryModel;
 import ai.idylnlp.opennlp.custom.modelloader.LocalModelLoader;
 import com.neovisionaries.i18n.LanguageCode;

@@ -27,7 +27,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.mtnfog.entity.Entity;
+import ai.idylnlp.model.entity.Entity;
 import com.neovisionaries.i18n.LanguageCode;
 
 import ai.idylnlp.model.exceptions.EntityFinderException;

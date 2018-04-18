@@ -35,9 +35,14 @@
 			<version>${commons.io.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.mtnfog</groupId>
-			<artifactId>entity-model</artifactId>
-			<version>${entity.model.version}</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
+			<version>${commons.collections.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons.lang.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>

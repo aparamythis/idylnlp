@@ -25,7 +25,7 @@ import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.mtnfog.entity.Entity;
+import ai.idylnlp.model.entity.Entity;
 
 import ai.idylnlp.model.exceptions.EntityFinderException;
 import ai.idylnlp.model.exceptions.ModelLoaderException;

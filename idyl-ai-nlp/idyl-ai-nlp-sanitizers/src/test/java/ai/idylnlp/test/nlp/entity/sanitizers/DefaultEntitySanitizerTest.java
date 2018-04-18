@@ -22,7 +22,7 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import com.mtnfog.entity.Entity;
+import ai.idylnlp.model.entity.Entity;
 
 import ai.idylnlp.nlp.entity.sanitizers.DefaultEntitySanitizer;
 

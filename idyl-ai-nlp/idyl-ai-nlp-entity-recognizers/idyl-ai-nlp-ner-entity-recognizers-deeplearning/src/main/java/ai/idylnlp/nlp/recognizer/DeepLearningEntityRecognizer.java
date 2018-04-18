@@ -34,7 +34,7 @@ import org.deeplearning4j.models.embeddings.wordvectors.WordVectors;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 import org.deeplearning4j.util.ModelSerializer;
 
-import com.mtnfog.entity.Entity;
+import ai.idylnlp.model.entity.Entity;
 import ai.idylnlp.model.exceptions.EntityFinderException;
 import ai.idylnlp.model.exceptions.ModelLoaderException;
 import ai.idylnlp.model.manifest.SecondGenModelManifest;

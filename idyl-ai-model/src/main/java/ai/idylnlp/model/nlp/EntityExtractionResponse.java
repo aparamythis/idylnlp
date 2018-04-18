@@ -17,7 +17,7 @@ package ai.idylnlp.model.nlp;
 
 import java.util.Set;
 
-import com.mtnfog.entity.Entity;
+import ai.idylnlp.model.entity.Entity;
 
 /**
  * Response to an entity extraction request.

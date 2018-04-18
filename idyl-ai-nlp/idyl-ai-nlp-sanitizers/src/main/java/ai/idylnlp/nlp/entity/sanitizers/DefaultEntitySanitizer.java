@@ -17,7 +17,7 @@ package ai.idylnlp.nlp.entity.sanitizers;
 
 import java.util.Set;
 
-import com.mtnfog.entity.Entity;
+import ai.idylnlp.model.entity.Entity;
 import ai.idylnlp.model.nlp.EntitySanitizer;
 
 public class DefaultEntitySanitizer implements EntitySanitizer {

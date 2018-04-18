@@ -26,7 +26,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.i18n.phonenumbers.PhoneNumberMatch;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
-import com.mtnfog.entity.Entity;
+import ai.idylnlp.model.entity.Entity;
 import ai.idylnlp.model.nlp.EntityExtractionRequest;
 import ai.idylnlp.model.nlp.EntityExtractionResponse;
 import ai.idylnlp.model.nlp.EntityRecognizer;
@@ -67,7 +67,7 @@ public class PhoneNumberEntityRecognizer implements EntityRecognizer {
 				entity.setExtractionDate(System.currentTimeMillis());
 				
 				// TODO: IDYLSDK-450: Set the token-based span correctly.
-				entity.setSpan(new com.mtnfog.entity.Span(0, 0));
+				entity.setSpan(new ai.idylnlp.model.entity.Span(0, 0));
 
 				entities.add(entity);
 				

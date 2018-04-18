@@ -17,7 +17,7 @@ package ai.idylnlp.model.nlp;
 
 import java.util.Collection;
 
-import com.mtnfog.entity.Entity;
+import ai.idylnlp.model.entity.Entity;
 
 /**
  * Interface for writing annotated input text. The annotated

@@ -1,5 +1,7 @@
 # Idyl NLP
 
+[![Build Status](https://travis-ci.org/idylnlp/idylnlp.svg?branch=master)](https://travis-ci.org/idylnlp/idylnlp)
+
 Idyl NLP is a natural language processing (NLP) framework released under the business-friendly Apache License, version 2.0. The framework features NLP capabilities such as language detection, sentence extraction, tokenization, named-entity extraction, and others. Some capabilities, such as named-entity extraction and document classification, are capable of using neural networks on both CPU and GPU architectures.
 
 Idyl NLP uses a combination of custom implementations and other open-source projects to perform its tasks. In some cases there are multiple implementations available. All core capabilities are abstracted by interfaces to allow an implementation choice.

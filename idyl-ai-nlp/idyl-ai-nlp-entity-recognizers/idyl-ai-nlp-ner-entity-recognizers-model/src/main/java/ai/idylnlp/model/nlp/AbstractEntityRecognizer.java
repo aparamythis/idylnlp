@@ -28,7 +28,7 @@ import org.apache.commons.math3.util.Precision;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.mtnfog.entity.Entity;
+import ai.idylnlp.model.entity.Entity;
 import ai.idylnlp.model.exceptions.EntityFinderException;
 import ai.idylnlp.model.manifest.ModelManifest;
 
@@ -134,7 +134,7 @@ public abstract class AbstractEntityRecognizer<T extends AbstractEntityRecognize
 					Entity entity = new Entity(entityText, roundedConfidence, modelManifest.getType(), modelManifest.getLanguageCode().getAlpha3().toString());
 					
 					// TODO: Remove last two arguments.
-					entity.setSpan(new com.mtnfog.entity.Span(name.getStart(), name.getEnd()));
+					entity.setSpan(new ai.idylnlp.model.entity.Span(name.getStart(), name.getEnd()));
 					entity.setContext(entityExtractionRequest.getContext());
 					entity.setExtractionDate(System.currentTimeMillis());
 										

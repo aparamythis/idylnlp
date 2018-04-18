@@ -26,7 +26,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.mtnfog.entity.Entity;
+import ai.idylnlp.model.entity.Entity;
 import ai.idylnlp.model.exceptions.EntityFinderException;
 import ai.idylnlp.model.nlp.EntityExtractionRequest;
 import ai.idylnlp.model.nlp.EntityExtractionResponse;
@@ -149,7 +149,7 @@ public class FuzzyDictionaryEntityRecognizer implements EntityRecognizer {
 					entity.setText(dicWord);
 					entity.setType(type);
 					entity.setConfidence(100.0);
-					entity.setSpan(new com.mtnfog.entity.Span(span.getStart(), span.getEnd()));
+					entity.setSpan(new ai.idylnlp.model.entity.Span(span.getStart(), span.getEnd()));
 					entity.setContext(request.getContext());
 					entity.setExtractionDate(System.currentTimeMillis());
 					

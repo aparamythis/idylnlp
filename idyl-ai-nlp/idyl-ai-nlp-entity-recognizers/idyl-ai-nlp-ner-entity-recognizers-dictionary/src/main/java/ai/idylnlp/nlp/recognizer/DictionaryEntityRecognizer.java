@@ -26,7 +26,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.mtnfog.entity.Entity;
+import ai.idylnlp.model.entity.Entity;
 import ai.idylnlp.model.exceptions.EntityFinderException;
 import ai.idylnlp.model.nlp.EntityExtractionRequest;
 import ai.idylnlp.model.nlp.EntityExtractionResponse;
@@ -141,7 +141,7 @@ public class DictionaryEntityRecognizer implements EntityRecognizer {
                 
                 // Create a new entity object.
 				Entity entity = new Entity(nameInDocument, 100.0, type, LanguageCode.undefined.getAlpha3().toString());
-				entity.setSpan(new com.mtnfog.entity.Span(name.getStart(), name.getEnd()));
+				entity.setSpan(new ai.idylnlp.model.entity.Span(name.getStart(), name.getEnd()));
 				entity.setContext(request.getContext());
 				entity.setExtractionDate(System.currentTimeMillis());
 				

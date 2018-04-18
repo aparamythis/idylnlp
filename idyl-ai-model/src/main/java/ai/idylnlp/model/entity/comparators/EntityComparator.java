@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-package ai.idylnlp.model.nlp;
+package ai.idylnlp.model.entity.comparators;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,17 +33,21 @@ import ai.idylnlp.model.entity.Entity;
  */
 public class EntityComparator implements Comparator<Entity> {
 	
-	private EntityOrder sortingBy;
+	private Order sortingBy;
 	
 	/**
 	 * Creates a new {@link EntityComparator} with the given
 	 * sorting method.
-	 * @param sortingBy The {@link EntityOrder} to sort the entities.
+	 * @param sortingBy The {@link Order} to sort the entities.
 	 */
-	public EntityComparator(EntityOrder sortingBy) {
+	public EntityComparator(Order sortingBy) {
 		this.sortingBy = sortingBy;
 	}
-		
+	
+	public enum Order {
+		CONFIDENCE, TEXT
+	}
+
 	@Override
 	public int compare(Entity entity1, Entity entity2) {
 		
@@ -55,9 +59,6 @@ public class EntityComparator implements Comparator<Entity> {
 		case TEXT:
 			return entity1.getText().compareTo(entity2.getText());
 
-		case OCCURRENCE:
-			return Integer.compare(entity1.getSpan().getTokenStart(), entity2.getSpan().getTokenStart());
-			
 		}
 
 		throw new IllegalArgumentException("Invalid sort type.");
@@ -66,9 +67,9 @@ public class EntityComparator implements Comparator<Entity> {
 
 	/**
 	 * Gets the sorting order.
-	 * @return The {@link EntityOrder}.
+	 * @return The {@link Order}.
 	 */
-	public EntityOrder getSortingBy() {
+	public Order getSortingBy() {
 		return sortingBy;
 	}
 	
@@ -78,7 +79,7 @@ public class EntityComparator implements Comparator<Entity> {
 	 * @param sortingBy The sorting method.
 	 * @return A set of sorted {@link Entity entities}.
 	 */
-	public static Set<Entity> sort(Set<Entity> entities, EntityOrder sortingBy) {
+	public static Set<Entity> sort(Set<Entity> entities, Order sortingBy) {
 		
 		EntityComparator comparator = new EntityComparator(sortingBy);
 		List<Entity> list = new ArrayList<Entity>(entities);
@@ -88,5 +89,5 @@ public class EntityComparator implements Comparator<Entity> {
 		return sortedEntities;
 				
 	}
-	
+
 }

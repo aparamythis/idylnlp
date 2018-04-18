@@ -29,7 +29,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.mockito.Mockito;
 
-import com.mtnfog.entity.Entity;
+import ai.idylnlp.model.entity.Entity;
 import ai.idylnlp.opennlp.custom.model.DictionaryModel;
 import ai.idylnlp.opennlp.custom.modelloader.LocalModelLoader;
 import com.neovisionaries.i18n.LanguageCode;

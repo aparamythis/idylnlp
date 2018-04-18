@@ -28,7 +28,7 @@ import org.apache.logging.log4j.Logger;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 
-import com.mtnfog.entity.Entity;
+import ai.idylnlp.model.entity.Entity;
 import com.neovisionaries.i18n.LanguageCode;
 
 import ai.idylnlp.model.ModelValidator;

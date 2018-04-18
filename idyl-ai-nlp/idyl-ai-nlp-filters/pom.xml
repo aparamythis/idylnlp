@@ -17,11 +17,6 @@
 	</licenses>
 	<dependencies>
 		<dependency>
-			<groupId>com.mtnfog</groupId>
-			<artifactId>entity-model</artifactId>
-			<version>${entity.model.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>ai.idyl</groupId>
 			<artifactId>idyl-ai-model</artifactId>
 			<version>${project.version}</version>

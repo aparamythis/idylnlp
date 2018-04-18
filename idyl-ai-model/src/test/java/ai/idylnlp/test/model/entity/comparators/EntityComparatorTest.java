@@ -13,9 +13,9 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-package ai.idylnlp.test.model.nlp;
+package ai.idylnlp.test.model.entity.comparators;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -25,10 +25,7 @@ import java.util.Set;
 import org.junit.Test;
 
 import ai.idylnlp.model.entity.Entity;
-import ai.idylnlp.model.entity.Span;
-
-import ai.idylnlp.model.nlp.EntityComparator;
-import ai.idylnlp.model.nlp.EntityOrder;
+import ai.idylnlp.model.entity.comparators.EntityComparator;
 
 public class EntityComparatorTest {
 	
@@ -40,7 +37,7 @@ public class EntityComparatorTest {
 		entities.add(new Entity("george", 20, "person", "[0,2)"));
 		entities.add(new Entity("bob", 70, "person", "[0,2)"));
 		
-		Set<Entity> sortedEntities = EntityComparator.sort(entities, EntityOrder.CONFIDENCE);
+		Set<Entity> sortedEntities = EntityComparator.sort(entities, EntityComparator.Order.CONFIDENCE);
 		
 		List<Entity> list = new ArrayList<Entity>(sortedEntities);
 		
@@ -58,40 +55,13 @@ public class EntityComparatorTest {
 		entities.add(new Entity("george", 20, "person", "[0,2)"));
 		entities.add(new Entity("bob", 70, "person", "[0,2)"));
 		
-		Set<Entity> sortedEntities = EntityComparator.sort(entities, EntityOrder.TEXT);
+		Set<Entity> sortedEntities = EntityComparator.sort(entities, EntityComparator.Order.TEXT);
 		
 		List<Entity> list = new ArrayList<Entity>(sortedEntities);
 		
 		assertTrue(list.get(0).getText().equals("bob"));
 		assertTrue(list.get(1).getText().equals("george"));
 		assertTrue(list.get(2).getText().equals("jeffrey"));
-		
-	}
-	
-	@Test
-	public void sortBySpan() {
-				
-		Entity entity1 = new Entity("jeffrey", 40, "person", "[0,2)");
-		entity1.setSpan(new Span(1, 2));
-		
-		Entity entity2 = new Entity("george", 20, "person", "[0,2)");
-		entity2.setSpan(new Span(1, 2));
-		
-		Entity entity3 = new Entity("bob", 70, "person", "[0,2)");
-		entity3.setSpan(new Span(1, 2));
-		
-		Set<Entity> entities = new HashSet<Entity>();
-		entities.add(entity1);
-		entities.add(entity2);
-		entities.add(entity3);
-		
-		Set<Entity> sortedEntities = EntityComparator.sort(entities, EntityOrder.OCCURRENCE);
-		
-		List<Entity> list = new ArrayList<Entity>(sortedEntities);
-		
-		assertTrue(list.get(0).getText().equals("bob"));
-		assertTrue(list.get(1).getText().equals("jeffrey"));
-		assertTrue(list.get(2).getText().equals("george"));
 		
 	}
 	
@@ -103,7 +73,7 @@ public class EntityComparatorTest {
 		entities.add(new Entity("george", 20, "person", "[0,2)"));
 		entities.add(new Entity("bob", 70, "person", "[0,2)"));
 		
-		EntityComparator.sort(entities, EntityOrder.valueOf("test"));
+		EntityComparator.sort(entities, EntityComparator.Order.valueOf("test"));
 		
 	}
 	

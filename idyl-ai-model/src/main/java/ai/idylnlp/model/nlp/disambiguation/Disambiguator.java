@@ -15,7 +15,7 @@
  ******************************************************************************/
 package ai.idylnlp.model.nlp.disambiguation;
 
-import com.mtnfog.entity.Entity;
+import ai.idylnlp.model.entity.Entity;
 
 import ai.idylnlp.model.exceptions.DisambiguationException;
 

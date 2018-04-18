@@ -22,7 +22,7 @@ import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 
 import com.google.gson.Gson;
-import com.mtnfog.entity.Entity;
+import ai.idylnlp.model.entity.Entity;
 import ai.idylnlp.model.nlp.EntityExtractionRequest;
 import ai.idylnlp.model.nlp.EntityExtractionResponse;
 

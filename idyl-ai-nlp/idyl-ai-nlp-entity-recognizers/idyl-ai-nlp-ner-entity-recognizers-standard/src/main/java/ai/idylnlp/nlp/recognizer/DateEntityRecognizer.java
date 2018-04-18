@@ -26,7 +26,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.joestelmach.natty.DateGroup;
 import com.joestelmach.natty.Parser;
-import com.mtnfog.entity.Entity;
+import ai.idylnlp.model.entity.Entity;
 import ai.idylnlp.model.exceptions.EntityFinderException;
 import ai.idylnlp.model.nlp.EntityExtractionRequest;
 import ai.idylnlp.model.nlp.EntityExtractionResponse;
@@ -84,7 +84,7 @@ public class DateEntityRecognizer implements EntityRecognizer {
 				
 				// TODO: IDYLSDK-450: Set the token-based span correctly.
 				Span span = SpanUtils.getSpan(SimpleTokenizer.INSTANCE, group.getText(), text);
-				entity.setSpan(new com.mtnfog.entity.Span(span.getStart(), span.getEnd()));
+				entity.setSpan(new ai.idylnlp.model.entity.Span(span.getStart(), span.getEnd()));
 				
 				entities.add(entity);
 				

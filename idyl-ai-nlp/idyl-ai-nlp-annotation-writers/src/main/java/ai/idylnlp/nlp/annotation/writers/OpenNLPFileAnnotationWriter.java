@@ -17,7 +17,7 @@ package ai.idylnlp.nlp.annotation.writers;
 
 import java.util.Collection;
 
-import com.mtnfog.entity.Entity;
+import ai.idylnlp.model.entity.Entity;
 import ai.idylnlp.model.nlp.AnnotationWriter;
 
 /**

@@ -26,7 +26,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 
-import com.mtnfog.entity.Entity;
+import ai.idylnlp.model.entity.Entity;
 import ai.idylnlp.model.ModelValidator;
 import ai.idylnlp.model.manifest.SecondGenModelManifest;
 import ai.idylnlp.model.nlp.EntityExtractionRequest;

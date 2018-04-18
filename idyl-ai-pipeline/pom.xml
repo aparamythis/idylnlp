@@ -65,13 +65,6 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.mtnfog</groupId>
-			<artifactId>entity-model</artifactId>
-			<version>${entity.model.version}</version>
-			<type>test-jar</type>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>ai.idyl</groupId>
 			<artifactId>idyl-ai-testing</artifactId>
 			<version>${project.version}</version>

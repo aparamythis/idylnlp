@@ -15,7 +15,7 @@
  ******************************************************************************/
 package ai.idylnlp.model.stats;
 
-import com.mtnfog.entity.Entity;
+import ai.idylnlp.model.entity.Entity;
 
 import ai.idylnlp.model.manifest.ModelManifest;
 import ai.idylnlp.model.manifest.StandardModelManifest;
