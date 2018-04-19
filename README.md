@@ -4,9 +4,7 @@
 
 Idyl NLP is a natural language processing (NLP) framework released under the business-friendly Apache License, version 2.0. The framework features NLP capabilities such as language detection, sentence extraction, tokenization, named-entity extraction, and others. Some capabilities, such as named-entity extraction and document classification, are capable of using neural networks on both CPU and GPU architectures.
 
-Idyl NLP uses a combination of custom implementations and other open-source projects to perform its tasks. In some cases there are multiple implementations available. All core capabilities are abstracted by interfaces to allow an implementation choice.
-
-The goal of Idyl NLP is to provide a comprehensive NLP library that is available under a business-friendly open-source license.
+Idyl NLP uses a combination of custom implementations and other open-source projects to perform its tasks. In some cases there are multiple implementations available. All core capabilities are abstracted by interfaces to allow a choice of implementation. Idyl NLP stands on the shoulders of giants to provide a capable NLP framework.
 
 If you are looking for pre-built NLP microservices available as Docker containers and deployable on AWS and Azure checkout the [NLP Building Blocks](http://www.mtnfog.com/nlp-building-blocks/) powered by Idyl NLP.
 
