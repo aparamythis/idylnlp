@@ -3,11 +3,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>idylnlp-ai</artifactId>
+	<artifactId>idylnlp</artifactId>
 	<groupId>ai.idylnlp</groupId>
 	<packaging>pom</packaging>
 	<version>1.0.0-SNAPSHOT</version>
-	<name>idylnlp-ai</name>
+	<name>idylnlp</name>
 	<scm>
 		<connection>scm:git:ssh://git@github.com:idylnlp/idylnlp.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com:idylnlp/idylnlp.git</developerConnection>
@@ -21,12 +21,12 @@
 		</license>
 	</licenses>
 	<modules>
-		<module>idylnlp-ai-model</module>
-		<module>idylnlp-ai-models</module>
-		<module>idylnlp-ai-nlp</module>
-		<module>idylnlp-ai-pipeline</module>
-		<module>idylnlp-ai-testing</module>
-		<module>idylnlp-ai-training-definition</module>
+		<module>idylnlp-model</module>
+		<module>idylnlp-models</module>
+		<module>idylnlp-nlp</module>
+		<module>idylnlp-pipeline</module>
+		<module>idylnlp-testing</module>
+		<module>idylnlp-training-definition</module>
 		<module>opennlp</module>
 	</modules>
 	<dependencyManagement>
