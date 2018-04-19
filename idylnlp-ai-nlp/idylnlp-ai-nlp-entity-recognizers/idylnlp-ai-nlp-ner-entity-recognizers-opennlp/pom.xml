@@ -16,6 +16,39 @@
 		</license>
 	</licenses>
 	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.googlecode.maven-download-plugin</groupId>
+				<artifactId>download-maven-plugin</artifactId>
+				<version>1.4.0</version>
+				<executions>
+					<execution>
+						<id>1</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>wget</goal>
+						</goals>
+						<configuration>
+							<url>http://apache.claz.org/opennlp/models/langdetect/1.8.3/langdetect-183.bin</url>
+							<outputFileName>langdetect-183.bin</outputFileName>
+							<outputDirectory>${project.basedir}/src/test/resources/</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>2</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>wget</goal>
+						</goals>
+						<configuration>
+							<url>http://apache.claz.org/opennlp/models/langdetect/1.8.3/langdetect-183.bin</url>
+							<outputFileName>langdetect-183.bin</outputFileName>
+							<outputDirectory>${project.basedir}/src/main/resources/</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
 		<testResources>
 			<testResource>
 				<directory>${project.basedir}/src/test/resources/</directory>

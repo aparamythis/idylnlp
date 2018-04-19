@@ -10,6 +10,29 @@
 	</parent>
 	<artifactId>idylnlp-ai-nlp-pos-tagging</artifactId>
 	<name>idylnlp-ai-nlp-pos-tagging</name>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.googlecode.maven-download-plugin</groupId>
+				<artifactId>download-maven-plugin</artifactId>
+				<version>1.4.0</version>
+				<executions>
+					<execution>
+						<id>1</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>wget</goal>
+						</goals>
+						<configuration>
+							<url>http://opennlp.sourceforge.net/models-1.5/en-pos-maxent.bin</url>
+							<outputFileName>en-sent.bin</outputFileName>
+							<outputDirectory>${project.basedir}/src/test/resources/models/</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 	<dependencies>
 		<dependency>
 			<groupId>ai.idylnlp</groupId>
