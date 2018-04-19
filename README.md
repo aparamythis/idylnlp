@@ -14,7 +14,7 @@ For more information see the Idyl NLP home at [idylnlp.ai](http://www.idylnlp.ai
 
 ## Core Capabilities
 
-Refer to the samples directory for example implementations of the below capabilities. Some of the unit tests will also provide examples.
+Refer to the [sample projects](https://github.com/idylnlp/idylnlp-samples) for example implementations of the below capabilities. Some of the unit tests in this project will also provide examples.
 
 * Language Detection
 * Sentence Extraction
