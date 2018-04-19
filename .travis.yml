@@ -1,6 +1,5 @@
 language: java
 script:
-  - ./download-files.sh
   - mvn package
 jdk:
   - oraclejdk8

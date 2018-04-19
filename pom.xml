@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>idylnlp-ai</artifactId>
 	<groupId>ai.idylnlp</groupId>
@@ -54,26 +56,18 @@
 		<commons.text.version>1.1</commons.text.version>
 		<commons.validator.version>1.6</commons.validator.version>
 		<equalsverifier.version>2.3.2</equalsverifier.version>
-		<google.guava.version>23.0</google.guava.version>
-		<httpclient.version>4.5.3</httpclient.version>
-		<jacoco.version>0.7.2.201409121644</jacoco.version>
-		<jackson.version>1.9.11</jackson.version>
 		<joshua.version>6.1</joshua.version>
 		<jsoup.version>1.8.1</jsoup.version>
 		<libphonenumber.version>8.7.1</libphonenumber.version>
 		<lucene.version>5.3.0</lucene.version>
 		<maven.compiler.version>3.6.2</maven.compiler.version>
-		<maven.shade.version>3.0.0</maven.shade.version>
 		<maven.surefire.version>2.21.0</maven.surefire.version>
 		<natty.version>0.13</natty.version>
 		<nv.version>1.22</nv.version>
 		<opennlp.tools.version>1.8.3</opennlp.tools.version>
-		<pdfbox.version>1.8.8</pdfbox.version>
-		<poi.ooxml.schemas.version>1.1</poi.ooxml.schemas.version>
-		<poi.version>3.11</poi.version>
 		<powermock.version>1.7.0</powermock.version>
 		<segment.version>2.0.0</segment.version>
-		<spring.boot.version>1.5.10.RELEASE</spring.boot.version>
+		<spring.boot.version>2.0.1.RELEASE</spring.boot.version>
 		<tika.version>1.15</tika.version>
 		<tika.langdetect.version>1.16</tika.langdetect.version>
 		<!-- DeepLearning4J -->
@@ -155,6 +149,73 @@
 					<source>1.8</source>
 					<target>1.8</target>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.googlecode.maven-download-plugin</groupId>
+				<artifactId>download-maven-plugin</artifactId>
+				<version>1.4.0</version>
+				<executions>
+					<execution>
+						<id>1</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>wget</goal>
+						</goals>
+						<configuration>
+							<url>http://opennlp.sourceforge.net/models-1.5/en-sent.bin</url>
+							<outputFileName>en-sent.bin</outputFileName>
+							<outputDirectory>idylnlp-ai-nlp/idylnlp-ai-nlp-entity-recognizers/idylnlp-ai-nlp-ner-entity-recognizers-opennlp/src/test/resources/models/</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>2</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>wget</goal>
+						</goals>
+						<configuration>
+							<url>http://opennlp.sourceforge.net/models-1.5/en-sent.bin</url>
+							<outputFileName>en-sent.bin</outputFileName>
+							<outputDirectory>idylnlp-ai-nlp/idylnlp-ai-nlp-sentence-detection/src/test/resources/</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>3</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>wget</goal>
+						</goals>
+						<configuration>
+							<url>http://opennlp.sourceforge.net/models-1.5/en-pos-maxent.bin</url>
+							<outputFileName>en-pos-maxent.bin</outputFileName>
+							<outputDirectory>idylnlp-ai-nlp/idylnlp-ai-nlp-pos-tagging/src/test/resources/models/</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>4</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>wget</goal>
+						</goals>
+						<configuration>
+							<url>http://apache.claz.org/opennlp/models/langdetect/1.8.3/langdetect-183.bin</url>
+							<outputFileName>langdetect-183.bin</outputFileName>
+							<outputDirectory>idylnlp-ai-nlp/idylnlp-ai-nlp-language-detection/idylnlp-ai-nlp-language-detection-opennlp/src/main/resources/</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>5</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>wget</goal>
+						</goals>
+						<configuration>
+							<url>http://apache.claz.org/opennlp/models/langdetect/1.8.3/langdetect-183.bin</url>
+							<outputFileName>langdetect-183.bin</outputFileName>
+							<outputDirectory>idylnlp-ai-nlp/idylnlp-ai-nlp-language-detection/idylnlp-ai-nlp-language-detection-opennlp/src/test/resources/</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

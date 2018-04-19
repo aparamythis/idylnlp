@@ -31,11 +31,8 @@ Idyl NLP requires Java 8.
 To build:
 
 ```
-./download-files.sh
 mvn clean install
 ```
-
-The `download-files.sh` script downloads some files required by unit tests.
 
 ### Testing
 
