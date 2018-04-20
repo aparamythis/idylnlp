@@ -165,9 +165,7 @@ public class IdylPipeline implements Pipeline {
 	}
 
 	/**
-	 * Run all components of the Idyl pipeline on the input. First,
-	 * entities will be extracted, followed by entity disambiguation,
-	 * followed by entity enrichment.
+	 * Run all components of the pipeline on the input.
 	 * @param request An {@link EntityExtractionRequest} object.
 	 * @return An {@link EntityExtractionResponse response}. Returns
 	 * <code>null</code> if an error occurred during the execution.
