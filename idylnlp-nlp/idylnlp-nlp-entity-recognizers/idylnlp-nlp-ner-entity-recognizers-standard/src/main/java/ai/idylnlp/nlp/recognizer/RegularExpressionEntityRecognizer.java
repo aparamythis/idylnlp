@@ -73,12 +73,12 @@ public class RegularExpressionEntityRecognizer implements EntityRecognizer {
 		
 		try {		
 						
-			// IDYLSDK-431 - Surround all patterns with spaces.
+			// TODO: Surround all patterns with spaces.
 			final String text = StringUtils.join(request.getText(), " ").replaceAll(pattern.pattern(), " $1 ");			
 			
 			Pattern[] patterns = {pattern};
 			
-			// IDYLSDK-431 - This recognizer must use the WhitespaceTokenizer.
+			// TODO: This recognizer must use the WhitespaceTokenizer.
 			Tokenizer tokenizer = WhitespaceTokenizer.INSTANCE;
 						
 			// tokenize the text into the required OpenNLP format 

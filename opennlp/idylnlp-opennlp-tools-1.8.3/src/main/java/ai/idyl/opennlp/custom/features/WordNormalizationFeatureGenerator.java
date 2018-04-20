@@ -30,7 +30,6 @@ import opennlp.tools.util.featuregen.AdaptiveFeatureGenerator;
  * and 'IL-8' is also normalized to 'AA-0'.
  * 
  * @author Mountain Fog, Inc.
- * @see IDYLSDK-490
  *
  */
 public class WordNormalizationFeatureGenerator implements AdaptiveFeatureGenerator {

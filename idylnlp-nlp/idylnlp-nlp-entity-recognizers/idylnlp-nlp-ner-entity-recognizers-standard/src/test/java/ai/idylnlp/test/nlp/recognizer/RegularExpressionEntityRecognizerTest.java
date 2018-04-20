@@ -71,8 +71,6 @@ public class RegularExpressionEntityRecognizerTest {
 	@Test
 	public void emailAddress2() throws EntityFinderException {
 		
-		// Tests IDYLSDK-431.
-				
 		Pattern pattern = Pattern.compile(EMAIL_REGULAR_EXPRESSION, Pattern.CASE_INSENSITIVE);
 		
 		RegularExpressionEntityRecognizer recognizer = new RegularExpressionEntityRecognizer(pattern, "email");
@@ -100,9 +98,7 @@ public class RegularExpressionEntityRecognizerTest {
 	
 	@Test
 	public void emailAddress3() throws EntityFinderException {
-		
-		// Tests IDYLSDK-431.
-				
+
 		Pattern pattern = Pattern.compile(EMAIL_REGULAR_EXPRESSION, Pattern.CASE_INSENSITIVE);
 		
 		RegularExpressionEntityRecognizer recognizer = new RegularExpressionEntityRecognizer(pattern, "email");

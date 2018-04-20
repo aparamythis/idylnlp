@@ -36,8 +36,6 @@ public class DefaultEntitySanitizer implements EntitySanitizer {
 		
 			if(entity.getText().endsWith(",") || entity.getText().endsWith(".")) {
 				
-				// IDYLSDK-78: Remove the trailing comma.
-				// IDYLSDK-86: Remove the trailing period.
 				entity.setText(entity.getText().substring(0, entity.getText().length() - 1));
 				
 			}

@@ -184,7 +184,7 @@ public class OpenNLPEntityRecognizer extends AbstractEntityRecognizer<OpenNLPEnt
 				
 				if(request.getLanguage() == null) {
 					
-					// IDYLSDK-320: Run all languages to support multilingual documents.
+					// TODO: Run all languages to support multilingual documents.
 					Set<LanguageCode> languages = getConfiguration().getEntityModels().get(type).keySet();
 					
 					for(LanguageCode l : languages) {
@@ -239,9 +239,9 @@ public class OpenNLPEntityRecognizer extends AbstractEntityRecognizer<OpenNLPEnt
 								// Extract the entities.
 								final Collection<Entity> extractedEntities = findEntities(nameFinderMe, request, modelManifest, sentenceSanitizer);
 								
-								// (IDYLSDK-440) Clear the adaptive data after each entity extraction.
+								// TODO: Clear the adaptive data after each entity extraction.
 								// This really has no effect because the NameFinderME is reinstantiated for every entity extraction request.
-								// Having a single NameFinderME would run into the threadsafe issue (IDYLSDK-449).
+								// Having a single NameFinderME would run into the threadsafe issue.
 								nameFinderMe.clearAdaptiveData();
 								
 								// Want to return all entities.

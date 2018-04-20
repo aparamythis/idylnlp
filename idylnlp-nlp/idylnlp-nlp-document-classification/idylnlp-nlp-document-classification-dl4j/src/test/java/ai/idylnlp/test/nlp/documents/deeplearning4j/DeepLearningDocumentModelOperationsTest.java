@@ -77,7 +77,8 @@ public class DeepLearningDocumentModelOperationsTest {
 					.withModels(models)
 					.build();
 				
-		final String text = FileUtils.readFileToString(new File("/mtnfog/code/bitbucket/idyl-sdk/data/aclImdb/test/neg/6_3.txt"));
+		// TODO: Fix file name.
+		final String text = FileUtils.readFileToString(new File("negative.txt"));
 		
 		DeepLearningDocumentClassificationRequest deepLearningDocumentClassificationRequest = new DeepLearningDocumentClassificationRequest(text, LanguageCode.en);
 		

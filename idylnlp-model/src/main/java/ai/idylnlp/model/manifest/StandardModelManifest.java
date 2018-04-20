@@ -30,7 +30,6 @@ import com.neovisionaries.i18n.LanguageCode;
 public class StandardModelManifest extends ModelManifest implements Comparable<StandardModelManifest> {
 
 	// The beam size controls the depth of the beam search in OpenNLP's context evaluation.
-	// The beam size was exposed to the user through the manifest in IDYLSDK-473.
 	public static final int DEFAULT_BEAM_SIZE = 3;
 	
 	public static final String DEFAULT_SUBTYPE = "none";

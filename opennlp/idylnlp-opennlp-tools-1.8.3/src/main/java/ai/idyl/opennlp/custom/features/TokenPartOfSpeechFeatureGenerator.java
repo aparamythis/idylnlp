@@ -31,7 +31,6 @@ import opennlp.tools.util.featuregen.AdaptiveFeatureGenerator;
  * Generates features for tokens based on the token's part of speech.
  * 
  * @author Mountain Fog, Inc.
- * @see IDYLSDK-493
  *
  */
 public class TokenPartOfSpeechFeatureGenerator implements AdaptiveFeatureGenerator {

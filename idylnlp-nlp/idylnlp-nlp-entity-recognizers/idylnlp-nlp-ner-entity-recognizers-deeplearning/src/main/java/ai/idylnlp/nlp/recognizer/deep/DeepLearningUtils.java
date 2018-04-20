@@ -34,7 +34,6 @@ import opennlp.tools.namefind.NameSample;
  * Utility functions for deep learning model training and evaluation.
  * 
  * Note: The functions in this class are not thread-safe.
- * See IDYLSDK-678.
  * 
  * @author Mountain Fog, Inc.
  *

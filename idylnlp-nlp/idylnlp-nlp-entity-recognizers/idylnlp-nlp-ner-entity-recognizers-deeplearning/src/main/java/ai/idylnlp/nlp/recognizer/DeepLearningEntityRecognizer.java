@@ -113,7 +113,7 @@ public class DeepLearningEntityRecognizer extends AbstractEntityRecognizer<DeepL
 							getConfiguration().getBlacklistedModelIDs().add(modelManifest.getModelId());
 							LOGGER.warn("Model {} is blacklisted. Loading will not be attempted until restart.", modelManifest.getModelFileName());
 							
-							// TODO: IDYLSDK-463: This should probably be made visible to the user somehow - maybe through the API?
+							// TODO: This should probably be made visible to the user somehow - maybe through the API?
 							
 						}
 						
@@ -174,7 +174,7 @@ public class DeepLearningEntityRecognizer extends AbstractEntityRecognizer<DeepL
 								
 				if(request.getLanguage() == null) {
 					
-					// IDYLSDK-320: Run all languages to support multilingual documents.
+					// TODO: Run all languages to support multilingual documents.
 					Set<LanguageCode> languages = getConfiguration().getEntityModels().get(type).keySet();
 					
 					for(LanguageCode l : languages) {

@@ -82,7 +82,7 @@ public class DateEntityRecognizer implements EntityRecognizer {
 				entity.setExtractionDate(System.currentTimeMillis());
 				entity.setLanguageCode(LanguageCode.en.getAlpha3().toString());
 				
-				// TODO: IDYLSDK-450: Set the token-based span correctly.
+				// TODO: Set the token-based span correctly.
 				Span span = SpanUtils.getSpan(SimpleTokenizer.INSTANCE, group.getText(), text);
 				entity.setSpan(new ai.idylnlp.model.entity.Span(span.getStart(), span.getEnd()));
 				

@@ -40,7 +40,6 @@ import opennlp.tools.util.featuregen.GeneratorFactory.XmlFeatureGeneratorFactory
  * Factory for {@link WordNormalizationFeatureGenerator}.
  * 
  * @author Mountain Fog, Inc.
- * @see IDYLSDK-490
  *
  */
 public class WordNormalizationFeatureGeneratorFactory implements XmlFeatureGeneratorFactory {
@@ -108,7 +107,7 @@ public class WordNormalizationFeatureGeneratorFactory implements XmlFeatureGener
 		
 		StandardModelManifest standardModelManifest = (StandardModelManifest) modelManifest;
 		
-		// TODO: Get a Validator in here. See: https://cm01.mtnfog.com/jira/browse/IDYLSDK-572
+		// TODO: Get a Validator in here.
 		partsOfSpeechTagger = new DefaultPartsOfSpeechTagger(posModelpath, standardModelManifest, validator);
 		
 	}

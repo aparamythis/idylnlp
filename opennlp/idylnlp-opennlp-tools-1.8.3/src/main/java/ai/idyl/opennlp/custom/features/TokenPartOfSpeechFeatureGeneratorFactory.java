@@ -36,7 +36,6 @@ import opennlp.tools.util.featuregen.GeneratorFactory.XmlFeatureGeneratorFactory
  * Factory for {@link TokenPartOfSpeechFeatureGenerator}.
  * 
  * @author Mountain Fog, Inc.
- * @see IDYLSDK-493
  *
  */
 public class TokenPartOfSpeechFeatureGeneratorFactory implements XmlFeatureGeneratorFactory {

@@ -66,7 +66,7 @@ public class PhoneNumberEntityRecognizer implements EntityRecognizer {
 				entity.setContext(request.getContext());
 				entity.setExtractionDate(System.currentTimeMillis());
 				
-				// TODO: IDYLSDK-450: Set the token-based span correctly.
+				// TODO: Set the token-based span correctly.
 				entity.setSpan(new ai.idylnlp.model.entity.Span(0, 0));
 
 				entities.add(entity);

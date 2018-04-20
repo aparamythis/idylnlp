@@ -26,7 +26,6 @@ import opennlp.tools.util.featuregen.AdaptiveFeatureGenerator;
  * Generates features for tokens containing hyphens.
  * 
  * @author Mountain Fog, Inc.
- * @see IDYLSDK-489
  *
  */
 public class SpecialCharacterFeatureGenerator implements AdaptiveFeatureGenerator {

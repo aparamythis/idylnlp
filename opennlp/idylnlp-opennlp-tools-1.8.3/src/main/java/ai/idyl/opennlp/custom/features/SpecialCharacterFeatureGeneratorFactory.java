@@ -29,7 +29,6 @@ import opennlp.tools.util.featuregen.GeneratorFactory.XmlFeatureGeneratorFactory
  * Factory for {@link SpecialCharacterFeatureGenerator}.
  * 
  * @author Mountain Fog, Inc.
- * @see IDYLSDK-489
  *
  */
 public class SpecialCharacterFeatureGeneratorFactory implements XmlFeatureGeneratorFactory {

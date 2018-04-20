@@ -139,8 +139,10 @@ public abstract class AbstractEntityRecognizer<T extends AbstractEntityRecognize
 					entity.setExtractionDate(System.currentTimeMillis());
 										
 					if(entityExtractionRequest.isIncludeModelFileNameInMetadata()) {
-						// IDYLSDK-664: Put the model filename in the entity metadata.
+						
+						// TODO: Put the model filename in the entity metadata.
 						entity.getMetadata().put(METADATA_MODEL_FILENAME_KEY, modelManifest.getModelFileName());
+						
 					}
 					
 					LOGGER.debug("Found entity with text: " + entityText + "; confidence: " + probabilities[x] + "; language: " + modelManifest.getLanguageCode());

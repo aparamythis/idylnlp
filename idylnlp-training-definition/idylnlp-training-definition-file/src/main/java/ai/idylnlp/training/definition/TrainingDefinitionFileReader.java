@@ -100,7 +100,7 @@ public class TrainingDefinitionFileReader implements TrainingDefinitionReader {
 				
 			} else {
 				
-				// IDYLSDK-588: Verify that the file exists.
+				// TODO: Verify that the file exists.
 				File file = new File(trainingDefinition.getTrainingdata().getAnnotations());
 				
 				if(!file.exists()) {
