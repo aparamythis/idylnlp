@@ -22,6 +22,10 @@ Refer to the [sample projects](https://github.com/idylnlp/idylnlp-samples) for e
 
 All of these core capabilities with the exception of language detection can utilize custom trained models. The ability to train and evaluate trained models is available. Named-entity extraction and document classification support neural network models as well as maximum entropy and perceptron-based models.
 
+## Applications
+
+* Apache NiFi processors using Idyl NLP for NLP tasks are available in the [idylnlp-nifi](https://github.com/idylnlp/idylnlp-nifi) project.
+
 ## Building
 
 Idyl NLP requires Java 8. To build, simply:
