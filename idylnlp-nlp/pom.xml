@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>idylnlp</artifactId>
+		<groupId>ai.idylnlp</groupId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+	<packaging>pom</packaging>
+	<name>idylnlp-nlp</name>
+	<artifactId>idylnlp-nlp</artifactId>
+	<modules>
+		<module>idylnlp-nlp-entity-recognizers</module>
+		<module>idylnlp-nlp-language-detection</module>
+		<module>idylnlp-nlp-utils</module>
+		<module>idylnlp-nlp-tokenizers</module>
+		<module>idylnlp-nlp-filters</module>
+		<module>idylnlp-nlp-sanitizers</module>
+		<module>idylnlp-nlp-sentence-detection</module>
+		<module>idylnlp-nlp-annotation-readers</module>
+		<module>idylnlp-nlp-annotation-writers</module>
+		<module>idylnlp-nlp-pos-tagging</module>
+		<module>idylnlp-nlp-lemmatization</module>
+		<module>idylnlp-nlp-document-classification</module>
+		<module>idylnlp-nlp-translation</module>
+	</modules>
+</project>

@@ -2,15 +2,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>ai.idylnlp</groupId>
 		<artifactId>idylnlp</artifactId>
+		<groupId>ai.idylnlp</groupId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>idylnlp-opennlp</artifactId>
-	<name>idylnlp-opennlp</name>
 	<packaging>pom</packaging>
+	<name>idylnlp-models</name>
+	<artifactId>idylnlp-models</artifactId>
 	<modules>
-		<module>idylnlp-opennlp-tools-1.8.3</module>
-		<module>idylnlp-opennlp-custom</module>
+		<module>idylnlp-models-loaders</module>
+		<module>idylnlp-models-tools</module>
+		<module>idylnlp-models-opennlp</module>
+		<module>idylnlp-models-deeplearning</module>
 	</modules>
 </project>
