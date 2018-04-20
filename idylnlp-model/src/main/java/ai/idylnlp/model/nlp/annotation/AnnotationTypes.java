@@ -13,14 +13,29 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-package ai.idylnlp.model.nlp.subjects;
 
-public class BratSubjectOfTrainingOrEvaluation extends SubjectOfTrainingOrEvaluation {
+package ai.idylnlp.model.nlp.annotation;
 
-	public BratSubjectOfTrainingOrEvaluation(String inputFile) {
-		
-		super(inputFile);
-		
+public enum AnnotationTypes {
+
+	BRAT("brat"),
+	CONLL2003("conll2003"),
+	OPENNLP("opennlp"),
+	IDYLNLP("idylnlp");
+	
+	private String name;
+	
+	private AnnotationTypes(String name) {
+		this.name = name;
 	}
-
+	
+	public String getName() {
+		return name;
+	}
+	
+	@Override
+	public String toString() {
+		return name;
+	}
+	
 }
