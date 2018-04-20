@@ -14,16 +14,28 @@
  * the License.
  ******************************************************************************/
 
-package ai.idylnlp.opennlp.custom.validators;
+package ai.idylnlp.model.nlp.annotation;
 
-import ai.idylnlp.model.ModelValidator;
-import ai.idylnlp.model.exceptions.ValidationException;
+public enum AnnotationTypes {
 
-public class TrueValidator implements ModelValidator {
-
-	@Override
-	public boolean validateVersion(String creatorVersion) {
-		return true;
+	BRAT("brat"),
+	CONLL2003("conll2003"),
+	OPENNLP("opennlp"),
+	IDYLNLP("idylnlp");
+	
+	private String name;
+	
+	private AnnotationTypes(String name) {
+		this.name = name;
 	}
-
+	
+	public String getName() {
+		return name;
+	}
+	
+	@Override
+	public String toString() {
+		return name;
+	}
+	
 }

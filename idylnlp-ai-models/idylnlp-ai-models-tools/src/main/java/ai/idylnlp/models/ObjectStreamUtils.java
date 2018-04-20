@@ -17,21 +17,28 @@ package ai.idylnlp.models;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ai.idylnlp.nlp.annotation.reader.IdylNLPFileAnnotationReader;
 import ai.idylnlp.opennlp.custom.formats.IdylNLPNameSampleStream;
-
 import ai.idylnlp.model.Constants;
 import ai.idylnlp.model.nlp.annotation.AnnotationReader;
+import ai.idylnlp.model.nlp.subjects.BratSubjectOfTrainingOrEvaluation;
 import ai.idylnlp.model.nlp.subjects.CoNLL2003SubjectOfTrainingOrEvaluation;
 import ai.idylnlp.model.nlp.subjects.IdylNLPSubjectOfTrainingOrEvaluation;
 import ai.idylnlp.model.nlp.subjects.OpenNLPSubjectOfTrainingOrEvaluation;
 import ai.idylnlp.model.nlp.subjects.SubjectOfTrainingOrEvaluation;
 import opennlp.tools.formats.Conll02NameSampleStream;
 import opennlp.tools.formats.Conll03NameSampleStream;
+import opennlp.tools.formats.brat.AnnotationConfiguration;
+import opennlp.tools.formats.brat.BratAnnotation;
+import opennlp.tools.formats.brat.BratAnnotationStream;
+import opennlp.tools.formats.brat.BratNameSampleStream;
 import opennlp.tools.namefind.NameSample;
 import opennlp.tools.namefind.NameSampleDataStream;
 import opennlp.tools.util.InputStreamFactory;
@@ -61,12 +68,30 @@ public class ObjectStreamUtils {
 			
 			IdylNLPSubjectOfTrainingOrEvaluation nameFinderSubjectOfTraining = (IdylNLPSubjectOfTrainingOrEvaluation) subjectOfTraining;
 		
-			LOGGER.info("Using Idyl NLP formatted data.");
+			LOGGER.info("Using Idyl NLP formatted annotations.");
 			
 			final AnnotationReader annotationReader = new IdylNLPFileAnnotationReader(nameFinderSubjectOfTraining.getAnnotationsFile());
 			final InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File(subjectOfTraining.getInputFile()));
 			sampleStream = new IdylNLPNameSampleStream(new PlainTextByLineStream(inputStreamFactory, Constants.ENCODING_UTF8), annotationReader);
-	
+			
+		} else if(subjectOfTraining instanceof BratSubjectOfTrainingOrEvaluation) {
+			
+			BratSubjectOfTrainingOrEvaluation nameFinderSubjectOfTraining = (BratSubjectOfTrainingOrEvaluation) subjectOfTraining;
+				
+			LOGGER.info("Using Brat formatted annotations.");
+			
+			Map<String, String> typeToClassMap = new HashMap<>();
+		    typeToClassMap.put("Person", AnnotationConfiguration.ENTITY_TYPE);
+		    typeToClassMap.put("Location", AnnotationConfiguration.ENTITY_TYPE);
+		    typeToClassMap.put("Organization", AnnotationConfiguration.ENTITY_TYPE);
+		    typeToClassMap.put("Date", AnnotationConfiguration.ENTITY_TYPE);
+			
+			AnnotationConfiguration config = new AnnotationConfiguration(typeToClassMap);
+		    InputStream in = ObjectStreamUtils.class.getResourceAsStream(nameFinderSubjectOfTraining.getInputFile() + ".ann");
+		    
+		    // TODO: Return the brat annotations stream.
+		    // sampleStream = new BratAnnotationStream(config, "idylnlp", in);
+
 		} else if(subjectOfTraining instanceof CoNLL2003SubjectOfTrainingOrEvaluation) {
 			
 			CoNLL2003SubjectOfTrainingOrEvaluation nameFinderSubjectOfTraining = (CoNLL2003SubjectOfTrainingOrEvaluation) subjectOfTraining;

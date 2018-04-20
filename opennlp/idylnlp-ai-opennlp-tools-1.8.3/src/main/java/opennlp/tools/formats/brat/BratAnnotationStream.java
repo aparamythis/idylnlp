@@ -182,7 +182,7 @@ public class BratAnnotationStream implements ObjectStream<BratAnnotation> {
   private final BufferedReader reader;
   private final String id;
 
-  BratAnnotationStream(AnnotationConfiguration config, String id, InputStream in) {
+  public BratAnnotationStream(AnnotationConfiguration config, String id, InputStream in) {
     this.config = config;
     this.id = id;
 

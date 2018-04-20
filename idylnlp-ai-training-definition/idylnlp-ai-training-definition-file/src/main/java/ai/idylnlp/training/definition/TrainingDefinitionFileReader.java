@@ -70,10 +70,7 @@ public class TrainingDefinitionFileReader implements TrainingDefinitionReader {
 		
 	}
 	
-
-	/**
-	 * {@inheritDoc}
-	 */
+	@Override
 	public TrainingDefinitionValidationResult validate() {
 		
 		List<String> messages = new LinkedList<String>();
@@ -125,9 +122,7 @@ public class TrainingDefinitionFileReader implements TrainingDefinitionReader {
 
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
+	@Override
 	public String getFeatures() {
 
 		String features = null;
@@ -155,9 +150,7 @@ public class TrainingDefinitionFileReader implements TrainingDefinitionReader {
 		
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
+	@Override
 	public Trainingdefinition getTrainingDefinition() {
 		return trainingDefinition;
 	}

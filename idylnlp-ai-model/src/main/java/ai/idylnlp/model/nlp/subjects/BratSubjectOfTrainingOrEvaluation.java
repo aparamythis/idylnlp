@@ -13,17 +13,14 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
+package ai.idylnlp.model.nlp.subjects;
 
-package ai.idylnlp.opennlp.custom.validators;
+public class BratSubjectOfTrainingOrEvaluation extends SubjectOfTrainingOrEvaluation {
 
-import ai.idylnlp.model.ModelValidator;
-import ai.idylnlp.model.exceptions.ValidationException;
-
-public class TrueValidator implements ModelValidator {
-
-	@Override
-	public boolean validateVersion(String creatorVersion) {
-		return true;
+	public BratSubjectOfTrainingOrEvaluation(String inputFile) {
+		
+		super(inputFile);
+		
 	}
 
 }

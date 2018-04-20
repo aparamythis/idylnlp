@@ -58,6 +58,7 @@ import org.nd4j.linalg.lossfunctions.LossFunctions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import ai.idylnlp.model.nlp.annotation.AnnotationTypes;
 import ai.idylnlp.model.nlp.subjects.CoNLL2003SubjectOfTrainingOrEvaluation;
 import ai.idylnlp.model.nlp.subjects.IdylNLPSubjectOfTrainingOrEvaluation;
 import ai.idylnlp.model.nlp.subjects.OpenNLPSubjectOfTrainingOrEvaluation;
@@ -345,9 +346,9 @@ public class DeepLearningEntityModelOperations {
 		
 		final String trainingInputFile = definition.getTrainingData().getInputFile();
 		
-		if(definition.getTrainingData().getFormat().equalsIgnoreCase("idylnlp")) {			
+		if(definition.getTrainingData().getFormat().equalsIgnoreCase(AnnotationTypes.IDYLNLP.getName())) {			
 			return new IdylNLPSubjectOfTrainingOrEvaluation(trainingInputFile, definition.getTrainingData().getAnnotationsFile());
-		} else if(definition.getTrainingData().getFormat().equalsIgnoreCase("conll2003")) {
+		} else if(definition.getTrainingData().getFormat().equalsIgnoreCase(AnnotationTypes.CONLL2003.getName())) {
 			return new CoNLL2003SubjectOfTrainingOrEvaluation(trainingInputFile);
 		} else {
 			LOGGER.info("Defaulting to OpenNLP subject of training.");
@@ -360,9 +361,9 @@ public class DeepLearningEntityModelOperations {
 		
 		final String trainingInputFile = definition.getEvaluationData().getInputFile();
 		
-		if(definition.getEvaluationData().getFormat().equalsIgnoreCase("idylnlp")) {			
+		if(definition.getEvaluationData().getFormat().equalsIgnoreCase(AnnotationTypes.IDYLNLP.getName())) {			
 			return new IdylNLPSubjectOfTrainingOrEvaluation(trainingInputFile, definition.getTrainingData().getAnnotationsFile());
-		} else if(definition.getEvaluationData().getFormat().equalsIgnoreCase("conll2003")) {
+		} else if(definition.getEvaluationData().getFormat().equalsIgnoreCase(AnnotationTypes.CONLL2003.getName())) {
 			return new CoNLL2003SubjectOfTrainingOrEvaluation(trainingInputFile);
 		} else {
 			LOGGER.info("Defaulting to OpenNLP subject of training.");

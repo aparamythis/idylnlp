@@ -25,6 +25,7 @@ import java.util.Map;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
+import ai.idylnlp.model.nlp.annotation.AnnotationTypes;
 import ai.idylnlp.models.deeplearning.training.DeepLearningEntityModelOperations;
 import ai.idylnlp.models.deeplearning.training.model.DeepLearningTrainingDefinition;
 import ai.idylnlp.models.deeplearning.training.model.EarlyTermination;
@@ -109,8 +110,8 @@ public class DeepLearningTrainingDefinitionTest {
 		String wordVectorsFile = TRAINING_DATA_PATH + "/reuters-vectors.txt";
 
 		DeepLearningTrainingDefinition definition = new DeepLearningTrainingDefinition();
-		definition.setTrainingData(new TrainingData("conll2003", TRAINING_DATA_PATH + "/conll2003-eng.train", wordVectorsFile));
-		definition.setEvaluationData(new EvaluationData("conll2003", TRAINING_DATA_PATH + "/conll2003-eng.testa"));
+		definition.setTrainingData(new TrainingData(AnnotationTypes.CONLL2003.getName(), TRAINING_DATA_PATH + "/conll2003-eng.train", wordVectorsFile));
+		definition.setEvaluationData(new EvaluationData(AnnotationTypes.CONLL2003.getName(), TRAINING_DATA_PATH + "/conll2003-eng.testa"));
 		definition.setOutput(new Output(File.createTempFile("multilayernetwork", ".zip").getAbsolutePath(), "/tmp/stats.dl4j"));
 		definition.setEarlyTermination(new EarlyTermination(20, 180));
 		definition.setEntityType("person");
