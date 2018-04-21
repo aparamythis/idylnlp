@@ -49,7 +49,7 @@ public class OpenNLPLanguageDetector implements LanguageDetector {
 	
 	public OpenNLPLanguageDetector() throws IOException {
 
-		InputStream in = OpenNLPLanguageDetector.class.getResourceAsStream("langdetect-183.bin");
+		InputStream in = ClassLoader.getSystemResourceAsStream("langdetect-183.bin");
 		
 		LanguageDetectorModel m = new LanguageDetectorModel(in);
 		detector = new LanguageDetectorME(m);
