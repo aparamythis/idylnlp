@@ -31,6 +31,8 @@ import ai.idylnlp.model.exceptions.ValidationException;
 import ai.idylnlp.model.manifest.StandardModelManifest;
 import ai.idylnlp.opennlp.custom.encryption.OpenNLPEncryptionFactory;
 import ai.idylnlp.opennlp.custom.model.DictionaryModel;
+import ai.idylnlp.zoo.IdylNLPModelZoo;
+import ai.idylnlp.zoo.ModelZooClient;
 import opennlp.tools.cmdline.namefind.TokenNameFinderModelLoader;
 import opennlp.tools.lemmatizer.LemmatizerModel;
 import opennlp.tools.namefind.TokenNameFinderModel;
@@ -56,8 +58,9 @@ public abstract class ModelLoader<T extends BaseModel> {
 	private String modelDirectory;
 
 	private Class<T> typeParameterClass;
-
+	
 	private ModelValidator modelValidator;
+	private IdylNLPModelZoo idylNlpModelZoo;
 
 	public ModelLoader(ModelValidator modelValidator) {
 		this.modelValidator = modelValidator;
@@ -121,12 +124,25 @@ public abstract class ModelLoader<T extends BaseModel> {
 
 	private T loadModel(StandardModelManifest modelManifest) throws Exception {
 
-		String fullModelFileName = modelDirectory + modelManifest.getModelFileName();
+		final String fullModelFileName = modelDirectory + modelManifest.getModelFileName();
 
 		LOGGER.debug("Loading model from: " + fullModelFileName);
 
 		// Does this file exist?
-		File modelFile = new File(fullModelFileName);
+		final File modelFile = new File(fullModelFileName);
+		
+		if(!modelFile.exists()) {
+			
+			if(idylNlpModelZoo != null) {
+				
+				LOGGER.info("Attempting to download model {} from the Idyl NLP zoo.", modelManifest.getModelId());
+				
+				// Try to download the model from the zoo.
+				idylNlpModelZoo.downloadModel(modelManifest.getModelId(), modelFile);
+				
+			}
+			
+		}
 
 		// Model loading will always take a decent amount of time
 		// so milliseconds is a decent measure here.
@@ -259,6 +275,14 @@ public abstract class ModelLoader<T extends BaseModel> {
 		this.modelDirectory = modelDirectory;
 	}
 
+	/**
+	 * Sets the {@link IdylNLPModelZoo} client.
+	 * @param idylNLPModelZoo A {@link IdylNLPModelZoo client}.
+	 */
+	public void setIdylNLPModelZoo(IdylNLPModelZoo idylNLPModelZoo) {
+		this.idylNlpModelZoo = idylNLPModelZoo;
+	}
+	
 	/**
 	 * Gets the map of models to file names.
 	 * @return A map of models to file names.

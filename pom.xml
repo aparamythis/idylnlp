@@ -45,6 +45,7 @@
 		<module>idylnlp-pipeline</module>
 		<module>idylnlp-testing</module>
 		<module>idylnlp-training-definition</module>
+		<module>idylnlp-zoo-client</module>
 		<module>opennlp</module>
 	</modules>
 	<dependencyManagement>
