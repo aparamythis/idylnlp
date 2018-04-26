@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>ai.idylnlp</groupId>
 		<artifactId>idylnlp</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>1.0.0</version>
 	</parent>
 	<artifactId>idylnlp-pipeline</artifactId>
 	<name>idylnlp-pipeline</name>
