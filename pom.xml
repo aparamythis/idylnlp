@@ -6,6 +6,8 @@
 	<packaging>pom</packaging>
 	<version>1.0.0</version>
 	<name>idylnlp</name>
+	<description>NLP library for Java.</description>
+	<url>http://idylnlp.ai</url>
 	<scm>
 		<connection>scm:git:ssh://git@github.com:idylnlp/idylnlp.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com:idylnlp/idylnlp.git</developerConnection>
