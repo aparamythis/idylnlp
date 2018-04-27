@@ -10,6 +10,18 @@ Idyl NLP uses a combination of custom implementations and other open-source proj
 
 If you are looking for commercially supported NLP microservices look at the [NLP Building Blocks](http://www.mtnfog.com/nlp-building-blocks/). These applications are powered by Idyl NLP.
 
+## Usage
+
+Available in [Maven Central](https://search.maven.org/#search%7Cga%7C1%7Cg%3A"ai.idylnlp"):
+
+```
+<dependency>
+  <groupId>ai.idylnlp</groupId>
+  <artifactId>...</artifactId>
+  <version>1.0.0</version>
+</dependency>
+```
+
 ## Core NLP Capabilities
 
 Refer to the [sample projects](https://github.com/idylnlp/idylnlp-samples) for example implementations of the below capabilities. Some of the unit tests in this project will also provide examples.
