@@ -19,7 +19,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ai.idylnlp.opennlp.custom.modelloader.ModelLoader;
-
+import ai.idylnlp.zoo.IdylNLPModelZoo;
 import ai.idylnlp.model.ModelValidator;
 import ai.idylnlp.model.manifest.StandardModelManifest;
 import opennlp.tools.sentdetect.SentenceModel;
@@ -34,20 +34,40 @@ public class SentenceDetectorModelLoader extends ModelLoader<SentenceModel> {
 
 	private static final Logger LOGGER = LogManager.getLogger(SentenceDetectorModelLoader.class);
 	
-	private StandardModelManifest ModelManifest;
+	private StandardModelManifest modelManifest;
 	
 	/**
 	 * Create a new {@link SentenceDetectorModelLoader}.
+	 * @param modelValidator A {@link ModelValidator} to validate the model.
 	 * @param modelDirectory The full path to the directory containing the model.
-	 * @param ModelManifest The model's {@link StandardModelManifest}.
+	 * @param modelManifest The model's {@link StandardModelManifest}.
 	 */
-	public SentenceDetectorModelLoader(ModelValidator modelValidator, String modelDirectory, StandardModelManifest ModelManifest) {
+	public SentenceDetectorModelLoader(ModelValidator modelValidator, String modelDirectory, StandardModelManifest modelManifest) {
 		
 		super(modelValidator);
 		
 		super.setModelDirectory(modelDirectory);
 		
-		this.ModelManifest = ModelManifest;
+		this.modelManifest = modelManifest;
+		
+	}
+	
+	/**
+	 * Create a new {@link SentenceDetectorModelLoader}.
+	 * @param modelValidator A {@link ModelValidator} to validate the model.
+	 * @param modelDirectory The full path to the directory containing the model.
+	 * @param modelManifest The model's {@link StandardModelManifest}.
+	 * @param idylNlpModelZoo A {@link IdylNLPModelZoo} client.
+	 */
+	public SentenceDetectorModelLoader(ModelValidator modelValidator, String modelDirectory, StandardModelManifest modelManifest,
+			IdylNLPModelZoo idylNlpModelZoo) {
+		
+		super(modelValidator);
+		
+		super.setModelDirectory(modelDirectory);
+		super.setIdylNLPModelZoo(idylNlpModelZoo);
+		
+		this.modelManifest = modelManifest;
 		
 	}
 	
@@ -56,7 +76,7 @@ public class SentenceDetectorModelLoader extends ModelLoader<SentenceModel> {
 	 * @return The full path (directory and filename) of the model.
 	 */
 	public String getFullModelPath() {	
-		return super.getModelDirectory() + ModelManifest.getModelFileName();		
+		return super.getModelDirectory() + modelManifest.getModelFileName();		
 	}
 
 	/**
@@ -64,7 +84,7 @@ public class SentenceDetectorModelLoader extends ModelLoader<SentenceModel> {
 	 * @return The model's {@link StandardModelManifest}..
 	 */
 	public StandardModelManifest getModelManifest() {
-		return ModelManifest;
+		return modelManifest;
 	}
 	
 }

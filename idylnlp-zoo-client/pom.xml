@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>ai.idylnlp</groupId>
 		<artifactId>idylnlp</artifactId>
-		<version>1.1.0</version>
+		<version>1.1.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>idylnlp-zoo-client</artifactId>
 	<name>idylnlp-zoo-client</name>
