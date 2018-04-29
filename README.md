@@ -3,8 +3,8 @@
 |    | Links |
 | ------------- | ------------- |
 | Build Status  | [![Build Status](https://travis-ci.org/idylnlp/idylnlp.svg?branch=master)](https://travis-ci.org/idylnlp/idylnlp)  |
-| Current Release  | [![Release](https://img.shields.io/nexus/r/https/oss.sonatype.org/ai.idylnlp/idylnlp.svg)](Release)  |
-| Current Snapshots  | [![Snapshot](https://img.shields.io/nexus/s/https/oss.sonatype.org/ai.idylnlp/idylnlp.svg)](Snapshot)  |
+| Current Release  | [![Release](https://img.shields.io/nexus/r/https/oss.sonatype.org/ai.idylnlp/idylnlp.svg)](https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22ai.idylnlp%22)  |
+| Current Snapshots  | [![Snapshot](https://img.shields.io/nexus/s/https/oss.sonatype.org/ai.idylnlp/idylnlp.svg)](https://oss.sonatype.org/content/repositories/snapshots/ai/idylnlp/) |
 | Follow  | ![Follow](	https://img.shields.io/twitter/follow/mtnfog.svg?style=social&label=Follow)  |
 
 Idyl NLP is a natural language processing (NLP) framework released under the business-friendly Apache License, version 2.0. The framework features core NLP capabilities such as language detection, sentence extraction, tokenization, and named-entity extraction.
