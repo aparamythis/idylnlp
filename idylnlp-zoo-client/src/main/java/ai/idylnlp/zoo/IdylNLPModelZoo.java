@@ -17,10 +17,9 @@ package ai.idylnlp.zoo;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-
 import org.apache.commons.io.FileUtils;
 
+import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -39,7 +38,7 @@ public class IdylNLPModelZoo {
 	private String token;
 	
 	/**
-	 * Creates a new client using thd default Idyl NLP endpoint.
+	 * Creates a new client using the default Idyl NLP endpoint.
 	 * @param token The client token.
 	 */
 	public IdylNLPModelZoo(String token) {
@@ -81,8 +80,9 @@ public class IdylNLPModelZoo {
 	 */
 	public void downloadModel(String modelId, File destination) throws IOException {
 		
-		final String modelUrl = client.getModelUrl(token, modelId).execute().body();
-		FileUtils.copyURLToFile(new URL(modelUrl), destination);
+		final ResponseBody responseBody = client.getModelUrl(token, modelId).execute().body();
+		
+		FileUtils.copyInputStreamToFile(responseBody.byteStream(), destination);
 		
 	}
 	

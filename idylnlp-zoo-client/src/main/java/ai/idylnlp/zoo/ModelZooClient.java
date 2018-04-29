@@ -15,14 +15,17 @@
  ******************************************************************************/
 package ai.idylnlp.zoo;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Path;
+import retrofit2.http.Streaming;
 
 public interface ModelZooClient {
 
 	@GET("/model/{id}")
-    Call<String> getModelUrl(@Header("X-Token") String token, @Path("id") String modelId);
+	@Streaming
+    Call<ResponseBody> getModelUrl(@Header("X-Token") String token, @Path("id") String modelId);
 	
 }
