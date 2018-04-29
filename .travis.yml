@@ -5,7 +5,7 @@ before_install:
 install:
     mvn --settings .travis/settings.xml install -DskipTests=true -Dgpg.skip -Dmaven.javadoc.skip=true -B -V
 script:
-    mvn clean deploy --settings .travis/settings.xml -DskipTests=true -B -U -Prelease
+    mvn clean deploy --settings .travis/settings.xml -B -U -Prelease
 jdk:
   - oraclejdk8
 
