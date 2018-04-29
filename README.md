@@ -14,7 +14,7 @@ If you are looking for commercially supported NLP microservices look at the [NLP
 
 ## Usage
 
-[Releases](https://search.maven.org/#search%7Cga%7C1%7Cg%3A"ai.idylnlp") and [snapshots](https://oss.sonatype.org/content/repositories/snapshots/ai/idylnlp/) are available in Maven Central:
+[Release](https://search.maven.org/#search%7Cga%7C1%7Cg%3A"ai.idylnlp") and [snapshot](https://oss.sonatype.org/content/repositories/snapshots/ai/idylnlp/) dependencies are available:
 
 ```
 <dependency>
