@@ -4,6 +4,11 @@
 
 [![Javadocs](https://www.javadoc.io/badge/idylnlp.ai/idylnlp.svg)](https://www.javadoc.io/doc/idylnlp.ai/idylnlp)
 
+<a class="twitter-follow-button"
+  href="https://twitter.com/mtnfog"
+  data-size="large">
+Follow @mtnfog</a>
+
 Visit the Idyl NLP home page at [idylnlp.ai](http://www.idylnlp.ai).
 
 Idyl NLP is a natural language processing (NLP) framework released under the business-friendly Apache License, version 2.0. The framework features core NLP capabilities such as language detection, sentence extraction, tokenization, and named-entity extraction.
