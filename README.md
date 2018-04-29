@@ -1,21 +1,19 @@
 # Idyl NLP
 
-[![Build Status](https://travis-ci.org/idylnlp/idylnlp.svg?branch=master)](https://travis-ci.org/idylnlp/idylnlp)
-
-[![Javadocs](https://www.javadoc.io/badge/idylnlp.ai/idylnlp.svg)](https://www.javadoc.io/doc/idylnlp.ai/idylnlp)
-
-<a class="twitter-follow-button"
-  href="https://twitter.com/mtnfog"
-  data-size="large">
-Follow @mtnfog</a>
-
-Visit the Idyl NLP home page at [idylnlp.ai](http://www.idylnlp.ai).
+|    | Links |
+| ------------- | ------------- |
+| Build Status  | [![Build Status](https://travis-ci.org/idylnlp/idylnlp.svg?branch=master)](https://travis-ci.org/idylnlp/idylnlp)  |
+| Current Release  | [![Release](https://img.shields.io/nexus/r/https/oss.sonatype.org/ai.idylnlp/idylnlp.svg)](Release)  |
+| Current Snapshots  | [![Snapshot](https://img.shields.io/nexus/s/https/oss.sonatype.org/ai.idylnlp/idylnlp.svg)](Snapshot)  |
+| Follow  | ![Follow](	https://img.shields.io/twitter/follow/mtnfog.svg?style=social&label=Follow)  |
 
 Idyl NLP is a natural language processing (NLP) framework released under the business-friendly Apache License, version 2.0. The framework features core NLP capabilities such as language detection, sentence extraction, tokenization, and named-entity extraction.
 
 Idyl NLP uses a combination of custom implementations and other open-source projects to perform its tasks. In some cases there are multiple implementations available allowing a choice of which to use.  Idyl NLP stands on the shoulders of giants to provide a capable, flexible, and powerful NLP framework.
 
 If you are looking for commercially supported NLP microservices look at the [NLP Building Blocks](http://www.mtnfog.com/nlp-building-blocks/). These applications are powered by Idyl NLP.
+
+Visit the Idyl NLP home page at [idylnlp.ai](http://www.idylnlp.ai).
 
 ## Usage
 
