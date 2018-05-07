@@ -15,73 +15,47 @@
  ******************************************************************************/
 package ai.idylnlp.test.nlp.recognizer;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.Before;
 import org.junit.Test;
+
+import com.neovisionaries.i18n.LanguageCode;
 
 import ai.idylnlp.model.entity.Entity;
 import ai.idylnlp.model.exceptions.EntityFinderException;
 import ai.idylnlp.model.nlp.ner.EntityExtractionRequest;
 import ai.idylnlp.model.nlp.ner.EntityExtractionResponse;
 import ai.idylnlp.nlp.recognizer.DictionaryEntityRecognizer;
-import opennlp.tools.tokenize.SimpleTokenizer;
-import opennlp.tools.tokenize.Tokenizer;
 
 public class DictionaryEntityRecognizerTest {
 	
 	private static final Logger LOGGER = LogManager.getLogger(DictionaryEntityRecognizerTest.class);
 	
-	private static final String MTNFOG_EN_DICT_MODEL = "mtnfog-en-drug-dict-test.bin";
-	
-	private File tempDictionary;
-	
-	@Before
-	public void before() throws IOException {
-		
-	    tempDictionary = File.createTempFile("test-dictionary", ".dic");
-	    tempDictionary.deleteOnExit();
-
-	    List<String> lines = new ArrayList<String>();
-	    
-	    lines.add("# This is a comment.");
-	    lines.add("The Matrix");
-	    lines.add("The Matrix Reloaded");
-	    lines.add("Speed Racer");
-	    lines.add("Matrix");
-	    
-	    FileUtils.writeLines(tempDictionary, lines);
-		
-	}
-	
 	@Test
-	public void test() throws EntityFinderException, IOException {
+	public void extractEntitiesTest() throws EntityFinderException, IOException {
 
-		Tokenizer tokenizer = SimpleTokenizer.INSTANCE;
+		Set<String> dictionary = new LinkedHashSet<>();
+		dictionary.add("united states".toLowerCase());
+		dictionary.add("George Washington".toLowerCase());
 		
-		DictionaryEntityRecognizer recognizer = new DictionaryEntityRecognizer(tempDictionary, "city", tokenizer);
+		DictionaryEntityRecognizer recognizer = new DictionaryEntityRecognizer(LanguageCode.en, dictionary, "place", 0.1);
 		
-		String input = "The Matrix was a good movie.";		
-		String[] text = input.split(" ");
+		String[] tokens = {"george", "washington", "was", "president", "of", "the", "United", "states"};
 		
-		EntityExtractionRequest request = new EntityExtractionRequest(text);
+		EntityExtractionRequest request = new EntityExtractionRequest(tokens);
 		
 		EntityExtractionResponse response = recognizer.extractEntities(request);
 		
-		assertTrue(response.getEntities().size() > 0);
+		assertEquals(2, response.getEntities().size());
 		
-		for(Entity entity : response.getEntities()) {
-			
-			LOGGER.info("Entity: " + entity.getText());
-			
+		for(Entity entity : response.getEntities()) {			
+			LOGGER.info("Entity: " + entity.toString());			
 		}
 		
 	}

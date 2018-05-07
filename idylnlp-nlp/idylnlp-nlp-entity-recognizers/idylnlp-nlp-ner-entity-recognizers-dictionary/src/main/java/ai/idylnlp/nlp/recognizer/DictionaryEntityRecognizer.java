@@ -17,12 +17,13 @@ package ai.idylnlp.nlp.recognizer;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -31,14 +32,11 @@ import ai.idylnlp.model.exceptions.EntityFinderException;
 import ai.idylnlp.model.nlp.ner.EntityExtractionRequest;
 import ai.idylnlp.model.nlp.ner.EntityExtractionResponse;
 import ai.idylnlp.model.nlp.ner.EntityRecognizer;
+import ai.idylnlp.nlp.utils.ngrams.NgramUtils;
 
+import com.google.common.hash.BloomFilter;
+import com.google.common.hash.Funnels;
 import com.neovisionaries.i18n.LanguageCode;
-
-import opennlp.tools.dictionary.Dictionary;
-import opennlp.tools.namefind.DictionaryNameFinder;
-import opennlp.tools.tokenize.Tokenizer;
-import opennlp.tools.util.Span;
-import opennlp.tools.util.StringList;
 
 /**
  * Implementation of {@link EntityRecognizer} that uses a dictionary.
@@ -50,22 +48,24 @@ public class DictionaryEntityRecognizer implements EntityRecognizer {
 
 	private static final Logger LOGGER = LogManager.getLogger(DictionaryEntityRecognizer.class);
 	
-	private Dictionary dictionary;
+	private LanguageCode languageCode;
+	private Set<String> dictionary;
 	private String type;
-	private Tokenizer tokenizer;
+	private double fpp = 0.1;
 	
 	/**
 	 * Creates a new dictionary entity recognizer.
-	 * @param dictionary The {@link Dictionary dictionary}.
+	 * @param dictionary A list of strings, one per line, for the dictionary.
 	 * @param type The type of entity being extracted. There is a one-to-one relationship
 	 * between dictionary and entity type.
-	 * @param tokenizer The {@link Tokenizer}.
+	 * @param fpp The desired false positive probability. Use this to tune the performance.
 	 */
-	public DictionaryEntityRecognizer(Dictionary dictionary, String type, Tokenizer tokenizer) {
+	public DictionaryEntityRecognizer(LanguageCode languageCode, Set<String> dictionary, String type, double fpp) {
 		
+		this.languageCode = languageCode;
 		this.dictionary = dictionary;
 		this.type = type;
-		this.tokenizer = tokenizer;
+		this.fpp = fpp;
 		
 	}
 	
@@ -74,93 +74,78 @@ public class DictionaryEntityRecognizer implements EntityRecognizer {
 	 * @param dictionaryFile The {@link File file} defining the dictionary.
 	 * @param type The type of entity being extracted. There is a one-to-one relationship
 	 * between dictionary and entity type.
-	 * @param tokenizer The {@link Tokenizer}.
+	 * @param fpp The desired false positive probability. Use this to tune the performance.
 	 * @throws IOException Thrown if the dictionary file cannot be accessed.
 	 */
-	public DictionaryEntityRecognizer(File dictionaryFile, String type, Tokenizer tokenizer) throws IOException {
+	public DictionaryEntityRecognizer(LanguageCode languageCode, File dictionaryFile, String type, double fpp) throws IOException {
 
+		this.languageCode = languageCode;
 		this.type = type;
-		this.dictionary = new Dictionary();
-		this.tokenizer = tokenizer;
+		this.fpp = fpp;
 		
-		// Read in the dictionary.		
-		List<String> lines = FileUtils.readLines(dictionaryFile);
-		
-		for(String line : lines) {
-			
-			// Ignore commented lines.
-			if(!line.startsWith("#")) {
-			
-				String entry[] = line.split("=");
-		
-				dictionary.put(new StringList(entry));
-			
-			}
-			
+		for(String line : FileUtils.readLines(dictionaryFile)) {
+			dictionary.add(line.toLowerCase());
 		}
 		
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public EntityExtractionResponse extractEntities(EntityExtractionRequest request) throws EntityFinderException {
 
-		LOGGER.trace("Finding entities with the dictionary entity recognizer.");
-		
-		Set<Entity> entities = new LinkedHashSet<Entity>();
+		final Set<Entity> entities = new LinkedHashSet<Entity>();
 		
 		long startTime = System.currentTimeMillis();
 		
-		try {
-
-			final String text = StringUtils.join(request.getText(), " ");
-			
-			// tokenize the text into the required OpenNLP format 
-            String[] tokens = tokenizer.tokenize(text); 
-            
-            //the values used in these Spans are string character offsets of each token from the sentence beginning 
-            Span[] tokenPositionsWithinSentence = tokenizer.tokenizePos(text); 
-            
-            // find the location names in the tokenized text 
-            // the values used in these Spans are NOT string character offsets, they are indices into the 'tokens' array
-            DictionaryNameFinder dictionaryNER = new DictionaryNameFinder(dictionary, type); 
-            Span names[] = dictionaryNER.find(tokens);
-            
-            //for each name that got found, create our corresponding occurrence 
-            for (Span name : names) { 
- 
-                //find offsets relative to the start of the sentence 
-                int beginningOfFirstWord = tokenPositionsWithinSentence[name.getStart()].getStart();
-                
-                // -1 because the high end of a Span is noninclusive 
-                int endOfLastWord = tokenPositionsWithinSentence[name.getEnd() - 1].getEnd(); 
- 
-                //look back into the original input string to figure out what the text is that I got a hit on 
-                String nameInDocument = text.substring(beginningOfFirstWord, endOfLastWord);                  
-                
-                // Create a new entity object.
-				Entity entity = new Entity(nameInDocument, 100.0, type, LanguageCode.undefined.getAlpha3().toString());
-				entity.setSpan(new ai.idylnlp.model.entity.Span(name.getStart(), name.getEnd()));
-				entity.setContext(request.getContext());
-				entity.setExtractionDate(System.currentTimeMillis());
-				
-				LOGGER.debug("Found entity with text: {}", nameInDocument);
-				
-				// Add the entity to the list.
-				entities.add(entity);
-				
-				LOGGER.trace("Found entity [{}] as a {} with span {}.", nameInDocument, type, name.toString());
-
-            }  
-			
-			long extractionTime = (System.currentTimeMillis() - startTime);
-						
-			EntityExtractionResponse response = new EntityExtractionResponse(entities, extractionTime, true);
-			
-			return response;
+		final String[] tokens = request.getText();
 		
+		try {
+            
+			final BloomFilter<String> filter = BloomFilter.create(
+					Funnels.stringFunnel(Charset.defaultCharset()), dictionary.size(), fpp);
+
+			for(String entry : dictionary) {
+				filter.put(entry.toLowerCase());
+			}
+			
+			// Break the tokens into n-grams because some dictionary entries
+			// may be more than one token.
+			final String[] ngrams = NgramUtils.getNgrams(tokens);
+			
+			for(String ngram : ngrams) {
+
+				boolean mightContain = filter.mightContain(ngram.toLowerCase());
+				
+				if(mightContain) {
+					
+					// Make sure it does exist in the dictionary.
+					boolean contains = dictionary.contains(ngram.toLowerCase());
+					
+					if(contains) {
+						
+						// Find the span for this entity.
+						String[] d = ngram.split(" ");
+						int start = Collections.indexOfSubList(Arrays.asList(ngrams), Arrays.asList(d));
+						
+						// Create a new entity object.
+						final Entity entity = new Entity(ngram, 100.0, type, languageCode.getAlpha3().toString());
+						entity.setSpan(new ai.idylnlp.model.entity.Span(start, start + d.length - 1));
+						entity.setContext(request.getContext());
+						entity.setExtractionDate(System.currentTimeMillis());
+						
+						LOGGER.debug("Found entity with text: {}", ngram);
+						
+						entities.add(entity);
+
+					}
+					
+				}
+			
+			}
+			
+			final long extractionTime = (System.currentTimeMillis() - startTime);
+						
+			return new EntityExtractionResponse(entities, extractionTime, true);
+			
 		} catch (Exception ex) {
 			
 			LOGGER.error("Unable to find entities with the DictionaryEntityRecognizer.", ex);

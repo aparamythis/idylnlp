@@ -30,7 +30,7 @@ public class NgramUtilsTest {
 	private static final Logger LOGGER = LogManager.getLogger(NgramUtilsTest.class);
 
 	@Test
-	public void test1() {
+	public void getNgrams() {
 		
 		String[] tokens = {"George", "Washington", "was", "president"};
 		
@@ -45,6 +45,21 @@ public class NgramUtilsTest {
 		assertTrue(ArrayUtils.contains(ngrams, "George Washington"));
 		assertTrue(ArrayUtils.contains(ngrams, "Washington was"));
 		assertTrue(ArrayUtils.contains(ngrams, "was president"));
+
+	}
+	
+	@Test
+	public void getAllNgrams() {
+		
+		String[] tokens = {"George", "Washington", "was", "president"};
+		
+		String[] ngrams = NgramUtils.getNgrams(tokens);
+		
+		for(String ngram : ngrams) {
+			LOGGER.info(ngram);
+		}
+		
+		assertEquals(10, ngrams.length);
 
 	}
 	

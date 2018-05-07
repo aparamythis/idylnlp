@@ -58,4 +58,35 @@ public class NgramUtils {
 		
 	}
 	
+	/**
+	 * Gets all n-grams for a given set of tokens.
+	 * @param tokens The tokens.
+	 * @return All n-grams for a given set of tokens.
+	 */
+	public static String[] getNgrams(String[] tokens) {
+	    
+		final List<String> ngrams = new LinkedList<>();
+		
+		for(int len = 1; len <= tokens.length; len++) {
+		
+		    for(int i = 0; i < tokens.length - len + 1; i++) {
+		      
+		    	StringBuilder sb = new StringBuilder();
+		       
+		       for(int k = 0; k < len; k++) {
+		           if(k > 0) sb.append(' ');
+		           sb.append(tokens[i+k]);
+		       }
+		       
+		       ngrams.add(sb.toString());
+		       
+	    }
+	    
+		}
+	    
+	    final String[] n = new String[ngrams.size()];
+	    return ngrams.toArray(n);
+		
+	}
+	
 }
