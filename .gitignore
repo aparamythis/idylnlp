@@ -12,7 +12,7 @@ dependency-reduced-pom.xml
 .cache-tests
 *.log
 *.dl4j
-
+**/package-info.java
 en-pos-maxent.bin
 en-sent.bin
 langdetect-183.bin
