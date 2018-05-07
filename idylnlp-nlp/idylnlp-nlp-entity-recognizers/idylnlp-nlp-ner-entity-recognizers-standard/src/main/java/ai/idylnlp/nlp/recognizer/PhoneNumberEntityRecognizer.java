@@ -27,9 +27,9 @@ import org.apache.logging.log4j.Logger;
 import com.google.i18n.phonenumbers.PhoneNumberMatch;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import ai.idylnlp.model.entity.Entity;
-import ai.idylnlp.model.nlp.EntityExtractionRequest;
-import ai.idylnlp.model.nlp.EntityExtractionResponse;
-import ai.idylnlp.model.nlp.EntityRecognizer;
+import ai.idylnlp.model.nlp.ner.EntityExtractionRequest;
+import ai.idylnlp.model.nlp.ner.EntityExtractionResponse;
+import ai.idylnlp.model.nlp.ner.EntityRecognizer;
 
 public class PhoneNumberEntityRecognizer implements EntityRecognizer {
 

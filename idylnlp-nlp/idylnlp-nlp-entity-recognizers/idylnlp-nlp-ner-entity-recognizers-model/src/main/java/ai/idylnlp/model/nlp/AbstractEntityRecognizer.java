@@ -33,6 +33,8 @@ import ai.idylnlp.model.exceptions.EntityFinderException;
 import ai.idylnlp.model.manifest.ModelManifest;
 
 import ai.idylnlp.model.nlp.configuration.AbstractEntityRecognizerConfiguration;
+import ai.idylnlp.model.nlp.ner.EntityExtractionRequest;
+import ai.idylnlp.model.nlp.ner.EntityRecognizer;
 import ai.idylnlp.model.nlp.sentiment.Sentiment;
 import ai.idylnlp.model.nlp.sentiment.SentimentAnalysisException;
 import ai.idylnlp.model.nlp.sentiment.SentimentAnalysisRequest;

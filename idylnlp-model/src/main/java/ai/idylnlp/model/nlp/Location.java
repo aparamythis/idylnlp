@@ -15,6 +15,8 @@
  ******************************************************************************/
 package ai.idylnlp.model.nlp;
 
+import ai.idylnlp.model.nlp.ner.EntityExtractionRequest;
+
 /**
  * A geographic location. Used by {@link EntityExtractionRequest}
  * to add location to extracted entities.

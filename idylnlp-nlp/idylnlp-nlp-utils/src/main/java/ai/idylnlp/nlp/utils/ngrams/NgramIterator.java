@@ -25,25 +25,22 @@ import java.util.Iterator;
  */
 public class NgramIterator implements Iterator<String> {
 
-	// See: http://stackoverflow.com/a/3656824
-	
-	private String[] words;
+	private String[] tokens;
 	private int pos = 0, n;
 
-	public NgramIterator(String str, int n, boolean removePunctuation) {
-		
-		if(removePunctuation) {
-			str = str.replaceAll("\\p{P}", "");
-		}
-		
+	/**
+	 * Creates a new N-gram iterator.
+	 * @param tokens The tokens.
+	 * @param n The size of the n-grams.
+	 */
+	public NgramIterator(String[] tokens, int n) {
+		this.tokens = tokens;
 		this.n = n;
-		words = str.split(" ");
-		
 	}
 
 	@Override
 	public boolean hasNext() {
-		return pos < words.length - n + 1;
+		return pos < tokens.length - n + 1;
 	}
 
 	@Override
@@ -52,7 +49,7 @@ public class NgramIterator implements Iterator<String> {
 		StringBuilder sb = new StringBuilder();
 	
 		for (int i = pos; i < pos + n; i++) {
-			sb.append((i > pos ? " " : "") + words[i]);
+			sb.append((i > pos ? " " : "") + tokens[i]);
 		}
 		
 		pos++;

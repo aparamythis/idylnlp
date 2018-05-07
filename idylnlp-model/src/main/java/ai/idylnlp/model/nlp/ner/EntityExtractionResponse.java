@@ -13,17 +13,18 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-package ai.idylnlp.model.nlp;
+package ai.idylnlp.model.nlp.ner;
 
 import java.util.Set;
 
 import ai.idylnlp.model.entity.Entity;
+import ai.idylnlp.model.nlp.pipeline.PipelineResponse;
 
 /**
  * Response to an entity extraction request.
  * @author Mountain Fog, Inc.
  */
-public class EntityExtractionResponse {
+public class EntityExtractionResponse extends PipelineResponse {
 
 	private Set<Entity> entities;
 	private long extractionTime;

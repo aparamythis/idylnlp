@@ -15,8 +15,8 @@
  ******************************************************************************/
 package ai.idylnlp.nlp.utils.ngrams;
 
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Utility functions for N-Grams.
@@ -32,35 +32,29 @@ public class NgramUtils {
 	
 	/**
 	 * Returns the N-Grams for a string of a given length.
-	 * @param s The string input.
+	 * @param tokens An array of tokens.
 	 * @param len The length of the n-grams.
 	 * @return A collection of N-Grams for the input string.
 	 */
-	public static Collection<String> getNgrams(String s, int len, boolean removePunctuation) {
+	public static String[] getNgrams(String[] tokens, int len) {
+		    
+		final List<String> ngrams = new LinkedList<>();
 		
-		if(removePunctuation) {
-			s = s.replaceAll("\\p{P}", "");
-		}
-		
-		// See: http://stackoverflow.com/a/3656855
-		
-		// TODO: Any benefit to using a whitespace tokenizer instead of splitting on a space?
-	    String[] parts = s.split(" ");
-	    String[] result = new String[parts.length - len + 1];
-	    
-	    for(int i = 0; i < parts.length - len + 1; i++) {
+	    for(int i = 0; i < tokens.length - len + 1; i++) {
 	      
 	    	StringBuilder sb = new StringBuilder();
 	       
 	       for(int k = 0; k < len; k++) {
 	           if(k > 0) sb.append(' ');
-	           sb.append(parts[i+k]);
+	           sb.append(tokens[i+k]);
 	       }
 	       
-	       result[i] = sb.toString();
+	       ngrams.add(sb.toString());
+	       
 	    }
 	    
-	    return Arrays.asList(result);
+	    final String[] n = new String[ngrams.size()];
+	    return ngrams.toArray(n);
 		
 	}
 	

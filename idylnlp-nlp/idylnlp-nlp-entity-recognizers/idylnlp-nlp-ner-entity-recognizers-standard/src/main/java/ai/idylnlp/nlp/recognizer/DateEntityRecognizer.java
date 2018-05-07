@@ -28,9 +28,9 @@ import com.joestelmach.natty.DateGroup;
 import com.joestelmach.natty.Parser;
 import ai.idylnlp.model.entity.Entity;
 import ai.idylnlp.model.exceptions.EntityFinderException;
-import ai.idylnlp.model.nlp.EntityExtractionRequest;
-import ai.idylnlp.model.nlp.EntityExtractionResponse;
-import ai.idylnlp.model.nlp.EntityRecognizer;
+import ai.idylnlp.model.nlp.ner.EntityExtractionRequest;
+import ai.idylnlp.model.nlp.ner.EntityExtractionResponse;
+import ai.idylnlp.model.nlp.ner.EntityRecognizer;
 import ai.idylnlp.nlp.utils.SpanUtils;
 import com.neovisionaries.i18n.LanguageCode;
 

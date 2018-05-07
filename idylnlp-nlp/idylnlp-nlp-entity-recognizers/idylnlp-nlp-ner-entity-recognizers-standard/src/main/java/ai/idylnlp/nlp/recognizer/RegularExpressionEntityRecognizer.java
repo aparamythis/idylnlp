@@ -25,9 +25,10 @@ import org.apache.logging.log4j.Logger;
 
 import ai.idylnlp.model.entity.Entity;
 import ai.idylnlp.model.exceptions.EntityFinderException;
-import ai.idylnlp.model.nlp.EntityExtractionRequest;
-import ai.idylnlp.model.nlp.EntityExtractionResponse;
-import ai.idylnlp.model.nlp.EntityRecognizer;
+import ai.idylnlp.model.nlp.ner.EntityExtractionRequest;
+import ai.idylnlp.model.nlp.ner.EntityExtractionResponse;
+import ai.idylnlp.model.nlp.ner.EntityRecognizer;
+
 import com.neovisionaries.i18n.LanguageCode;
 
 import opennlp.tools.namefind.RegexNameFinder;

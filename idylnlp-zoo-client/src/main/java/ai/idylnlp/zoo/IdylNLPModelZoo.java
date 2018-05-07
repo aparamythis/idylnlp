@@ -17,8 +17,13 @@ package ai.idylnlp.zoo;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+
 import org.apache.commons.io.FileUtils;
 
+import com.neovisionaries.i18n.LanguageCode;
+
+import ai.idylnlp.zoo.model.Model;
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -83,6 +88,18 @@ public class IdylNLPModelZoo {
 		final ResponseBody responseBody = client.getModelUrl(token, modelId).execute().body();
 		
 		FileUtils.copyInputStreamToFile(responseBody.byteStream(), destination);
+		
+	}
+	
+	/**
+	 * Finds all available models for a given language.
+	 * @param language The language.
+	 * @return
+	 * @throws IOException
+	 */
+	public List<Model> getModelsByLanguage(LanguageCode languageCode) throws IOException {
+		
+		return client.getModelsForLanguage(token, languageCode.getAlpha3().toString().toLowerCase()).execute().body();
 		
 	}
 	

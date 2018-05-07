@@ -20,13 +20,13 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
-import ai.idylnlp.opennlp.custom.utils.SpansToSpans;
 import com.neovisionaries.i18n.LanguageCode;
 
 import ai.idylnlp.model.exceptions.ModelLoaderException;
 import ai.idylnlp.model.nlp.Span;
 import ai.idylnlp.model.nlp.Stemmer;
 import ai.idylnlp.model.nlp.Tokenizer;
+import ai.idylnlp.opennlp.custom.utils.SpansToSpans;
 import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
 

@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-package ai.idylnlp.model.nlp;
+package ai.idylnlp.model.nlp.ner;
 
 import ai.idylnlp.model.exceptions.EntityFinderException;
 import ai.idylnlp.model.exceptions.ModelLoaderException;

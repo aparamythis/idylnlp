@@ -34,9 +34,9 @@ public class NgramIteratorTest {
 	@Test
 	public void test1() {
 		
-		final String input = "George Washington was president.";
+		String[] tokens = {"George", "Washington", "was", "president"};
 		
-		NgramIterator i = new NgramIterator(input, 2, true);
+		NgramIterator i = new NgramIterator(tokens, 2);
 		
 		Collection<String> ngrams = new LinkedList<String>();
 		

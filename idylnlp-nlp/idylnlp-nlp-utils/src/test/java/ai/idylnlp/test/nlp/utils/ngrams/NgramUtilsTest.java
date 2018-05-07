@@ -18,8 +18,7 @@ package ai.idylnlp.test.nlp.utils.ngrams;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Collection;
-
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Test;
@@ -33,18 +32,20 @@ public class NgramUtilsTest {
 	@Test
 	public void test1() {
 		
-		Collection<String> ngrams = NgramUtils.getNgrams("George Washington was president.", 2, true);
+		String[] tokens = {"George", "Washington", "was", "president"};
+		
+		String[] ngrams = NgramUtils.getNgrams(tokens, 2);
 		
 		for(String ngram : ngrams) {
 			LOGGER.info(ngram);
 		}
 		
-		assertEquals(3, ngrams.size());
+		assertEquals(3, ngrams.length);
 		
-		assertTrue(ngrams.contains("George Washington"));
-		assertTrue(ngrams.contains("Washington was"));
-		assertTrue(ngrams.contains("was president"));
-		
+		assertTrue(ArrayUtils.contains(ngrams, "George Washington"));
+		assertTrue(ArrayUtils.contains(ngrams, "Washington was"));
+		assertTrue(ArrayUtils.contains(ngrams, "was president"));
+
 	}
 	
 }

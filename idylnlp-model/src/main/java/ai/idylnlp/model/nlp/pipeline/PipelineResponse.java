@@ -13,27 +13,8 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-package ai.idylnlp.zoo;
+package ai.idylnlp.model.nlp.pipeline;
 
-import java.util.List;
+public abstract class PipelineResponse {
 
-import ai.idylnlp.zoo.model.Model;
-
-import okhttp3.ResponseBody;
-
-import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.Header;
-import retrofit2.http.Path;
-import retrofit2.http.Streaming;
-
-public interface ModelZooClient {
-
-	@GET("/model/{id}")
-	@Streaming
-    Call<ResponseBody> getModelUrl(@Header("X-Token") String token, @Path("id") String modelId);
-	
-	@GET("/models/{language}")
-    Call<List<Model>> getModelsForLanguage(@Header("X-Token") String token, @Path("language") String language);
-	
 }

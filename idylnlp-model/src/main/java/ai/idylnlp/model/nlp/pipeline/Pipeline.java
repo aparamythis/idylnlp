@@ -15,14 +15,14 @@
  ******************************************************************************/
 package ai.idylnlp.model.nlp.pipeline;
 
-import ai.idylnlp.model.nlp.EntityExtractionRequest;
-import ai.idylnlp.model.nlp.EntityExtractionResponse;
-
 @FunctionalInterface
-public interface Pipeline {
-	
-	public static final String DEFAULT_PIPELINE_NAME = "default";
+public interface Pipeline<T extends PipelineResponse> {
 
-	public EntityExtractionResponse run(EntityExtractionRequest request);
+	/**
+	 * Execute the pipeline.
+	 * @param request The input to the pipeline.
+	 * @return The response from the pipeline.
+	 */
+	T run(String text);
 	
 }

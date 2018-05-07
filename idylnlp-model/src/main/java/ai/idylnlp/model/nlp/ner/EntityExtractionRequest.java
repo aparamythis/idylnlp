@@ -13,19 +13,24 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-package ai.idylnlp.model.nlp;
+package ai.idylnlp.model.nlp.ner;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.neovisionaries.i18n.LanguageCode;
 
+import ai.idylnlp.model.nlp.DuplicateEntityStrategy;
+import ai.idylnlp.model.nlp.EntityOrder;
+import ai.idylnlp.model.nlp.Location;
+import ai.idylnlp.model.nlp.pipeline.PipelineRequest;
+
 /**
  * Request to extract entities from text.
  * 
  * @author Mountain Fog, Inc.
  */
-public class EntityExtractionRequest {
+public class EntityExtractionRequest extends PipelineRequest {
 
 	private String[] text;
 	private int confidenceThreshold = 0;

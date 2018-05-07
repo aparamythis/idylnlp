@@ -1,0 +1,10 @@
+# person model manifest
+# Copyright 2018 Mountain Fog, Inc.
+# Contact support@mtnfog.com or visit www.mtnfog.com for assistance.
+model.type=person
+model.filename=mtnfog-eng-person-base.bin
+model.version=1.0
+language.code=en
+license.key=mtnfog:6d7fdea8c5af51357d738dd8ce900e582bee7cc255d98547efdd75b1c6b583a5ad575a3979a104ce9873ea42759d18faa8ca7d013847cbdfe144ea36f69b43a4
+encryption.key=idylami589012347
+model.id=9b94762e-1470-11e6-a148-3e1d05defe78

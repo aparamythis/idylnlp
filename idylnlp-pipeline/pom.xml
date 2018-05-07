@@ -20,6 +20,31 @@
 			<artifactId>idylnlp-model</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+				<dependency>
+			<groupId>ai.idylnlp</groupId>
+			<artifactId>idylnlp-nlp-entity-recognizers-standard</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ai.idylnlp</groupId>
+			<artifactId>idylnlp-nlp-entity-recognizers-opennlp</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ai.idylnlp</groupId>
+			<artifactId>idylnlp-nlp-entity-recognizers-deeplearning</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ai.idylnlp</groupId>
+			<artifactId>idylnlp-models-loaders-local</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ai.idylnlp</groupId>
+			<artifactId>idylnlp-nlp-tokenizers</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>ai.idylnlp</groupId>
 			<artifactId>idylnlp-nlp-sentence-detection</artifactId>
@@ -32,30 +57,6 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>ai.idylnlp</groupId>
-			<artifactId>idylnlp-nlp-entity-recognizers-standard</artifactId>
-			<version>${project.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>ai.idylnlp</groupId>
-			<artifactId>idylnlp-nlp-entity-recognizers-opennlp</artifactId>
-			<version>${project.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>ai.idylnlp</groupId>
-			<artifactId>idylnlp-nlp-entity-recognizers-deeplearning</artifactId>
-			<version>${project.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>ai.idylnlp</groupId>
-			<artifactId>idylnlp-models-loaders-local</artifactId>
-			<version>${project.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

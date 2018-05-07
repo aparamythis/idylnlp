@@ -13,27 +13,54 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-package ai.idylnlp.zoo;
+package ai.idylnlp.zoo.model;
 
-import java.util.List;
+public class Model {
 
-import ai.idylnlp.zoo.model.Model;
-
-import okhttp3.ResponseBody;
-
-import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.Header;
-import retrofit2.http.Path;
-import retrofit2.http.Streaming;
-
-public interface ModelZooClient {
-
-	@GET("/model/{id}")
-	@Streaming
-    Call<ResponseBody> getModelUrl(@Header("X-Token") String token, @Path("id") String modelId);
+	private String id;
+	private String url;
+	private String language;
+	private String type;
+	private String version;
 	
-	@GET("/models/{language}")
-    Call<List<Model>> getModelsForLanguage(@Header("X-Token") String token, @Path("language") String language);
+	public String getId() {
+		return id;
+	}
+	
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
 	
 }

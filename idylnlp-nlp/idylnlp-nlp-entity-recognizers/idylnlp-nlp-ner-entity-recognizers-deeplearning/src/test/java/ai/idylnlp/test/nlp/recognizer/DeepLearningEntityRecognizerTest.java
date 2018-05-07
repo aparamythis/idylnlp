@@ -30,8 +30,9 @@ import org.mockito.Mockito;
 import ai.idylnlp.model.entity.Entity;
 import ai.idylnlp.model.ModelValidator;
 import ai.idylnlp.model.manifest.SecondGenModelManifest;
-import ai.idylnlp.model.nlp.EntityExtractionRequest;
-import ai.idylnlp.model.nlp.EntityExtractionResponse;
+import ai.idylnlp.model.nlp.ner.EntityExtractionRequest;
+import ai.idylnlp.model.nlp.ner.EntityExtractionResponse;
+
 import com.neovisionaries.i18n.LanguageCode;
 
 import ai.idylnlp.nlp.recognizer.DeepLearningEntityRecognizer;

@@ -16,6 +16,24 @@ If you are looking for commercially supported NLP microservices look at the [NLP
 
 Visit the Idyl NLP home page at [idylnlp.ai](http://www.idylnlp.ai).
 
+### Idyl NLP Capabilities
+
+Refer to the [sample projects](https://github.com/idylnlp/idylnlp-samples) for example implementations of the below capabilities. Some of the unit tests in this project will also provide examples.
+
+* Language Detection
+* Sentence Extraction
+* Tokenization
+* Named-Entity Extraction (supports neural network models on CPU/GPU)
+* Document Classification (supports neural network models on CPU/GPU)
+
+All of these core capabilities with the exception of language detection can utilize custom trained models. The ability to train and evaluate trained models is available. Named-entity extraction and document classification support neural network models as well as maximum entropy and perceptron-based models.
+
+### Related Projects
+
+* [idylnlp-nifi](https://github.com/idylnlp/idylnlp-nifi) provides Apache NiFi processors using Idyl NLP for NLP tasks.
+* [idylnlp-deeplearning4j](https://github.com/idylnlp/idylnlp-deeplearning4j) allows for using Idyl NLP within DeepLearning4j projects.
+* [idylnlp-standford-core-nlp](https://github.com/idylnlp/idylnlp-stanford-core-nlp) provides wrapper implementations to use [Stanford Core NLP](https://github.com/stanfordnlp/CoreNLP) within Idyl NLP.
+
 ## Usage
 
 [Release](https://search.maven.org/#search%7Cga%7C1%7Cg%3A"ai.idylnlp") and [snapshot](https://oss.sonatype.org/content/repositories/snapshots/ai/idylnlp/) dependencies are available:
@@ -28,23 +46,28 @@ Visit the Idyl NLP home page at [idylnlp.ai](http://www.idylnlp.ai).
 </dependency>
 ```
 
-## Core NLP Capabilities
+### Simplified NER Pipeline
 
-Refer to the [sample projects](https://github.com/idylnlp/idylnlp-samples) for example implementations of the below capabilities. Some of the unit tests in this project will also provide examples.
+An example to quickly make a named-entity extraction pipeline to extract person entities from English natural language text:
 
-* Language Detection
-* Sentence Extraction
-* Tokenization
-* Named-Entity Extraction (supports neural network models on CPU/GPU)
-* Document Classification (supports neural network models on CPU/GPU)
+```
+NerPipelineBuilder builder = new NerPipeline.NerPipelineBuilder();
+NerPipeline pipeline = builder.build(LanguageCode.en);
 
-All of these core capabilities with the exception of language detection can utilize custom trained models. The ability to train and evaluate trained models is available. Named-entity extraction and document classification support neural network models as well as maximum entropy and perceptron-based models.
+EntityExtractionResponse response = pipeline.run("George Washington was president.");
 
-## Applications
+for(Entity e : response.getEntities()) {
+   System.out.println(e.toString());
+}
+```
 
-* Apache NiFi processors using Idyl NLP for NLP tasks are available in the [idylnlp-nifi](https://github.com/idylnlp/idylnlp-nifi) project.
+This code outputs:
 
-## Building
+```
+Text: George Washington; Confidence: 0.96; Type: person; Language Code: eng; Span: [0..2);
+```
+
+## Building Idyl NLP
 
 Idyl NLP requires Java 8. To build, simply:
 
@@ -52,7 +75,7 @@ Idyl NLP requires Java 8. To build, simply:
 mvn clean install
 ```
 
-### Tests
+### Testing
 
 Unit tests are included. Some tests require data that cannot be made publicly available at this time due to either size constraints or licensing. These tests are categorized as `ExternalData` and are skipped during a regular build. We execute these tests using an in-house build job executed after each commit. We are working to find a suitable location to host the large test data to make it available to everyone.
 

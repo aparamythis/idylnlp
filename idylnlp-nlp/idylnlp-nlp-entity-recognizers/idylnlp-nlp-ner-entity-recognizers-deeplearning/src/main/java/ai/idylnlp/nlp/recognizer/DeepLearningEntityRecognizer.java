@@ -39,10 +39,10 @@ import ai.idylnlp.model.exceptions.EntityFinderException;
 import ai.idylnlp.model.exceptions.ModelLoaderException;
 import ai.idylnlp.model.manifest.SecondGenModelManifest;
 import ai.idylnlp.model.nlp.AbstractEntityRecognizer;
-import ai.idylnlp.model.nlp.EntityExtractionRequest;
-import ai.idylnlp.model.nlp.EntityExtractionResponse;
-import ai.idylnlp.model.nlp.EntityRecognizer;
 import ai.idylnlp.model.nlp.SentenceSanitizer;
+import ai.idylnlp.model.nlp.ner.EntityExtractionRequest;
+import ai.idylnlp.model.nlp.ner.EntityExtractionResponse;
+import ai.idylnlp.model.nlp.ner.EntityRecognizer;
 import ai.idylnlp.nlp.sentence.sanitizers.DefaultSentenceSanitizer;
 import com.neovisionaries.i18n.LanguageCode;
 
