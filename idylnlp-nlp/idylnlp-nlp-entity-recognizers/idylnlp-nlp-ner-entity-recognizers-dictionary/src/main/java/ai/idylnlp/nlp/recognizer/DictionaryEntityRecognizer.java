@@ -15,15 +15,17 @@
  ******************************************************************************/
 package ai.idylnlp.nlp.recognizer;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -52,6 +54,7 @@ public class DictionaryEntityRecognizer implements EntityRecognizer {
 	private Set<String> dictionary;
 	private String type;
 	private double fpp = 0.1;
+	private boolean caseSensitive;
 	
 	/**
 	 * Creates a new dictionary entity recognizer.
@@ -60,12 +63,14 @@ public class DictionaryEntityRecognizer implements EntityRecognizer {
 	 * between dictionary and entity type.
 	 * @param fpp The desired false positive probability. Use this to tune the performance.
 	 */
-	public DictionaryEntityRecognizer(LanguageCode languageCode, Set<String> dictionary, String type, double fpp) {
+	public DictionaryEntityRecognizer(LanguageCode languageCode, Set<String> dictionary,
+			String type, double fpp, boolean caseSensitive) {
 		
 		this.languageCode = languageCode;
 		this.dictionary = dictionary;
 		this.type = type;
 		this.fpp = fpp;
+		this.caseSensitive = caseSensitive;
 		
 	}
 	
@@ -77,14 +82,30 @@ public class DictionaryEntityRecognizer implements EntityRecognizer {
 	 * @param fpp The desired false positive probability. Use this to tune the performance.
 	 * @throws IOException Thrown if the dictionary file cannot be accessed.
 	 */
-	public DictionaryEntityRecognizer(LanguageCode languageCode, File dictionaryFile, String type, double fpp) throws IOException {
+	public DictionaryEntityRecognizer(LanguageCode languageCode, File dictionaryFile, String type,
+			double fpp, boolean caseSensitive) throws IOException {
 
 		this.languageCode = languageCode;
 		this.type = type;
 		this.fpp = fpp;
+		this.caseSensitive = caseSensitive;
 		
-		for(String line : FileUtils.readLines(dictionaryFile)) {
-			dictionary.add(line.toLowerCase());
+		try(BufferedReader br = Files.newBufferedReader(dictionaryFile.toPath(), StandardCharsets.UTF_8)) {
+			
+		    for(String line = null; (line = br.readLine()) != null;) {
+		        
+		    	if(!line.startsWith("#")) {
+		    	
+			    	if(!caseSensitive) {
+			    		dictionary.add(line.toLowerCase());
+			    	} else {
+			    		dictionary.add(line);
+			    	}
+		    	
+		    	}
+		    	
+		    }
+		    
 		}
 		
 	}
@@ -104,7 +125,13 @@ public class DictionaryEntityRecognizer implements EntityRecognizer {
 					Funnels.stringFunnel(Charset.defaultCharset()), dictionary.size(), fpp);
 
 			for(String entry : dictionary) {
-				filter.put(entry.toLowerCase());
+				
+				if(!caseSensitive) {
+					filter.put(entry.toLowerCase());
+				} else {
+					filter.put(entry);					
+				}
+				
 			}
 			
 			// Break the tokens into n-grams because some dictionary entries
@@ -113,12 +140,24 @@ public class DictionaryEntityRecognizer implements EntityRecognizer {
 			
 			for(String ngram : ngrams) {
 
-				boolean mightContain = filter.mightContain(ngram.toLowerCase());
+				boolean mightContain;
+				
+				if(!caseSensitive) {
+					mightContain = filter.mightContain(ngram.toLowerCase());
+				} else {
+					mightContain = filter.mightContain(ngram);
+				}
 				
 				if(mightContain) {
 					
 					// Make sure it does exist in the dictionary.
-					boolean contains = dictionary.contains(ngram.toLowerCase());
+					boolean contains;
+					
+					if(!caseSensitive) {
+						contains = dictionary.contains(ngram.toLowerCase());
+					} else {
+						contains = dictionary.contains(ngram);
+					}
 					
 					if(contains) {
 						
