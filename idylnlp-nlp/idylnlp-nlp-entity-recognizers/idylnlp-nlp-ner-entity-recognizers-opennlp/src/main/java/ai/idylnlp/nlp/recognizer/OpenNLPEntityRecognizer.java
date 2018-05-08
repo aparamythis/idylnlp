@@ -70,8 +70,6 @@ public class OpenNLPEntityRecognizer extends AbstractEntityRecognizer<OpenNLPEnt
 
     super(configuration);
 
-    // If preload is enabled and there are models to use.
-    // If there are no models to use then we can only do dictionary-based extraction.
     if(configuration.isPreloadModels() && configuration.getEntityModels().size() > 0) {
 
       // Load the models into memory.
@@ -98,8 +96,6 @@ public class OpenNLPEntityRecognizer extends AbstractEntityRecognizer<OpenNLPEnt
 
               try {
 
-                // TODO: Necessary to check the subtype?
-                // if(StringUtils.equalsIgnoreCase(modelManifest.getSubtype(), ModelManifest.DICTIONARY_SUBTYPE)) {
                 configuration.getEntityModelLoader().getModel(modelManifest, TokenNameFinderModel.class);
 
               } catch (ModelLoaderException ex) {

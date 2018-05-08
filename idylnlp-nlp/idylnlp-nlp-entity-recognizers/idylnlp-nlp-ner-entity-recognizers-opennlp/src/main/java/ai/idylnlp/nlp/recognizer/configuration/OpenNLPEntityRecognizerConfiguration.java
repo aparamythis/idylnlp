@@ -20,7 +20,6 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-import ai.idylnlp.opennlp.custom.model.DictionaryModel;
 import ai.idylnlp.opennlp.custom.modelloader.ModelLoader;
 import com.neovisionaries.i18n.LanguageCode;
 
@@ -44,7 +43,6 @@ public class OpenNLPEntityRecognizerConfiguration extends AbstractEntityRecogniz
 
   private OpenNLPEntityRecognizerConfiguration(
       ModelLoader<TokenNameFinderModel> entityModelLoader,
-      ModelLoader<DictionaryModel> dictionaryModelLoader,
       ConfidenceFilter confidenceFilter,
       Map<String, Map<LanguageCode, Set<StandardModelManifest>>> entityModels,
       Set<String> blacklistedModelIDs) {
@@ -60,7 +58,6 @@ public class OpenNLPEntityRecognizerConfiguration extends AbstractEntityRecogniz
   public static class Builder {
 
     private ModelLoader<TokenNameFinderModel> entityModelLoader;
-    private ModelLoader<DictionaryModel> dictionaryModelLoader;
     private ConfidenceFilter confidenceFilter;
     private Map<String, Map<LanguageCode, Set<StandardModelManifest>>> entityModels;
     private Set<String> blacklistedModelIDs;
@@ -72,11 +69,6 @@ public class OpenNLPEntityRecognizerConfiguration extends AbstractEntityRecogniz
 
     public Builder withEntityModelLoader(ModelLoader<TokenNameFinderModel> entityModelLoader) {
       this.entityModelLoader = entityModelLoader;
-      return this;
-    }
-
-    public Builder withDictionaryFinderModelLoader(ModelLoader<DictionaryModel> dictionaryModelLoader) {
-      this.dictionaryModelLoader = dictionaryModelLoader;
       return this;
     }
 
@@ -105,7 +97,7 @@ public class OpenNLPEntityRecognizerConfiguration extends AbstractEntityRecogniz
       }
 
       return new OpenNLPEntityRecognizerConfiguration(
-        entityModelLoader, dictionaryModelLoader, confidenceFilter, entityModels, blacklistedModelIDs
+        entityModelLoader, confidenceFilter, entityModels, blacklistedModelIDs
       );
 
     }

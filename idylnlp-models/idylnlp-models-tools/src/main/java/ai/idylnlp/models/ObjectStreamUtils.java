@@ -31,14 +31,10 @@ import ai.idylnlp.model.nlp.annotation.AnnotationReader;
 import ai.idylnlp.model.nlp.subjects.BratSubjectOfTrainingOrEvaluation;
 import ai.idylnlp.model.nlp.subjects.CoNLL2003SubjectOfTrainingOrEvaluation;
 import ai.idylnlp.model.nlp.subjects.IdylNLPSubjectOfTrainingOrEvaluation;
-import ai.idylnlp.model.nlp.subjects.OpenNLPSubjectOfTrainingOrEvaluation;
 import ai.idylnlp.model.nlp.subjects.SubjectOfTrainingOrEvaluation;
 import opennlp.tools.formats.Conll02NameSampleStream;
 import opennlp.tools.formats.Conll03NameSampleStream;
 import opennlp.tools.formats.brat.AnnotationConfiguration;
-import opennlp.tools.formats.brat.BratAnnotation;
-import opennlp.tools.formats.brat.BratAnnotationStream;
-import opennlp.tools.formats.brat.BratNameSampleStream;
 import opennlp.tools.namefind.NameSample;
 import opennlp.tools.namefind.NameSampleDataStream;
 import opennlp.tools.util.InputStreamFactory;
@@ -81,16 +77,16 @@ public class ObjectStreamUtils {
       LOGGER.info("Using Brat formatted annotations.");
 
       Map<String, String> typeToClassMap = new HashMap<>();
-        typeToClassMap.put("Person", AnnotationConfiguration.ENTITY_TYPE);
-        typeToClassMap.put("Location", AnnotationConfiguration.ENTITY_TYPE);
-        typeToClassMap.put("Organization", AnnotationConfiguration.ENTITY_TYPE);
-        typeToClassMap.put("Date", AnnotationConfiguration.ENTITY_TYPE);
+      typeToClassMap.put("Person", AnnotationConfiguration.ENTITY_TYPE);
+      typeToClassMap.put("Location", AnnotationConfiguration.ENTITY_TYPE);
+      typeToClassMap.put("Organization", AnnotationConfiguration.ENTITY_TYPE);
+      typeToClassMap.put("Date", AnnotationConfiguration.ENTITY_TYPE);
 
       AnnotationConfiguration config = new AnnotationConfiguration(typeToClassMap);
-        InputStream in = ObjectStreamUtils.class.getResourceAsStream(nameFinderSubjectOfTraining.getInputFile() + ".ann");
+      InputStream in = ObjectStreamUtils.class.getResourceAsStream(nameFinderSubjectOfTraining.getInputFile() + ".ann");
 
-        // TODO: Return the brat annotations stream.
-        // sampleStream = new BratAnnotationStream(config, "idylnlp", in);
+      // TODO: Return the brat annotations stream.
+      // sampleStream = new BratAnnotationStream(config, "idylnlp", in);
 
     } else if(subjectOfTraining instanceof CoNLL2003SubjectOfTrainingOrEvaluation) {
 

@@ -33,7 +33,6 @@ import org.mockito.Mockito;
 
 import com.google.gson.Gson;
 import ai.idylnlp.model.entity.Entity;
-import ai.idylnlp.opennlp.custom.model.DictionaryModel;
 import ai.idylnlp.opennlp.custom.modelloader.LocalModelLoader;
 import com.neovisionaries.i18n.LanguageCode;
 
@@ -60,7 +59,6 @@ public class OpenNLPEntityRecognizerTest {
 
   private static final String MODEL_PATH = new File("src/test/resources/models/").getAbsolutePath();
   private static final String MTNFOG_EN_PERSON_MODEL = "mtnfog-en-person-test.bin";
-  private static final String MTNFOG_EN_COUNTRY_MODEL = "mtnfog-en-country-test.bin";
   private static final String MTNFOG_DE_PERSON_MODEL = "mtnfog-de-person-test.bin";
 
   private static final LocalConfidenceFilterSerializer serializer = new LocalConfidenceFilterSerializer();
@@ -85,7 +83,6 @@ public class OpenNLPEntityRecognizerTest {
     germanModelManifests.add(germanModelManifest);
 
     LocalModelLoader<TokenNameFinderModel> entityModelLoader = new LocalModelLoader<TokenNameFinderModel>(modelValidator, MODEL_PATH);
-    LocalModelLoader<DictionaryModel> dictionaryModelLoader = new LocalModelLoader<DictionaryModel>(modelValidator, MODEL_PATH);
 
     Map<String, Map<LanguageCode, Set<StandardModelManifest>>> models = new HashMap<>();
 
@@ -97,7 +94,6 @@ public class OpenNLPEntityRecognizerTest {
 
     OpenNLPEntityRecognizerConfiguration config = new Builder()
       .withEntityModelLoader(entityModelLoader)
-      .withDictionaryFinderModelLoader(dictionaryModelLoader)
       .withConfidenceFilter(confidenceFilter)
       .withEntityModels(models)
       .build();
@@ -132,7 +128,6 @@ public class OpenNLPEntityRecognizerTest {
 
     ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
 
-
     StandardModelManifest englishModelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MTNFOG_EN_PERSON_MODEL, LanguageCode.en, "idylami589012347", "person", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE).build();
 
     // Not really a place model but we just want to make sure both person and place models are looked at.
@@ -145,7 +140,6 @@ public class OpenNLPEntityRecognizerTest {
     germanModelManifests.add(germanModelManifest);
 
     LocalModelLoader<TokenNameFinderModel> entityModelLoader = new LocalModelLoader<TokenNameFinderModel>(modelValidator, MODEL_PATH);
-    LocalModelLoader<DictionaryModel> dictionaryModelLoader = new LocalModelLoader<DictionaryModel>(modelValidator, MODEL_PATH);
 
     Map<String, Map<LanguageCode, Set<StandardModelManifest>>> models = new HashMap<>();
 
@@ -159,7 +153,6 @@ public class OpenNLPEntityRecognizerTest {
 
     OpenNLPEntityRecognizerConfiguration config = new Builder()
       .withEntityModelLoader(entityModelLoader)
-      .withDictionaryFinderModelLoader(dictionaryModelLoader)
       .withConfidenceFilter(confidenceFilter)
       .withEntityModels(models)
       .build();
@@ -205,7 +198,6 @@ public class OpenNLPEntityRecognizerTest {
     englishModelManifests.add(englishModelManifest);
 
     LocalModelLoader<TokenNameFinderModel> entityModelLoader = new LocalModelLoader<TokenNameFinderModel>(modelValidator, MODEL_PATH);
-    LocalModelLoader<DictionaryModel> dictionaryModelLoader = new LocalModelLoader<DictionaryModel>(modelValidator, MODEL_PATH);
 
     Map<String, Map<LanguageCode, Set<StandardModelManifest>>> models = new HashMap<>();
 
@@ -216,7 +208,6 @@ public class OpenNLPEntityRecognizerTest {
 
     OpenNLPEntityRecognizerConfiguration config = new Builder()
       .withEntityModelLoader(entityModelLoader)
-      .withDictionaryFinderModelLoader(dictionaryModelLoader)
       .withConfidenceFilter(confidenceFilter)
       .withEntityModels(models)
       .build();
@@ -262,7 +253,6 @@ public class OpenNLPEntityRecognizerTest {
     englishModelManifests.add(englishModelManifest);
 
     LocalModelLoader<TokenNameFinderModel> entityModelLoader = new LocalModelLoader<TokenNameFinderModel>(modelValidator, MODEL_PATH);
-    LocalModelLoader<DictionaryModel> dictionaryModelLoader = new LocalModelLoader<DictionaryModel>(modelValidator, MODEL_PATH);
 
     Map<String, Map<LanguageCode, Set<StandardModelManifest>>> models = new HashMap<String, Map<LanguageCode, Set<StandardModelManifest>>>();
 
@@ -273,7 +263,6 @@ public class OpenNLPEntityRecognizerTest {
 
     OpenNLPEntityRecognizerConfiguration config = new Builder()
       .withEntityModelLoader(entityModelLoader)
-      .withDictionaryFinderModelLoader(dictionaryModelLoader)
       .withConfidenceFilter(confidenceFilter)
       .withEntityModels(models)
       .build();
@@ -311,7 +300,6 @@ public class OpenNLPEntityRecognizerTest {
     germanModelManifests.add(germanModelManifest);
 
     LocalModelLoader<TokenNameFinderModel> entityModelLoader = new LocalModelLoader<TokenNameFinderModel>(modelValidator, MODEL_PATH);
-    LocalModelLoader<DictionaryModel> dictionaryModelLoader = new LocalModelLoader<DictionaryModel>(modelValidator, MODEL_PATH);
 
     Map<String, Map<LanguageCode, Set<StandardModelManifest>>> models = new HashMap<String, Map<LanguageCode, Set<StandardModelManifest>>>();
 
@@ -323,7 +311,6 @@ public class OpenNLPEntityRecognizerTest {
 
     OpenNLPEntityRecognizerConfiguration config = new Builder()
       .withEntityModelLoader(entityModelLoader)
-      .withDictionaryFinderModelLoader(dictionaryModelLoader)
       .withConfidenceFilter(confidenceFilter)
       .withEntityModels(models)
       .build();
@@ -371,7 +358,6 @@ public class OpenNLPEntityRecognizerTest {
     manifests.add(modelManifest);
 
     LocalModelLoader<TokenNameFinderModel> entityModelLoader = new LocalModelLoader<TokenNameFinderModel>(modelValidator, MODEL_PATH);
-    LocalModelLoader<DictionaryModel> dictionaryModelLoader = new LocalModelLoader<DictionaryModel>(modelValidator, MODEL_PATH);
 
     Map<String, Map<LanguageCode, Set<StandardModelManifest>>> models = new HashMap<String, Map<LanguageCode, Set<StandardModelManifest>>>();
 
@@ -382,7 +368,6 @@ public class OpenNLPEntityRecognizerTest {
 
     OpenNLPEntityRecognizerConfiguration config = new Builder()
       .withEntityModelLoader(entityModelLoader)
-      .withDictionaryFinderModelLoader(dictionaryModelLoader)
       .withConfidenceFilter(confidenceFilter)
       .withEntityModels(models)
       .build();
@@ -410,7 +395,6 @@ public class OpenNLPEntityRecognizerTest {
     manifests.add(modelManifest);
 
     LocalModelLoader<TokenNameFinderModel> entityModelLoader = new LocalModelLoader<TokenNameFinderModel>(modelValidator, MODEL_PATH);
-    LocalModelLoader<DictionaryModel> dictionaryModelLoader = new LocalModelLoader<DictionaryModel>(modelValidator, MODEL_PATH);
 
     Map<String, Map<LanguageCode, Set<StandardModelManifest>>> models = new HashMap<String, Map<LanguageCode, Set<StandardModelManifest>>>();
 
@@ -421,7 +405,6 @@ public class OpenNLPEntityRecognizerTest {
 
     OpenNLPEntityRecognizerConfiguration config = new Builder()
       .withEntityModelLoader(entityModelLoader)
-      .withDictionaryFinderModelLoader(dictionaryModelLoader)
       .withConfidenceFilter(confidenceFilter)
       .withEntityModels(models)
       .build();
@@ -451,7 +434,6 @@ public class OpenNLPEntityRecognizerTest {
     manifests.add(modelManifest);
 
     LocalModelLoader<TokenNameFinderModel> entityModelLoader = new LocalModelLoader<TokenNameFinderModel>(modelValidator, "f:\\invalidpath");
-    LocalModelLoader<DictionaryModel> dictionaryModelLoader = new LocalModelLoader<DictionaryModel>(modelValidator, "f:\\invalidpath");
 
     Map<String, Map<LanguageCode, Set<StandardModelManifest>>> models = new HashMap<String, Map<LanguageCode, Set<StandardModelManifest>>>();
 
@@ -461,7 +443,6 @@ public class OpenNLPEntityRecognizerTest {
 
     OpenNLPEntityRecognizerConfiguration config = new Builder()
       .withEntityModelLoader(entityModelLoader)
-      .withDictionaryFinderModelLoader(dictionaryModelLoader)
       .withConfidenceFilter(confidenceFilter)
       .withEntityModels(models)
       .build();
