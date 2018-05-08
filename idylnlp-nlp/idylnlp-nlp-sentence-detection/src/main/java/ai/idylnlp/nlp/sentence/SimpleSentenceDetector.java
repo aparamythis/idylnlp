@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2018 Mountain Fog, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -29,12 +29,12 @@ import ai.idylnlp.model.nlp.Span;
  * An implementation of {@link SentenceDetector} that identifies
  * sentences based on the presence of periods. Usage is not
  * generally recommended.
- * 
+ *
  * @author Mountain Fog, Inc.
  *
  */
 public class SimpleSentenceDetector implements SentenceDetector {
-	
+
 	@Override
 	public List<String> getLanguageCodes() {
 		return Collections.emptyList();
@@ -42,41 +42,41 @@ public class SimpleSentenceDetector implements SentenceDetector {
 
 	@Override
 	public Span[] sentPosDetect(String text) {
-		
+
 		List<Span> spans = new LinkedList<Span>();
-		
+
 		List<String> sentences = Arrays.asList(text.split("."));
-		
+
 		if(CollectionUtils.isEmpty(sentences)) {
-			
+
 			spans.add(new Span(0, text.length() - 1));
-			
+
 		} else {
-			
+
 			int lastPeriod = 0;
-			
+
 			for(String sentence : sentences) {
-				
+
 				int period = sentence.indexOf(".");
-				
+
 				spans.add(new Span(lastPeriod, period));
-				
+
 				lastPeriod = period + 1;
-				
+
 			}
 
-		}	
-		
+		}
+
 		return spans.toArray(new Span[spans.size()]);
 
 	}
 
 	@Override
 	public String[] sentDetect(String text) {
-		
+
 		// TOOD: Implement this.
 		return null;
-		
+
 	}
-	
+
 }

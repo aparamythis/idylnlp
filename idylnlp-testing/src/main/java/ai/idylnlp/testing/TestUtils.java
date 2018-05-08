@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2018 Mountain Fog, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -24,11 +24,11 @@ public class TestUtils {
 	 * @return The absolute path to the <code>src/test/resources</code> directory.
 	 */
 	public static String getTestResourcesAbsolutePath() {
-		
+
 		return new File("src/test/resources/").getAbsolutePath();
-		
+
 	}
-	
+
 	/**
 	 * Returns <code>true</code> if running on Windows.
 	 * @return <code>True</code> if running on Windows.
@@ -36,9 +36,9 @@ public class TestUtils {
 	public static boolean isWindows() {
 
 		return System.getProperty("os.name").toLowerCase().startsWith("win");
-		
+
 	}
-	
+
 	/**
 	 * Returns a value based on the operating system.
 	 * @param linuxValue The value to return when on Linux.
@@ -47,17 +47,17 @@ public class TestUtils {
 	 * when on Windows.
 	 */
 	public static String setOsDependentValue(String linuxValue, String windowsValue) {
-		
+
 		if(isWindows()) {
-			
+
 			return windowsValue;
-			
+
 		} else {
-			
+
 			return linuxValue;
-			
+
 		}
-		
+
 	}
-	
+
 }

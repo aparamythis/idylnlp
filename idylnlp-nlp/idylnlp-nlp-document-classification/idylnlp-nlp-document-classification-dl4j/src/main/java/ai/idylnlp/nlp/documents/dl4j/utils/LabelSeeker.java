@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2018 Mountain Fog, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -32,20 +32,20 @@ import java.util.List;
  * @author raver119@gmail.com
  */
 public class LabelSeeker {
-	
+
     private List<String> labelsUsed;
-    
+
     private InMemoryLookupTable<VocabWord> lookupTable;
 
     public LabelSeeker(List<String> labelsUsed, InMemoryLookupTable<VocabWord> lookupTable) {
-    	
+
         if(labelsUsed.isEmpty()) {
         	throw new IllegalStateException("You can't have 0 labels used for ParagraphVectors");
         }
-        
+
         this.lookupTable = lookupTable;
         this.labelsUsed = labelsUsed;
-        
+
     }
 
     /**
@@ -54,24 +54,24 @@ public class LabelSeeker {
      * @return
      */
     public List<Pair<String, Double>> getScores(INDArray vector) {
-    	
+
         List<Pair<String, Double>> result = new ArrayList<>();
-        
+
         for(String label : labelsUsed) {
-        	
+
             INDArray vecLabel = lookupTable.vector(label);
-            
+
             if(vecLabel == null) {
             	throw new IllegalStateException("Label '" + label + "' has no known vector!");
             }
 
             double sim = Transforms.cosineSim(vector, vecLabel);
             result.add(new Pair<String, Double>(label, sim));
-            
+
         }
-        
+
         return result;
-        
+
     }
-    
+
 }

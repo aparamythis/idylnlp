@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2018 Mountain Fog, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -35,17 +35,17 @@ public class WhitespaceTokenizer implements Tokenizer {
 	public static final WhitespaceTokenizer INSTANCE = new WhitespaceTokenizer();
 
 	private WhitespaceTokenizer() {
-		
+
 	}
-	
+
 	@Override
 	public List<String> getLanguageCodes() {
-		
+
 		// This tokenizer is not language-dependent so return an empty list.
 		return Collections.EMPTY_LIST;
-		
+
 	}
-	
+
 	@Override
 	public String[] tokenize(String s) {
 		return Span.spansToStrings(tokenizePos(s), s);

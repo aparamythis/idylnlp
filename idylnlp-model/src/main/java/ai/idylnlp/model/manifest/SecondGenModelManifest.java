@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2018 Mountain Fog, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -22,33 +22,33 @@ import com.neovisionaries.i18n.LanguageCode;
 
 /**
  * A model manifest for a second generation (deep learning) model.
- * 
+ *
  * @author Mountain Fog, Inc.
  *
  */
 public class SecondGenModelManifest extends ModelManifest implements Comparable<SecondGenModelManifest> {
-		
+
 	public static final String ENTITY = "entity";
-	
+
 	private String vectorsFileName;
 	private int windowSize;
 	private String vectorsSource;
-	
-	public SecondGenModelManifest(String modelId, String modelFileName, 
-			LanguageCode languageCode, String type, String name, 
+
+	public SecondGenModelManifest(String modelId, String modelFileName,
+			LanguageCode languageCode, String type, String name,
 			String creatorVersion, String vectorsFileName, int windowSize, String source, String vectorsSource) {
-		
+
 		super(modelId, modelFileName, languageCode, type, name, creatorVersion, source, ModelManifest.SECOND_GENERATION);
-		
+
 		this.vectorsFileName = vectorsFileName;
 		this.windowSize = windowSize;
 		this.vectorsSource = vectorsSource;
-		
+
 	}
-	
+
 	@Override
 	public final int hashCode() {
-		
+
 		return new HashCodeBuilder(17, 31)
 				.append(modelId)
 		        .append(modelFileName)
@@ -62,16 +62,16 @@ public class SecondGenModelManifest extends ModelManifest implements Comparable<
 		        .append(vectorsSource)
 		        .append(generation)
 		        .toHashCode();
-		
+
 	}
-	
+
 	@Override
 	public final boolean equals(Object obj) {
-		
+
 		if(obj instanceof SecondGenModelManifest){
-			
+
 	        final SecondGenModelManifest other = (SecondGenModelManifest) obj;
-	        
+
 	        return new EqualsBuilder()
 	        	.append(modelId, other.getModelId())
 	            .append(modelFileName, other.getModelFileName())
@@ -85,18 +85,18 @@ public class SecondGenModelManifest extends ModelManifest implements Comparable<
 	            .append(vectorsSource, other.getVectorsSource())
 	            .append(generation, other.getGeneration())
 	            .isEquals();
-	        
+
 	    } else {
 	        return false;
 	    }
-		
+
 	}
-	
+
 	@Override
 	public int compareTo(SecondGenModelManifest modelManifest) {
 		return modelManifest.getType().compareTo(type);
 	}
-	
+
 	public String getVectorsFileName() {
 		return vectorsFileName;
 	}
@@ -108,5 +108,5 @@ public class SecondGenModelManifest extends ModelManifest implements Comparable<
 	public String getVectorsSource() {
 		return vectorsSource;
 	}
-	
+
 }

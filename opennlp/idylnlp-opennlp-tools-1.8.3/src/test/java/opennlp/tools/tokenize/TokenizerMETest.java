@@ -73,7 +73,7 @@ public class TokenizerMETest {
     Assert.assertEquals("through", tokens[7]);
     Assert.assertEquals("!", tokens[8]);
   }
-  
+
   @Test(expected = InsufficientTrainingDataException.class)
   public void testInsufficientData() throws IOException {
 
@@ -90,5 +90,5 @@ public class TokenizerMETest {
     TokenizerME.train(samples, TokenizerFactory.create(null, "eng", null, true, null), mlParams);
 
   }
-  
+
 }

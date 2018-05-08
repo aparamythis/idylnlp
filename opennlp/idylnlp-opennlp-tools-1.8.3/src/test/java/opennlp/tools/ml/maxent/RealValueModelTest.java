@@ -42,7 +42,7 @@ public class RealValueModelTest {
     testDataIndexer = new OnePassRealValueDataIndexer();
     testDataIndexer.init(trainingParameters, new HashMap<>());
   }
-  
+
   @Test
   public void testRealValuedWeightsVsRepeatWeighting() throws IOException {
     GISModel realModel;

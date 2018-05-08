@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2018 Mountain Fog, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -35,7 +35,7 @@ import opennlp.tools.util.ObjectStream;
 public class NameSampleDataSetIterator implements DataSetIterator {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private final int windowSize;
 	private final String[] labels;
 	private final int batchSize;
@@ -46,7 +46,7 @@ public class NameSampleDataSetIterator implements DataSetIterator {
 
 	public NameSampleDataSetIterator(ObjectStream<NameSample> samples, WordVectors wordVectors, int vectorSize,
 			int windowSize, String labels[], int batchSize) throws IOException {
-		
+
 		this.windowSize = windowSize;
 		this.labels = labels;
 		this.vectorSize = vectorSize;
@@ -64,12 +64,12 @@ public class NameSampleDataSetIterator implements DataSetIterator {
 		totalSamples = total;
 
 		samples.reset();
-		
+
 	}
 
 	@Override
 	public DataSet next(int num) {
-		
+
 		if (cursor >= totalExamples()) {
 			throw new NoSuchElementException();
 		}
@@ -83,9 +83,9 @@ public class NameSampleDataSetIterator implements DataSetIterator {
 		// iterate stream and copy to arrays
 
 		for (int i = 0; i < num; i++) {
-			
+
 			DataSet sample;
-			
+
 			try {
 				sample = samples.read();
 			} catch (IOException e) {
@@ -93,7 +93,7 @@ public class NameSampleDataSetIterator implements DataSetIterator {
 			}
 
 			if (sample != null) {
-				
+
 				INDArray feature = sample.getFeatureMatrix();
 				features.put(new INDArrayIndex[] { NDArrayIndex.point(i) }, feature.get(NDArrayIndex.point(0)));
 
@@ -106,15 +106,15 @@ public class NameSampleDataSetIterator implements DataSetIterator {
 				INDArray label = sample.getLabels();
 				labels.put(new INDArrayIndex[] { NDArrayIndex.point(i) }, label.get(NDArrayIndex.point(0)));
 				labelsMask.putScalar(new int[] { i, windowSize - 1 }, 1.0);
-				
+
 			}
 
 			cursor++;
-			
+
 		}
 
 		return new DataSet(features, labels, featuresMask, labelsMask);
-		
+
 	}
 
 	@Override
@@ -151,7 +151,7 @@ public class NameSampleDataSetIterator implements DataSetIterator {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-		
+
 	}
 
 	@Override

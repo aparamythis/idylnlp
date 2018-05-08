@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2018 Mountain Fog, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -31,7 +31,7 @@ import opennlp.tools.util.Span;
  * An implementation of OpenNLP's {@link TokenNameFinder} that
  * performs entity extraction via a deeplearning4j neural
  * network.
- * 
+ *
  * @author Mountain Fog, Inc.
  *
  */
@@ -44,19 +44,19 @@ public class DeepLearningTokenNameFinder implements TokenNameFinder {
 
 	/**
 	 * Creates a new token name finder.
-	 * @param network The neural {@link MultiLayerNetwork network}. 
+	 * @param network The neural {@link MultiLayerNetwork network}.
 	 * @param wordVectors The word {@link WordVectors vectors}.
 	 * @param windowSize The size of the window.
 	 * @param labels An array of outcome labels.
 	 */
-	public DeepLearningTokenNameFinder(MultiLayerNetwork network, WordVectors wordVectors, 
+	public DeepLearningTokenNameFinder(MultiLayerNetwork network, WordVectors wordVectors,
 			int windowSize, String[] labels) {
-		
+
 		this.network = network;
 		this.wordVectors = wordVectors;
 		this.windowSize = windowSize;
 		this.labels = labels;
-		
+
 	}
 
 	@Override
@@ -88,7 +88,7 @@ public class DeepLearningTokenNameFinder implements TokenNameFinder {
 	public void clearAdaptiveData() {
 		// There is nothing to clear.
 	}
-	
+
 	/**
 	 * Finds the index of the largest element in the {@link INDArray}.
 	 * @param array The {@link INDArray}.
@@ -100,14 +100,14 @@ public class DeepLearningTokenNameFinder implements TokenNameFinder {
 
 		int best = 0;
 		for (int i = 0; i < array.size(0); i++) {
-	
+
 			if (array.getDouble(i) > array.getDouble(best)) {
 				best = i;
 			}
 		}
-		
+
 		return best;
-		
+
 	}
-	
+
 }

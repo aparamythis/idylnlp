@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2018 Mountain Fog, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -21,42 +21,42 @@ import com.neovisionaries.i18n.LanguageCode;
 
 /**
  * A deep learning document classifier training request.
- * 
+ *
  * @author Mountain Fog, Inc.
  *
  */
 public class DeepLearningDocumentClassifierTrainingRequest extends DocumentClassifierTrainingRequest {
-	
+
 	// Defines minimal word frequency in training corpus. All words below this threshold will be removed prior model training.
 	private int minWordFrequency = 1;
-	
+
 	// Defines number of dimensions for output vectors
 	private int layerSize = 100;
-	
+
 	// Number of examples in each minibatch
-    private int batchSize = 64;     
-    
+    private int batchSize = 64;
+
 	// Number of epochs (full passes of training data) to train on
-    private int epochs = 1;        
-    
+    private int epochs = 1;
+
 	// Truncate reviews with length (# words) greater than this
-    private int truncateToLength = 256; 
-    
+    private int truncateToLength = 256;
+
     private double learningRate = 0.025;
     private double minLearningRate = 0.001;
-    
+
     private LanguageCode languageCode;
 	private List<String> directories;
-	
+
 	public DeepLearningDocumentClassifierTrainingRequest() {
 
 	}
-	
+
 	public DeepLearningDocumentClassifierTrainingRequest(LanguageCode languageCode, List<String> directories) {
 
 		this.languageCode = languageCode;
 		this.setDirectories(directories);
-		
+
 	}
 
 	public LanguageCode getLanguageCode() {
@@ -130,5 +130,5 @@ public class DeepLearningDocumentClassifierTrainingRequest extends DocumentClass
 	public void setLayerSize(int layerSize) {
 		this.layerSize = layerSize;
 	}
-	
+
 }

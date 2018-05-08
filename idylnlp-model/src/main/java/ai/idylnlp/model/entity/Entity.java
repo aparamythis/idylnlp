@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2018 Mountain Fog, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -24,13 +24,13 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * An entity.
- * 
+ *
  * @author Mountain Fog, Inc.
  */
 public class Entity implements Serializable {
 
 	private static final long serialVersionUID = 5297145844547340358L;
-	
+
 	private String text;
 	private double confidence;
 	private Span span;
@@ -41,22 +41,22 @@ public class Entity implements Serializable {
 	private String documentId;
 	private long extractionDate;
 	private Map<String, String> metadata;
-	
+
 	/**
 	 * Create a new entity.
 	 */
 	public Entity() {
-		
+
 		this.metadata = new HashMap<String, String>();
-		
+
 	}
-	
+
 	/**
 	 * Create a new entity from an existing entity.
 	 * @param entity An existing entity.
 	 */
 	public Entity(Entity entity) {
-			
+
 		setConfidence(entity.getConfidence());
 		setMetadata(entity.getMetadata());
 		setType(entity.getType());
@@ -64,9 +64,9 @@ public class Entity implements Serializable {
 		setSpan(entity.getSpan());
 		setText(entity.getText());
 		setUri(entity.getUri());
-		
+
 	}
-	
+
 	/**
 	 * Create a new entity given the attributes of the entity.
 	 * @param text The text of the entity.
@@ -75,15 +75,15 @@ public class Entity implements Serializable {
 	 * @param languageCode The two-letter ISO language code of the entity.
 	 */
 	public Entity(String text, double confidence, String type, String languageCode) {
-		
+
 		this.text = text;
 		this.confidence = confidence;
 		this.type = type;
 		this.metadata = new HashMap<String, String>();
 		this.languageCode = languageCode;
-		
+
 	}
-	
+
 	/**
 	 * Create a new entity given the attributes of the entity.
 	 * @param text The text of the entity.
@@ -93,46 +93,46 @@ public class Entity implements Serializable {
 	 * @param languageCode The two-letter ISO language code of the entity.
 	 */
 	public Entity(String text, double confidence, String type, Span span, String languageCode) {
-		
+
 		this.text = text;
 		this.confidence = confidence;
 		this.span = span;
 		this.type = type;
 		this.metadata = new HashMap<String, String>();
 		this.languageCode = languageCode;
-		
+
 	}
-	
+
 	/**
 	 * Create a new entity given the attributes of the entity.
 	 * @param text The text of the entity.
 	 */
 	public Entity(String text) {
-		
+
 		this.text = text;
 		this.metadata = new HashMap<String, String>();
-		
+
 	}
-	
+
 	/**
 	 * Create a new entity given the attributes of the entity.
 	 * @param text The text of the entity.
 	 * @param type The type of entity.
 	 */
 	public Entity(String text, String type) {
-		
+
 		this.text = text;
 		this.type = type;
 		this.metadata = new HashMap<String, String>();
-		
+
 	}
-	
+
 	/**
      * {@inheritDoc}
      */
 	@Override
 	public int hashCode() {
-		
+
 		return new HashCodeBuilder(17, 31)
 			.append(text)
             .append(confidence)
@@ -143,19 +143,19 @@ public class Entity implements Serializable {
             .append(context)
             .append(documentId)
             .toHashCode();
-		
+
 	}
-		
+
 	/**
      * {@inheritDoc}
      */
 	@Override
 	public boolean equals(Object obj) {
-		
+
 	    if(obj != null && obj instanceof Entity) {
-	    	
+
 	        final Entity other = (Entity) obj;
-	        
+
 	        return new EqualsBuilder()
 	            .append(text, other.text)
 	            .append(confidence, other.confidence)
@@ -166,31 +166,31 @@ public class Entity implements Serializable {
 	            .append(context, other.context)
 	            .append(documentId, other.documentId)
 	            .isEquals();
-	        
+
 	    }
 
 	    return false;
-	    
+
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public String toString() {
-		
+
 		StringBuilder sb = new StringBuilder();
 		sb.append("Text: " + text + "; ");
 		sb.append("Confidence: " + confidence + "; ");
 		sb.append("Type: " + type + "; ");
 		sb.append("Language Code: " + languageCode + "; ");
-		
+
 		if(span != null) {
 			sb.append("Span: " + span.toString() + "; ");
 		}
-		
+
 		return sb.toString();
-		
+
 	}
 
 	/**

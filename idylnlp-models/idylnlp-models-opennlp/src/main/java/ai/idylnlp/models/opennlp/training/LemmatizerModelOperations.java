@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2018 Mountain Fog, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -51,14 +51,14 @@ import opennlp.tools.util.TrainingParameters;
 
 /**
  * Operations for training and validating lemma models.
- * 
+ *
  * @author Mountain Fog, Inc.
  *
  */
 public class LemmatizerModelOperations implements ModelTrainingOperations, ModelSeparateDataValidationOperations<AccuracyEvaluationResult> {
-	
+
 	private static final Logger LOGGER = LogManager.getLogger(LemmatizerModelOperations.class);
-				
+
 	/**
 	 * Performs sentence model training using a training definition file.
 	 * @param reader A {@link TrainingDefinitionReader}.
@@ -68,9 +68,9 @@ public class LemmatizerModelOperations implements ModelTrainingOperations, Model
 	public static String train(TrainingDefinitionReader reader) throws IOException {
 
 		final LemmatizerModelOperations ops = new LemmatizerModelOperations();
-		
+
 		final SubjectOfTrainingOrEvaluation subjectOfTraining = ModelOperationsUtils.getSubjectOfTrainingOrEvaluation(reader);
-		
+
 		final String modelFile = reader.getTrainingDefinition().getModel().getFile();
 		final String language = reader.getTrainingDefinition().getModel().getLanguage();
 		final String encryptionKey = reader.getTrainingDefinition().getModel().getEncryptionkey();
@@ -78,155 +78,155 @@ public class LemmatizerModelOperations implements ModelTrainingOperations, Model
 		final int iterations = reader.getTrainingDefinition().getAlgorithm().getIterations().intValue();
 		final int threads = reader.getTrainingDefinition().getAlgorithm().getThreads().intValue();
 		final String algorithm = reader.getTrainingDefinition().getAlgorithm().getName();
-		
+
 		final LanguageCode languageCode = LanguageCode.getByCodeIgnoreCase(language);
-		
+
 		if(algorithm.equalsIgnoreCase(TrainingAlgorithm.PERCEPTRON.getName())) {
-		
+
 			return ops.trainPerceptron(subjectOfTraining, modelFile, languageCode, encryptionKey, cutOff, iterations);
 
 		} else if(algorithm.equalsIgnoreCase(TrainingAlgorithm.MAXENT_QN.getName())) {
-					
+
 			final double l1 = reader.getTrainingDefinition().getAlgorithm().getL1().doubleValue();
 			final double l2 = reader.getTrainingDefinition().getAlgorithm().getL2().doubleValue();
 			int m = reader.getTrainingDefinition().getAlgorithm().getM().intValue();
 			int max = reader.getTrainingDefinition().getAlgorithm().getMax().intValue();
-			
+
 			return ops.trainMaxEntQN(subjectOfTraining, modelFile, languageCode, encryptionKey, cutOff, iterations, threads, l1, l2, m, max);
-			
+
 		} else {
-			
+
 			throw new IOException("Invalid algorithm specified in the training definition file: " + algorithm);
-			
+
 		}
-		
+
 	}
-	
+
 	@Override
 	public AccuracyEvaluationResult separateDataEvaluate(SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluation, String modelFileName, String encryptionKey) throws IOException {
-		
+
 		LOGGER.info("Doing model evaluation using separate training data.");
-		
+
 		// Set the encryption key.
 		OpenNLPEncryptionFactory.getDefault().setKey(encryptionKey);
-		
+
 		InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File(SubjectOfTrainingOrEvaluation.getInputFile()));
 		ObjectStream<LemmaSample> sample = new LemmaSampleStream(new PlainTextByLineStream(inputStreamFactory, Constants.ENCODING_UTF8));
-		
+
 		LemmatizerModel model = new LemmatizerModel(new File(SubjectOfTrainingOrEvaluation.getInputFile()));
 		LemmatizerME posTaggerME = new LemmatizerME(model);
-		
+
 		LemmatizerEvaluationMonitor monitor = new LemmatizerFineGrainedReportListener();
-		
+
 		LemmatizerEvaluator evaluator = new LemmatizerEvaluator(posTaggerME, monitor);
-		
+
 		evaluator.evaluate(sample);
-		
+
 		// Clear the encryption key.
 		OpenNLPEncryptionFactory.getDefault().clearKey();
-				
+
 		return new AccuracyEvaluationResult(evaluator.getWordAccuracy(), evaluator.getWordCount());
-		
+
 	}
-	
+
 	@Override
 	public String trainMaxEntQN(SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluation, String modelFile, LanguageCode language, String encryptionKey, int cutOff, int iterations, int threads, double l1, double l2, int m, int max) throws IOException {
-		
+
 		LOGGER.info("Beginning tokenizer model training. Output model will be: " + modelFile);
-		
+
 		InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File(SubjectOfTrainingOrEvaluation.getInputFile()));
 		ObjectStream<String> lineStream = new PlainTextByLineStream(inputStreamFactory, Constants.ENCODING_UTF8);
 		ObjectStream<LemmaSample> sampleStream = new LemmaSampleStream(lineStream);
-		
+
 		TrainingParameters trainParams = new TrainingParameters();
 		trainParams.put(TrainingParameters.CUTOFF_PARAM, Integer.toString(cutOff));
 		trainParams.put(TrainingParameters.ITERATIONS_PARAM, Integer.toString(iterations));
 		trainParams.put(TrainingParameters.ALGORITHM_PARAM, TrainingAlgorithm.MAXENT_QN.getAlgorithm());
 		trainParams.put(TrainingParameters.THREADS_PARAM, Integer.toString(threads));
-		
+
 		trainParams.put(QNTrainer.L1COST_PARAM, String.valueOf(l1));
 		trainParams.put(QNTrainer.L2COST_PARAM, String.valueOf(l2));
 		trainParams.put(QNTrainer.M_PARAM, String.valueOf(m));
 		trainParams.put(QNTrainer.MAX_FCT_EVAL_PARAM, String.valueOf(max));
-		
+
 		LemmatizerFactory lemmatizerFactory = new LemmatizerFactory();
-		
+
 		// Set the encryption key.
 		OpenNLPEncryptionFactory.getDefault().setKey(encryptionKey);
-		
+
 		LemmatizerModel model = LemmatizerME.train(language.getAlpha3().toString(), sampleStream, trainParams, lemmatizerFactory);
-		
+
 		BufferedOutputStream modelOut = null;
-		
+
 		String modelId = "";
-		
+
 		try {
-	
+
 			modelOut = new BufferedOutputStream(new FileOutputStream(modelFile));
 			modelId = model.serialize(modelOut);
-		  
+
 		} finally {
-			
+
 			if (modelOut != null) {
-				modelOut.close();  
+				modelOut.close();
 			}
-			
+
 			lineStream.close();
-			
+
 			// Clear the encryption key.
 			OpenNLPEncryptionFactory.getDefault().clearKey();
-		  
+
 		}
-		
+
 		return modelId;
-		
+
 	}
-	
+
 	@Override
 	public String trainPerceptron(SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluation, String modelFile, LanguageCode language, String encryptionKey, int cutOff, int iterations) throws IOException {
-		
+
 		LOGGER.info("Beginning tokenizer model training. Output model will be: " + modelFile);
-		
+
 		InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File(SubjectOfTrainingOrEvaluation.getInputFile()));
 		ObjectStream<String> lineStream = new PlainTextByLineStream(inputStreamFactory, Constants.ENCODING_UTF8);
 		ObjectStream<LemmaSample> sampleStream = new LemmaSampleStream(lineStream);
-		
+
 		TrainingParameters trainParams = new TrainingParameters();
 		trainParams.put(TrainingParameters.CUTOFF_PARAM, Integer.toString(cutOff));
 		trainParams.put(TrainingParameters.ITERATIONS_PARAM, Integer.toString(iterations));
 		trainParams.put(TrainingParameters.ALGORITHM_PARAM, TrainingAlgorithm.PERCEPTRON.getAlgorithm());
-		
+
 		LemmatizerFactory lemmatizerFactory = new LemmatizerFactory();
-		
+
 		// Set the encryption key.
 		OpenNLPEncryptionFactory.getDefault().setKey(encryptionKey);
-		
+
 		LemmatizerModel model = LemmatizerME.train(language.getAlpha3().toString(), sampleStream, trainParams, lemmatizerFactory);
-		
+
 		BufferedOutputStream modelOut = null;
-		
+
 		String modelId = "";
-		
+
 		try {
-	
+
 			modelOut = new BufferedOutputStream(new FileOutputStream(modelFile));
 			modelId = model.serialize(modelOut);
-		  
+
 		} finally {
-			
+
 			if (modelOut != null) {
-				modelOut.close();  
+				modelOut.close();
 			}
-			
+
 			lineStream.close();
-			
+
 			// Clear the encryption key.
 			OpenNLPEncryptionFactory.getDefault().clearKey();
-		  
+
 		}
-		
+
 		return modelId;
-		
+
 	}
-	
+
 }

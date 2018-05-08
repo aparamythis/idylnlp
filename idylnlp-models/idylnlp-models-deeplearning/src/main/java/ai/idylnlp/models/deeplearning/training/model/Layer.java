@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2018 Mountain Fog, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -29,55 +29,55 @@ public class Layer {
 	@SerializedName("LearningRate")
 	@Expose
 	private double learningRate = 1e-1;
-	
+
 	@SerializedName("BiasLearningRate")
 	@Expose
 	private double biasLearningRate = Double.NaN;
-	
+
 	@SerializedName("LearningRateDecayPolicy")
 	@Expose
 	private String learningRateDecayPolicy = "schedule";
-	
+
 	@SerializedName("LearningRateSchedule")
 	@Expose
 	private Map<String, Double> learningRateSchedule;
-	
+
 	public Layer() {
-		
+
 	}
-	
+
 	public Layer(double learningRate) {
-		
+
 		this.learningRate = learningRate;
-		
+
 	}
-	
+
 	public Layer(double learningRate, double biasLearningRate, Map<String, Double> learningRateSchedule) {
-		
+
 		this.learningRate = learningRate;
 		this.biasLearningRate = biasLearningRate;
 		this.learningRateSchedule = learningRateSchedule;
-		
+
 	}
 
 	public Map<Integer, Double> getLearningRateScheduleParam() {
-		
+
 		Map<Integer, Double> param = new HashMap<Integer, Double>();
-		
+
 		if(learningRateSchedule != null) {
-		
+
 			for(String key : learningRateSchedule.keySet()) {
-				
+
 				param.put(Integer.valueOf(key), learningRateSchedule.get(key));
-				
+
 			}
-			
+
 		}
-		
+
 		return param;
-		
+
 	}
-	
+
 	@Override
     public boolean equals(Object o) {
       return EqualsBuilder.reflectionEquals(this, o);
@@ -87,7 +87,7 @@ public class Layer {
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
     }
-	
+
 	public double getLearningRate() {
 		return learningRate;
 	}
@@ -119,5 +119,5 @@ public class Layer {
 	public void setLearningRateDecayPolicy(String learningRateDecayPolicy) {
 		this.learningRateDecayPolicy = learningRateDecayPolicy;
 	}
-	
+
 }

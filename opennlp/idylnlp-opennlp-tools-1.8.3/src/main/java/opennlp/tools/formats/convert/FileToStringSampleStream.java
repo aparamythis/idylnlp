@@ -92,5 +92,5 @@ public class FileToStringSampleStream extends FilterObjectStream<File, String> {
       return null;
     }
   }
-  
+
 }

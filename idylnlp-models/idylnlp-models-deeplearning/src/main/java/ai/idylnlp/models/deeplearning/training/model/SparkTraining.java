@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2018 Mountain Fog, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -26,11 +26,11 @@ public class SparkTraining {
 	@SerializedName("AveragingFrequency")
 	@Expose
 	private int averagingFrequency = 5;
-	
+
 	@SerializedName("BatchSizePerWorker")
 	@Expose
 	private int batchSizePerWorker = 32;
-	
+
 	@SerializedName("WorkerPrefetchNumBatches")
 	@Expose
 	private int workerPrefetchNumBatches = 2;
@@ -38,26 +38,26 @@ public class SparkTraining {
 	@SerializedName("EnableSparkTraining")
 	@Expose
 	private boolean enableSparkTraining = false;
-	
+
 	@SerializedName("Master")
 	@Expose
 	private String master = "local[*]";
-	
+
 	public SparkTraining() {
-		
+
 	}
-	
+
 	public SparkTraining(int averagingFrequency, int batchSizePerWorker, int workerPrefetchNumBatches,
 			String master) {
-		
+
 		this.averagingFrequency = averagingFrequency;
 		this.batchSizePerWorker = batchSizePerWorker;
 		this.workerPrefetchNumBatches = workerPrefetchNumBatches;
 		this.enableSparkTraining = true;
 		this.master = master;
-		
+
 	}
-	
+
 	@Override
     public boolean equals(Object o) {
       return EqualsBuilder.reflectionEquals(this, o);

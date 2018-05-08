@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2018 Mountain Fog, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -29,24 +29,24 @@ public class Output {
 	@SerializedName("OutputFile")
 	@Expose
 	private String outputFile;
-	
+
 	@SerializedName("StatsFile")
 	@Expose
 	private String statsFile;
 
 	public Output() throws IOException {
-		
+
 		statsFile = File.createTempFile("stats", "dl4j").getAbsolutePath();
-		
+
 	}
-	
+
 	public Output(String outputFile, String statsFile) {
-		
+
 		this.outputFile = outputFile;
 		this.statsFile = statsFile;
-		
+
 	}
-	
+
 	@Override
     public boolean equals(Object o) {
       return EqualsBuilder.reflectionEquals(this, o);
@@ -56,7 +56,7 @@ public class Output {
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
     }
-	
+
 	public String getOutputFile() {
 		return outputFile;
 	}

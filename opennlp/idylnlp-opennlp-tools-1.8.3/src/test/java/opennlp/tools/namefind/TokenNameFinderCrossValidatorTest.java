@@ -96,7 +96,7 @@ public class TokenNameFinderCrossValidatorTest {
     Assert.assertTrue(out.size() > 0);
     Assert.assertNotNull(cv.getFMeasure());
   }
-  
+
   @Test(expected = InsufficientTrainingDataException.class)
   public void testWithInsufficientData() throws Exception {
 
@@ -119,5 +119,5 @@ public class TokenNameFinderCrossValidatorTest {
     cv.evaluate(sampleStream, 2);
 
   }
-  
+
 }

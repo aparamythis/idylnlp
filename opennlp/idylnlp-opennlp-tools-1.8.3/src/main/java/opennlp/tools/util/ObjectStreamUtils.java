@@ -93,7 +93,7 @@ public class ObjectStreamUtils {
    */
   public static <T> ObjectStream<T> concatenateObjectStream(final Collection<ObjectStream<T>> streams) {
 
-    // We may want to skip null streams instead of throwing a 
+    // We may want to skip null streams instead of throwing a
     for (ObjectStream<T> stream : streams) {
       if (stream == null) {
         throw new NullPointerException("stream cannot be null");

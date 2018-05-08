@@ -30,7 +30,7 @@ public class URLInputStreamFactory implements InputStreamFactory {
   public URLInputStreamFactory(URL url) {
     this.url = url;
   }
-  
+
   @Override
   public InputStream createInputStream() throws IOException {
     return url.openStream();

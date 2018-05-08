@@ -161,7 +161,7 @@ public class TrainerFactory {
       Map<String, String> reportMap) {
 
     // if the trainerType is not defined -- use the GISTrainer.
-    String trainerType = 
+    String trainerType =
         trainParams.getStringParameter(AbstractTrainer.ALGORITHM_PARAM, GISTrainer.MAXENT_VALUE);
 
     if (BUILTIN_TRAINERS.containsKey(trainerType)) {

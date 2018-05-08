@@ -39,5 +39,5 @@ public class MockSequenceTrainer implements EventModelSequenceTrainer {
   public void init(TrainingParameters trainParams,
       Map<String, String> reportMap) {
   }
-  
+
 }

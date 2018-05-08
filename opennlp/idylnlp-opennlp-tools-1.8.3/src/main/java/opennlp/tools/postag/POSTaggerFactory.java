@@ -279,7 +279,7 @@ public class POSTaggerFactory extends BaseToolFactory {
         return new DefaultPOSContextGenerator(cacheSize, getDictionary());
       }
     }
-    
+
     return new ConfigurablePOSContextGenerator(cacheSize, createFeatureGenerators());
 
   }

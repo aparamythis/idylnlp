@@ -62,7 +62,7 @@ public class GISTrainer extends AbstractEventTrainer {
 
   @Deprecated
   public static final String OLD_LL_THRESHOLD_PARAM = "llthreshold";
-  
+
   public static final String LOG_LIKELIHOOD_THRESHOLD_PARAM = "LLThreshold";
   public static final double LOG_LIKELIHOOD_THRESHOLD_DEFAULT = 0.0001;
   private double llThreshold = 0.0001;
@@ -157,7 +157,7 @@ public class GISTrainer extends AbstractEventTrainer {
   private static final boolean GAUSSIAN_SMOOTHING_DEFAULT = false;
   private static final String GAUSSIAN_SMOOTHING_SIGMA_PARAM = "GaussianSmoothingSigma";
   private static final double GAUSSIAN_SMOOTHING_SIGMA_DEFAULT = 2.0;
-  
+
   /**
    * Creates a new <code>GISTrainer</code> instance which does not print
    * progress messages about training to STDOUT.
@@ -178,7 +178,7 @@ public class GISTrainer extends AbstractEventTrainer {
     // Just in case someone is using "llthreshold" instead of LLThreshold...
     // this warning can be removed in a future version of OpenNLP.
     if (trainingParameters.getDoubleParameter(OLD_LL_THRESHOLD_PARAM, -1.) > 0. ) {
-      display("WARNING: the training parameter: " + OLD_LL_THRESHOLD_PARAM + 
+      display("WARNING: the training parameter: " + OLD_LL_THRESHOLD_PARAM +
           " has been deprecated.  Please use " +
           LOG_LIKELIHOOD_THRESHOLD_DEFAULT + " instead");
       // if they didn't supply a value for both llthreshold AND LLThreshold  copy it over..
@@ -188,26 +188,26 @@ public class GISTrainer extends AbstractEventTrainer {
       }
     }
 
-    llThreshold = trainingParameters.getDoubleParameter(LOG_LIKELIHOOD_THRESHOLD_PARAM, 
+    llThreshold = trainingParameters.getDoubleParameter(LOG_LIKELIHOOD_THRESHOLD_PARAM,
         LOG_LIKELIHOOD_THRESHOLD_DEFAULT);
 
     useSimpleSmoothing = trainingParameters.getBooleanParameter(SMOOTHING_PARAM, SMOOTHING_DEFAULT);
     if (useSimpleSmoothing) {
-      _smoothingObservation = 
+      _smoothingObservation =
           trainingParameters.getDoubleParameter(SMOOTHING_OBSERVATION_PARAM, SMOOTHING_OBSERVATION);
     }
-    
-    useGaussianSmoothing = 
+
+    useGaussianSmoothing =
         trainingParameters.getBooleanParameter(GAUSSIAN_SMOOTHING_PARAM, GAUSSIAN_SMOOTHING_DEFAULT);
     if (useGaussianSmoothing) {
       sigma = trainingParameters.getDoubleParameter(
           GAUSSIAN_SMOOTHING_SIGMA_PARAM, GAUSSIAN_SMOOTHING_SIGMA_DEFAULT);
     }
-    
-    if (useSimpleSmoothing && useGaussianSmoothing) 
+
+    if (useSimpleSmoothing && useGaussianSmoothing)
       throw new RuntimeException("Cannot set both Gaussian smoothing and Simple smoothing");
   }
-  
+
   @Override
   public MaxentModel doTrain(DataIndexer indexer) throws IOException {
     int iterations = getIterations();

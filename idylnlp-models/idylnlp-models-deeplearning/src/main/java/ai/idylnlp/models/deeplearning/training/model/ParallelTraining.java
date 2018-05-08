@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2018 Mountain Fog, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -26,38 +26,38 @@ public class ParallelTraining {
 	@SerializedName("PrefetchBuffer")
 	@Expose
 	private int prefetchBuffer = 2;
-	
+
 	@SerializedName("Workers")
 	@Expose
 	private int workers = 2;
-	
+
 	@SerializedName("AveragingFrequency")
 	@Expose
 	private int averagingFrequency = 3;
-	
+
 	@SerializedName("ReportScoreAfterAveraging")
 	@Expose
 	private boolean reportScoreAfterAveraging = true;
-	
+
 	@SerializedName("LegacyAveraging")
 	@Expose
 	private boolean legacyAveraging = false;
 
 	public ParallelTraining() {
-		
+
 	}
-	
+
 	public ParallelTraining(int prefetchBuffer, int workers, int averagingFrequency,
 			boolean reportScoreAfterAveraging, boolean legacyAveraging) {
-		
+
 		this.prefetchBuffer = prefetchBuffer;
 		this.workers = workers;
 		this.averagingFrequency = averagingFrequency;
 		this.reportScoreAfterAveraging = reportScoreAfterAveraging;
 		this.legacyAveraging = legacyAveraging;
-		
+
 	}
-	
+
 	@Override
     public boolean equals(Object o) {
       return EqualsBuilder.reflectionEquals(this, o);

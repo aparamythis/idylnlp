@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2018 Mountain Fog, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -33,17 +33,17 @@ import ai.idylnlp.model.nlp.translation.Translator;
 /**
  * Implementation of {@link Translator} that uses Apache Joshua
  * to perform translation of natural language text.
- * 
+ *
  * @author Mountain Fog, Inc.
  *
  */
 public class JoshuaTranslator implements Translator {
-	
+
 	private static final Logger LOGGER = LogManager.getLogger(JoshuaTranslator.class);
-	
+
 	private Decoder decoder;
 	private int counter = 0;
-	
+
 	/**
 	 * Creates a new translator.
 	 * @param joshuaLanguagePackPath The full path to the Apache Joshua language pack.
@@ -51,36 +51,36 @@ public class JoshuaTranslator implements Translator {
 	 * @throws IOException Thrown if the language pack cannot be loaded.
 	 */
 	public JoshuaTranslator(final String joshuaLanguagePackPath) throws IOException {
-	
-		LOGGER.info("Initialize Apache Joshua translator from {}.", joshuaLanguagePackPath); 
-		
+
+		LOGGER.info("Initialize Apache Joshua translator from {}.", joshuaLanguagePackPath);
+
 		String deEnJoshuaConfigFile = joshuaLanguagePackPath + "/joshua.config";
 		JoshuaConfiguration deEnConf = new JoshuaConfiguration();
 		deEnConf.readConfigFile(deEnJoshuaConfigFile);
 		deEnConf.use_structured_output = true;
 		deEnConf.modelRootPath = joshuaLanguagePackPath;
-		
+
 		decoder = new Decoder(deEnConf, deEnJoshuaConfigFile);
-		
+
 	}
 
 	@Override
 	public LanguageTranslationResponse translate(LanguageTranslationRequest request) {
-		
+
 		final String input = request.getInput();
-		
+
 		Sentence sentence = new Sentence(input, counter++, decoder.getJoshuaConfiguration());
 		Translation translation = decoder.decode(sentence);
 		List<StructuredTranslation> structuredTranslations = translation.getStructuredTranslations();
-	
+
 		StringBuilder sb = new StringBuilder();
-		
+
 		for (StructuredTranslation st : structuredTranslations) {
 			sb.append(st.getTranslationString());
 		}
 
 		return new LanguageTranslationResponse(sb.toString());
-		
+
 	}
 
 }

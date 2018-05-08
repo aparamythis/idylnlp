@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2018 Mountain Fog, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -34,7 +34,7 @@ import opennlp.tools.util.featuregen.GeneratorFactory.XmlFeatureGeneratorFactory
 
 /**
  * Factory for {@link TokenPartOfSpeechFeatureGenerator}.
- * 
+ *
  * @author Mountain Fog, Inc.
  *
  */
@@ -45,30 +45,30 @@ public class TokenPartOfSpeechFeatureGeneratorFactory implements XmlFeatureGener
 	@Override
 	public AdaptiveFeatureGenerator create(Element generatorElement, FeatureGeneratorResourceProvider resourceManager)
 			throws InvalidFormatException {
-		
+
 		final String modelPath = generatorElement.getAttribute("modelPath");
 		final String modelManifestPath = generatorElement.getAttribute("modelManifest");
-		
+
 		try {
-		
+
 			ModelManifest modelManifest = ModelManifestUtils.readManifest(modelPath + modelManifestPath);
-			
+
 			StandardModelManifest standardModelManifest = (StandardModelManifest) modelManifest;
-		
+
 			PartsOfSpeechTagger tagger = new DefaultPartsOfSpeechTagger(modelPath, standardModelManifest, new TrueValidator());
-		
+
 			return new TokenPartOfSpeechFeatureGenerator(tagger);
-			
+
 		} catch (Exception ex) {
-			
+
 			throw new InvalidFormatException("Unable to load the parts-of-speech model.", ex);
-			
+
 		}
-		
+
 	}
 
 	public static void register(Map<String, XmlFeatureGeneratorFactory> factoryMap) {
 		factoryMap.put(ELEMENT_NAME, new TokenPartOfSpeechFeatureGeneratorFactory());
 	}
-	
+
 }

@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2018 Mountain Fog, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -42,24 +42,24 @@ import ai.idylnlp.models.deeplearning.training.model.UpdaterParameters;
 import ai.idylnlp.testing.markers.ExternalData;
 
 public class DeepLearningTrainingDefinitionTest {
-	
+
 	private static final String TRAINING_DATA_PATH = System.getProperty("testDataPath");
 
 	@Category(ExternalData.class)
 	@Test
 	public void serialize() throws IOException {
-		
+
 		DeepLearningEntityModelOperations ops = new DeepLearningEntityModelOperations();
-		
+
 		DeepLearningTrainingDefinition definition = getDefinition();
 		final String json = ops.getGson().toJson(definition);
-		
+
 		DeepLearningTrainingDefinition deserialized = ops.getGson().fromJson(json, DeepLearningTrainingDefinition.class);
-		
+
 		assertEquals(definition, deserialized);
-		
+
 	}
-	
+
 	private DeepLearningTrainingDefinition getDefinition() throws IOException {
 
 		UpdaterParameters updaterParameters = new UpdaterParameters();
@@ -74,12 +74,12 @@ public class DeepLearningTrainingDefinitionTest {
 		learningRateSchedule.put("1000", 0.005);
 		learningRateSchedule.put("2000", 0.001);
 		learningRateSchedule.put("3000", 0.0001);
-		learningRateSchedule.put("4000", 0.00001);		
-		
+		learningRateSchedule.put("4000", 0.00001);
+
 		Layer layer1 = new Layer();
 		layer1.setLearningRate(0.00001);
 		layer1.setLearningRateSchedule(learningRateSchedule);
-		
+
 		Layer layer2 = new Layer();
 		layer2.setLearningRate(0.00001);
 		layer2.setLearningRateSchedule(learningRateSchedule);
@@ -96,7 +96,7 @@ public class DeepLearningTrainingDefinitionTest {
 		networkConfigurationParameters.setPretrain(false);
 		networkConfigurationParameters.setBackprop(true);
 		networkConfigurationParameters.setWeightInit("xavier");
-		
+
 		HyperParameters hyperParameters = new HyperParameters();
 		hyperParameters.setEpochs(1);
 		hyperParameters.setWindowSize(5);
@@ -106,7 +106,7 @@ public class DeepLearningTrainingDefinitionTest {
 
 		Monitoring monitoring = new Monitoring();
 		monitoring.setScoreIteration(100);
-				
+
 		String wordVectorsFile = TRAINING_DATA_PATH + "/reuters-vectors.txt";
 
 		DeepLearningTrainingDefinition definition = new DeepLearningTrainingDefinition();
@@ -117,9 +117,9 @@ public class DeepLearningTrainingDefinitionTest {
 		definition.setEntityType("person");
 		definition.setHyperParameters(hyperParameters);
 		definition.setMonitoring(monitoring);
-		
+
 		return definition;
 
 	}
-	
+
 }

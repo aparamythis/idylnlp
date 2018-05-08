@@ -43,7 +43,7 @@ public class DirectorySampleStream implements ObjectStream<File> {
   private Stack<File> directories = new Stack<>();
 
   private Stack<File> textFiles = new Stack<>();
-  
+
   /**
    * Creates a new directory sample stream.
    * @param dirs The directories to read.

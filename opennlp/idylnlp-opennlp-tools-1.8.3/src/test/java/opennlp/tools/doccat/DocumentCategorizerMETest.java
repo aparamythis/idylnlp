@@ -62,7 +62,7 @@ public class DocumentCategorizerMETest {
     Set<String> cat = sortedScoreMap.get(sortedScoreMap.lastKey());
     Assert.assertEquals(1, cat.size());
   }
-  
+
   @Test(expected = InsufficientTrainingDataException.class)
   public void insufficientTestData() throws IOException {
 
@@ -77,5 +77,5 @@ public class DocumentCategorizerMETest {
         params, new DoccatFactory());
 
   }
-  
+
 }

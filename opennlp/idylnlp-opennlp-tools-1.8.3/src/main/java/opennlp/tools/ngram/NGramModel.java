@@ -320,7 +320,7 @@ public class NGramModel implements Iterable<StringList> {
         Attributes attributes = new Attributes();
 
         attributes.setValue(COUNT, Integer.toString(getCount(tokens)));
-        
+
         return new Entry(tokens, attributes);
       }
 

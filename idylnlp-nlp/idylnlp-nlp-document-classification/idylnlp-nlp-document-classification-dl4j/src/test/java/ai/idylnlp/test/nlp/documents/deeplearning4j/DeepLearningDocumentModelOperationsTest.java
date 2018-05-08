@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2018 Mountain Fog, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -44,49 +44,49 @@ import ai.idylnlp.nlp.documents.dl4j.model.DeepLearningDocumentClassifierConfigu
 import ai.idylnlp.testing.markers.ExternalData;
 
 public class DeepLearningDocumentModelOperationsTest {
-	
+
 	private static final Logger LOGGER = LogManager.getLogger(DeepLearningDocumentModelOperationsTest.class);
-	
+
 	private static final String TRAINING_DATA_PATH = System.getProperty("testDataPath");
 
 	@Ignore
 	@Category(ExternalData.class)
 	@Test
 	public void train() throws DocumentModelTrainingException, DocumentClassifierException, IOException {
-		
+
 		List<String> directories = Arrays.asList(TRAINING_DATA_PATH, "aclImdb/train");
-		
+
 		DeepLearningDocumentClassifierTrainingRequest request = new DeepLearningDocumentClassifierTrainingRequest();
 		request.setLanguageCode(LanguageCode.en);
 		request.setDirectories(directories);
-		
+
 		DeepLearningDocumentModelOperations ops = new DeepLearningDocumentModelOperations();
 		DocumentClassificationTrainingResponse response = ops.train(request);
-		
+
 		final File modelFile = response.getFiles().get(DocumentClassificationFile.MODEL_FILE);
 
 		DocumentModelManifest manifest = new DocumentModelManifest(response.getModelId(), modelFile.getAbsolutePath(),
 				LanguageCode.en, "document", "name",
-				"1.0.0", "https://source/", Arrays.asList("pos", "neg"));			
-		
+				"1.0.0", "https://source/", Arrays.asList("pos", "neg"));
+
 		List<DocumentModelManifest> models = new LinkedList<>();
 		models.add(manifest);
-		
+
 		DeepLearningDocumentClassifierConfiguration config = new DeepLearningDocumentClassifierConfiguration
 				.Builder()
 					.withModels(models)
 					.build();
-				
+
 		// TODO: Fix file name.
 		final String text = FileUtils.readFileToString(new File("negative.txt"));
-		
+
 		DeepLearningDocumentClassificationRequest deepLearningDocumentClassificationRequest = new DeepLearningDocumentClassificationRequest(text, LanguageCode.en);
-		
+
 		DeepLearningDocumentClassifier classifier = new DeepLearningDocumentClassifier(config);
 		DocumentClassificationResponse documentClassificationResponse = classifier.classify(deepLearningDocumentClassificationRequest);
-		
+
 		LOGGER.info("Predicted category: " + documentClassificationResponse.getScores().getPredictedCategory().getLeft());
-		
+
 	}
-	
+
 }

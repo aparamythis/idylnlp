@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2018 Mountain Fog, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -56,14 +56,14 @@ import opennlp.tools.util.TrainingParameters;
 
 /**
  * Operations for training and validating sentence models.
- * 
+ *
  * @author Mountain Fog, Inc.
  *
  */
 public class SentenceModelOperations implements ModelTrainingOperations, ModelSeparateDataValidationOperations<FMeasureModelValidationResult>, ModelCrossValidationOperations<FMeasureModelValidationResult> {
-	
+
 	private static final Logger LOGGER = LogManager.getLogger(SentenceModelOperations.class);
-	
+
 	/**
 	 * Performs sentence model training using a training definition file.
 	 * @param reader A {@link TrainingDefinitionReader}.
@@ -73,9 +73,9 @@ public class SentenceModelOperations implements ModelTrainingOperations, ModelSe
 	public static String train(TrainingDefinitionReader reader) throws IOException {
 
 		final SentenceModelOperations ops = new SentenceModelOperations();
-		
+
 		final SubjectOfTrainingOrEvaluation subjectOfTraining = ModelOperationsUtils.getSubjectOfTrainingOrEvaluation(reader);
-		
+
 		final String modelFile = reader.getTrainingDefinition().getModel().getFile();
 		final String language = reader.getTrainingDefinition().getModel().getLanguage();
 		final String encryptionKey = reader.getTrainingDefinition().getModel().getEncryptionkey();
@@ -85,28 +85,28 @@ public class SentenceModelOperations implements ModelTrainingOperations, ModelSe
 		final String algorithm = reader.getTrainingDefinition().getAlgorithm().getName();
 
 		final LanguageCode languageCode = LanguageCode.getByCodeIgnoreCase(language);
-		
+
 		if(algorithm.equalsIgnoreCase(TrainingAlgorithm.PERCEPTRON.getName())) {
-		
+
 			return ops.trainPerceptron(subjectOfTraining, modelFile, languageCode, encryptionKey, cutOff, iterations);
 
 		} else if(algorithm.equalsIgnoreCase(TrainingAlgorithm.MAXENT_QN.getName())) {
-					
+
 			final double l1 = reader.getTrainingDefinition().getAlgorithm().getL1().doubleValue();
 			final double l2 = reader.getTrainingDefinition().getAlgorithm().getL2().doubleValue();
 			int m = reader.getTrainingDefinition().getAlgorithm().getM().intValue();
 			int max = reader.getTrainingDefinition().getAlgorithm().getMax().intValue();
-			
+
 			return ops.trainMaxEntQN(subjectOfTraining, modelFile, languageCode, encryptionKey, cutOff, iterations, threads, l1, l2, m, max);
-			
+
 		} else {
-			
+
 			throw new IOException("Invalid algorithm specified in the training definition file: " + algorithm);
-			
+
 		}
-		
+
 	}
-	
+
 	/**
 	 * Performs cross-validation of a sentence model.
 	 * @param reader A {@link TrainingDefinitionReader}.
@@ -115,75 +115,75 @@ public class SentenceModelOperations implements ModelTrainingOperations, ModelSe
 	 * @throws IOException Thrown if the model cannot be validated.
 	 */
 	public static FMeasureModelValidationResult crossValidate(TrainingDefinitionReader reader, int folds) throws IOException {
-		
+
 		final String language = reader.getTrainingDefinition().getModel().getLanguage();
 		final int iterations = reader.getTrainingDefinition().getAlgorithm().getIterations().intValue();
-		final int cutoff = reader.getTrainingDefinition().getAlgorithm().getCutoff().intValue();		
+		final int cutoff = reader.getTrainingDefinition().getAlgorithm().getCutoff().intValue();
 		final String algorithm = reader.getTrainingDefinition().getAlgorithm().getName();
 		final double l1 = reader.getTrainingDefinition().getAlgorithm().getL1().doubleValue();
 		final double l2 = reader.getTrainingDefinition().getAlgorithm().getL2().doubleValue();
 		final int m = reader.getTrainingDefinition().getAlgorithm().getM().intValue();
 		final int max = reader.getTrainingDefinition().getAlgorithm().getMax().intValue();
-		
+
 		final LanguageCode languageCode = LanguageCode.getByCodeIgnoreCase(language);
-		
+
 		// Get the subject of training based on what's specified in the training definition file.
 		final SubjectOfTrainingOrEvaluation subjectOfTraining = ModelOperationsUtils.getSubjectOfTrainingOrEvaluation(reader);
-				
+
 		// Now we can set up the entity model operations.
-		final SentenceModelOperations sentenceModelOperations = new SentenceModelOperations();		
-		
+		final SentenceModelOperations sentenceModelOperations = new SentenceModelOperations();
+
 		FMeasureModelValidationResult result = null;
-		
+
 		if(StringUtils.equalsIgnoreCase(algorithm, TrainingAlgorithm.PERCEPTRON.getName())) {
-			
+
 			result = sentenceModelOperations.crossValidationEvaluatePerceptron(subjectOfTraining, languageCode, iterations, cutoff, folds);
 
 		} else if(StringUtils.equalsIgnoreCase(algorithm, TrainingAlgorithm.MAXENT_QN.getName())) {
-			
+
 			result = sentenceModelOperations.crossValidationEvaluateMaxEntQN(subjectOfTraining, languageCode, iterations, cutoff, folds, l1, l2, m, max);
-			
+
 		} else {
-			
+
 			throw new IOException("Invalid algorithm specified in the training definition file: " + algorithm);
-			
+
 		}
-				
+
 		return result;
-		
+
 	}
-	
+
 	@Override
 	public FMeasureModelValidationResult crossValidationEvaluateMaxEntQN(SubjectOfTrainingOrEvaluation subjectOfTraining, LanguageCode language, int iterations, int cutOff, int folds, double l1, double l2, int m, int max) throws IOException {
-		
+
 		LOGGER.info("Doing model evaluation using cross-validation with {} folds using input {}.", folds, subjectOfTraining.getInputFile());
-				
+
 		InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File(subjectOfTraining.getInputFile()));
 		ObjectStream<String> lineStream = new PlainTextByLineStream(inputStreamFactory, Constants.ENCODING_UTF8);
 		ObjectStream<SentenceSample> sampleStream = new SentenceSampleStream(lineStream);
-				
+
 		TrainingParameters trainParams = new TrainingParameters();
 		trainParams.put(TrainingParameters.CUTOFF_PARAM, Integer.toString(cutOff));
 		trainParams.put(TrainingParameters.ITERATIONS_PARAM, Integer.toString(iterations));
 		trainParams.put(TrainingParameters.ALGORITHM_PARAM, TrainingAlgorithm.MAXENT_QN.getAlgorithm());
 		trainParams.put(TrainingParameters.THREADS_PARAM, Integer.toString(1));
-		
+
 		SentenceDetectorFactory sentenceDetectorFactory = new SentenceDetectorFactory(language.getAlpha3().toString(), true, new Dictionary(), null);
 		SentenceDetectorEvaluationMonitor monitor = new SentenceEvaluationErrorListener();
-		
+
 		SDCrossValidator evaluator = new SDCrossValidator(language.getAlpha3().toString(), trainParams, sentenceDetectorFactory, monitor);
 		evaluator.evaluate(sampleStream, folds);
 
 		final FMeasure fmeasure = new FMeasure(evaluator.getFMeasure().getPrecisionScore(),
 				evaluator.getFMeasure().getRecallScore(), evaluator.getFMeasure().getFMeasure());
-		
+
 		return new FMeasureModelValidationResult(fmeasure);
-	
+
 	}
-	
+
 	@Override
 	public FMeasureModelValidationResult crossValidationEvaluatePerceptron(SubjectOfTrainingOrEvaluation subjectOfTraining, LanguageCode language, int iterations, int cutOff, int folds) throws IOException {
-		
+
 		LOGGER.info("Doing model evaluation using cross-validation with {} folds using input {}.", folds, subjectOfTraining.getInputFile());
 
 		InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File(subjectOfTraining.getInputFile()));
@@ -198,50 +198,50 @@ public class SentenceModelOperations implements ModelTrainingOperations, ModelSe
 
 		SentenceDetectorFactory sentenceDetectorFactory = new SentenceDetectorFactory(language.getAlpha3().toString(), true, new Dictionary(), null);
 		SentenceDetectorEvaluationMonitor monitor = new SentenceEvaluationErrorListener();
-		
+
 		SDCrossValidator evaluator = new SDCrossValidator(language.getAlpha3().toString(), trainParams, sentenceDetectorFactory, monitor);
 		evaluator.evaluate(sampleStream, folds);
 
 		final FMeasure fmeasure = new FMeasure(evaluator.getFMeasure().getPrecisionScore(),
 				evaluator.getFMeasure().getRecallScore(), evaluator.getFMeasure().getFMeasure());
-		
+
 		return new FMeasureModelValidationResult(fmeasure);
-	
+
 	}
-	
+
 	@Override
 	public FMeasureModelValidationResult separateDataEvaluate(SubjectOfTrainingOrEvaluation subjectOfTraining, String modelFileName, String encryptionKey) throws IOException {
-		
+
 		LOGGER.info("Doing model evaluation using separate training data.");
-		
+
 		// Set the encryption key.
 		OpenNLPEncryptionFactory.getDefault().setKey(encryptionKey);
-		
+
 		InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File(subjectOfTraining.getInputFile()));
 		ObjectStream<SentenceSample> sample = new SentenceSampleStream(new PlainTextByLineStream(inputStreamFactory, Constants.ENCODING_UTF8));
-		
+
 		SentenceModel model = new SentenceModel(new File(modelFileName));
 		SentenceDetectorME nameFinderME = new SentenceDetectorME(model);
-		
+
 		SentenceDetectorEvaluator evaluator = new SentenceDetectorEvaluator(nameFinderME);
-		
+
 		evaluator.evaluate(sample);
-		
+
 		// Clear the encryption key.
 		OpenNLPEncryptionFactory.getDefault().clearKey();
 
 		final FMeasure fmeasure = new FMeasure(evaluator.getFMeasure().getPrecisionScore(),
 				evaluator.getFMeasure().getRecallScore(), evaluator.getFMeasure().getFMeasure());
-		
+
 		return new FMeasureModelValidationResult(fmeasure);
-		
+
 	}
-	
+
 	@Override
 	public String trainMaxEntQN(SubjectOfTrainingOrEvaluation subjectOfTraining, String modelFile, LanguageCode language, String encryptionKey, int cutOff, int iterations, int threads, double l1, double l2, int m, int max) throws IOException {
-				
+
 		LOGGER.info("Beginning sentence model training. Output model will be: " + modelFile);
-				
+
 		InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File(subjectOfTraining.getInputFile()));
 		ObjectStream<String> lineStream =  new PlainTextByLineStream(inputStreamFactory, Constants.ENCODING_UTF8);
 		ObjectStream<SentenceSample> sampleStream = new SentenceSampleStream(lineStream);
@@ -251,50 +251,50 @@ public class SentenceModelOperations implements ModelTrainingOperations, ModelSe
 		trainParams.put(TrainingParameters.ITERATIONS_PARAM, Integer.toString(iterations));
 		trainParams.put(TrainingParameters.ALGORITHM_PARAM, TrainingAlgorithm.MAXENT_QN.getAlgorithm());
 		trainParams.put(TrainingParameters.THREADS_PARAM, Integer.toString(threads));
-		
+
 		trainParams.put(QNTrainer.L1COST_PARAM, String.valueOf(l1));
 		trainParams.put(QNTrainer.L2COST_PARAM, String.valueOf(l2));
 		trainParams.put(QNTrainer.M_PARAM, String.valueOf(m));
 		trainParams.put(QNTrainer.MAX_FCT_EVAL_PARAM, String.valueOf(max));
-		
+
 		SentenceDetectorFactory sentenceDetectorFactory = new SentenceDetectorFactory(language.getAlpha3().toString(), true, new Dictionary(), null);
-		
+
 		// Set the encryption key.
 		OpenNLPEncryptionFactory.getDefault().setKey(encryptionKey);
-		
+
 		SentenceModel model = SentenceDetectorME.train(language.getAlpha3().toString(), sampleStream, sentenceDetectorFactory, trainParams);
-				
+
 		BufferedOutputStream modelOut = null;
-		
+
 		String modelId = "";
-		
+
 		try {
-	
+
 			modelOut = new BufferedOutputStream(new FileOutputStream(modelFile));
 			modelId = model.serialize(modelOut);
-		  
+
 		} finally {
-			
+
 			if (modelOut != null) {
-				modelOut.close();  
+				modelOut.close();
 			}
-			
+
 			lineStream.close();
-			
+
 			// Clear the encryption key.
 			OpenNLPEncryptionFactory.getDefault().clearKey();
-		  
+
 		}
-		
+
 		return modelId;
-		
+
 	}
-	
+
 	@Override
 	public String trainPerceptron(SubjectOfTrainingOrEvaluation subjectOfTraining, String modelFile, LanguageCode language, String encryptionKey, int cutOff, int iterations) throws IOException {
 
 		LOGGER.info("Beginning sentence model training. Output model will be: " + modelFile);
-				
+
 		InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File(subjectOfTraining.getInputFile()));
 		ObjectStream<String> lineStream =  new PlainTextByLineStream(inputStreamFactory, Constants.ENCODING_UTF8);
 		ObjectStream<SentenceSample> sampleStream = new SentenceSampleStream(lineStream);
@@ -303,38 +303,38 @@ public class SentenceModelOperations implements ModelTrainingOperations, ModelSe
 		trainParams.put(TrainingParameters.CUTOFF_PARAM, Integer.toString(cutOff));
 		trainParams.put(TrainingParameters.ITERATIONS_PARAM, Integer.toString(iterations));
 		trainParams.put(TrainingParameters.ALGORITHM_PARAM, TrainingAlgorithm.PERCEPTRON.getAlgorithm());
-		
+
 		SentenceDetectorFactory sentenceDetectorFactory = new SentenceDetectorFactory(language.getAlpha3().toString(), true, new Dictionary(), null);
-		
+
 		// Set the encryption key.
 		OpenNLPEncryptionFactory.getDefault().setKey(encryptionKey);
-		
+
 		SentenceModel model = SentenceDetectorME.train(language.getAlpha3().toString(), sampleStream, sentenceDetectorFactory, trainParams);
-				
+
 		BufferedOutputStream modelOut = null;
-		
+
 		String modelId = "";
-		
+
 		try {
-	
+
 			modelOut = new BufferedOutputStream(new FileOutputStream(modelFile));
 			modelId = model.serialize(modelOut);
-		  
+
 		} finally {
-			
+
 			if (modelOut != null) {
-				modelOut.close();  
+				modelOut.close();
 			}
-			
+
 			lineStream.close();
-			
+
 			// Clear the encryption key.
 			OpenNLPEncryptionFactory.getDefault().clearKey();
-		  
+
 		}
-		
+
 		return modelId;
-		
+
 	}
-	
+
 }

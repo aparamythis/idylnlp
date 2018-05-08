@@ -128,7 +128,7 @@ public class BeamSearchTest {
 
     Sequence seq = bs.bestSequence(sequence, null, cg,
         (int i, String[] inputSequence, String[] outcomesSequence, String outcome) -> true);
-    
+
     Assert.assertNotNull(seq);
     Assert.assertEquals(sequence.length, seq.getOutcomes().size());
   }

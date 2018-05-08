@@ -49,14 +49,14 @@ public abstract class AbstractTrainer {
   public AbstractTrainer(TrainingParameters parameters) {
     init(parameters,new HashMap<>());
   }
-  
+
   public void init(TrainingParameters trainingParameters, Map<String,String> reportMap) {
     this.trainingParameters = trainingParameters;
     if (reportMap == null) reportMap = new HashMap<>();
     this.reportMap = reportMap;
     printMessages = trainingParameters.getBooleanParameter(VERBOSE_PARAM, VERBOSE_DEFAULT);
   }
-  
+
   @Deprecated
   public void init(Map<String, String> trainParams, Map<String, String> reportMap) {
     init(new TrainingParameters(trainParams),reportMap);
@@ -125,7 +125,7 @@ public abstract class AbstractTrainer {
   protected int TrainingParameters(String key, int defaultValue) {
     return trainingParameters.getIntParameter(key, defaultValue);
   }
-  
+
   /**
    * Use the PluggableParameters directly...
    * @param key

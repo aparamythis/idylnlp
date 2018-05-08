@@ -75,7 +75,7 @@ public class ArvoresDeitadasEval extends AbstractEvalTest {
     return new PlainTextByLineStream(new MarkableFileInputStreamFactory(
         new File(getOpennlpDataDir(), corpus)), StandardCharsets.ISO_8859_1);
   }
-  
+
   @BeforeClass
   public static void verifyTrainingData() throws Exception {
 
@@ -84,7 +84,7 @@ public class ArvoresDeitadasEval extends AbstractEvalTest {
 
     verifyTrainingData(new ADSentenceSampleStream(getLineSample(FLORESTA_VIRGEM), false),
         new BigInteger("2614161133949079191933514776652602918"));
-  
+
   }
 
   private void sentenceCrossEval(TrainingParameters params,

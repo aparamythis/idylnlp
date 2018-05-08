@@ -129,7 +129,7 @@ public class ChunkerMETest {
     Assert.assertEquals(Arrays.asList(expect1), preds[0].getOutcomes());
     Assert.assertNotSame(Arrays.asList(expect1), preds[1].getOutcomes());
   }
-  
+
   @Test(expected = InsufficientTrainingDataException.class)
   public void testInsufficientData() throws IOException {
 

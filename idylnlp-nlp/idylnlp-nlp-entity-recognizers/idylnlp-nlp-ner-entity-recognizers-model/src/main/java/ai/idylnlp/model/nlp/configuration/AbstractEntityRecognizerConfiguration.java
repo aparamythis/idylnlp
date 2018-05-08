@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2018 Mountain Fog, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -33,20 +33,20 @@ import ai.idylnlp.model.nlp.ConfidenceFilter;
 public abstract class AbstractEntityRecognizerConfiguration<T extends ModelManifest> {
 
 	private static final Logger LOGGER = LogManager.getLogger(AbstractEntityRecognizerConfiguration.class);
-	
+
 	protected boolean preloadModels = true;
 	protected Set<String> blacklistedModelIDs;
 	protected ConfidenceFilter confidenceFilter;
 	protected StatsReporter statsReporter;
 
-	protected Map<String, Map<LanguageCode, Set<T>>> entityModels = new HashMap<>();	
-	
+	protected Map<String, Map<LanguageCode, Set<T>>> entityModels = new HashMap<>();
+
 	public AbstractEntityRecognizerConfiguration(Set<String> blacklistedModelIDs) {
-		
+
 		this.blacklistedModelIDs = blacklistedModelIDs;
-		
+
 	}
-			
+
 	/**
 	 * Adds a model to the list of entityModels to use during the extraction.
 	 * @param entityType The {@link String class} of the model's type.
@@ -54,49 +54,49 @@ public abstract class AbstractEntityRecognizerConfiguration<T extends ModelManif
 	 * @param modelManifest The {@link StandardModelManifest manifest} of the model.
 	 */
 	public void addEntityModel(String entityType, LanguageCode language, T modelManifest) {
-				
+
 		if(entityModels.containsKey(entityType)) {
-			
+
 			// There already exists an entity class so add this model to it.
-			
+
 			Map<LanguageCode, Set<T>> m = entityModels.get(entityType);
-			
+
 			if(m.containsKey(language)) {
-				
+
 				LOGGER.trace("Adding manifest for model {}.", modelManifest.getModelId());
-				
+
 				entityModels.get(entityType).get(language).add(modelManifest);
-				
+
 			} else {
-				
+
 				Set<T> manifests = new HashSet<T>();
 				manifests.add(modelManifest);
-				
+
 				m.put(language, manifests);
-				
+
 				entityModels.put(entityType, m);
-				
-			}						
-			
+
+			}
+
 		} else {
-			
+
 			// This entity class does not exist so just add it.
-			
+
 			Map<LanguageCode, Set<T>> m = new HashMap<>();
 
 			Set<T> modelManifests = new HashSet<T>();
 			modelManifests.add(modelManifest);
-			
+
 			m.put(language, modelManifests);
-			
+
 			LOGGER.trace("Adding manifest for model {}.", modelManifest.getModelId());
-			
+
 			entityModels.put(entityType, m);
-						
+
 		}
-		
+
 	}
-		
+
 	/**
 	 * Gets the {@link ConfidenceFilter}.
 	 * @return The {@link ConfidenceFilter}.
@@ -128,7 +128,7 @@ public abstract class AbstractEntityRecognizerConfiguration<T extends ModelManif
 	public void setStatsReporter(StatsReporter statsReporter) {
 		this.statsReporter = statsReporter;
 	}
-	
+
 	/**
 	 * Gets a boolean indicating if entityModels will be preloaded.
 	 * @return A boolean indicating if entityModels will be preloaded.
@@ -136,7 +136,7 @@ public abstract class AbstractEntityRecognizerConfiguration<T extends ModelManif
 	public boolean isPreloadModels() {
 		return preloadModels;
 	}
-	
+
 	/**
 	 * Sets if entityModels will be preloaded.
 	 * @param preloadModels Set to true to enable model preloading.
@@ -144,7 +144,7 @@ public abstract class AbstractEntityRecognizerConfiguration<T extends ModelManif
 	public void setPreloadModels(boolean preloadModels) {
 		this.preloadModels = preloadModels;
 	}
-	
+
 	/**
 	 * Gets the entity models used during the entity extraction.
 	 * @return A map of entity models to their corresponding language and file names.
@@ -152,7 +152,7 @@ public abstract class AbstractEntityRecognizerConfiguration<T extends ModelManif
 	public Map<String, Map<LanguageCode, Set<T>>> getEntityModels() {
 		return entityModels;
 	}
-	
+
 	/**
 	 * Sets the entityModels used during the entity extraction.
 	 * @param entityModels A map of entityModels to their corresponding language and file names.
@@ -176,5 +176,5 @@ public abstract class AbstractEntityRecognizerConfiguration<T extends ModelManif
 	public void setBlacklistedModelIDs(Set<String> blacklistedModelIDs) {
 		this.blacklistedModelIDs = blacklistedModelIDs;
 	}
-	
+
 }

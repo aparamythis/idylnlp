@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2018 Mountain Fog, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -23,7 +23,7 @@ import ai.idylnlp.model.nlp.subjects.SubjectOfTrainingOrEvaluation;
 
 /**
  * Provides model training operations.
- * 
+ *
  * @author Mountain Fog, Inc.
  *
  */
@@ -46,7 +46,7 @@ public interface ModelTrainingOperations {
 	 * @throws IOException Thrown if the model cannot be trained.
 	 */
 	public String trainMaxEntQN(SubjectOfTrainingOrEvaluation subjectOfTraining, String modelFile, LanguageCode language, String encryptionKey, int cutOff, int iterations, int threads, double l1, double l2, int m, int max) throws IOException;
-	
+
 	/**
 	 * Train a perceptron model using.
 	 * @param subjectOfTraining The {@link SubjectOfTrainingOrEvaluation}.
@@ -59,5 +59,5 @@ public interface ModelTrainingOperations {
 	 * @throws IOException Thrown if the model cannot be trained.
 	 */
 	public String trainPerceptron(SubjectOfTrainingOrEvaluation subjectOfTraining, String modelFile, LanguageCode language, String encryptionKey, int cutOff, int iterations) throws IOException;
-	
+
 }

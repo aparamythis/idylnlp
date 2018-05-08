@@ -9,17 +9,17 @@ import org.apache.commons.lang3.StringUtils;
 import ai.idylnlp.opennlp.custom.encryption.OpenNLPEncryptionFactory;
 
 public class EncryptedDataOutputStream extends DataOutputStream {
-	
+
 	public EncryptedDataOutputStream(OutputStream out) {
 
 		super(out);
-		
+
 	}
-	
+
 	public void writeEncryptedUTF(String s) throws IOException {
 
 		if(StringUtils.isNotEmpty(OpenNLPEncryptionFactory.getDefault().getKey())) {
-			
+
 			try {
 				// Encrypt the input.
 				s = OpenNLPEncryptionFactory.getDefault().encrypt(s);

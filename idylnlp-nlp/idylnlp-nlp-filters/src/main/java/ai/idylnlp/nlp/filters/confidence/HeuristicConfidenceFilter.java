@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2018 Mountain Fog, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -29,32 +29,32 @@ import ai.idylnlp.model.nlp.ConfidenceFilterSerializer;
 /**
  * Implementation of {@link ConfidenceFilter} that uses a T-test to
  * determine if an entity should be filtered or not.
- *  
+ *
  * @author Mountain Fog, Inc.
  *
  */
 public class HeuristicConfidenceFilter implements ConfidenceFilter {
-	
+
 	private static final Logger LOGGER = LogManager.getLogger(HeuristicConfidenceFilter.class);
-	
+
 	protected Map<String, SynchronizedSummaryStatistics> statistics  = new HashMap<String, SynchronizedSummaryStatistics>();
 	private TTest ttest = new TTest();
-	
+
 	private ConfidenceFilterSerializer serializer;
 	private int minSampleSize = 50;
 	private double alpha = 0.05;
-	
+
 	private boolean dirty = false;
-	
+
 	/**
 	 * Creates a new filter.
 	 */
 	public HeuristicConfidenceFilter(ConfidenceFilterSerializer serializer) {
-		
+
 		this.serializer = serializer;
-		
+
 	}
-	
+
 	/**
 	 * Creates a new filter.
 	 * @param minSampleSize The minimum sample size before tests are used
@@ -66,65 +66,65 @@ public class HeuristicConfidenceFilter implements ConfidenceFilter {
 		this.serializer = serializer;
 		this.minSampleSize = minSampleSize;
 		this.alpha = alpha;
-	
+
 		ttest = new TTest();
-		
+
 	}
 
 	@Override
-	public boolean test(String modelId, double entityConfidence, double confidenceThreshold) {				
-		
+	public boolean test(String modelId, double entityConfidence, double confidenceThreshold) {
+
 		SynchronizedSummaryStatistics confidences = statistics.get(modelId);
-		
+
 		if(confidences == null) {
-			
+
 			confidences = new SynchronizedSummaryStatistics();
 			statistics.put(modelId, confidences);
-			
+
 		}
-		
+
 		boolean filter = false;
-		
+
 		if(entityConfidence >= confidenceThreshold) {
-		
+
 			// If the entity's confidence is greater than the threshold
 			// always return the entity.
-			
+
 			filter = true;
-			
-		} else {					
-				
+
+		} else {
+
 			if(confidences.getN() >= minSampleSize) {
-			
+
 				// Null hypothesis: The confidence of the entity is not in the ballpark.
-				
+
 				// Performs a two-sided t-test evaluating the null hypothesis that the mean of
 				// the population from which the dataset described by stats is drawn equals mu.
 				// Returns true iff the null hypothesis can be rejected with confidence 1 - ALPHA.
 				// To perform a 1-sided test, use ALPHA * 2.
 				filter = !ttest.tTest(entityConfidence, confidences, alpha * 2);
-		
+
 				// true means do NOT return the entity.
 				// false means return the entity.
-			
+
 			} else {
-				
+
 				filter = true;
-				
+
 			}
-		
+
 		}
-	
+
 		// Add this value to the statistics after doing the T-test.
 		confidences.addValue(entityConfidence);
-		
+
 		// Mark it as dirty.
 		dirty = true;
-		
+
 		return filter;
-		
+
 	}
-	
+
 	@Override
 	public int serialize() throws Exception {
 		dirty = false;

@@ -75,7 +75,7 @@ public interface DataIndexer {
    * @return The number of total events indexed.
    */
   int getNumEvents();
-  
+
   /**
    * Sets parameters used during the data indexing.
    * @param trainParams {@link TrainingParameters}
@@ -84,7 +84,7 @@ public interface DataIndexer {
 
   /**
    * Performs the data indexing. Make sure the init(...) method is called first.
-   * 
+   *
    * @param eventStream {@link ObjectStream<Event>}
    */
   void index(ObjectStream<Event> eventStream) throws IOException;

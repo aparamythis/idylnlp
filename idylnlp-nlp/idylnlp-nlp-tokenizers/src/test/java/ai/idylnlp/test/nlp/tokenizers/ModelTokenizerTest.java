@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2018 Mountain Fog, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -39,10 +39,10 @@ import opennlp.tools.util.Span;
 import opennlp.tools.util.TrainingParameters;
 
 public class ModelTokenizerTest {
-	
+
 	// NOTE: these tests were taken from OpenNLP's WhitespaceTokenizerTest class since
-	// our WhitespaceTokenizer is just a pass-through to OpenNLP's WhitespaceTokenizer.	
-	
+	// our WhitespaceTokenizer is just a pass-through to OpenNLP's WhitespaceTokenizer.
+
 	@Test
 	public void testTokenizerSimpleModel() throws IOException {
 
@@ -55,12 +55,12 @@ public class ModelTokenizerTest {
 		assertEquals(2, tokens.length);
 		assertEquals("test", tokens[0]);
 		assertEquals(",", tokens[1]);
-		
+
 	}
 
 	@Test
 	public void testTokenizer() throws IOException {
-		
+
 		TokenizerModel model = createMaxentTokenModel();
 
 		TokenizerME tokenizer = new TokenizerME(model);
@@ -77,11 +77,11 @@ public class ModelTokenizerTest {
 		assertEquals("thought", tokens[6]);
 		assertEquals("through", tokens[7]);
 		assertEquals("!", tokens[8]);
-		
+
 	}
 
 	private TokenizerModel createSimpleMaxentTokenModel() throws IOException {
-		
+
 		List<TokenSample> samples = new ArrayList<TokenSample>();
 
 		samples.add(new TokenSample("year", new Span[] { new Span(0, 4) }));
@@ -92,13 +92,13 @@ public class ModelTokenizerTest {
 		samples.add(new TokenSample("yes,", new Span[] { new Span(0, 3), new Span(3, 4) }));
 
 		TokenizerFactory tokenizerFactory = new TokenizerFactory("en", new Dictionary(), false, null);
-		
+
 		TrainingParameters mlParams = new TrainingParameters();
 		mlParams.put(TrainingParameters.ITERATIONS_PARAM, Integer.toString(100));
 		mlParams.put(TrainingParameters.CUTOFF_PARAM, Integer.toString(0));
 
 		return TokenizerME.train(new CollectionObjectStream<TokenSample>(samples), tokenizerFactory, mlParams);
-		
+
 	}
 
 	private TokenizerModel createMaxentTokenModel() throws IOException {
@@ -108,15 +108,15 @@ public class ModelTokenizerTest {
 		InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File(trainingData));
 		ObjectStream<String> lineStream =  new PlainTextByLineStream(inputStreamFactory, "UTF-8");
 		ObjectStream<TokenSample> sampleStream = new TokenSampleStream(lineStream);
-		
+
 		TrainingParameters mlParams = new TrainingParameters();
 		mlParams.put(TrainingParameters.ITERATIONS_PARAM, Integer.toString(100));
 		mlParams.put(TrainingParameters.CUTOFF_PARAM, Integer.toString(0));
-		
+
 		TokenizerFactory tokenizerFactory = new TokenizerFactory("en", new Dictionary(), false, null);
-		
+
 		return TokenizerME.train(sampleStream, tokenizerFactory, mlParams);
-		
+
 	}
 
 }

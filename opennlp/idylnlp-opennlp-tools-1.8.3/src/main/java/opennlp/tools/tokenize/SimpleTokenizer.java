@@ -45,7 +45,7 @@ public class SimpleTokenizer extends AbstractTokenizer {
       return name;
     }
   }
-  
+
   public static final SimpleTokenizer INSTANCE;
 
   static {

@@ -193,7 +193,7 @@ public abstract class BaseModel implements ArtifactProvider, Serializable {
       loadModel(in);
     }
   }
-  
+
   protected BaseModel() {
 	  // Used when the model is not an OpenNLP model.
   }
@@ -523,7 +523,7 @@ public abstract class BaseModel implements ArtifactProvider, Serializable {
 
     manifest.setProperty(key, value);
   }
-  
+
   public String getModelId() {
 	  return getManifestProperty("model.id");
   }
@@ -563,14 +563,14 @@ public abstract class BaseModel implements ArtifactProvider, Serializable {
       throw new IllegalStateException(
           "The method BaseModel.loadArtifactSerializers() was not called by BaseModel subclass constructor.");
     }
-    
+
     // The model ID is generated here in order to reduce the code changes
     // necessary. If the modelId is generated external to this function then
     // anywhere this function is called must be changed. I just want to
     // minimize the number of code changes to upgrades to newer OpenNLP
     // versions are simplified.
     final String modelId = UUID.randomUUID().toString();
-    
+
     // Write the model ID to the model's properties.
     setManifestProperty("model.id", modelId);
 
@@ -621,9 +621,9 @@ public abstract class BaseModel implements ArtifactProvider, Serializable {
 
     zip.finish();
     zip.flush();
-    
+
     return modelId;
-    
+
   }
 
   public final void serialize(File model) throws IOException {

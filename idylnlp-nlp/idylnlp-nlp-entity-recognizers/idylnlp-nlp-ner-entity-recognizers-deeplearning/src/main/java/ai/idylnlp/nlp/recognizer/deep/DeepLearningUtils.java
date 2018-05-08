@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2018 Mountain Fog, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -32,9 +32,9 @@ import opennlp.tools.namefind.NameSample;
 
 /**
  * Utility functions for deep learning model training and evaluation.
- * 
+ *
  * Note: The functions in this class are not thread-safe.
- * 
+ *
  * @author Mountain Fog, Inc.
  *
  */
@@ -69,15 +69,15 @@ public class DeepLearningUtils {
 		final int vectorSize = wordVectors.getWordVector(wordVectors.vocab().wordAtIndex(0)).length;
 
 		for (int i = 0; i < tokens.length; i++) {
-			
+
 			INDArray features = Nd4j.create(1, vectorSize, windowSize);
-			
+
 			for(int vectorIndex = 0; vectorIndex < windowSize; vectorIndex++) {
-				
+
 				int tokenIndex = i + vectorIndex - ((windowSize - 1) / 2);
-				
+
 				if (tokenIndex >= 0 && tokenIndex < tokens.length) {
-				
+
 					String token = tokens[tokenIndex];
 
 					if (wordVectors.hasWord(token)) {
@@ -89,11 +89,11 @@ public class DeepLearningUtils {
 					}
 
 				}
-				
+
 			}
-			
+
 			matrices.add(features);
-			
+
 		}
 
 		return matrices;

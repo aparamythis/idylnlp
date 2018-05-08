@@ -440,7 +440,7 @@ public class TrainingParameters {
       }
     }
   }
-  
+
   public static TrainingParameters defaultParams() {
     TrainingParameters mlParams = new TrainingParameters();
     mlParams.put(TrainingParameters.ALGORITHM_PARAM, "MAXENT");

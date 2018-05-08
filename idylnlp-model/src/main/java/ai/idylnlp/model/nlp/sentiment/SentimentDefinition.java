@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2018 Mountain Fog, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -19,62 +19,62 @@ import ai.idylnlp.model.nlp.Stemmer;
 
 /**
  * A definition of a sentiment.
- * 
+ *
  * @author Mountain Fog, Inc.
  *
  */
 public class SentimentDefinition {
-	
+
 	private String sentimentLabel;
 	private String fileName;
 	private String fullFilePath;
 	private boolean enableFuzzyMatching;
 	private boolean enableStemming;
 	private Stemmer stemmer;
-	
+
 	public SentimentDefinition(String sentimentLabel, String fileName, String fullFilePath) {
-		
+
 		this.sentimentLabel = sentimentLabel;
 		this.fileName = fileName;
 		this.fullFilePath = fullFilePath;
 		this.enableFuzzyMatching = false;
 		this.enableStemming = false;
-		
+
 	}
-	
+
 	public SentimentDefinition(String sentimentLabel, String fileName, String fullFilePath, boolean enableFuzzyMatching, boolean enableStemming, Stemmer stemmer) {
-		
+
 		this.sentimentLabel = sentimentLabel;
 		this.fileName = fileName;
 		this.fullFilePath = fullFilePath;
 		this.enableFuzzyMatching = enableFuzzyMatching;
 		this.enableStemming = enableStemming;
 		this.stemmer = stemmer;
-		
+
 	}
-	
+
 	public SentimentDefinition(String sentimentLabel, String fileName, String fullFilePath, boolean enableFuzzyMatching, int maxFuzziness, boolean enableStemming, Stemmer stemmer) {
-		
+
 		this.sentimentLabel = sentimentLabel;
 		this.fileName = fileName;
 		this.fullFilePath = fullFilePath;
 		this.enableFuzzyMatching = enableFuzzyMatching;
 		this.enableStemming = enableStemming;
 		this.stemmer = stemmer;
-		
+
 	}
-	
+
 	@Override
 	public String toString() {
-		
+
 		return String.format("Sentiment Label: %s; Definition File: %s", sentimentLabel, fileName);
-		
+
 	}
-	
+
 	public String getFileName() {
 		return fileName;
 	}
-	
+
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
@@ -118,5 +118,5 @@ public class SentimentDefinition {
 	public void setStemmer(Stemmer stemmer) {
 		this.stemmer = stemmer;
 	}
-	
+
 }

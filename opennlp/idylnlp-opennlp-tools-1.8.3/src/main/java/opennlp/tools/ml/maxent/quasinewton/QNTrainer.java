@@ -69,7 +69,7 @@ public class QNTrainer extends AbstractEventTrainer {
   public QNTrainer(TrainingParameters parameters) {
     super(parameters);
   }
-  
+
   // Constructor -- to log. For testing purpose
   public QNTrainer(boolean printMessages) {
     this(M_DEFAULT, printMessages);
@@ -108,7 +108,7 @@ public class QNTrainer extends AbstractEventTrainer {
     this.l1Cost = trainingParameters.getDoubleParameter(L1COST_PARAM, L1COST_DEFAULT);
     this.l2Cost = trainingParameters.getDoubleParameter(L2COST_PARAM, L2COST_DEFAULT);
   }
-  
+
   @Override
   @Deprecated
   public void init(Map<String, String> trainParams, Map<String, String> reportMap) {

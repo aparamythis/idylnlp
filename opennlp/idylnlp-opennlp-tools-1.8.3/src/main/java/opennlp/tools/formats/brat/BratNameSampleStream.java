@@ -48,7 +48,7 @@ public class BratNameSampleStream extends SegmenterObjectStream<BratDocument, Na
     super(samples);
 
     // TODO: We can pass in custom validators here ...
-    this.parser = new BratDocumentParser(new SentenceDetectorME(sentModel), new TokenizerME(tokenModel)); 
+    this.parser = new BratDocumentParser(new SentenceDetectorME(sentModel), new TokenizerME(tokenModel));
   }
 
   @Override

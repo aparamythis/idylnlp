@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2018 Mountain Fog, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -30,72 +30,72 @@ public class NetworkConfigurationParameters {
 	@SerializedName("BiasInit")
 	@Expose
 	private double biasInit = 0.0;
-	
+
 	@SerializedName("BiasLearningRate")
 	@Expose
 	private Integer biasLearningRate = 0;
-	
+
 	@SerializedName("ConvolutionMode")
 	@Expose
 	private String convolutionMode;
-	
+
 	@SerializedName("UseDropConnect")
 	@Expose
 	private boolean useDropConnect = false;
-	
+
 	@SerializedName("DropOut")
 	@Expose
 	private double dropOut = 0.0;
-	
+
 	@SerializedName("Iterations")
 	@Expose
 	private int iterations = 1;
-	
+
 	@SerializedName("OptimizationAlgorithm")
 	@Expose
 	private String optimizationAlgorithm = "stochastic_gradient_descent";
-	
+
 	@SerializedName("WeightInit")
 	@Expose
 	private String weightInit;
-	
+
 	@SerializedName("Pretrain")
 	@Expose
 	private boolean pretrain = false;
-	
+
 	@SerializedName("Backprop")
 	@Expose
 	private boolean backprop = true;
-	
+
 	@SerializedName("RegularizationParameters")
 	@Expose
 	private RegularizationParameters regularizationParameters;
-	
+
 	@SerializedName("UpdaterParameters")
 	@Expose
 	private UpdaterParameters updaterParameters;
-		
+
 	@SerializedName("Layers")
 	@Expose
 	private Layers layers;
-	
+
 	@SerializedName("GradientNormalization")
 	@Expose
 	private String gradientNormalization;
-	
+
 	@SerializedName("GradientNormalizationThreshold")
 	@Expose
 	private double gradientNormalizationThreshold = 0.0;
-	
+
 	public NetworkConfigurationParameters() {
-		
+
 	}
 
 	public NetworkConfigurationParameters(double biasInit, int biasLearningRate, String convolutionMode, boolean useDropConnect,
 			int dropOut, int iterations, String optimizationAlgorithm, String weightInit, double learningRate,
 			boolean pretrain, boolean backprop, RegularizationParameters regularizationParameters,
 			UpdaterParameters updaterParameters, Layers layers, String gradientNormalization, double gradientNormalizationThreshold) {
-		
+
 		this.biasInit = biasInit;
 		this.biasLearningRate = biasLearningRate;
 		this.convolutionMode = convolutionMode;
@@ -110,119 +110,119 @@ public class NetworkConfigurationParameters {
 		this.layers = layers;
 		this.gradientNormalization = gradientNormalization;
 		this.gradientNormalizationThreshold = gradientNormalizationThreshold;
-		
+
 	}
-	
+
 	public OptimizationAlgorithm getOptimizationAlgorithmParam() {
-		
+
 		if(StringUtils.equalsIgnoreCase(optimizationAlgorithm, "conjugate_gradient")) {
-			
+
 			return OptimizationAlgorithm.CONJUGATE_GRADIENT;
-			
+
 		} else if(StringUtils.equalsIgnoreCase(optimizationAlgorithm, "lbfgs")) {
-			
+
 			return OptimizationAlgorithm.LBFGS;
-			
+
 		} else if(StringUtils.equalsIgnoreCase(optimizationAlgorithm, "line_gradient_descent")) {
-			
+
 			return OptimizationAlgorithm.LINE_GRADIENT_DESCENT;
-			
+
 		} else if(StringUtils.equalsIgnoreCase(optimizationAlgorithm, "stochastic_gradient_descent")) {
-			
+
 			return OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT;
-			
+
 		} else {
-			
+
 			return null;
-			
-		}			
-		
-	}
-	
-	public WeightInit getWeightInitParam() {
-		
-		if(StringUtils.equalsIgnoreCase(weightInit, "xavier")) {
-			
-			return WeightInit.XAVIER;
-			
-		} else if(StringUtils.equalsIgnoreCase(weightInit, "distribution")) {
-			
-			return WeightInit.DISTRIBUTION;
-			
-		} else if(StringUtils.equalsIgnoreCase(weightInit, "relu")) {
-			
-			return WeightInit.RELU;
-		
-		} else if(StringUtils.equalsIgnoreCase(weightInit, "relu_uniform")) {
-			
-			return WeightInit.RELU_UNIFORM;
-			
-		} else if(StringUtils.equalsIgnoreCase(weightInit, "sigmoid_uniform")) {
-			
-			return WeightInit.SIGMOID_UNIFORM;
-			
-		} else if(StringUtils.equalsIgnoreCase(weightInit, "uniform")) {
-			
-			return WeightInit.UNIFORM;
-			
-		} else if(StringUtils.equalsIgnoreCase(weightInit, "xavier_fan_in")) {
-			
-			return WeightInit.XAVIER_FAN_IN;
-			
-		} else if(StringUtils.equalsIgnoreCase(weightInit, "xavier_legacy")) {
-			
-			return WeightInit.XAVIER_LEGACY;
-			
-		} else if(StringUtils.equalsIgnoreCase(weightInit, "xavier_uniform")) {
-			
-			return WeightInit.XAVIER_UNIFORM;
-			
-		} else if(StringUtils.equalsIgnoreCase(weightInit, "zero")) {
-			
-			return WeightInit.ZERO;
-			
-		} else {
-			
-			return null;
-			
+
 		}
-		
+
 	}
-	
+
+	public WeightInit getWeightInitParam() {
+
+		if(StringUtils.equalsIgnoreCase(weightInit, "xavier")) {
+
+			return WeightInit.XAVIER;
+
+		} else if(StringUtils.equalsIgnoreCase(weightInit, "distribution")) {
+
+			return WeightInit.DISTRIBUTION;
+
+		} else if(StringUtils.equalsIgnoreCase(weightInit, "relu")) {
+
+			return WeightInit.RELU;
+
+		} else if(StringUtils.equalsIgnoreCase(weightInit, "relu_uniform")) {
+
+			return WeightInit.RELU_UNIFORM;
+
+		} else if(StringUtils.equalsIgnoreCase(weightInit, "sigmoid_uniform")) {
+
+			return WeightInit.SIGMOID_UNIFORM;
+
+		} else if(StringUtils.equalsIgnoreCase(weightInit, "uniform")) {
+
+			return WeightInit.UNIFORM;
+
+		} else if(StringUtils.equalsIgnoreCase(weightInit, "xavier_fan_in")) {
+
+			return WeightInit.XAVIER_FAN_IN;
+
+		} else if(StringUtils.equalsIgnoreCase(weightInit, "xavier_legacy")) {
+
+			return WeightInit.XAVIER_LEGACY;
+
+		} else if(StringUtils.equalsIgnoreCase(weightInit, "xavier_uniform")) {
+
+			return WeightInit.XAVIER_UNIFORM;
+
+		} else if(StringUtils.equalsIgnoreCase(weightInit, "zero")) {
+
+			return WeightInit.ZERO;
+
+		} else {
+
+			return null;
+
+		}
+
+	}
+
 	public GradientNormalization getGradientNormalizationParam() {
-		
+
 		if(StringUtils.equalsIgnoreCase(gradientNormalization, "clipelementwiseabsolutevalue")) {
-			
+
 			return GradientNormalization.ClipElementWiseAbsoluteValue;
 
 		} else if(StringUtils.equalsIgnoreCase(gradientNormalization, "clipl2perlayer")) {
-			
+
 			return GradientNormalization.ClipL2PerLayer;
-			
+
 		} else if(StringUtils.equalsIgnoreCase(gradientNormalization, "clipl2perparamtype")) {
-			
+
 			return GradientNormalization.ClipL2PerParamType;
-			
+
 		} else if(StringUtils.equalsIgnoreCase(gradientNormalization, "none")) {
-			
+
 			return GradientNormalization.None;
-			
+
 		} else if(StringUtils.equalsIgnoreCase(gradientNormalization, "renormalizel2perlayer")) {
-			
+
 			return GradientNormalization.RenormalizeL2PerLayer;
-			
+
 		} else if(StringUtils.equalsIgnoreCase(gradientNormalization, "renormalizel2perparamtype")) {
-			
+
 			return GradientNormalization.RenormalizeL2PerParamType;
-			
+
 		} else {
-			
+
 			return null;
-			
+
 		}
-		
+
 	}
-	
+
 	@Override
     public boolean equals(Object o) {
       return EqualsBuilder.reflectionEquals(this, o);
@@ -232,7 +232,7 @@ public class NetworkConfigurationParameters {
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
     }
-	
+
 	public double getBiasInit() {
 		return biasInit;
 	}

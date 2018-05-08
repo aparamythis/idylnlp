@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2018 Mountain Fog, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -27,7 +27,7 @@ import ai.idylnlp.model.nlp.pipeline.PipelineRequest;
 
 /**
  * Request to extract entities from text.
- * 
+ *
  * @author Mountain Fog, Inc.
  */
 public class EntityExtractionRequest extends PipelineRequest {
@@ -42,20 +42,20 @@ public class EntityExtractionRequest extends PipelineRequest {
 	private Map<String, String> metadata;
 	private String type = null;
 	private boolean includeModelFileNameInMetadata = true;
-	
+
 	/**
 	 * Create a request to extract entities. This request will use
-	 * a confidence threshold of zero unless manually set. 
+	 * a confidence threshold of zero unless manually set.
 	 * It is assumed the input language is English.
 	 * @param text The text to extract entities from.
 	 */
 	public EntityExtractionRequest(String[] text) {
-		
-		this.text = text;		
+
+		this.text = text;
 		this.metadata = new LinkedHashMap<String, String>();
-		
+
 	}
-	
+
 	/**
 	 * Sets the entity metadata.
 	 * @param metadata The entity metadata.
@@ -65,7 +65,7 @@ public class EntityExtractionRequest extends PipelineRequest {
 		this.metadata = metadata;
 		return this;
 	}
-	
+
 	/**
 	 * Sets the confidence threshold.
 	 * @param confidenceThreshold The confidence threshold.
@@ -75,7 +75,7 @@ public class EntityExtractionRequest extends PipelineRequest {
 		this.confidenceThreshold = confidenceThreshold;
 		return this;
 	}
-	
+
 	/**
 	 * Sets the extraction context. This value does not have to be unique.
 	 * @param context The context for the extraction.
@@ -85,7 +85,7 @@ public class EntityExtractionRequest extends PipelineRequest {
 		this.context = context;
 		return this;
 	}
-	
+
 	/**
 	 * Sets the type of entity to extract.
 	 * @param type The type of entity to extract.
@@ -97,7 +97,7 @@ public class EntityExtractionRequest extends PipelineRequest {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param language The {@link LanguageCode} of the input text.
 	 * @return The {@link EntityExtractionRequest}.
 	 */
@@ -105,17 +105,17 @@ public class EntityExtractionRequest extends PipelineRequest {
 		this.languageCode = language;
 		return this;
 	}
-	
+
 	/**
 	 * The sort {@link EntityOrder order} for the returned entities.
-	 * @param order The sort {@link EntityOrder order} for the returned entities. 
+	 * @param order The sort {@link EntityOrder order} for the returned entities.
 	 * @return Returns a reference to this object so that method calls can be chained together.
 	 */
 	public EntityExtractionRequest withOrder(EntityOrder order) {
 		this.order = order;
 		return this;
 	}
-	
+
 	/**
 	 * Sets a {@link Location location} attribute for the entity extraction request.
 	 * @param location The {@link Location location}.
@@ -125,7 +125,7 @@ public class EntityExtractionRequest extends PipelineRequest {
 		this.location = location;
 		return this;
 	}
-	
+
 	/**
 	 * Sets the duplicate entity {@link DuplicateEntityStrategy strategy}. If set this value overrides
 	 * the duplicate entity strategy set for the pipeline for this request only.
@@ -148,18 +148,18 @@ public class EntityExtractionRequest extends PipelineRequest {
 		this.includeModelFileNameInMetadata = includeModelFileNameInMetadata;
 		return this;
 	}
-	
+
 	@Override
 	public String toString() {
-		
+
 		StringBuilder sb = new StringBuilder();
-		
+
 		sb.append("Text: " + text + "; Confidence Threshold: " + confidenceThreshold + "; Context: " + context + "; Language: " + languageCode.getAlpha3().toString() + "; ");
-	
+
 		return sb.toString();
-		
+
 	}
-	
+
 	/**
 	 * Gets the value of the confidence threshold.
 	 * @return The value of the confidence threshold.
@@ -183,7 +183,7 @@ public class EntityExtractionRequest extends PipelineRequest {
 	public String[] getText() {
 		return text;
 	}
-	
+
 	/**
 	 * Gets the language of the input text.
 	 * @return The {@link LanguageCode} of the input text.
@@ -191,7 +191,7 @@ public class EntityExtractionRequest extends PipelineRequest {
 	public LanguageCode getLanguage() {
 		return languageCode;
 	}
-	
+
 	/**
 	 * Sets the language of the input text.
 	 * @param languageCode The {@link LanguageCode}.
@@ -199,7 +199,7 @@ public class EntityExtractionRequest extends PipelineRequest {
 	public void setLanguage(LanguageCode languageCode) {
 		this.languageCode = languageCode;
 	}
-	
+
 	/**
 	 * Gets the context used for the extraction.
 	 * @return The context.
@@ -317,5 +317,5 @@ public class EntityExtractionRequest extends PipelineRequest {
 			boolean includeModelFileNameInMetadata) {
 		this.includeModelFileNameInMetadata = includeModelFileNameInMetadata;
 	}
-	
+
 }

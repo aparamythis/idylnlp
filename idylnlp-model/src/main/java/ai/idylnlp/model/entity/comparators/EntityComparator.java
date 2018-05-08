@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2018 Mountain Fog, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -27,14 +27,14 @@ import ai.idylnlp.model.entity.Entity;
 /**
  * {@link Comparator Comparator} for {@link Entity entities}.
  * Supports sorting by entity confidence and entity text.
- * 
+ *
  * @author Mountain Fog, Inc.
  *
  */
 public class EntityComparator implements Comparator<Entity> {
-	
+
 	private Order sortingBy;
-	
+
 	/**
 	 * Creates a new {@link EntityComparator} with the given
 	 * sorting method.
@@ -43,16 +43,16 @@ public class EntityComparator implements Comparator<Entity> {
 	public EntityComparator(Order sortingBy) {
 		this.sortingBy = sortingBy;
 	}
-	
+
 	public enum Order {
 		CONFIDENCE, TEXT
 	}
 
 	@Override
 	public int compare(Entity entity1, Entity entity2) {
-		
+
 		switch (sortingBy) {
-		
+
 		case CONFIDENCE:
 			return Double.compare(entity1.getConfidence(), entity2.getConfidence());
 
@@ -62,7 +62,7 @@ public class EntityComparator implements Comparator<Entity> {
 		}
 
 		throw new IllegalArgumentException("Invalid sort type.");
-		
+
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class EntityComparator implements Comparator<Entity> {
 	public Order getSortingBy() {
 		return sortingBy;
 	}
-	
+
 	/**
 	 * Sort the entities.
 	 * @param entities The set of {@link Entity entities}.
@@ -80,14 +80,14 @@ public class EntityComparator implements Comparator<Entity> {
 	 * @return A set of sorted {@link Entity entities}.
 	 */
 	public static Set<Entity> sort(Set<Entity> entities, Order sortingBy) {
-		
+
 		EntityComparator comparator = new EntityComparator(sortingBy);
 		List<Entity> list = new ArrayList<Entity>(entities);
 		Collections.sort(list, comparator);
 		Set<Entity> sortedEntities = new LinkedHashSet<>(list);
-		
+
 		return sortedEntities;
-				
+
 	}
 
 }

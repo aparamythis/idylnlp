@@ -40,7 +40,7 @@ import opennlp.tools.util.model.ModelUtil;
 
 public class UniversalDependency20Eval extends AbstractEvalTest {
 
-  private static File SPA_ANCORA_TRAIN;      
+  private static File SPA_ANCORA_TRAIN;
   private static File SPA_ANCORA_DEV;
 
   @BeforeClass

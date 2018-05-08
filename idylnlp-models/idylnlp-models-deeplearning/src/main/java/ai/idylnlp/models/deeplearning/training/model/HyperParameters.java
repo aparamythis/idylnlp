@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2018 Mountain Fog, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -24,23 +24,23 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class HyperParameters {
-	
+
 	@SerializedName("WindowSize")
 	@Expose
 	private int windowSize = 15;
-	
+
 	@SerializedName("Seed")
 	@Expose
 	private long seed = 1497630814976308L;
-		
+
 	@SerializedName("Epochs")
 	@Expose
 	private int epochs = 1;
-	
+
 	@SerializedName("BatchSize")
 	@Expose
 	private int batchSize = 1;
-	
+
 	@SerializedName("ConvolutionMode")
 	@Expose
 	private String convolutionMode = "truncate";
@@ -48,29 +48,29 @@ public class HyperParameters {
 	@SerializedName("NetworkConfigurationParameters")
 	@Expose
 	private NetworkConfigurationParameters networkConfigurationParameters;
-	
+
 	public ConvolutionMode getConvolutionModeParam() {
-		
+
 		if(StringUtils.equalsIgnoreCase(convolutionMode, "truncate")) {
-			
+
 			return ConvolutionMode.Truncate;
-			
+
 		} else if(StringUtils.equalsIgnoreCase(convolutionMode, "same")) {
-			
+
 			return ConvolutionMode.Same;
-			
+
 		} else if(StringUtils.equalsIgnoreCase(convolutionMode, "strict")) {
-			
+
 			return ConvolutionMode.Strict;
-			
+
 		} else {
-			
+
 			return null;
-			
+
 		}
-		
+
 	}
-	
+
 	@Override
     public boolean equals(Object o) {
       return EqualsBuilder.reflectionEquals(this, o);

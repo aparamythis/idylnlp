@@ -240,7 +240,7 @@ public class TokenNameFinderCrossValidator {
   public FMeasure getFMeasure() {
     return fmeasure;
   }
-  
+
   public List<FMeasure> getFMeasures() {
 	return fmeasures;
   }

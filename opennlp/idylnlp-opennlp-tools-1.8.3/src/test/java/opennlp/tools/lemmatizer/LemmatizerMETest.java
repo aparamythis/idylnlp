@@ -85,10 +85,10 @@ public class LemmatizerMETest {
 
     Assert.assertArrayEquals(expect, lemmas);
   }
-  
+
   @Test(expected = InsufficientTrainingDataException.class)
   public void testInsufficientData() throws IOException {
- 
+
     ObjectStream<LemmaSample> sampleStream = new LemmaSampleStream(
         new PlainTextByLineStream(new MockInputStreamFactory(
             new File("opennlp/tools/lemmatizer/trial.old-insufficient.tsv")),

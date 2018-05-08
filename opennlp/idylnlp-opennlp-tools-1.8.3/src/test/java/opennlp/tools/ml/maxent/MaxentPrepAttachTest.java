@@ -47,12 +47,12 @@ public class MaxentPrepAttachTest {
     testDataIndexer = new TwoPassDataIndexer();
     testDataIndexer.init(trainingParameters, new HashMap<>());
   }
-  
+
   @Test
   public void testMaxentOnPrepAttachData() throws IOException {
     testDataIndexer.index(PrepAttachDataUtil.createTrainingStream());
     // this shows why the GISTrainer should be a AbstractEventTrainer.
-    // TODO: make sure that the trainingParameter cutoff and the 
+    // TODO: make sure that the trainingParameter cutoff and the
     // cutoff value passed here are equal.
     AbstractModel model =
         new GISTrainer(true).trainModel(100,
@@ -97,7 +97,7 @@ public class MaxentPrepAttachTest {
 
     PrepAttachDataUtil.testModel(model, 0.8086159940579352 );
   }
-  
+
   @Test
   public void testMaxentOnPrepAttachDataWithParamsLLThreshold() throws IOException {
     TrainingParameters trainParams = new TrainingParameters();

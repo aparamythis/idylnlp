@@ -59,7 +59,7 @@ public class Conll02NameFinderEval extends AbstractEvalTest {
   private static File spanishTrainingFile;
   private static File spanishTestAFile;
   private static File spanishTestBFile;
-      
+
 
   private TokenNameFinderModel train(File trainFile, LANGUAGE lang,
       TrainingParameters params, int types) throws IOException {
@@ -82,7 +82,7 @@ public class Conll02NameFinderEval extends AbstractEvalTest {
 
     Assert.assertEquals(expectedFMeasure, evaluator.getFMeasure().getFMeasure(), 0.0001);
   }
-  
+
   @BeforeClass
   public static void verifyTrainingData() throws Exception {
 
@@ -92,7 +92,7 @@ public class Conll02NameFinderEval extends AbstractEvalTest {
     spanishTrainingFile = new File(getOpennlpDataDir(), "conll02/ner/data/esp.train");
     spanishTestAFile = new File(getOpennlpDataDir(), "conll02/ner/data/esp.testa");
     spanishTestBFile = new File(getOpennlpDataDir(), "conll02/ner/data/esp.testb");
-    
+
     verifyTrainingData(new Conll02NameSampleStream(
         LANGUAGE.NLD, new MarkableFileInputStreamFactory(dutchTrainingFile),
           Conll02NameSampleStream.GENERATE_PERSON_ENTITIES),
@@ -105,11 +105,11 @@ public class Conll02NameFinderEval extends AbstractEvalTest {
         LANGUAGE.NLD, new MarkableFileInputStreamFactory(dutchTestBFile),
           Conll02NameSampleStream.GENERATE_PERSON_ENTITIES),
             new BigInteger("223206987942490952427646331013509976957"));
-    
+
     verifyTrainingData(new Conll02NameSampleStream(
         LANGUAGE.SPA, new MarkableFileInputStreamFactory(spanishTrainingFile),
           Conll02NameSampleStream.GENERATE_PERSON_ENTITIES),
-            new BigInteger("226089384066775461905386060946810714487"));  
+            new BigInteger("226089384066775461905386060946810714487"));
     verifyTrainingData(new Conll02NameSampleStream(
         LANGUAGE.SPA, new MarkableFileInputStreamFactory(spanishTestAFile),
           Conll02NameSampleStream.GENERATE_PERSON_ENTITIES),

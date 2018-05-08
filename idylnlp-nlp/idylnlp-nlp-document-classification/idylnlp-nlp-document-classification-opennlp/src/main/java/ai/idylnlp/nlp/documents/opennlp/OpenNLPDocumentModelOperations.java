@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2018 Mountain Fog, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -49,7 +49,7 @@ import opennlp.tools.util.TrainingParameters;
 /**
  * Implementation of {@link DocumentClassifier} that performs document classification
  * using OpenNLP.
- * 
+ *
  * @author Mountain Fog, Inc.
  *
  */
@@ -59,58 +59,58 @@ public class OpenNLPDocumentModelOperations implements DocumentClassifierModelOp
 
 	@Override
 	public DocumentClassificationTrainingResponse train(OpenNLPDocumentClassifierTrainingRequest request) throws DocumentModelTrainingException {
-		
+
 		try {
-			
+
 			InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(request.getTrainingFile());
 			ObjectStream<DocumentSample> sample = new DocumentSampleStream(new PlainTextByLineStream(inputStreamFactory, Constants.ENCODING_UTF8));
 
 			final String language = request.getLanguageCode().getAlpha3().toString();
-			
+
 			DoccatModel model = DocumentCategorizerME.train(language, sample, TrainingParameters.defaultParams(), new DoccatFactory());
-			
+
 			BufferedOutputStream modelOut = null;
-			
+
 			// Set the encryption key.
 			OpenNLPEncryptionFactory.getDefault().setKey(request.getEncryptionKey());
-			
+
 			// The generated model's ID. Assigned during the training process.
 			String modelId = "";
-			
+
 			File modelFile = File.createTempFile("model", ".bin");
-			
+
 			try {
-		
+
 				modelOut = new BufferedOutputStream(new FileOutputStream(modelFile));
 				modelId = model.serialize(modelOut);
-						  
+
 			} catch (Exception ex) {
-				
-				LOGGER.error("Unable to create the model.", ex);			
-				
+
+				LOGGER.error("Unable to create the model.", ex);
+
 			} finally {
-				
+
 				if (modelOut != null) {
-					modelOut.close();  
+					modelOut.close();
 				}
-				
+
 				// Clear the encryption key.
 				OpenNLPEncryptionFactory.getDefault().clearKey();
-			  
+
 			}
-			
+
 			final Map<DocumentClassificationFile, File> files = new HashMap<>();
 			files.put(DocumentClassificationFile.MODEL_FILE, modelFile);
-			
+
 			// TODO: Get the categories and return them.
 			return new DocumentClassificationTrainingResponse(modelId, files, Collections.emptyList());
-			
+
 		} catch (IOException ex) {
 
 			throw new DocumentModelTrainingException("Unable to train document classification model.", ex);
-			
+
 		}
 
 	}
-	
+
 }

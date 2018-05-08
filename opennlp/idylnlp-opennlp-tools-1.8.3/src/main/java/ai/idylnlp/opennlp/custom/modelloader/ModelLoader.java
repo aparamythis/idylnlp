@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2018 Mountain Fog, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -58,7 +58,7 @@ public abstract class ModelLoader<T extends BaseModel> {
 	private String modelDirectory;
 
 	private Class<T> typeParameterClass;
-	
+
 	private ModelValidator modelValidator;
 	private IdylNLPModelZoo idylNlpModelZoo;
 
@@ -130,18 +130,18 @@ public abstract class ModelLoader<T extends BaseModel> {
 
 		// Does this file exist?
 		final File modelFile = new File(fullModelFileName);
-		
+
 		if(!modelFile.exists()) {
-			
+
 			if(idylNlpModelZoo != null) {
-				
+
 				LOGGER.info("Attempting to download model {} from the Idyl NLP zoo.", modelManifest.getModelId());
-				
+
 				// Try to download the model from the zoo.
 				idylNlpModelZoo.downloadModel(modelManifest.getModelId(), modelFile);
-				
+
 			}
-			
+
 		}
 
 		// Model loading will always take a decent amount of time
@@ -282,7 +282,7 @@ public abstract class ModelLoader<T extends BaseModel> {
 	public void setIdylNLPModelZoo(IdylNLPModelZoo idylNLPModelZoo) {
 		this.idylNlpModelZoo = idylNLPModelZoo;
 	}
-	
+
 	/**
 	 * Gets the map of models to file names.
 	 * @return A map of models to file names.

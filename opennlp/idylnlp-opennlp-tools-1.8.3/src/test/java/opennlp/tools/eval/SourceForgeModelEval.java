@@ -84,7 +84,7 @@ public class SourceForgeModelEval extends AbstractEvalTest {
   public static void verifyTrainingData() throws Exception {
     verifyTrainingData(new LeipzigDoccatSampleStream("eng", 25,
             new MarkableFileInputStreamFactory(new File(getOpennlpDataDir(),
-                    "leipzig/eng_news_2010_300K-sentences.txt"))), 
+                    "leipzig/eng_news_2010_300K-sentences.txt"))),
         new BigInteger("172812413483919324675263268750583851712"));
   }
 

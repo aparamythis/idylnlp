@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2018 Mountain Fog, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -33,71 +33,71 @@ import ai.idylnlp.training.definition.xml.Trainingdefinition;
 import ai.idylnlp.training.definition.xml.Trainingdefinition.Trainingdata;
 
 public class ModelOperationsUtilsTest {
-	
+
 	private static final Logger LOGGER = LogManager.getLogger(ModelOperationsUtilsTest.class);
 
 	@Test
 	public void getSubjectOfTrainingOrEvaluationOpenNLP() {
-		
+
 		Trainingdata data = new Trainingdata();
 		data.setFile("training-input-file.txt");
-		data.setFormat("opennlp");		
-		
+		data.setFormat("opennlp");
+
 		Trainingdefinition def = new Trainingdefinition();
 		def.setTrainingdata(data);
-		
+
 		TrainingDefinitionReader reader = Mockito.mock(TrainingDefinitionReader.class);
 		when(reader.getTrainingDefinition()).thenReturn(def);
-		
+
 		SubjectOfTrainingOrEvaluation sot = ModelOperationsUtils.getSubjectOfTrainingOrEvaluation(reader);
-		
+
 		assertTrue(sot instanceof OpenNLPSubjectOfTrainingOrEvaluation);
 		assertEquals(sot.getInputFile(), "training-input-file.txt");
-		
+
 	}
-	
+
 	@Test
 	public void getSubjectOfTrainingOrEvaluationIdylNLP() {
-		
+
 		Trainingdata data = new Trainingdata();
 		data.setFile("training-input-file.txt");
-		data.setFormat("idylnlp");		
+		data.setFormat("idylnlp");
 		data.setAnnotations("annotations.txt");
-		
+
 		Trainingdefinition def = new Trainingdefinition();
 		def.setTrainingdata(data);
-		
+
 		TrainingDefinitionReader reader = Mockito.mock(TrainingDefinitionReader.class);
 		when(reader.getTrainingDefinition()).thenReturn(def);
-		
+
 		SubjectOfTrainingOrEvaluation sot = ModelOperationsUtils.getSubjectOfTrainingOrEvaluation(reader);
-		
+
 		assertTrue(sot instanceof IdylNLPSubjectOfTrainingOrEvaluation);
 		assertEquals(sot.getInputFile(), "training-input-file.txt");
-		
+
 		IdylNLPSubjectOfTrainingOrEvaluation nf = (IdylNLPSubjectOfTrainingOrEvaluation) sot;
 		assertEquals(nf.getAnnotationsFile(), "annotations.txt");
-		
+
 	}
-	
+
 	@Test
 	public void getSubjectOfTrainingOrEvaluationInvalid() {
-		
+
 		Trainingdata data = new Trainingdata();
 		data.setFile("training-input-file.txt");
-		data.setFormat("INVALID");		
-		
+		data.setFormat("INVALID");
+
 		Trainingdefinition def = new Trainingdefinition();
 		def.setTrainingdata(data);
-		
+
 		TrainingDefinitionReader reader = Mockito.mock(TrainingDefinitionReader.class);
 		when(reader.getTrainingDefinition()).thenReturn(def);
-		
+
 		SubjectOfTrainingOrEvaluation sot = ModelOperationsUtils.getSubjectOfTrainingOrEvaluation(reader);
-		
+
 		assertTrue(sot instanceof OpenNLPSubjectOfTrainingOrEvaluation);
 		assertEquals(sot.getInputFile(), "training-input-file.txt");
-		
+
 	}
-	
+
 }

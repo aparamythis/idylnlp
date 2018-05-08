@@ -88,7 +88,7 @@ public class IrishSentenceBankDocument {
     public TokenSample getTokenSample() {
       return new TokenSample(original, tokens);
     }
-    public IrishSentenceBankSentence(String src, String trans, String orig, 
+    public IrishSentenceBankSentence(String src, String trans, String orig,
                                      Span[] toks, IrishSentenceBankFlex[] flx) {
       this.source = src;
       this.translation = trans;

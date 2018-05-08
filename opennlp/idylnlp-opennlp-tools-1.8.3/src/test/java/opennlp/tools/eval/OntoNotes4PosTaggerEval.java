@@ -71,7 +71,7 @@ public class OntoNotes4PosTaggerEval extends AbstractEvalTest {
   public static void verifyTrainingData() throws Exception {
     verifyTrainingData(createPOSSampleStream(), new BigInteger("300430765214895870888056958221353356972"));
   }
-  
+
   @Test
   public void evalEnglishMaxentTagger() throws IOException {
     TrainingParameters params = ModelUtil.createDefaultTrainingParameters();

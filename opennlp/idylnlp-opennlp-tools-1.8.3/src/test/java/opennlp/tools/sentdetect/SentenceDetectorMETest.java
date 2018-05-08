@@ -135,7 +135,7 @@ public class SentenceDetectorMETest {
     Assert.assertEquals(new Span(16, 56), pos[1]);
 
   }
-  
+
   @Test(expected = InsufficientTrainingDataException.class)
   public void testInsufficientData() throws IOException {
 
@@ -147,11 +147,11 @@ public class SentenceDetectorMETest {
     mlParams.put(TrainingParameters.CUTOFF_PARAM, 0);
 
     SentenceDetectorFactory factory = new SentenceDetectorFactory("eng", true, null, null);
-    
+
     SentenceDetectorME.train("eng",
         new SentenceSampleStream(
             new PlainTextByLineStream(in, StandardCharsets.UTF_8)), factory, mlParams);
-    
+
   }
-  
+
 }

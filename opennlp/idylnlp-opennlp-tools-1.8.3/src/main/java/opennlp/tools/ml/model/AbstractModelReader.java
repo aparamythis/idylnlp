@@ -79,8 +79,8 @@ public abstract class AbstractModelReader {
   /**
    * Implement as needed for the format the model is stored in.
    */
-  public String readUTF() throws java.io.IOException { 
-	  
+  public String readUTF() throws java.io.IOException {
+
 	  String s = dataReader.readUTF();
 
 	  if(StringUtils.isNotEmpty(OpenNLPEncryptionFactory.getDefault().getKey())) {
@@ -91,11 +91,11 @@ public abstract class AbstractModelReader {
 		  } catch (Exception ex) {
 			  throw new RuntimeException("Unable to load the model. Verify that your license key and encryption key are correct.", ex);
 		  }
-	 
+
 	  }
-	  
+
 	  return s;
-    
+
   }
 
   public AbstractModel getModel() throws IOException {

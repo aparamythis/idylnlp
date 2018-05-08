@@ -18,19 +18,19 @@ import ai.idylnlp.custom.encryption.AbstractEncryption;
  * If you get an error like "java.security.InvalidKeyException: Illegal key size or default parameters" when trying
  * to load and decrypt a model make sure you have the Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files
  * for your JDK. Refer to: http://stackoverflow.com/a/6481658 and http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html
- * <p>  
+ * <p>
  * You will NOT get this error when using OpenJDK!
- * 
+ *
  * @author Mountain Fog, Inc.
  *
  */
 public class OpenNLP183Encryption extends AbstractEncryption implements OpenNLPEncryption {
-	
+
 	private String encryptionKey;
 
 	@Override
 	public String encrypt(String strToEncrypt) throws Exception {
-		
+
 		SecretKeySpec key = generateKey(encryptionKey);
 
 		Cipher cipher = Cipher.getInstance("AES");
@@ -43,7 +43,7 @@ public class OpenNLP183Encryption extends AbstractEncryption implements OpenNLPE
 
 	@Override
 	public String decrypt(String strToDecrypt) throws Exception {
-				
+
 		return decrypt(strToDecrypt, encryptionKey);
 
 	}
@@ -61,7 +61,7 @@ public class OpenNLP183Encryption extends AbstractEncryption implements OpenNLPE
 	public void setKey(String encryptionKey) {
 		this.encryptionKey = encryptionKey;
 	}
-	
+
 	@Override
 	public String getKey() {
 		return encryptionKey;
@@ -80,9 +80,9 @@ public class OpenNLP183Encryption extends AbstractEncryption implements OpenNLPE
 		Cipher cipher = Cipher.getInstance("AES");
 
 		cipher.init(Cipher.DECRYPT_MODE, key);
-		
+
 		return new String(cipher.doFinal(Base64.decodeBase64(text)));
-		
+
 	}
 
 }

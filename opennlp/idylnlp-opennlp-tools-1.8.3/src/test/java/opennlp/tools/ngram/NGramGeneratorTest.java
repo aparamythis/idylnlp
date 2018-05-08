@@ -25,30 +25,30 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class NGramGeneratorTest {
-  
+
   @Test
   public void generateListTest() {
-    
+
     final List<String> input = Arrays.asList("This", "is", "a", "sentence");
     final int window = 2;
     final String separator = "-";
-    
+
     final List<String> ngrams = NGramGenerator.generate(input, window, separator);
-    
+
     Assert.assertEquals(3,  ngrams.size());
     Assert.assertTrue(ngrams.contains("This-is"));
     Assert.assertTrue(ngrams.contains("is-a"));
     Assert.assertTrue(ngrams.contains("a-sentence"));
-    
+
   }
-  
+
   @Test
   public void generateCharTest() {
-    
+
     final char[] input = "Test again".toCharArray();
     final int window = 4;
     final String separator = "-";
-    
+
     final List<String> ngrams = NGramGenerator.generate(input, window, separator);
 
     Assert.assertEquals(7,  ngrams.size());
@@ -59,33 +59,33 @@ public class NGramGeneratorTest {
     Assert.assertTrue(ngrams.contains(" -a-g-a"));
     Assert.assertTrue(ngrams.contains("a-g-a-i"));
     Assert.assertTrue(ngrams.contains("g-a-i-n"));
-    
+
   }
-  
+
   @Test
   public void generateLargerWindowThanListTest() {
-    
+
     final List<String> input = Arrays.asList("One", "two");
     final int window = 3;
     final String separator = "-";
-    
-    final List<String> ngrams = NGramGenerator.generate(input, window, separator);
-    
-    Assert.assertTrue(ngrams.isEmpty());
-    
-  }
-  
-  @Test
-  public void emptyTest() {
-    
-    final List<String> input = new ArrayList<>();
-    final int window = 2;
-    final String separator = "-";
-    
+
     final List<String> ngrams = NGramGenerator.generate(input, window, separator);
 
     Assert.assertTrue(ngrams.isEmpty());
-    
+
   }
-  
+
+  @Test
+  public void emptyTest() {
+
+    final List<String> input = new ArrayList<>();
+    final int window = 2;
+    final String separator = "-";
+
+    final List<String> ngrams = NGramGenerator.generate(input, window, separator);
+
+    Assert.assertTrue(ngrams.isEmpty());
+
+  }
+
 }

@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2018 Mountain Fog, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -38,31 +38,31 @@ public class NameSampleToDataSetStream extends FilterObjectStream<NameSample, Da
     private final String[] labels;
     private int windowSize;
     private int vectorSize;
-    
+
     private Iterator<DataSet> dataSets = Collections.emptyListIterator();
 
     public NameSampleToDataSetStream(ObjectStream<NameSample> samples, WordVectors wordVectors, int windowSize, int vectorSize, String[] labels) {
-      
+
     	super(samples);
-      
+
     	this.wordVectors = wordVectors;
     	this.windowSize = windowSize;
     	this.vectorSize = vectorSize;
     	this.labels = labels;
-      
+
     }
 
     @Override
     public final DataSet read() throws IOException {
 
     	if(dataSets.hasNext()) {
-    	  
+
     		return dataSets.next();
-        
+
     	} else {
-    	  
+
     		NameSample sample;
-        
+
     		while (!dataSets.hasNext() && (sample = samples.read()) != null) {
     			dataSets = createDataSets(sample);
     		}
@@ -70,31 +70,31 @@ public class NameSampleToDataSetStream extends FilterObjectStream<NameSample, Da
     		if(dataSets.hasNext()) {
     			return read();
     		}
-        
+
     	}
 
     	return null;
-      
+
     }
-    
+
     private Iterator<DataSet> createDataSets(NameSample sample) {
-    	
+
     	TokenizerFactory tokenizerFactory = new DefaultTokenizerFactory();
-        tokenizerFactory.setTokenPreProcessor(new CommonPreprocessor());	
+        tokenizerFactory.setTokenPreProcessor(new CommonPreprocessor());
 
         String s = String.join(" ", sample.getSentence());
         List<String> tokens = tokenizerFactory.create(s).getTokens();
 
         String[] t = tokens.toArray(new String[tokens.size()]);
-        
+
         // sample and t are different tokens at this point due to removing punctuation
-        
+
         /*System.out.println("t = " + t.length);
         System.out.println(String.join(" ", t));
         System.out.println("sample = " + sample.getSentence().length);
         System.out.println(String.join(" ", sample.getSentence()));
         System.out.println("--------");*/
-        
+
         List<INDArray> features = DeepLearningUtils.mapToFeatureMatrices(wordVectors, t, windowSize);
         List<INDArray> labels = DeepLearningUtils.mapToLabelVectors(sample, windowSize, this.labels);
 
@@ -105,7 +105,7 @@ public class NameSampleToDataSetStream extends FilterObjectStream<NameSample, Da
         }
 
         return dataSetList.iterator();
-      
+
 	}
-    
+
 }
