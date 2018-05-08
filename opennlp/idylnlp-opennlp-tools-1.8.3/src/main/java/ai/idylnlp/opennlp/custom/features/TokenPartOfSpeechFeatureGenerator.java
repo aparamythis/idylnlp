@@ -35,45 +35,45 @@ import opennlp.tools.util.featuregen.AdaptiveFeatureGenerator;
  */
 public class TokenPartOfSpeechFeatureGenerator implements AdaptiveFeatureGenerator {
 
-	private static final String POS_PREFIX = "tpos";
+  private static final String POS_PREFIX = "tpos";
 
-	private PartsOfSpeechTagger tagger;
-	private Map<String, String> tokPosMap;
+  private PartsOfSpeechTagger tagger;
+  private Map<String, String> tokPosMap;
 
-	public TokenPartOfSpeechFeatureGenerator(PartsOfSpeechTagger tagger) {
+  public TokenPartOfSpeechFeatureGenerator(PartsOfSpeechTagger tagger) {
 
-		this.tagger = tagger;
-		tokPosMap = new HashMap<String, String>();
+    this.tagger = tagger;
+    tokPosMap = new HashMap<String, String>();
 
-	}
+  }
 
-	@Override
-	public void createFeatures(List<String> features, String[] tokens, int index, String[] previousOutcomes) {
+  @Override
+  public void createFeatures(List<String> features, String[] tokens, int index, String[] previousOutcomes) {
 
-		String[] postags = getPostags(tokens);
-		features.add(POS_PREFIX + "=" + postags[index]);
+    String[] postags = getPostags(tokens);
+    features.add(POS_PREFIX + "=" + postags[index]);
 
-	}
+  }
 
-	private String[] getPostags(String[] tokens) {
+  private String[] getPostags(String[] tokens) {
 
-		String text = StringUtils.join(tokens, " ");
+    String text = StringUtils.join(tokens, " ");
 
-		if (tokPosMap.containsKey(text)) {
+    if (tokPosMap.containsKey(text)) {
 
-			return tokPosMap.get(text).split(" ");
+      return tokPosMap.get(text).split(" ");
 
-		} else {
+    } else {
 
-			List<PartsOfSpeechToken> partsOfSpeechTokens = tagger.tag(tokens);
-			String[] tags = PartsOfSpeechToken.getTokens(partsOfSpeechTokens);
+      List<PartsOfSpeechToken> partsOfSpeechTokens = tagger.tag(tokens);
+      String[] tags = PartsOfSpeechToken.getTokens(partsOfSpeechTokens);
 
-			tokPosMap.put(text, StringUtils.join(tags, " "));
+      tokPosMap.put(text, StringUtils.join(tags, " "));
 
-			return tags;
+      return tags;
 
-		}
+    }
 
-	}
+  }
 
 }

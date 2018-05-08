@@ -20,20 +20,20 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class DocumentClassificationEvaluationResponse {
 
-	private Map<String, Map<String, AtomicInteger>> results;
+  private Map<String, Map<String, AtomicInteger>> results;
 
-	public DocumentClassificationEvaluationResponse(Map<String, Map<String, AtomicInteger>> results) {
+  public DocumentClassificationEvaluationResponse(Map<String, Map<String, AtomicInteger>> results) {
 
-		this.results = results;
+    this.results = results;
 
-	}
+  }
 
-	public Map<String, Map<String, AtomicInteger>> getResults() {
-		return results;
-	}
+  public Map<String, Map<String, AtomicInteger>> getResults() {
+    return results;
+  }
 
-	public void setResults(Map<String, Map<String, AtomicInteger>> results) {
-		this.results = results;
-	}
+  public void setResults(Map<String, Map<String, AtomicInteger>> results) {
+    this.results = results;
+  }
 
 }

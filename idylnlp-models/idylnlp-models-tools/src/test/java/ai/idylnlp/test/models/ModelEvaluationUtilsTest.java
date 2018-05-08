@@ -28,70 +28,70 @@ import ai.idylnlp.models.ModelEvaluationUtils;
 
 public class ModelEvaluationUtilsTest {
 
-	@Test
-	public void performPairedTTestSameValues() {
+  @Test
+  public void performPairedTTestSameValues() {
 
-		double alpha = 0.05;
+    double alpha = 0.05;
 
-		final FMeasure fmeasure1 = new FMeasure(0, 0, 0.85);
+    final FMeasure fmeasure1 = new FMeasure(0, 0, 0.85);
 
-		List<FMeasure> measures1 = new LinkedList<FMeasure>();
-		measures1.add(new FMeasure(0, 0, 0.85));
-		measures1.add(new FMeasure(0, 0, 0.85));
-		measures1.add(new FMeasure(0, 0, 0.85));
-		measures1.add(new FMeasure(0, 0, 0.85));
-		measures1.add(new FMeasure(0, 0, 0.85));
+    List<FMeasure> measures1 = new LinkedList<FMeasure>();
+    measures1.add(new FMeasure(0, 0, 0.85));
+    measures1.add(new FMeasure(0, 0, 0.85));
+    measures1.add(new FMeasure(0, 0, 0.85));
+    measures1.add(new FMeasure(0, 0, 0.85));
+    measures1.add(new FMeasure(0, 0, 0.85));
 
-		FMeasureModelValidationResult result1 = new FMeasureModelValidationResult(fmeasure1, measures1);
+    FMeasureModelValidationResult result1 = new FMeasureModelValidationResult(fmeasure1, measures1);
 
-		final FMeasure fmeasure2 = new FMeasure(055, 0.60, 0.78);
+    final FMeasure fmeasure2 = new FMeasure(055, 0.60, 0.78);
 
-		List<FMeasure> measures2 = new LinkedList<FMeasure>();
-		measures2.add(new FMeasure(0, 0, 0.85));
-		measures2.add(new FMeasure(0, 0, 0.85));
-		measures2.add(new FMeasure(0, 0, 0.85));
-		measures2.add(new FMeasure(0, 0, 0.85));
-		measures2.add(new FMeasure(0, 0, 0.85));
+    List<FMeasure> measures2 = new LinkedList<FMeasure>();
+    measures2.add(new FMeasure(0, 0, 0.85));
+    measures2.add(new FMeasure(0, 0, 0.85));
+    measures2.add(new FMeasure(0, 0, 0.85));
+    measures2.add(new FMeasure(0, 0, 0.85));
+    measures2.add(new FMeasure(0, 0, 0.85));
 
-		FMeasureModelValidationResult result2 = new FMeasureModelValidationResult(fmeasure2, measures2);
+    FMeasureModelValidationResult result2 = new FMeasureModelValidationResult(fmeasure2, measures2);
 
-		boolean result = ModelEvaluationUtils.performPairedTTest(result1, result2, alpha);
+    boolean result = ModelEvaluationUtils.performPairedTTest(result1, result2, alpha);
 
-		assertFalse(result);
+    assertFalse(result);
 
-	}
+  }
 
-	@Test
-	public void performPairedTTest() {
+  @Test
+  public void performPairedTTest() {
 
-		double alpha = 0.05;
+    double alpha = 0.05;
 
-		final FMeasure fmeasure1 = new FMeasure(0, 0, 0.85);
+    final FMeasure fmeasure1 = new FMeasure(0, 0, 0.85);
 
-		List<FMeasure> measures1 = new LinkedList<FMeasure>();
-		measures1.add(new FMeasure(0, 0, 0.85));
-		measures1.add(new FMeasure(0, 0, 0.77));
-		measures1.add(new FMeasure(0, 0, 0.55));
-		measures1.add(new FMeasure(0, 0, 0.62));
-		measures1.add(new FMeasure(0, 0, 0.88));
+    List<FMeasure> measures1 = new LinkedList<FMeasure>();
+    measures1.add(new FMeasure(0, 0, 0.85));
+    measures1.add(new FMeasure(0, 0, 0.77));
+    measures1.add(new FMeasure(0, 0, 0.55));
+    measures1.add(new FMeasure(0, 0, 0.62));
+    measures1.add(new FMeasure(0, 0, 0.88));
 
-		FMeasureModelValidationResult result1 = new FMeasureModelValidationResult(fmeasure1, measures1);
+    FMeasureModelValidationResult result1 = new FMeasureModelValidationResult(fmeasure1, measures1);
 
-		final FMeasure fmeasure2 = new FMeasure(055, 0.60, 0.78);
+    final FMeasure fmeasure2 = new FMeasure(055, 0.60, 0.78);
 
-		List<FMeasure> measures2 = new LinkedList<FMeasure>();
-		measures2.add(new FMeasure(0, 0, 0.19));
-		measures2.add(new FMeasure(0, 0, 0.29));
-		measures2.add(new FMeasure(0, 0, 0.24));
-		measures2.add(new FMeasure(0, 0, 0.33));
-		measures2.add(new FMeasure(0, 0, 0.35));
+    List<FMeasure> measures2 = new LinkedList<FMeasure>();
+    measures2.add(new FMeasure(0, 0, 0.19));
+    measures2.add(new FMeasure(0, 0, 0.29));
+    measures2.add(new FMeasure(0, 0, 0.24));
+    measures2.add(new FMeasure(0, 0, 0.33));
+    measures2.add(new FMeasure(0, 0, 0.35));
 
-		FMeasureModelValidationResult result2 = new FMeasureModelValidationResult(fmeasure2, measures2);
+    FMeasureModelValidationResult result2 = new FMeasureModelValidationResult(fmeasure2, measures2);
 
-		boolean result = ModelEvaluationUtils.performPairedTTest(result1, result2, alpha);
+    boolean result = ModelEvaluationUtils.performPairedTTest(result1, result2, alpha);
 
-		assertTrue(result);
+    assertTrue(result);
 
-	}
+  }
 
 }

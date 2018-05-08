@@ -31,45 +31,45 @@ import ai.idylnlp.model.nlp.documents.AbstractDocumentClassifierConfiguration;
  */
 public class DeepLearningDocumentClassifierConfiguration extends AbstractDocumentClassifierConfiguration {
 
-	private static final Logger LOGGER = LogManager.getLogger(DeepLearningDocumentClassifierConfiguration.class);
+  private static final Logger LOGGER = LogManager.getLogger(DeepLearningDocumentClassifierConfiguration.class);
 
-	private Collection<DocumentModelManifest> models;
+  private Collection<DocumentModelManifest> models;
 
-	private DeepLearningDocumentClassifierConfiguration(Collection<DocumentModelManifest> models) {
+  private DeepLearningDocumentClassifierConfiguration(Collection<DocumentModelManifest> models) {
 
-		this.models = models;
+    this.models = models;
 
-	}
+  }
 
-	/**
-	 * Builder class to construct {@link DeepLearningDocumentClassifierConfiguration}.
-	 *
-	 * @author Mountain Fog, Inc.
-	 *
-	 */
-	public static class Builder {
+  /**
+   * Builder class to construct {@link DeepLearningDocumentClassifierConfiguration}.
+   *
+   * @author Mountain Fog, Inc.
+   *
+   */
+  public static class Builder {
 
-		private Collection<DocumentModelManifest> models;
+    private Collection<DocumentModelManifest> models;
 
-		public Builder withModels(Collection<DocumentModelManifest> models) {
-			this.models = models;
-			return this;
-		}
+    public Builder withModels(Collection<DocumentModelManifest> models) {
+      this.models = models;
+      return this;
+    }
 
-		/**
-		 * Creates a configured {@link DeepLearningDocumentClassifierConfiguration}.
-		 * @return A configured {@link DeepLearningDocumentClassifierConfiguration}.
-		 */
-		public DeepLearningDocumentClassifierConfiguration build() {
+    /**
+     * Creates a configured {@link DeepLearningDocumentClassifierConfiguration}.
+     * @return A configured {@link DeepLearningDocumentClassifierConfiguration}.
+     */
+    public DeepLearningDocumentClassifierConfiguration build() {
 
-			return new DeepLearningDocumentClassifierConfiguration(models);
+      return new DeepLearningDocumentClassifierConfiguration(models);
 
-		}
+    }
 
-	}
+  }
 
-	public Collection<DocumentModelManifest> getModels() {
-		return models;
-	}
+  public Collection<DocumentModelManifest> getModels() {
+    return models;
+  }
 
 }

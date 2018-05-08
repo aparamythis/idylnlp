@@ -25,71 +25,71 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  */
 public class IdylNLPAnnotation {
 
-	private int lineNumber;
-	private int tokenStart;
-	private int tokenEnd;
-	private String type;
+  private int lineNumber;
+  private int tokenStart;
+  private int tokenEnd;
+  private String type;
 
-	/**
-	 * Creates a new annotation.
-	 * @param lineNumber The line number in the text that contains the entity.
-	 * @param tokenStart The token-based start position of the entity.
-	 * @param tokenEnd THe token-based end position of the entity.
-	 * @param type The type of entity.
-	 */
-	public IdylNLPAnnotation(int lineNumber, int tokenStart, int tokenEnd, String type) {
+  /**
+   * Creates a new annotation.
+   * @param lineNumber The line number in the text that contains the entity.
+   * @param tokenStart The token-based start position of the entity.
+   * @param tokenEnd THe token-based end position of the entity.
+   * @param type The type of entity.
+   */
+  public IdylNLPAnnotation(int lineNumber, int tokenStart, int tokenEnd, String type) {
 
-		this.lineNumber = lineNumber;
-		this.tokenStart = tokenStart;
-		this.tokenEnd = tokenEnd;
-		this.type = type;
+    this.lineNumber = lineNumber;
+    this.tokenStart = tokenStart;
+    this.tokenEnd = tokenEnd;
+    this.type = type;
 
-	}
+  }
 
-	/**
-	 * Creates a new annotation.
-	 */
-	public IdylNLPAnnotation() {
+  /**
+   * Creates a new annotation.
+   */
+  public IdylNLPAnnotation() {
 
-	}
+  }
 
-	@Override
-	public String toString() {
+  @Override
+  public String toString() {
 
-		return ToStringBuilder.reflectionToString(this);
+    return ToStringBuilder.reflectionToString(this);
 
-	}
+  }
 
-	public int getTokenStart() {
-		return tokenStart;
-	}
+  public int getTokenStart() {
+    return tokenStart;
+  }
 
-	public void setTokenStart(int tokenStart) {
-		this.tokenStart = tokenStart;
-	}
+  public void setTokenStart(int tokenStart) {
+    this.tokenStart = tokenStart;
+  }
 
-	public int getTokenEnd() {
-		return tokenEnd;
-	}
+  public int getTokenEnd() {
+    return tokenEnd;
+  }
 
-	public void setTokenEnd(int tokenEnd) {
-		this.tokenEnd = tokenEnd;
-	}
+  public void setTokenEnd(int tokenEnd) {
+    this.tokenEnd = tokenEnd;
+  }
 
-	public String getType() {
-		return type;
-	}
+  public String getType() {
+    return type;
+  }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+  public void setType(String type) {
+    this.type = type;
+  }
 
-	public int getLineNumber() {
-		return lineNumber;
-	}
+  public int getLineNumber() {
+    return lineNumber;
+  }
 
-	public void setLineNumber(int lineNumber) {
-		this.lineNumber = lineNumber;
-	}
+  public void setLineNumber(int lineNumber) {
+    this.lineNumber = lineNumber;
+  }
 
 }

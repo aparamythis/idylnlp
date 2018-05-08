@@ -21,20 +21,20 @@ import org.apache.commons.lang3.tuple.Pair;
 
 public class LanguageDetectionResponse {
 
-	private List<Pair<String, Double>> languages;
+  private List<Pair<String, Double>> languages;
 
-	public LanguageDetectionResponse(List<Pair<String, Double>> languages) {
+  public LanguageDetectionResponse(List<Pair<String, Double>> languages) {
 
-		this.languages = languages;
+    this.languages = languages;
 
-	}
+  }
 
-	public List<Pair<String, Double>> getLanguages() {
-		return languages;
-	}
+  public List<Pair<String, Double>> getLanguages() {
+    return languages;
+  }
 
-	public void setLanguages(List<Pair<String, Double>> languages) {
-		this.languages = languages;
-	}
+  public void setLanguages(List<Pair<String, Double>> languages) {
+    this.languages = languages;
+  }
 
 }

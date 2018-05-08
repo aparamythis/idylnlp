@@ -24,22 +24,22 @@ package ai.idylnlp.model.nlp.documents;
  */
 public enum DocumentClassificationFile {
 
-	/**
-	 * A model file.
-	 */
-	MODEL_FILE("Model"),
-	MODEL_MANIFEST("Model Manifest");
+  /**
+   * A model file.
+   */
+  MODEL_FILE("Model"),
+  MODEL_MANIFEST("Model Manifest");
 
-	private String description;
+  private String description;
 
-	private DocumentClassificationFile(String description) {
+  private DocumentClassificationFile(String description) {
 
-		this.description = description;
+    this.description = description;
 
-	}
+  }
 
-	public String getDescription() {
-		return description;
-	}
+  public String getDescription() {
+    return description;
+  }
 
 }

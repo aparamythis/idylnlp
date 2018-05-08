@@ -25,58 +25,58 @@ package ai.idylnlp.model.training;
  */
 public class AccuracyEvaluationResult extends EvaluationResult {
 
-	private double wordAccuracy;
-	private long wordCount;
+  private double wordAccuracy;
+  private long wordCount;
 
-	/**
-	 * Creates a new result.
-	 * @param wordAccuracy The word accuracy value.
-	 * @param wordCount The count of words.
-	 */
-	public AccuracyEvaluationResult(double wordAccuracy, long wordCount) {
+  /**
+   * Creates a new result.
+   * @param wordAccuracy The word accuracy value.
+   * @param wordCount The count of words.
+   */
+  public AccuracyEvaluationResult(double wordAccuracy, long wordCount) {
 
-		this.wordAccuracy = wordAccuracy;
-		this.wordCount = wordCount;
+    this.wordAccuracy = wordAccuracy;
+    this.wordCount = wordCount;
 
-	}
+  }
 
-	@Override
-	public String toString() {
+  @Override
+  public String toString() {
 
-		return "Word Accuracy: " + wordAccuracy + "; Word Count: " + wordCount;
+    return "Word Accuracy: " + wordAccuracy + "; Word Count: " + wordCount;
 
-	}
+  }
 
-	/**
-	 * Gets the word accuracy.
-	 * @return The word accuracy.
-	 */
-	public double getWordAccuracy() {
-		return wordAccuracy;
-	}
+  /**
+   * Gets the word accuracy.
+   * @return The word accuracy.
+   */
+  public double getWordAccuracy() {
+    return wordAccuracy;
+  }
 
-	/**
-	 * Sets the word accuracy.
-	 * @param wordAccuracy The word accuracy.
-	 */
-	public void setWordAccuracy(double wordAccuracy) {
-		this.wordAccuracy = wordAccuracy;
-	}
+  /**
+   * Sets the word accuracy.
+   * @param wordAccuracy The word accuracy.
+   */
+  public void setWordAccuracy(double wordAccuracy) {
+    this.wordAccuracy = wordAccuracy;
+  }
 
-	/**
-	 * Gets the word count.
-	 * @return The word count.
-	 */
-	public long getWordCount() {
-		return wordCount;
-	}
+  /**
+   * Gets the word count.
+   * @return The word count.
+   */
+  public long getWordCount() {
+    return wordCount;
+  }
 
-	/**
-	 * Sets the word count.
-	 * @param wordCount The word count.
-	 */
-	public void setWordCount(long wordCount) {
-		this.wordCount = wordCount;
-	}
+  /**
+   * Sets the word count.
+   * @param wordCount The word count.
+   */
+  public void setWordCount(long wordCount) {
+    this.wordCount = wordCount;
+  }
 
 }

@@ -28,26 +28,26 @@ import ai.idylnlp.model.nlp.AnnotationWriter;
  */
 public class OpenNLPFileAnnotationWriter implements AnnotationWriter {
 
-	/**
-	 * Creates a new {@link OpenNLPFileAnnotationWriter}.
-	 */
-	public OpenNLPFileAnnotationWriter() {
+  /**
+   * Creates a new {@link OpenNLPFileAnnotationWriter}.
+   */
+  public OpenNLPFileAnnotationWriter() {
 
-	}
+  }
 
-	@Override
-	public String annotateText(Collection<Entity> entities, String text) {
+  @Override
+  public String annotateText(Collection<Entity> entities, String text) {
 
-		String annotatedText = text;
+    String annotatedText = text;
 
-		for(Entity entity : entities) {
+    for(Entity entity : entities) {
 
-			annotatedText = annotatedText.replaceAll(entity.getText(), "<START:" + entity.getType().toLowerCase() + "> " + entity.getText() + " <END>");
+      annotatedText = annotatedText.replaceAll(entity.getText(), "<START:" + entity.getType().toLowerCase() + "> " + entity.getText() + " <END>");
 
-		}
+    }
 
-		return annotatedText;
+    return annotatedText;
 
-	}
+  }
 
 }

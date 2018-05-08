@@ -31,41 +31,41 @@ import ai.idylnlp.model.manifest.StandardModelManifest;
  */
 public interface StatsReporter {
 
-	/**
-	 * The count of entity extraction requests.
-	 */
-	public final String EXTRACTION_REQUESTS = "extraction.requests";
+  /**
+   * The count of entity extraction requests.
+   */
+  public final String EXTRACTION_REQUESTS = "extraction.requests";
 
-	/**
-	 * The total count of extracted entities.
-	 */
-	public final String ENTITY_COUNT = "entity.count";
+  /**
+   * The total count of extracted entities.
+   */
+  public final String ENTITY_COUNT = "entity.count";
 
-	/**
-	 * Record an entity extraction.
-	 * @param entity The extracted {@link Entity entity}.
-	 * @param modelManifest The {@link StandardModelManifest} that extracted the entity.
-	 */
-	public void recordEntityExtraction(Entity entity, ModelManifest modelManifest);
+  /**
+   * Record an entity extraction.
+   * @param entity The extracted {@link Entity entity}.
+   * @param modelManifest The {@link StandardModelManifest} that extracted the entity.
+   */
+  public void recordEntityExtraction(Entity entity, ModelManifest modelManifest);
 
-	/**
-	 * Increment a value.
-	 * @param metricName The name of the metric.
-	 */
-	public void increment(String metricName);
+  /**
+   * Increment a value.
+   * @param metricName The name of the metric.
+   */
+  public void increment(String metricName);
 
-	/**
-	 * Increments a value.
-	 * @param metricName The name of the metric.
-	 * @param value The value.
-	 */
-	public void increment(String metricName, long value);
+  /**
+   * Increments a value.
+   * @param metricName The name of the metric.
+   * @param value The value.
+   */
+  public void increment(String metricName, long value);
 
-	/**
-	 * Report an elapsed time.
-	 * @param metricName The name of the metric.
-	 * @param elapsedTime The elapsed time.
-	 */
-	public void time(String metricName, long elapsedTime);
+  /**
+   * Report an elapsed time.
+   * @param metricName The name of the metric.
+   * @param elapsedTime The elapsed time.
+   */
+  public void time(String metricName, long elapsedTime);
 
 }

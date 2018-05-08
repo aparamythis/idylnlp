@@ -43,66 +43,66 @@ import opennlp.tools.langdetect.LanguageDetectorModel;
  */
 public class OpenNLPLanguageDetector implements LanguageDetector {
 
-	private static final Logger LOGGER = LogManager.getLogger(OpenNLPLanguageDetector.class);
+  private static final Logger LOGGER = LogManager.getLogger(OpenNLPLanguageDetector.class);
 
-	private opennlp.tools.langdetect.LanguageDetector detector;
+  private opennlp.tools.langdetect.LanguageDetector detector;
 
-	public OpenNLPLanguageDetector() throws IOException {
+  public OpenNLPLanguageDetector() throws IOException {
 
-		InputStream in = ClassLoader.getSystemResourceAsStream("langdetect-183.bin");
+    InputStream in = ClassLoader.getSystemResourceAsStream("langdetect-183.bin");
 
-		LanguageDetectorModel m = new LanguageDetectorModel(in);
-		detector = new LanguageDetectorME(m);
+    LanguageDetectorModel m = new LanguageDetectorModel(in);
+    detector = new LanguageDetectorME(m);
 
-		in.close();
+    in.close();
 
-	}
+  }
 
-	public OpenNLPLanguageDetector(InputStream in) throws IOException {
+  public OpenNLPLanguageDetector(InputStream in) throws IOException {
 
-		LanguageDetectorModel m = new LanguageDetectorModel(in);
-		detector = new LanguageDetectorME(m);
+    LanguageDetectorModel m = new LanguageDetectorModel(in);
+    detector = new LanguageDetectorME(m);
 
-	}
+  }
 
-	@Override
-	public LanguageDetectionResponse detectLanguage(String text, int limit) throws LanguageDetectionException {
+  @Override
+  public LanguageDetectionResponse detectLanguage(String text, int limit) throws LanguageDetectionException {
 
-		List<Pair<String, Double>> pairs = new LinkedList<Pair<String, Double>>();
+    List<Pair<String, Double>> pairs = new LinkedList<Pair<String, Double>>();
 
-		int count = 0;
+    int count = 0;
 
-		for(Language language : detector.predictLanguages(text)) {
+    for(Language language : detector.predictLanguages(text)) {
 
-			pairs.add(new ImmutablePair<String, Double>(language.getLang(), language.getConfidence()));
+      pairs.add(new ImmutablePair<String, Double>(language.getLang(), language.getConfidence()));
 
-			count++;
+      count++;
 
-			if(count == limit) {
-				break;
-			}
+      if(count == limit) {
+        break;
+      }
 
-		}
+    }
 
-		Collections.sort(pairs, new Comparator<Pair<String, Double>>() {
+    Collections.sort(pairs, new Comparator<Pair<String, Double>>() {
 
-			@Override
-			public int compare(Pair<String, Double> arg0, Pair<String, Double> arg1) {
+      @Override
+      public int compare(Pair<String, Double> arg0, Pair<String, Double> arg1) {
 
-				if(arg1.getRight() > arg0.getRight()) {
-					return 1;
-				} else if(arg0.getRight() > arg1.getRight()) {
-					return -1;
-				} else {
-					return 0;
-				}
+        if(arg1.getRight() > arg0.getRight()) {
+          return 1;
+        } else if(arg0.getRight() > arg1.getRight()) {
+          return -1;
+        } else {
+          return 0;
+        }
 
-			}
+      }
 
-		});
+    });
 
-		return new LanguageDetectionResponse(pairs);
+    return new LanguageDetectionResponse(pairs);
 
-	}
+  }
 
 }

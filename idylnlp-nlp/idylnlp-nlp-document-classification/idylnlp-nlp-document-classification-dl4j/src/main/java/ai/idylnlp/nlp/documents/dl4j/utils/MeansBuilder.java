@@ -48,14 +48,14 @@ public class MeansBuilder {
      */
     public INDArray documentAsVector(LabelledDocument document) {
 
-    	List<String> documentAsTokens = tokenizerFactory.create(document.getContent()).getTokens();
+      List<String> documentAsTokens = tokenizerFactory.create(document.getContent()).getTokens();
 
-    	AtomicInteger cnt = new AtomicInteger(0);
+      AtomicInteger cnt = new AtomicInteger(0);
 
         for(String word : documentAsTokens) {
 
-        	if(vocabCache.containsWord(word)) {
-            	cnt.incrementAndGet();
+          if(vocabCache.containsWord(word)) {
+              cnt.incrementAndGet();
             }
 
         }
@@ -66,9 +66,9 @@ public class MeansBuilder {
 
         for(String word: documentAsTokens) {
 
-        	if(vocabCache.containsWord(word)) {
+          if(vocabCache.containsWord(word)) {
                 allWords.putRow(cnt.getAndIncrement(), lookupTable.vector(word));
-        	}
+          }
 
         }
 

@@ -40,83 +40,83 @@ import opennlp.tools.util.TrainingParameters;
 
 public class ModelTokenizerTest {
 
-	// NOTE: these tests were taken from OpenNLP's WhitespaceTokenizerTest class since
-	// our WhitespaceTokenizer is just a pass-through to OpenNLP's WhitespaceTokenizer.
+  // NOTE: these tests were taken from OpenNLP's WhitespaceTokenizerTest class since
+  // our WhitespaceTokenizer is just a pass-through to OpenNLP's WhitespaceTokenizer.
 
-	@Test
-	public void testTokenizerSimpleModel() throws IOException {
+  @Test
+  public void testTokenizerSimpleModel() throws IOException {
 
-		TokenizerModel model = createSimpleMaxentTokenModel();
+    TokenizerModel model = createSimpleMaxentTokenModel();
 
-		TokenizerME tokenizer = new TokenizerME(model);
+    TokenizerME tokenizer = new TokenizerME(model);
 
-		String tokens[] = tokenizer.tokenize("test,");
+    String tokens[] = tokenizer.tokenize("test,");
 
-		assertEquals(2, tokens.length);
-		assertEquals("test", tokens[0]);
-		assertEquals(",", tokens[1]);
+    assertEquals(2, tokens.length);
+    assertEquals("test", tokens[0]);
+    assertEquals(",", tokens[1]);
 
-	}
+  }
 
-	@Test
-	public void testTokenizer() throws IOException {
+  @Test
+  public void testTokenizer() throws IOException {
 
-		TokenizerModel model = createMaxentTokenModel();
+    TokenizerModel model = createMaxentTokenModel();
 
-		TokenizerME tokenizer = new TokenizerME(model);
+    TokenizerME tokenizer = new TokenizerME(model);
 
-		String tokens[] = tokenizer.tokenize("Sounds like it's not properly thought through!");
+    String tokens[] = tokenizer.tokenize("Sounds like it's not properly thought through!");
 
-		assertEquals(9, tokens.length);
-		assertEquals("Sounds", tokens[0]);
-		assertEquals("like", tokens[1]);
-		assertEquals("it", tokens[2]);
-		assertEquals("'s", tokens[3]);
-		assertEquals("not", tokens[4]);
-		assertEquals("properly", tokens[5]);
-		assertEquals("thought", tokens[6]);
-		assertEquals("through", tokens[7]);
-		assertEquals("!", tokens[8]);
+    assertEquals(9, tokens.length);
+    assertEquals("Sounds", tokens[0]);
+    assertEquals("like", tokens[1]);
+    assertEquals("it", tokens[2]);
+    assertEquals("'s", tokens[3]);
+    assertEquals("not", tokens[4]);
+    assertEquals("properly", tokens[5]);
+    assertEquals("thought", tokens[6]);
+    assertEquals("through", tokens[7]);
+    assertEquals("!", tokens[8]);
 
-	}
+  }
 
-	private TokenizerModel createSimpleMaxentTokenModel() throws IOException {
+  private TokenizerModel createSimpleMaxentTokenModel() throws IOException {
 
-		List<TokenSample> samples = new ArrayList<TokenSample>();
+    List<TokenSample> samples = new ArrayList<TokenSample>();
 
-		samples.add(new TokenSample("year", new Span[] { new Span(0, 4) }));
-		samples.add(new TokenSample("year,", new Span[] { new Span(0, 4), new Span(4, 5) }));
-		samples.add(new TokenSample("it,", new Span[] { new Span(0, 2), new Span(2, 3) }));
-		samples.add(new TokenSample("it", new Span[] { new Span(0, 2) }));
-		samples.add(new TokenSample("yes", new Span[] { new Span(0, 3) }));
-		samples.add(new TokenSample("yes,", new Span[] { new Span(0, 3), new Span(3, 4) }));
+    samples.add(new TokenSample("year", new Span[] { new Span(0, 4) }));
+    samples.add(new TokenSample("year,", new Span[] { new Span(0, 4), new Span(4, 5) }));
+    samples.add(new TokenSample("it,", new Span[] { new Span(0, 2), new Span(2, 3) }));
+    samples.add(new TokenSample("it", new Span[] { new Span(0, 2) }));
+    samples.add(new TokenSample("yes", new Span[] { new Span(0, 3) }));
+    samples.add(new TokenSample("yes,", new Span[] { new Span(0, 3), new Span(3, 4) }));
 
-		TokenizerFactory tokenizerFactory = new TokenizerFactory("en", new Dictionary(), false, null);
+    TokenizerFactory tokenizerFactory = new TokenizerFactory("en", new Dictionary(), false, null);
 
-		TrainingParameters mlParams = new TrainingParameters();
-		mlParams.put(TrainingParameters.ITERATIONS_PARAM, Integer.toString(100));
-		mlParams.put(TrainingParameters.CUTOFF_PARAM, Integer.toString(0));
+    TrainingParameters mlParams = new TrainingParameters();
+    mlParams.put(TrainingParameters.ITERATIONS_PARAM, Integer.toString(100));
+    mlParams.put(TrainingParameters.CUTOFF_PARAM, Integer.toString(0));
 
-		return TokenizerME.train(new CollectionObjectStream<TokenSample>(samples), tokenizerFactory, mlParams);
+    return TokenizerME.train(new CollectionObjectStream<TokenSample>(samples), tokenizerFactory, mlParams);
 
-	}
+  }
 
-	private TokenizerModel createMaxentTokenModel() throws IOException {
+  private TokenizerModel createMaxentTokenModel() throws IOException {
 
-		final String trainingData = new File("src/test/resources/token.train").getAbsolutePath();
+    final String trainingData = new File("src/test/resources/token.train").getAbsolutePath();
 
-		InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File(trainingData));
-		ObjectStream<String> lineStream =  new PlainTextByLineStream(inputStreamFactory, "UTF-8");
-		ObjectStream<TokenSample> sampleStream = new TokenSampleStream(lineStream);
+    InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File(trainingData));
+    ObjectStream<String> lineStream =  new PlainTextByLineStream(inputStreamFactory, "UTF-8");
+    ObjectStream<TokenSample> sampleStream = new TokenSampleStream(lineStream);
 
-		TrainingParameters mlParams = new TrainingParameters();
-		mlParams.put(TrainingParameters.ITERATIONS_PARAM, Integer.toString(100));
-		mlParams.put(TrainingParameters.CUTOFF_PARAM, Integer.toString(0));
+    TrainingParameters mlParams = new TrainingParameters();
+    mlParams.put(TrainingParameters.ITERATIONS_PARAM, Integer.toString(100));
+    mlParams.put(TrainingParameters.CUTOFF_PARAM, Integer.toString(0));
 
-		TokenizerFactory tokenizerFactory = new TokenizerFactory("en", new Dictionary(), false, null);
+    TokenizerFactory tokenizerFactory = new TokenizerFactory("en", new Dictionary(), false, null);
 
-		return TokenizerME.train(sampleStream, tokenizerFactory, mlParams);
+    return TokenizerME.train(sampleStream, tokenizerFactory, mlParams);
 
-	}
+  }
 
 }

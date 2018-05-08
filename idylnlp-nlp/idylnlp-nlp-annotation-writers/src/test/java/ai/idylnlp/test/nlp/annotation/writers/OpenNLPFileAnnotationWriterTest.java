@@ -31,47 +31,47 @@ import ai.idylnlp.nlp.annotation.writers.OpenNLPFileAnnotationWriter;
 
 public class OpenNLPFileAnnotationWriterTest {
 
-	private static final Logger LOGGER = LogManager.getLogger(OpenNLPFileAnnotationWriterTest.class);
+  private static final Logger LOGGER = LogManager.getLogger(OpenNLPFileAnnotationWriterTest.class);
 
-	@Test
-	public void write() throws IOException {
+  @Test
+  public void write() throws IOException {
 
-		OpenNLPFileAnnotationWriter writer = new OpenNLPFileAnnotationWriter();
+    OpenNLPFileAnnotationWriter writer = new OpenNLPFileAnnotationWriter();
 
-		Collection<Entity> entities = new ArrayList<Entity>();
-		entities.add(new Entity("George Washington", "person"));
-		entities.add(new Entity("Abraham Lincoln", "person"));
+    Collection<Entity> entities = new ArrayList<Entity>();
+    entities.add(new Entity("George Washington", "person"));
+    entities.add(new Entity("Abraham Lincoln", "person"));
 
-		String text = "George Washington and Abraham Lincoln were presidents.";
+    String text = "George Washington and Abraham Lincoln were presidents.";
 
-		String annotatedText = writer.annotateText(entities, text);
+    String annotatedText = writer.annotateText(entities, text);
 
-		String expectedText = "<START:person> George Washington <END> and <START:person> Abraham Lincoln <END> were presidents.";
+    String expectedText = "<START:person> George Washington <END> and <START:person> Abraham Lincoln <END> were presidents.";
 
-		LOGGER.info("Expected: " + expectedText);
-		LOGGER.info("Actual:   " + annotatedText);
+    LOGGER.info("Expected: " + expectedText);
+    LOGGER.info("Actual:   " + annotatedText);
 
-		assertEquals(expectedText, annotatedText);
+    assertEquals(expectedText, annotatedText);
 
-	}
+  }
 
-	@Test
-	public void writeEmpty() throws IOException {
+  @Test
+  public void writeEmpty() throws IOException {
 
-		OpenNLPFileAnnotationWriter writer = new OpenNLPFileAnnotationWriter();
+    OpenNLPFileAnnotationWriter writer = new OpenNLPFileAnnotationWriter();
 
-		Collection<Entity> entities = new ArrayList<Entity>();
-		// No entities to annotate.
+    Collection<Entity> entities = new ArrayList<Entity>();
+    // No entities to annotate.
 
-		String text = "George Washington and Abraham Lincoln were presidents.";
+    String text = "George Washington and Abraham Lincoln were presidents.";
 
-		String annotatedText = writer.annotateText(entities, text);
+    String annotatedText = writer.annotateText(entities, text);
 
-		LOGGER.info("Expected: " + text);
-		LOGGER.info("Actual:   " + annotatedText);
+    LOGGER.info("Expected: " + text);
+    LOGGER.info("Actual:   " + annotatedText);
 
-		assertEquals(text, annotatedText);
+    assertEquals(text, annotatedText);
 
-	}
+  }
 
 }

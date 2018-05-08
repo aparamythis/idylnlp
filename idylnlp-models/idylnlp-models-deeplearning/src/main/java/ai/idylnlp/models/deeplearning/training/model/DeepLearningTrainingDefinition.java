@@ -25,76 +25,76 @@ import com.google.gson.annotations.SerializedName;
 
 public class DeepLearningTrainingDefinition {
 
-	@SerializedName("Output")
-	@Expose
-	private Output output;
+  @SerializedName("Output")
+  @Expose
+  private Output output;
 
-	@SerializedName("TrainingData")
-	@Expose
-	private TrainingData trainingData;
+  @SerializedName("TrainingData")
+  @Expose
+  private TrainingData trainingData;
 
-	@SerializedName("EvaluationData")
-	@Expose
-	private EvaluationData evaluationData;
+  @SerializedName("EvaluationData")
+  @Expose
+  private EvaluationData evaluationData;
 
-	@SerializedName("HyperParameters")
-	@Expose
-	private HyperParameters hyperParameters;
+  @SerializedName("HyperParameters")
+  @Expose
+  private HyperParameters hyperParameters;
 
-	@SerializedName("EarlyTermination")
-	@Expose
-	private EarlyTermination earlyTermination;
+  @SerializedName("EarlyTermination")
+  @Expose
+  private EarlyTermination earlyTermination;
 
-	@SerializedName("EntityType")
-	@Expose
-	private String entityType;
+  @SerializedName("EntityType")
+  @Expose
+  private String entityType;
 
-	@SerializedName("Language")
-	@Expose
-	private String language = "en";
+  @SerializedName("Language")
+  @Expose
+  private String language = "en";
 
-	@SerializedName("Name")
-	@Expose
-	private String name = "model";
+  @SerializedName("Name")
+  @Expose
+  private String name = "model";
 
-	@SerializedName("Monitoring")
-	@Expose
-	private Monitoring monitoring;
+  @SerializedName("Monitoring")
+  @Expose
+  private Monitoring monitoring;
 
-	@SerializedName("ParallelTraining")
-	@Expose
-	private ParallelTraining parallelTraining;
+  @SerializedName("ParallelTraining")
+  @Expose
+  private ParallelTraining parallelTraining;
 
-	@SerializedName("SparkTraining")
-	@Expose
-	private SparkTraining sparkTraining = new SparkTraining();
+  @SerializedName("SparkTraining")
+  @Expose
+  private SparkTraining sparkTraining = new SparkTraining();
 
-	public DeepLearningTrainingDefinition() throws IOException {
+  public DeepLearningTrainingDefinition() throws IOException {
 
-		monitoring = new Monitoring();
+    monitoring = new Monitoring();
 
-	}
+  }
 
-	public DeepLearningTrainingDefinition(Output output, TrainingData trainingData,
-			EvaluationData evaluationData, HyperParameters hyperParameters, EarlyTermination earlyTermination,
-			String entityType, SparkTraining sparkTraining, Monitoring monitoring, ParallelTraining parallelTraining,
-			String name, String language) {
+  public DeepLearningTrainingDefinition(Output output, TrainingData trainingData,
+      EvaluationData evaluationData, HyperParameters hyperParameters, EarlyTermination earlyTermination,
+      String entityType, SparkTraining sparkTraining, Monitoring monitoring, ParallelTraining parallelTraining,
+      String name, String language) {
 
-		this.output = output;
-		this.trainingData = trainingData;
-		this.evaluationData = evaluationData;
-		this.hyperParameters = hyperParameters;
-		this.earlyTermination = earlyTermination;
-		this.entityType = entityType;
-		this.sparkTraining = sparkTraining;
-		this.monitoring = monitoring;
-		this.parallelTraining = parallelTraining;
-		this.name = name;
-		this.language = language;
+    this.output = output;
+    this.trainingData = trainingData;
+    this.evaluationData = evaluationData;
+    this.hyperParameters = hyperParameters;
+    this.earlyTermination = earlyTermination;
+    this.entityType = entityType;
+    this.sparkTraining = sparkTraining;
+    this.monitoring = monitoring;
+    this.parallelTraining = parallelTraining;
+    this.name = name;
+    this.language = language;
 
-	}
+  }
 
-	@Override
+  @Override
     public boolean equals(Object o) {
       return EqualsBuilder.reflectionEquals(this, o);
     }
@@ -104,96 +104,96 @@ public class DeepLearningTrainingDefinition {
         return HashCodeBuilder.reflectionHashCode(this);
     }
 
-	public Output getOutput() {
-		return output;
-	}
+  public Output getOutput() {
+    return output;
+  }
 
-	public void setOutput(Output output) {
-		this.output = output;
-	}
+  public void setOutput(Output output) {
+    this.output = output;
+  }
 
-	public HyperParameters getHyperParameters() {
-		return hyperParameters;
-	}
+  public HyperParameters getHyperParameters() {
+    return hyperParameters;
+  }
 
-	public void setTraining(HyperParameters hyperParameters) {
-		this.hyperParameters = hyperParameters;
-	}
+  public void setTraining(HyperParameters hyperParameters) {
+    this.hyperParameters = hyperParameters;
+  }
 
-	public TrainingData getTrainingData() {
-		return trainingData;
-	}
+  public TrainingData getTrainingData() {
+    return trainingData;
+  }
 
-	public void setTrainingData(TrainingData trainingData) {
-		this.trainingData = trainingData;
-	}
+  public void setTrainingData(TrainingData trainingData) {
+    this.trainingData = trainingData;
+  }
 
-	public EvaluationData getEvaluationData() {
-		return evaluationData;
-	}
+  public EvaluationData getEvaluationData() {
+    return evaluationData;
+  }
 
-	public void setEvaluationData(EvaluationData evaluationData) {
-		this.evaluationData = evaluationData;
-	}
+  public void setEvaluationData(EvaluationData evaluationData) {
+    this.evaluationData = evaluationData;
+  }
 
-	public void setHyperParameters(HyperParameters hyperParameters) {
-		this.hyperParameters = hyperParameters;
-	}
+  public void setHyperParameters(HyperParameters hyperParameters) {
+    this.hyperParameters = hyperParameters;
+  }
 
-	public EarlyTermination getEarlyTermination() {
-		return earlyTermination;
-	}
+  public EarlyTermination getEarlyTermination() {
+    return earlyTermination;
+  }
 
-	public void setEarlyTermination(EarlyTermination earlyTermination) {
-		this.earlyTermination = earlyTermination;
-	}
+  public void setEarlyTermination(EarlyTermination earlyTermination) {
+    this.earlyTermination = earlyTermination;
+  }
 
-	public String getEntityType() {
-		return entityType;
-	}
+  public String getEntityType() {
+    return entityType;
+  }
 
-	public void setEntityType(String entityType) {
-		this.entityType = entityType;
-	}
+  public void setEntityType(String entityType) {
+    this.entityType = entityType;
+  }
 
-	public SparkTraining getSparkTraining() {
-		return sparkTraining;
-	}
+  public SparkTraining getSparkTraining() {
+    return sparkTraining;
+  }
 
-	public void setSparkTraining(SparkTraining sparkTraining) {
-		this.sparkTraining = sparkTraining;
-	}
+  public void setSparkTraining(SparkTraining sparkTraining) {
+    this.sparkTraining = sparkTraining;
+  }
 
-	public Monitoring getMonitoring() {
-		return monitoring;
-	}
+  public Monitoring getMonitoring() {
+    return monitoring;
+  }
 
-	public void setMonitoring(Monitoring monitoring) {
-		this.monitoring = monitoring;
-	}
+  public void setMonitoring(Monitoring monitoring) {
+    this.monitoring = monitoring;
+  }
 
-	public ParallelTraining getParallelTraining() {
-		return parallelTraining;
-	}
+  public ParallelTraining getParallelTraining() {
+    return parallelTraining;
+  }
 
-	public void setParallelTraining(ParallelTraining parallelTraining) {
-		this.parallelTraining = parallelTraining;
-	}
+  public void setParallelTraining(ParallelTraining parallelTraining) {
+    this.parallelTraining = parallelTraining;
+  }
 
-	public String getLanguage() {
-		return language;
-	}
+  public String getLanguage() {
+    return language;
+  }
 
-	public void setLanguage(String language) {
-		this.language = language;
-	}
+  public void setLanguage(String language) {
+    this.language = language;
+  }
 
-	public String getName() {
-		return name;
-	}
+  public String getName() {
+    return name;
+  }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+  public void setName(String name) {
+    this.name = name;
+  }
 
 }

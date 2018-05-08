@@ -25,53 +25,53 @@ import com.google.gson.annotations.SerializedName;
 
 public class HyperParameters {
 
-	@SerializedName("WindowSize")
-	@Expose
-	private int windowSize = 15;
+  @SerializedName("WindowSize")
+  @Expose
+  private int windowSize = 15;
 
-	@SerializedName("Seed")
-	@Expose
-	private long seed = 1497630814976308L;
+  @SerializedName("Seed")
+  @Expose
+  private long seed = 1497630814976308L;
 
-	@SerializedName("Epochs")
-	@Expose
-	private int epochs = 1;
+  @SerializedName("Epochs")
+  @Expose
+  private int epochs = 1;
 
-	@SerializedName("BatchSize")
-	@Expose
-	private int batchSize = 1;
+  @SerializedName("BatchSize")
+  @Expose
+  private int batchSize = 1;
 
-	@SerializedName("ConvolutionMode")
-	@Expose
-	private String convolutionMode = "truncate";
+  @SerializedName("ConvolutionMode")
+  @Expose
+  private String convolutionMode = "truncate";
 
-	@SerializedName("NetworkConfigurationParameters")
-	@Expose
-	private NetworkConfigurationParameters networkConfigurationParameters;
+  @SerializedName("NetworkConfigurationParameters")
+  @Expose
+  private NetworkConfigurationParameters networkConfigurationParameters;
 
-	public ConvolutionMode getConvolutionModeParam() {
+  public ConvolutionMode getConvolutionModeParam() {
 
-		if(StringUtils.equalsIgnoreCase(convolutionMode, "truncate")) {
+    if(StringUtils.equalsIgnoreCase(convolutionMode, "truncate")) {
 
-			return ConvolutionMode.Truncate;
+      return ConvolutionMode.Truncate;
 
-		} else if(StringUtils.equalsIgnoreCase(convolutionMode, "same")) {
+    } else if(StringUtils.equalsIgnoreCase(convolutionMode, "same")) {
 
-			return ConvolutionMode.Same;
+      return ConvolutionMode.Same;
 
-		} else if(StringUtils.equalsIgnoreCase(convolutionMode, "strict")) {
+    } else if(StringUtils.equalsIgnoreCase(convolutionMode, "strict")) {
 
-			return ConvolutionMode.Strict;
+      return ConvolutionMode.Strict;
 
-		} else {
+    } else {
 
-			return null;
+      return null;
 
-		}
+    }
 
-	}
+  }
 
-	@Override
+  @Override
     public boolean equals(Object o) {
       return EqualsBuilder.reflectionEquals(this, o);
     }
@@ -81,52 +81,52 @@ public class HyperParameters {
         return HashCodeBuilder.reflectionHashCode(this);
     }
 
-	public int getWindowSize() {
-		return windowSize;
-	}
+  public int getWindowSize() {
+    return windowSize;
+  }
 
-	public void setWindowSize(int windowSize) {
-		this.windowSize = windowSize;
-	}
+  public void setWindowSize(int windowSize) {
+    this.windowSize = windowSize;
+  }
 
-	public long getSeed() {
-		return seed;
-	}
+  public long getSeed() {
+    return seed;
+  }
 
-	public void setSeed(long seed) {
-		this.seed = seed;
-	}
+  public void setSeed(long seed) {
+    this.seed = seed;
+  }
 
-	public NetworkConfigurationParameters getNetworkConfigurationParameters() {
-		return networkConfigurationParameters;
-	}
+  public NetworkConfigurationParameters getNetworkConfigurationParameters() {
+    return networkConfigurationParameters;
+  }
 
-	public void setNetworkConfigurationParameters(NetworkConfigurationParameters networkConfigurationParameters) {
-		this.networkConfigurationParameters = networkConfigurationParameters;
-	}
+  public void setNetworkConfigurationParameters(NetworkConfigurationParameters networkConfigurationParameters) {
+    this.networkConfigurationParameters = networkConfigurationParameters;
+  }
 
-	public int getEpochs() {
-		return epochs;
-	}
+  public int getEpochs() {
+    return epochs;
+  }
 
-	public void setEpochs(int eoochs) {
-		this.epochs = eoochs;
-	}
+  public void setEpochs(int eoochs) {
+    this.epochs = eoochs;
+  }
 
-	public int getBatchSize() {
-		return batchSize;
-	}
+  public int getBatchSize() {
+    return batchSize;
+  }
 
-	public void setBatchSize(int batchSize) {
-		this.batchSize = batchSize;
-	}
+  public void setBatchSize(int batchSize) {
+    this.batchSize = batchSize;
+  }
 
-	public String getConvolutionMode() {
-		return convolutionMode;
-	}
+  public String getConvolutionMode() {
+    return convolutionMode;
+  }
 
-	public void setConvolutionMode(String convolutionMode) {
-		this.convolutionMode = convolutionMode;
-	}
+  public void setConvolutionMode(String convolutionMode) {
+    this.convolutionMode = convolutionMode;
+  }
 
 }

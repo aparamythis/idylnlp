@@ -34,164 +34,164 @@ import opennlp.tools.util.ObjectStream;
 
 public class NameSampleDataSetIterator implements DataSetIterator {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	private final int windowSize;
-	private final String[] labels;
-	private final int batchSize;
-	private final int vectorSize;
-	private final int totalSamples;
-	private int cursor = 0;
-	private final ObjectStream<DataSet> samples;
+  private final int windowSize;
+  private final String[] labels;
+  private final int batchSize;
+  private final int vectorSize;
+  private final int totalSamples;
+  private int cursor = 0;
+  private final ObjectStream<DataSet> samples;
 
-	public NameSampleDataSetIterator(ObjectStream<NameSample> samples, WordVectors wordVectors, int vectorSize,
-			int windowSize, String labels[], int batchSize) throws IOException {
+  public NameSampleDataSetIterator(ObjectStream<NameSample> samples, WordVectors wordVectors, int vectorSize,
+      int windowSize, String labels[], int batchSize) throws IOException {
 
-		this.windowSize = windowSize;
-		this.labels = labels;
-		this.vectorSize = vectorSize;
-		this.batchSize = batchSize;
+    this.windowSize = windowSize;
+    this.labels = labels;
+    this.vectorSize = vectorSize;
+    this.batchSize = batchSize;
 
-		this.samples = new NameSampleToDataSetStream(samples, wordVectors, windowSize, vectorSize, labels);
+    this.samples = new NameSampleToDataSetStream(samples, wordVectors, windowSize, vectorSize, labels);
 
-		int total = 0;
+    int total = 0;
 
-		DataSet sample;
-		while ((sample = this.samples.read()) != null) {
-			total++;
-		}
+    DataSet sample;
+    while ((sample = this.samples.read()) != null) {
+      total++;
+    }
 
-		totalSamples = total;
+    totalSamples = total;
 
-		samples.reset();
+    samples.reset();
 
-	}
+  }
 
-	@Override
-	public DataSet next(int num) {
+  @Override
+  public DataSet next(int num) {
 
-		if (cursor >= totalExamples()) {
-			throw new NoSuchElementException();
-		}
+    if (cursor >= totalExamples()) {
+      throw new NoSuchElementException();
+    }
 
-		INDArray features = Nd4j.create(num, vectorSize, windowSize);
-		INDArray featuresMask = Nd4j.zeros(num, windowSize);
+    INDArray features = Nd4j.create(num, vectorSize, windowSize);
+    INDArray featuresMask = Nd4j.zeros(num, windowSize);
 
-		INDArray labels = Nd4j.create(num, 3, windowSize);
-		INDArray labelsMask = Nd4j.zeros(num, windowSize);
+    INDArray labels = Nd4j.create(num, 3, windowSize);
+    INDArray labelsMask = Nd4j.zeros(num, windowSize);
 
-		// iterate stream and copy to arrays
+    // iterate stream and copy to arrays
 
-		for (int i = 0; i < num; i++) {
+    for (int i = 0; i < num; i++) {
 
-			DataSet sample;
+      DataSet sample;
 
-			try {
-				sample = samples.read();
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
+      try {
+        sample = samples.read();
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
 
-			if (sample != null) {
+      if (sample != null) {
 
-				INDArray feature = sample.getFeatureMatrix();
-				features.put(new INDArrayIndex[] { NDArrayIndex.point(i) }, feature.get(NDArrayIndex.point(0)));
+        INDArray feature = sample.getFeatureMatrix();
+        features.put(new INDArrayIndex[] { NDArrayIndex.point(i) }, feature.get(NDArrayIndex.point(0)));
 
-				feature.get(new INDArrayIndex[] { NDArrayIndex.point(0), NDArrayIndex.all(), NDArrayIndex.point(0) });
+        feature.get(new INDArrayIndex[] { NDArrayIndex.point(0), NDArrayIndex.all(), NDArrayIndex.point(0) });
 
-				for (int j = 0; j < windowSize; j++) {
-					featuresMask.putScalar(new int[] { i, j }, 1.0);
-				}
+        for (int j = 0; j < windowSize; j++) {
+          featuresMask.putScalar(new int[] { i, j }, 1.0);
+        }
 
-				INDArray label = sample.getLabels();
-				labels.put(new INDArrayIndex[] { NDArrayIndex.point(i) }, label.get(NDArrayIndex.point(0)));
-				labelsMask.putScalar(new int[] { i, windowSize - 1 }, 1.0);
+        INDArray label = sample.getLabels();
+        labels.put(new INDArrayIndex[] { NDArrayIndex.point(i) }, label.get(NDArrayIndex.point(0)));
+        labelsMask.putScalar(new int[] { i, windowSize - 1 }, 1.0);
 
-			}
+      }
 
-			cursor++;
+      cursor++;
 
-		}
+    }
 
-		return new DataSet(features, labels, featuresMask, labelsMask);
+    return new DataSet(features, labels, featuresMask, labelsMask);
 
-	}
+  }
 
-	@Override
-	public int totalExamples() {
-		return totalSamples;
-	}
+  @Override
+  public int totalExamples() {
+    return totalSamples;
+  }
 
-	@Override
-	public int inputColumns() {
-		return vectorSize;
-	}
+  @Override
+  public int inputColumns() {
+    return vectorSize;
+  }
 
-	@Override
-	public int totalOutcomes() {
-		return getLabels().size();
-	}
+  @Override
+  public int totalOutcomes() {
+    return getLabels().size();
+  }
 
-	@Override
-	public boolean resetSupported() {
-		return true;
-	}
+  @Override
+  public boolean resetSupported() {
+    return true;
+  }
 
-	@Override
-	public boolean asyncSupported() {
-		return false;
-	}
+  @Override
+  public boolean asyncSupported() {
+    return false;
+  }
 
-	@Override
-	public void reset() {
-		cursor = 0;
+  @Override
+  public void reset() {
+    cursor = 0;
 
-		try {
-			samples.reset();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+    try {
+      samples.reset();
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
 
-	}
+  }
 
-	@Override
-	public int batch() {
-		return batchSize;
-	}
+  @Override
+  public int batch() {
+    return batchSize;
+  }
 
-	@Override
-	public int cursor() {
-		return cursor;
-	}
+  @Override
+  public int cursor() {
+    return cursor;
+  }
 
-	@Override
-	public int numExamples() {
-		return totalExamples();
-	}
+  @Override
+  public int numExamples() {
+    return totalExamples();
+  }
 
-	@Override
-	public void setPreProcessor(DataSetPreProcessor dataSetPreProcessor) {
-		throw new UnsupportedOperationException();
-	}
+  @Override
+  public void setPreProcessor(DataSetPreProcessor dataSetPreProcessor) {
+    throw new UnsupportedOperationException();
+  }
 
-	@Override
-	public DataSetPreProcessor getPreProcessor() {
-		throw new UnsupportedOperationException();
-	}
+  @Override
+  public DataSetPreProcessor getPreProcessor() {
+    throw new UnsupportedOperationException();
+  }
 
-	@Override
-	public List<String> getLabels() {
-		return Arrays.asList("start", "cont", "other");
-	}
+  @Override
+  public List<String> getLabels() {
+    return Arrays.asList("start", "cont", "other");
+  }
 
-	@Override
-	public boolean hasNext() {
-		return cursor < numExamples();
-	}
+  @Override
+  public boolean hasNext() {
+    return cursor < numExamples();
+  }
 
-	@Override
-	public DataSet next() {
-		return next(batchSize);
-	}
+  @Override
+  public DataSet next() {
+    return next(batchSize);
+  }
 
 }

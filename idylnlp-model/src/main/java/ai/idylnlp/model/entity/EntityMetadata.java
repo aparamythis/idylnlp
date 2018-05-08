@@ -23,46 +23,46 @@ import org.apache.commons.collections4.CollectionUtils;
 
 public class EntityMetadata {
 
-	private String name;
-	private String value;
+  private String name;
+  private String value;
 
-	/**
-	 * Converts a list of {@link EntityMetadata} to a map.
-	 * @param metadata A list of {@link EntityMetadata}.
-	 * @return A map that contains the entity metadata.
-	 */
-	public static Map<String, String> toMap(List<EntityMetadata> metadata) {
+  /**
+   * Converts a list of {@link EntityMetadata} to a map.
+   * @param metadata A list of {@link EntityMetadata}.
+   * @return A map that contains the entity metadata.
+   */
+  public static Map<String, String> toMap(List<EntityMetadata> metadata) {
 
-		Map<String, String> map = new LinkedHashMap<String, String>();
+    Map<String, String> map = new LinkedHashMap<String, String>();
 
-		if(CollectionUtils.isNotEmpty(metadata)) {
+    if(CollectionUtils.isNotEmpty(metadata)) {
 
-			for(EntityMetadata m : metadata) {
+      for(EntityMetadata m : metadata) {
 
-				map.put(m.getName(), m.getValue());
+        map.put(m.getName(), m.getValue());
 
-			}
+      }
 
-		}
+    }
 
-		return map;
+    return map;
 
-	}
+  }
 
-	public String getName() {
-		return name;
-	}
+  public String getName() {
+    return name;
+  }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+  public void setName(String name) {
+    this.name = name;
+  }
 
-	public String getValue() {
-		return value;
-	}
+  public String getValue() {
+    return value;
+  }
 
-	public void setValue(String value) {
-		this.value = value;
-	}
+  public void setValue(String value) {
+    this.value = value;
+  }
 
 }

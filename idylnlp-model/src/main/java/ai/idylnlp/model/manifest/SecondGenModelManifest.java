@@ -28,85 +28,85 @@ import com.neovisionaries.i18n.LanguageCode;
  */
 public class SecondGenModelManifest extends ModelManifest implements Comparable<SecondGenModelManifest> {
 
-	public static final String ENTITY = "entity";
+  public static final String ENTITY = "entity";
 
-	private String vectorsFileName;
-	private int windowSize;
-	private String vectorsSource;
+  private String vectorsFileName;
+  private int windowSize;
+  private String vectorsSource;
 
-	public SecondGenModelManifest(String modelId, String modelFileName,
-			LanguageCode languageCode, String type, String name,
-			String creatorVersion, String vectorsFileName, int windowSize, String source, String vectorsSource) {
+  public SecondGenModelManifest(String modelId, String modelFileName,
+      LanguageCode languageCode, String type, String name,
+      String creatorVersion, String vectorsFileName, int windowSize, String source, String vectorsSource) {
 
-		super(modelId, modelFileName, languageCode, type, name, creatorVersion, source, ModelManifest.SECOND_GENERATION);
+    super(modelId, modelFileName, languageCode, type, name, creatorVersion, source, ModelManifest.SECOND_GENERATION);
 
-		this.vectorsFileName = vectorsFileName;
-		this.windowSize = windowSize;
-		this.vectorsSource = vectorsSource;
+    this.vectorsFileName = vectorsFileName;
+    this.windowSize = windowSize;
+    this.vectorsSource = vectorsSource;
 
-	}
+  }
 
-	@Override
-	public final int hashCode() {
+  @Override
+  public final int hashCode() {
 
-		return new HashCodeBuilder(17, 31)
-				.append(modelId)
-		        .append(modelFileName)
-		        .append(vectorsFileName)
-		        .append(windowSize)
-		        .append(name)
-		        .append(languageCode)
-		        .append(type)
-		        .append(creatorVersion)
-		        .append(source)
-		        .append(vectorsSource)
-		        .append(generation)
-		        .toHashCode();
+    return new HashCodeBuilder(17, 31)
+        .append(modelId)
+            .append(modelFileName)
+            .append(vectorsFileName)
+            .append(windowSize)
+            .append(name)
+            .append(languageCode)
+            .append(type)
+            .append(creatorVersion)
+            .append(source)
+            .append(vectorsSource)
+            .append(generation)
+            .toHashCode();
 
-	}
+  }
 
-	@Override
-	public final boolean equals(Object obj) {
+  @Override
+  public final boolean equals(Object obj) {
 
-		if(obj instanceof SecondGenModelManifest){
+    if(obj instanceof SecondGenModelManifest){
 
-	        final SecondGenModelManifest other = (SecondGenModelManifest) obj;
+          final SecondGenModelManifest other = (SecondGenModelManifest) obj;
 
-	        return new EqualsBuilder()
-	        	.append(modelId, other.getModelId())
-	            .append(modelFileName, other.getModelFileName())
-	            .append(name, other.getName())
-	            .append(vectorsFileName, other.getVectorsFileName())
-	            .append(windowSize, windowSize)
-	            .append(languageCode, other.getLanguageCode())
-	            .append(type, other.getType())
-	            .append(creatorVersion, other.getCreatorVersion())
-	            .append(source, other.getSource())
-	            .append(vectorsSource, other.getVectorsSource())
-	            .append(generation, other.getGeneration())
-	            .isEquals();
+          return new EqualsBuilder()
+            .append(modelId, other.getModelId())
+              .append(modelFileName, other.getModelFileName())
+              .append(name, other.getName())
+              .append(vectorsFileName, other.getVectorsFileName())
+              .append(windowSize, windowSize)
+              .append(languageCode, other.getLanguageCode())
+              .append(type, other.getType())
+              .append(creatorVersion, other.getCreatorVersion())
+              .append(source, other.getSource())
+              .append(vectorsSource, other.getVectorsSource())
+              .append(generation, other.getGeneration())
+              .isEquals();
 
-	    } else {
-	        return false;
-	    }
+      } else {
+          return false;
+      }
 
-	}
+  }
 
-	@Override
-	public int compareTo(SecondGenModelManifest modelManifest) {
-		return modelManifest.getType().compareTo(type);
-	}
+  @Override
+  public int compareTo(SecondGenModelManifest modelManifest) {
+    return modelManifest.getType().compareTo(type);
+  }
 
-	public String getVectorsFileName() {
-		return vectorsFileName;
-	}
+  public String getVectorsFileName() {
+    return vectorsFileName;
+  }
 
-	public int getWindowSize() {
-		return windowSize;
-	}
+  public int getWindowSize() {
+    return windowSize;
+  }
 
-	public String getVectorsSource() {
-		return vectorsSource;
-	}
+  public String getVectorsSource() {
+    return vectorsSource;
+  }
 
 }

@@ -72,304 +72,304 @@ import opennlp.tools.util.ObjectStream;
 
 public class DeepLearningEntityModelOperations {
 
-	private static final Logger LOGGER = LogManager.getLogger(DeepLearningEntityModelOperations.class);
+  private static final Logger LOGGER = LogManager.getLogger(DeepLearningEntityModelOperations.class);
 
-	private Gson gson;
+  private Gson gson;
 
-	public DeepLearningEntityModelOperations() {
+  public DeepLearningEntityModelOperations() {
 
-		GsonBuilder gsonBuilder = new GsonBuilder();
-		gsonBuilder.serializeSpecialFloatingPointValues();
-		gson = gsonBuilder.setPrettyPrinting().create();
+    GsonBuilder gsonBuilder = new GsonBuilder();
+    gsonBuilder.serializeSpecialFloatingPointValues();
+    gson = gsonBuilder.setPrettyPrinting().create();
 
-	}
+  }
 
-	/**
-	 * Trains a deep learning model.
-	 * @param parameters The {@link BasicDeepLearningTrainingParameters parameters} for the training.
-	 * @param serializedModelFile The output trained model {@link File file}.
-	 * @return The {@link MultiLayerNetwork network}.
-	 * @throws IOException Thrown if the cross-validation encounters an error.
-	 */
-	public String train(DeepLearningTrainingDefinition definition) throws IOException {
+  /**
+   * Trains a deep learning model.
+   * @param parameters The {@link BasicDeepLearningTrainingParameters parameters} for the training.
+   * @param serializedModelFile The output trained model {@link File file}.
+   * @return The {@link MultiLayerNetwork network}.
+   * @throws IOException Thrown if the cross-validation encounters an error.
+   */
+  public String train(DeepLearningTrainingDefinition definition) throws IOException {
 
-		LOGGER.info("Starting training.");
+    LOGGER.info("Starting training.");
 
-		GsonBuilder gsonBuilder = new GsonBuilder();
-		gsonBuilder.serializeSpecialFloatingPointValues();
-		Gson gson = gsonBuilder.setPrettyPrinting().create();
-		String jsonString = gson.toJson(definition, DeepLearningTrainingDefinition.class);
-		LOGGER.debug(jsonString);
+    GsonBuilder gsonBuilder = new GsonBuilder();
+    gsonBuilder.serializeSpecialFloatingPointValues();
+    Gson gson = gsonBuilder.setPrettyPrinting().create();
+    String jsonString = gson.toJson(definition, DeepLearningTrainingDefinition.class);
+    LOGGER.debug(jsonString);
 
-		final File wordVectorsFile = new File(definition.getTrainingData().getWordVectorsFile());
-		final WordVectors wordVectors = WordVectorSerializer.loadStaticModel(wordVectorsFile);
-		final int vectorSize = wordVectors.getWordVector(wordVectors.vocab().wordAtIndex(0)).length;
-		final String[] labels = getLabels(definition.getEntityType());
+    final File wordVectorsFile = new File(definition.getTrainingData().getWordVectorsFile());
+    final WordVectors wordVectors = WordVectorSerializer.loadStaticModel(wordVectorsFile);
+    final int vectorSize = wordVectors.getWordVector(wordVectors.vocab().wordAtIndex(0)).length;
+    final String[] labels = getLabels(definition.getEntityType());
 
-		LOGGER.debug("Using vector size: {}", vectorSize);
+    LOGGER.debug("Using vector size: {}", vectorSize);
 
-		// Dataset for training.
-		final ObjectStream<NameSample> trainingSampleStream = ObjectStreamUtils.getObjectStream(getSubjectOfTraining(definition));
-		final DataSetIterator trainDataSetIterator = new NameSampleDataSetIterator(trainingSampleStream, wordVectors, vectorSize, definition.getHyperParameters().getWindowSize(), labels, definition.getHyperParameters().getBatchSize());
+    // Dataset for training.
+    final ObjectStream<NameSample> trainingSampleStream = ObjectStreamUtils.getObjectStream(getSubjectOfTraining(definition));
+    final DataSetIterator trainDataSetIterator = new NameSampleDataSetIterator(trainingSampleStream, wordVectors, vectorSize, definition.getHyperParameters().getWindowSize(), labels, definition.getHyperParameters().getBatchSize());
 
-		// Dataset for evaluation.
-		final ObjectStream<NameSample> evaluationSampleStream = ObjectStreamUtils.getObjectStream(getSubjectOfEvaluation(definition));
-		final DataSetIterator evaluationDataSetIterator = new NameSampleDataSetIterator(evaluationSampleStream, wordVectors, vectorSize, definition.getHyperParameters().getWindowSize(), labels, definition.getHyperParameters().getBatchSize());
+    // Dataset for evaluation.
+    final ObjectStream<NameSample> evaluationSampleStream = ObjectStreamUtils.getObjectStream(getSubjectOfEvaluation(definition));
+    final DataSetIterator evaluationDataSetIterator = new NameSampleDataSetIterator(evaluationSampleStream, wordVectors, vectorSize, definition.getHyperParameters().getWindowSize(), labels, definition.getHyperParameters().getBatchSize());
 
-		// Build the networks.
-		final MultiLayerConfiguration multiLayerConfiguration = buildNetworkConfiguration(definition.getHyperParameters(), vectorSize);
-		MultiLayerNetwork multiLayerNetwork = buildNetwork(multiLayerConfiguration, definition);
+    // Build the networks.
+    final MultiLayerConfiguration multiLayerConfiguration = buildNetworkConfiguration(definition.getHyperParameters(), vectorSize);
+    MultiLayerNetwork multiLayerNetwork = buildNetwork(multiLayerConfiguration, definition);
 
-		// Get the early stopping parameters.
-		if(definition.getEarlyTermination() != null) {
+    // Get the early stopping parameters.
+    if(definition.getEarlyTermination() != null) {
 
-			LOGGER.info("Enabling early-termination training.");
+      LOGGER.info("Enabling early-termination training.");
 
-			EarlyStoppingConfiguration.Builder<MultiLayerNetwork> esConf = new EarlyStoppingConfiguration.Builder<MultiLayerNetwork>();
+      EarlyStoppingConfiguration.Builder<MultiLayerNetwork> esConf = new EarlyStoppingConfiguration.Builder<MultiLayerNetwork>();
 
-			if(definition.getEarlyTermination().getMaxEpochs() != null) {
-				esConf.epochTerminationConditions(new ScoreImprovementEpochTerminationCondition(definition.getEarlyTermination().getMaxEpochs()));
-			}
+      if(definition.getEarlyTermination().getMaxEpochs() != null) {
+        esConf.epochTerminationConditions(new ScoreImprovementEpochTerminationCondition(definition.getEarlyTermination().getMaxEpochs()));
+      }
 
-			if(definition.getEarlyTermination().getMaxMinutes() != null) {
-				esConf.iterationTerminationConditions(new MaxTimeIterationTerminationCondition(definition.getEarlyTermination().getMaxMinutes(), TimeUnit.MINUTES));
-			}
+      if(definition.getEarlyTermination().getMaxMinutes() != null) {
+        esConf.iterationTerminationConditions(new MaxTimeIterationTerminationCondition(definition.getEarlyTermination().getMaxMinutes(), TimeUnit.MINUTES));
+      }
 
-			esConf.scoreCalculator(new DataSetLossCalculator(evaluationDataSetIterator, true));
-			esConf.evaluateEveryNEpochs(1);
-			esConf.modelSaver(new LocalFileModelSaver(System.getProperty("java.io.tmpdir")));
-			EarlyStoppingConfiguration<MultiLayerNetwork> earlyStoppingConfiguration = esConf.build();
+      esConf.scoreCalculator(new DataSetLossCalculator(evaluationDataSetIterator, true));
+      esConf.evaluateEveryNEpochs(1);
+      esConf.modelSaver(new LocalFileModelSaver(System.getProperty("java.io.tmpdir")));
+      EarlyStoppingConfiguration<MultiLayerNetwork> earlyStoppingConfiguration = esConf.build();
 
-	        EarlyStoppingTrainer trainer = new EarlyStoppingTrainer(earlyStoppingConfiguration, multiLayerNetwork, trainDataSetIterator);
-	        EarlyStoppingResult<MultiLayerNetwork> result = trainer.fit();
+          EarlyStoppingTrainer trainer = new EarlyStoppingTrainer(earlyStoppingConfiguration, multiLayerNetwork, trainDataSetIterator);
+          EarlyStoppingResult<MultiLayerNetwork> result = trainer.fit();
 
-	        multiLayerNetwork = result.getBestModel();
+          multiLayerNetwork = result.getBestModel();
 
-	        LOGGER.info("Termination reason: " + result.getTerminationReason());
-	        LOGGER.info("Termination details: " + result.getTerminationDetails());
-	        LOGGER.info("Total epochs: " + result.getTotalEpochs());
-	        LOGGER.info("Best epoch number: " + result.getBestModelEpoch());
-	        LOGGER.info("Score at best epoch: " + result.getBestModelScore());
+          LOGGER.info("Termination reason: " + result.getTerminationReason());
+          LOGGER.info("Termination details: " + result.getTerminationDetails());
+          LOGGER.info("Total epochs: " + result.getTotalEpochs());
+          LOGGER.info("Best epoch number: " + result.getBestModelEpoch());
+          LOGGER.info("Score at best epoch: " + result.getBestModelScore());
 
-		} else {
+    } else {
 
-			if(definition.getParallelTraining() != null) {
+      if(definition.getParallelTraining() != null) {
 
-				LOGGER.info("Doing parallel training.");
+        LOGGER.info("Doing parallel training.");
 
-				final ParallelWrapper wrapper = new ParallelWrapper.Builder<Classifier>(multiLayerNetwork)
-			        .prefetchBuffer(definition.getParallelTraining().getPrefetchBuffer())
-			        .workers(definition.getParallelTraining().getWorkers())
-			        .reportScoreAfterAveraging(definition.getParallelTraining().isReportScoreAfterAveraging())
-			        .averagingFrequency(definition.getParallelTraining().getAveragingFrequency())
-			        .useLegacyAveraging(definition.getParallelTraining().isLegacyAveraging())
-			        .build();
+        final ParallelWrapper wrapper = new ParallelWrapper.Builder<Classifier>(multiLayerNetwork)
+              .prefetchBuffer(definition.getParallelTraining().getPrefetchBuffer())
+              .workers(definition.getParallelTraining().getWorkers())
+              .reportScoreAfterAveraging(definition.getParallelTraining().isReportScoreAfterAveraging())
+              .averagingFrequency(definition.getParallelTraining().getAveragingFrequency())
+              .useLegacyAveraging(definition.getParallelTraining().isLegacyAveraging())
+              .build();
 
-				for (int i = 1; i <= definition.getHyperParameters().getEpochs(); i++) {
+        for (int i = 1; i <= definition.getHyperParameters().getEpochs(); i++) {
 
-					// Do parallel training based on the ParallelTraining properties.
+          // Do parallel training based on the ParallelTraining properties.
 
-					wrapper.fit(trainDataSetIterator);
-					trainDataSetIterator.reset();
-					LOGGER.info("Finished epoch {}", i);
+          wrapper.fit(trainDataSetIterator);
+          trainDataSetIterator.reset();
+          LOGGER.info("Finished epoch {}", i);
 
-		            Evaluation evaluation = new Evaluation();
+                Evaluation evaluation = new Evaluation();
 
-		            while (evaluationDataSetIterator.hasNext()) {
+                while (evaluationDataSetIterator.hasNext()) {
 
-		            	DataSet t = evaluationDataSetIterator.next();
+                  DataSet t = evaluationDataSetIterator.next();
 
-		                INDArray features = t.getFeatureMatrix();
-		                INDArray lables = t.getLabels();
-		                INDArray inMask = t.getFeaturesMaskArray();
-		                INDArray outMask = t.getLabelsMaskArray();
-		                INDArray predicted = multiLayerNetwork.output(features, false, inMask, outMask);
+                    INDArray features = t.getFeatureMatrix();
+                    INDArray lables = t.getLabels();
+                    INDArray inMask = t.getFeaturesMaskArray();
+                    INDArray outMask = t.getLabelsMaskArray();
+                    INDArray predicted = multiLayerNetwork.output(features, false, inMask, outMask);
 
-		                evaluation.evalTimeSeries(lables, predicted, outMask);
+                    evaluation.evalTimeSeries(lables, predicted, outMask);
 
-		            }
+                }
 
-		            evaluationDataSetIterator.reset();
+                evaluationDataSetIterator.reset();
 
-		            LOGGER.info("Evaluation statistics:\n{}", evaluation.stats());
+                LOGGER.info("Evaluation statistics:\n{}", evaluation.stats());
 
-				}
+        }
 
-			} else {
+      } else {
 
-				LOGGER.info("Doing single node training.");
+        LOGGER.info("Doing single node training.");
 
-				for (int i = 1; i <= definition.getHyperParameters().getEpochs(); i++) {
+        for (int i = 1; i <= definition.getHyperParameters().getEpochs(); i++) {
 
-					multiLayerNetwork.fit(trainDataSetIterator);
-					trainDataSetIterator.reset();
-					LOGGER.info("Finished epoch {}", i);
+          multiLayerNetwork.fit(trainDataSetIterator);
+          trainDataSetIterator.reset();
+          LOGGER.info("Finished epoch {}", i);
 
-		            Evaluation evaluation = new Evaluation();
+                Evaluation evaluation = new Evaluation();
 
-		            while (evaluationDataSetIterator.hasNext()) {
+                while (evaluationDataSetIterator.hasNext()) {
 
-		            	DataSet t = evaluationDataSetIterator.next();
+                  DataSet t = evaluationDataSetIterator.next();
 
-		                INDArray features = t.getFeatureMatrix();
-		                INDArray lables = t.getLabels();
-		                INDArray inMask = t.getFeaturesMaskArray();
-		                INDArray outMask = t.getLabelsMaskArray();
-		                INDArray predicted = multiLayerNetwork.output(features, false, inMask, outMask);
+                    INDArray features = t.getFeatureMatrix();
+                    INDArray lables = t.getLabels();
+                    INDArray inMask = t.getFeaturesMaskArray();
+                    INDArray outMask = t.getLabelsMaskArray();
+                    INDArray predicted = multiLayerNetwork.output(features, false, inMask, outMask);
 
-		                evaluation.evalTimeSeries(lables, predicted, outMask);
+                    evaluation.evalTimeSeries(lables, predicted, outMask);
 
-		            }
+                }
 
-		            evaluationDataSetIterator.reset();
+                evaluationDataSetIterator.reset();
 
-		            LOGGER.info("Evaluation statistics:\n{}", evaluation.stats());
+                LOGGER.info("Evaluation statistics:\n{}", evaluation.stats());
 
-				}
+        }
 
-			}
+      }
 
-		}
+    }
 
-		// Serialize the model to a file.
-		final File serializedModelFile = new File(definition.getOutput().getOutputFile());
+    // Serialize the model to a file.
+    final File serializedModelFile = new File(definition.getOutput().getOutputFile());
         ModelSerializer.writeModel(multiLayerNetwork, serializedModelFile, false);
         LOGGER.info("Model serialized to {}", serializedModelFile.getAbsolutePath());
 
-		return UUID.randomUUID().toString();
+    return UUID.randomUUID().toString();
 
-	}
+  }
 
-	public Gson getGson() {
-		return gson;
-	}
+  public Gson getGson() {
+    return gson;
+  }
 
-	public DeepLearningTrainingDefinition deserializeDefinition(String json) throws IOException {
+  public DeepLearningTrainingDefinition deserializeDefinition(String json) throws IOException {
 
-		return gson.fromJson(json, DeepLearningTrainingDefinition.class);
+    return gson.fromJson(json, DeepLearningTrainingDefinition.class);
 
-	}
+  }
 
-	private MultiLayerNetwork buildNetwork(MultiLayerConfiguration multiLayerConfiguration, DeepLearningTrainingDefinition definition) {
+  private MultiLayerNetwork buildNetwork(MultiLayerConfiguration multiLayerConfiguration, DeepLearningTrainingDefinition definition) {
 
-		MultiLayerNetwork multiLayerNetwork = new MultiLayerNetwork(multiLayerConfiguration);
-		multiLayerNetwork.init();
+    MultiLayerNetwork multiLayerNetwork = new MultiLayerNetwork(multiLayerConfiguration);
+    multiLayerNetwork.init();
 
-		List<IterationListener> listeners = new ArrayList<IterationListener>();
+    List<IterationListener> listeners = new ArrayList<IterationListener>();
 
-		if(StringUtils.isNotEmpty(definition.getOutput().getStatsFile())) {
+    if(StringUtils.isNotEmpty(definition.getOutput().getStatsFile())) {
 
-			File statsFile = new File(definition.getOutput().getStatsFile());
-        	StatsStorage statsStorage = new FileStatsStorage(statsFile);
+      File statsFile = new File(definition.getOutput().getStatsFile());
+          StatsStorage statsStorage = new FileStatsStorage(statsFile);
 
-        	listeners.add(new StatsListener(statsStorage));
+          listeners.add(new StatsListener(statsStorage));
 
-		}
+    }
 
-		listeners.add(new ScoreIterationListener(definition.getMonitoring().getScoreIteration()));
+    listeners.add(new ScoreIterationListener(definition.getMonitoring().getScoreIteration()));
 
         multiLayerNetwork.setListeners(listeners);
 
-		return multiLayerNetwork;
+    return multiLayerNetwork;
 
-	}
+  }
 
-	private MultiLayerConfiguration buildNetworkConfiguration(HyperParameters hp, int vectorSize) {
+  private MultiLayerConfiguration buildNetworkConfiguration(HyperParameters hp, int vectorSize) {
 
-		// https://deeplearning4j.org/neuralnet-configuration
+    // https://deeplearning4j.org/neuralnet-configuration
 
-		NeuralNetConfiguration.Builder builder = new NeuralNetConfiguration.Builder();
+    NeuralNetConfiguration.Builder builder = new NeuralNetConfiguration.Builder();
 
-		builder.seed(hp.getSeed());
-		builder.biasInit(hp.getNetworkConfigurationParameters().getBiasInit());
-		builder.convolutionMode(hp.getConvolutionModeParam());
-		builder.dropOut(hp.getNetworkConfigurationParameters().getDropOut());
-		builder.iterations(hp.getNetworkConfigurationParameters().getIterations());
+    builder.seed(hp.getSeed());
+    builder.biasInit(hp.getNetworkConfigurationParameters().getBiasInit());
+    builder.convolutionMode(hp.getConvolutionModeParam());
+    builder.dropOut(hp.getNetworkConfigurationParameters().getDropOut());
+    builder.iterations(hp.getNetworkConfigurationParameters().getIterations());
 
-		builder.regularization(hp.getNetworkConfigurationParameters().getRegularizationParameters().getRegularization());
-		builder.l1(hp.getNetworkConfigurationParameters().getRegularizationParameters().getL1());
-		builder.l1Bias(hp.getNetworkConfigurationParameters().getRegularizationParameters().getL1Bias());
-		builder.l2(hp.getNetworkConfigurationParameters().getRegularizationParameters().getL2());
-		builder.l2Bias(hp.getNetworkConfigurationParameters().getRegularizationParameters().getL2Bias());
+    builder.regularization(hp.getNetworkConfigurationParameters().getRegularizationParameters().getRegularization());
+    builder.l1(hp.getNetworkConfigurationParameters().getRegularizationParameters().getL1());
+    builder.l1Bias(hp.getNetworkConfigurationParameters().getRegularizationParameters().getL1Bias());
+    builder.l2(hp.getNetworkConfigurationParameters().getRegularizationParameters().getL2());
+    builder.l2Bias(hp.getNetworkConfigurationParameters().getRegularizationParameters().getL2Bias());
 
-		builder.updater(hp.getNetworkConfigurationParameters().getUpdaterParameters().getUpdaterParam());
-		//builder.adamMeanDecay(adamMeanDecay);
-		//builder.adamVarDecay(adamVarDecay);
+    builder.updater(hp.getNetworkConfigurationParameters().getUpdaterParameters().getUpdaterParam());
+    //builder.adamMeanDecay(adamMeanDecay);
+    //builder.adamVarDecay(adamVarDecay);
 
-		builder.useDropConnect(hp.getNetworkConfigurationParameters().isUseDropConnect());
-		builder.optimizationAlgo(hp.getNetworkConfigurationParameters().getOptimizationAlgorithmParam());
-		builder.gradientNormalization(hp.getNetworkConfigurationParameters().getGradientNormalizationParam());
-		builder.gradientNormalizationThreshold(hp.getNetworkConfigurationParameters().getGradientNormalizationThreshold());
+    builder.useDropConnect(hp.getNetworkConfigurationParameters().isUseDropConnect());
+    builder.optimizationAlgo(hp.getNetworkConfigurationParameters().getOptimizationAlgorithmParam());
+    builder.gradientNormalization(hp.getNetworkConfigurationParameters().getGradientNormalizationParam());
+    builder.gradientNormalizationThreshold(hp.getNetworkConfigurationParameters().getGradientNormalizationThreshold());
 
-		builder.weightInit(hp.getNetworkConfigurationParameters().getWeightInitParam());
-		//builder.dist(dist);
+    builder.weightInit(hp.getNetworkConfigurationParameters().getWeightInitParam());
+    //builder.dist(dist);
 
-		MultiLayerConfiguration multiLayerConfiguration = builder.list()
-				.layer(0, new GravesLSTM.Builder()
-						.nIn(vectorSize)
-						.nOut(256)
-						.activation(Activation.TANH)
-						//.learningRate(hp.getNetworkConfigurationParameters().getLayers().getLayer1().getLearningRate())
-						.learningRateDecayPolicy(LearningRatePolicy.Schedule)
-						.learningRateSchedule(hp.getNetworkConfigurationParameters().getLayers().getLayer1().getLearningRateScheduleParam())
-						.biasLearningRate(hp.getNetworkConfigurationParameters().getLayers().getLayer1().getBiasLearningRate())
-						.build())
-				.layer(1, new RnnOutputLayer.Builder()
-						.nIn(256)
-						.nOut(3) // Equal to the number of labels (START, CONT, END)
-						// The softmax function is often used in the final layer of a neural
-						// network-based classifier. Such networks are commonly trained under
-						// a log loss (or cross-entropy) regime, giving a non-linear variant
-						// of multinomial logistic regression.
-						.activation(Activation.SOFTMAX)
-						.lossFunction(LossFunctions.LossFunction.MCXENT)
-						//.learningRate(hp.getNetworkConfigurationParameters().getLayers().getLayer2().getLearningRate())
-						.learningRateDecayPolicy(LearningRatePolicy.Schedule)
-						.learningRateSchedule(hp.getNetworkConfigurationParameters().getLayers().getLayer2().getLearningRateScheduleParam())
-						.biasLearningRate(hp.getNetworkConfigurationParameters().getLayers().getLayer2().getBiasLearningRate())
-				.build())
-				.pretrain(hp.getNetworkConfigurationParameters().isPretrain())
-				.backprop(hp.getNetworkConfigurationParameters().isBackprop())
-				.build();
+    MultiLayerConfiguration multiLayerConfiguration = builder.list()
+        .layer(0, new GravesLSTM.Builder()
+            .nIn(vectorSize)
+            .nOut(256)
+            .activation(Activation.TANH)
+            //.learningRate(hp.getNetworkConfigurationParameters().getLayers().getLayer1().getLearningRate())
+            .learningRateDecayPolicy(LearningRatePolicy.Schedule)
+            .learningRateSchedule(hp.getNetworkConfigurationParameters().getLayers().getLayer1().getLearningRateScheduleParam())
+            .biasLearningRate(hp.getNetworkConfigurationParameters().getLayers().getLayer1().getBiasLearningRate())
+            .build())
+        .layer(1, new RnnOutputLayer.Builder()
+            .nIn(256)
+            .nOut(3) // Equal to the number of labels (START, CONT, END)
+            // The softmax function is often used in the final layer of a neural
+            // network-based classifier. Such networks are commonly trained under
+            // a log loss (or cross-entropy) regime, giving a non-linear variant
+            // of multinomial logistic regression.
+            .activation(Activation.SOFTMAX)
+            .lossFunction(LossFunctions.LossFunction.MCXENT)
+            //.learningRate(hp.getNetworkConfigurationParameters().getLayers().getLayer2().getLearningRate())
+            .learningRateDecayPolicy(LearningRatePolicy.Schedule)
+            .learningRateSchedule(hp.getNetworkConfigurationParameters().getLayers().getLayer2().getLearningRateScheduleParam())
+            .biasLearningRate(hp.getNetworkConfigurationParameters().getLayers().getLayer2().getBiasLearningRate())
+        .build())
+        .pretrain(hp.getNetworkConfigurationParameters().isPretrain())
+        .backprop(hp.getNetworkConfigurationParameters().isBackprop())
+        .build();
 
-		return multiLayerConfiguration;
+    return multiLayerConfiguration;
 
-	}
+  }
 
-	private String[] getLabels(String entityType) {
+  private String[] getLabels(String entityType) {
 
-		return new String[] { entityType + "-start", entityType + "-cont", "other" };
+    return new String[] { entityType + "-start", entityType + "-cont", "other" };
 
-	}
+  }
 
-	private SubjectOfTrainingOrEvaluation getSubjectOfTraining(DeepLearningTrainingDefinition definition) {
+  private SubjectOfTrainingOrEvaluation getSubjectOfTraining(DeepLearningTrainingDefinition definition) {
 
-		final String trainingInputFile = definition.getTrainingData().getInputFile();
+    final String trainingInputFile = definition.getTrainingData().getInputFile();
 
-		if(definition.getTrainingData().getFormat().equalsIgnoreCase(AnnotationTypes.IDYLNLP.getName())) {
-			return new IdylNLPSubjectOfTrainingOrEvaluation(trainingInputFile, definition.getTrainingData().getAnnotationsFile());
-		} else if(definition.getTrainingData().getFormat().equalsIgnoreCase(AnnotationTypes.CONLL2003.getName())) {
-			return new CoNLL2003SubjectOfTrainingOrEvaluation(trainingInputFile);
-		} else {
-			LOGGER.info("Defaulting to OpenNLP subject of training.");
-			return new OpenNLPSubjectOfTrainingOrEvaluation(trainingInputFile);
-		}
+    if(definition.getTrainingData().getFormat().equalsIgnoreCase(AnnotationTypes.IDYLNLP.getName())) {
+      return new IdylNLPSubjectOfTrainingOrEvaluation(trainingInputFile, definition.getTrainingData().getAnnotationsFile());
+    } else if(definition.getTrainingData().getFormat().equalsIgnoreCase(AnnotationTypes.CONLL2003.getName())) {
+      return new CoNLL2003SubjectOfTrainingOrEvaluation(trainingInputFile);
+    } else {
+      LOGGER.info("Defaulting to OpenNLP subject of training.");
+      return new OpenNLPSubjectOfTrainingOrEvaluation(trainingInputFile);
+    }
 
-	}
+  }
 
-	private SubjectOfTrainingOrEvaluation getSubjectOfEvaluation(DeepLearningTrainingDefinition definition) {
+  private SubjectOfTrainingOrEvaluation getSubjectOfEvaluation(DeepLearningTrainingDefinition definition) {
 
-		final String trainingInputFile = definition.getEvaluationData().getInputFile();
+    final String trainingInputFile = definition.getEvaluationData().getInputFile();
 
-		if(definition.getEvaluationData().getFormat().equalsIgnoreCase(AnnotationTypes.IDYLNLP.getName())) {
-			return new IdylNLPSubjectOfTrainingOrEvaluation(trainingInputFile, definition.getTrainingData().getAnnotationsFile());
-		} else if(definition.getEvaluationData().getFormat().equalsIgnoreCase(AnnotationTypes.CONLL2003.getName())) {
-			return new CoNLL2003SubjectOfTrainingOrEvaluation(trainingInputFile);
-		} else {
-			LOGGER.info("Defaulting to OpenNLP subject of training.");
-			return new OpenNLPSubjectOfTrainingOrEvaluation(trainingInputFile);
-		}
+    if(definition.getEvaluationData().getFormat().equalsIgnoreCase(AnnotationTypes.IDYLNLP.getName())) {
+      return new IdylNLPSubjectOfTrainingOrEvaluation(trainingInputFile, definition.getTrainingData().getAnnotationsFile());
+    } else if(definition.getEvaluationData().getFormat().equalsIgnoreCase(AnnotationTypes.CONLL2003.getName())) {
+      return new CoNLL2003SubjectOfTrainingOrEvaluation(trainingInputFile);
+    } else {
+      LOGGER.info("Defaulting to OpenNLP subject of training.");
+      return new OpenNLPSubjectOfTrainingOrEvaluation(trainingInputFile);
+    }
 
-	}
+  }
 
 }

@@ -33,18 +33,18 @@ import opennlp.tools.util.featuregen.GeneratorFactory.XmlFeatureGeneratorFactory
  */
 public class SpecialCharacterFeatureGeneratorFactory implements XmlFeatureGeneratorFactory {
 
-	private static final String ELEMENT_NAME = "specchar";
+  private static final String ELEMENT_NAME = "specchar";
 
-	@Override
-	public AdaptiveFeatureGenerator create(Element generatorElement, FeatureGeneratorResourceProvider resourceManager)
-			throws InvalidFormatException {
+  @Override
+  public AdaptiveFeatureGenerator create(Element generatorElement, FeatureGeneratorResourceProvider resourceManager)
+      throws InvalidFormatException {
 
-		return new SpecialCharacterFeatureGenerator();
+    return new SpecialCharacterFeatureGenerator();
 
-	}
+  }
 
-	public static void register(Map<String, XmlFeatureGeneratorFactory> factoryMap) {
-		factoryMap.put(ELEMENT_NAME, new SpecialCharacterFeatureGeneratorFactory());
-	}
+  public static void register(Map<String, XmlFeatureGeneratorFactory> factoryMap) {
+    factoryMap.put(ELEMENT_NAME, new SpecialCharacterFeatureGeneratorFactory());
+  }
 
 }

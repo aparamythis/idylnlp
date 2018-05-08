@@ -29,22 +29,22 @@ import nl.jqno.equalsverifier.Warning;
  */
 public abstract class ObjectTest<T extends Object> {
 
-	@Test
-	public void equalsContract() {
-	    EqualsVerifier
-	    	.forClass(getTestedClass())
-	    	.suppress(Warning.NONFINAL_FIELDS)
-	    	.suppress(Warning.INHERITED_DIRECTLY_FROM_OBJECT)
-	    	.verify();
-	}
+  @Test
+  public void equalsContract() {
+      EqualsVerifier
+        .forClass(getTestedClass())
+        .suppress(Warning.NONFINAL_FIELDS)
+        .suppress(Warning.INHERITED_DIRECTLY_FROM_OBJECT)
+        .verify();
+  }
 
-	@SuppressWarnings("unchecked")
-	private Class<T> getTestedClass() {
+  @SuppressWarnings("unchecked")
+  private Class<T> getTestedClass() {
 
-		return (Class<T>)
-				   ((ParameterizedType)getClass().getGenericSuperclass())
-				      .getActualTypeArguments()[0];
+    return (Class<T>)
+           ((ParameterizedType)getClass().getGenericSuperclass())
+              .getActualTypeArguments()[0];
 
-	}
+  }
 
 }

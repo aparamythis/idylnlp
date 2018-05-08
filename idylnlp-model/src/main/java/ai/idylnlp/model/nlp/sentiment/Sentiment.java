@@ -23,35 +23,35 @@ package ai.idylnlp.model.nlp.sentiment;
  */
 public class Sentiment {
 
-	private String sentimentName;
-	private int sentimentValue;
+  private String sentimentName;
+  private int sentimentValue;
 
-	/**
-	 * Creates a new Sentiment.
-	 * @param sentimentName The name the sentiment.
-	 * @param sentimentValue The value of the sentiment.
-	 */
-	public Sentiment(String sentimentName, int sentimentValue) {
+  /**
+   * Creates a new Sentiment.
+   * @param sentimentName The name the sentiment.
+   * @param sentimentValue The value of the sentiment.
+   */
+  public Sentiment(String sentimentName, int sentimentValue) {
 
-		this.sentimentName = sentimentName;
-		this.sentimentValue = sentimentValue;
+    this.sentimentName = sentimentName;
+    this.sentimentValue = sentimentValue;
 
-	}
+  }
 
-	/**
-	 * Gets the name of the sentiment.
-	 * @return The name of the sentiment.
-	 */
-	public String getSentimentName() {
-		return sentimentName;
-	}
+  /**
+   * Gets the name of the sentiment.
+   * @return The name of the sentiment.
+   */
+  public String getSentimentName() {
+    return sentimentName;
+  }
 
-	/**
-	 * Gets the integer value of the sentiment.
-	 * @return The integer value of the sentiment.
-	 */
-	public int getSentimentValue() {
-		return sentimentValue;
-	}
+  /**
+   * Gets the integer value of the sentiment.
+   * @return The integer value of the sentiment.
+   */
+  public int getSentimentValue() {
+    return sentimentValue;
+  }
 
 }

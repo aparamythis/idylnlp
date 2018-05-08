@@ -24,11 +24,11 @@ package ai.idylnlp.model.nlp;
 @FunctionalInterface
 public interface Stemmer {
 
-	/**
-	 * Stems text.
-	 * @param text The text to stem.
-	 * @return The stemmed text.
-	 */
-	public String stem(String text);
+  /**
+   * Stems text.
+   * @param text The text to stem.
+   * @return The stemmed text.
+   */
+  public String stem(String text);
 
 }

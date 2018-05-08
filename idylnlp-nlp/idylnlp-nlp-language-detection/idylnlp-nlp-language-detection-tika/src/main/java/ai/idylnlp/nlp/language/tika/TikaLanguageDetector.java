@@ -39,64 +39,64 @@ import ai.idylnlp.model.nlp.language.LanguageDetector;
  */
 public class TikaLanguageDetector implements LanguageDetector {
 
-	private static final Logger LOGGER = LogManager.getLogger(TikaLanguageDetector.class);
+  private static final Logger LOGGER = LogManager.getLogger(TikaLanguageDetector.class);
 
-	@Override
-	public LanguageDetectionResponse detectLanguage(String text, int limit) throws LanguageDetectionException {
+  @Override
+  public LanguageDetectionResponse detectLanguage(String text, int limit) throws LanguageDetectionException {
 
-		List<Pair<String, Double>> pairs = new LinkedList<Pair<String, Double>>();
+    List<Pair<String, Double>> pairs = new LinkedList<Pair<String, Double>>();
 
-		try {
+    try {
 
-			org.apache.tika.language.detect.LanguageDetector languageDetector = new OptimaizeLangDetector().loadModels();
-			List<LanguageResult> languageResults = languageDetector.detectAll(text);
+      org.apache.tika.language.detect.LanguageDetector languageDetector = new OptimaizeLangDetector().loadModels();
+      List<LanguageResult> languageResults = languageDetector.detectAll(text);
 
-			int x = 0;
+      int x = 0;
 
-			for(LanguageResult languageResult : languageResults) {
+      for(LanguageResult languageResult : languageResults) {
 
-				final String code = languageResult.getLanguage();
+        final String code = languageResult.getLanguage();
 
-				double confidence = 0;
+        double confidence = 0;
 
-				if(languageResult.getConfidence() == LanguageConfidence.HIGH) {
+        if(languageResult.getConfidence() == LanguageConfidence.HIGH) {
 
-					confidence = 0.9;
+          confidence = 0.9;
 
-				} else if(languageResult.getConfidence() == LanguageConfidence.MEDIUM) {
+        } else if(languageResult.getConfidence() == LanguageConfidence.MEDIUM) {
 
-					confidence = 0.6;
+          confidence = 0.6;
 
-				} else if(languageResult.getConfidence() == LanguageConfidence.LOW) {
+        } else if(languageResult.getConfidence() == LanguageConfidence.LOW) {
 
-					confidence = 0.3;
+          confidence = 0.3;
 
-				} else if(languageResult.getConfidence() == LanguageConfidence.NONE) {
+        } else if(languageResult.getConfidence() == LanguageConfidence.NONE) {
 
-					confidence = 0;
+          confidence = 0;
 
-				}
+        }
 
-				pairs.add(new ImmutablePair<String, Double>(code, confidence));
+        pairs.add(new ImmutablePair<String, Double>(code, confidence));
 
-				x++;
+        x++;
 
-				if(x == limit) {
-					break;
-				}
+        if(x == limit) {
+          break;
+        }
 
-			}
+      }
 
-		} catch (Exception ex) {
+    } catch (Exception ex) {
 
-			LOGGER.error("Unable to detect language for input: " + text);
+      LOGGER.error("Unable to detect language for input: " + text);
 
-			throw new LanguageDetectionException("Unable to detect language.");
+      throw new LanguageDetectionException("Unable to detect language.");
 
-		}
+    }
 
-		return new LanguageDetectionResponse(pairs);
+    return new LanguageDetectionResponse(pairs);
 
-	}
+  }
 
 }

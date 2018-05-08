@@ -25,18 +25,18 @@ import java.util.Collection;
  */
 public interface StopWordRemover {
 
-	/**
-	 * Determines if the input string is a stop word.
-	 * @param input The input string.
-	 * @return True if the input is a stop word.
-	 */
-	public boolean isStopWord(String input);
+  /**
+   * Determines if the input string is a stop word.
+   * @param input The input string.
+   * @return True if the input is a stop word.
+   */
+  public boolean isStopWord(String input);
 
-	/**
-	 * Removes all (if any) stop words from the input strings.
-	 * @param input A collection of input strings.
-	 * @return A subset of the input minus strings that were stop words.
-	 */
-	public Collection<String> removeStopWords(Collection<String> input);
+  /**
+   * Removes all (if any) stop words from the input strings.
+   * @param input A collection of input strings.
+   * @return A subset of the input minus strings that were stop words.
+   */
+  public Collection<String> removeStopWords(Collection<String> input);
 
 }

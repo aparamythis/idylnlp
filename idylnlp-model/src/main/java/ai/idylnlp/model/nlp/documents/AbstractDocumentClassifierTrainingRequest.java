@@ -27,39 +27,39 @@ import com.neovisionaries.i18n.LanguageCode;
  */
 public class AbstractDocumentClassifierTrainingRequest {
 
-	private File trainingFile;
-	private String encryptionKey;
-	private LanguageCode languageCode;
+  private File trainingFile;
+  private String encryptionKey;
+  private LanguageCode languageCode;
 
-	public AbstractDocumentClassifierTrainingRequest(File trainingFile, LanguageCode languageCode) {
+  public AbstractDocumentClassifierTrainingRequest(File trainingFile, LanguageCode languageCode) {
 
-		this.trainingFile = trainingFile;
-		this.languageCode = languageCode;
+    this.trainingFile = trainingFile;
+    this.languageCode = languageCode;
 
-	}
+  }
 
-	public File getTrainingFile() {
-		return trainingFile;
-	}
+  public File getTrainingFile() {
+    return trainingFile;
+  }
 
-	public void setTrainingFile(File trainingFile) {
-		this.trainingFile = trainingFile;
-	}
+  public void setTrainingFile(File trainingFile) {
+    this.trainingFile = trainingFile;
+  }
 
-	public String getEncryptionKey() {
-		return encryptionKey;
-	}
+  public String getEncryptionKey() {
+    return encryptionKey;
+  }
 
-	public void setEncryptionKey(String encryptionKey) {
-		this.encryptionKey = encryptionKey;
-	}
+  public void setEncryptionKey(String encryptionKey) {
+    this.encryptionKey = encryptionKey;
+  }
 
-	public LanguageCode getLanguageCode() {
-		return languageCode;
-	}
+  public LanguageCode getLanguageCode() {
+    return languageCode;
+  }
 
-	public void setLanguageCode(LanguageCode languageCode) {
-		this.languageCode = languageCode;
-	}
+  public void setLanguageCode(LanguageCode languageCode) {
+    this.languageCode = languageCode;
+  }
 
 }

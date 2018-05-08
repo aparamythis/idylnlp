@@ -40,63 +40,63 @@ import opennlp.tools.util.model.BaseModel;
  */
 public class DictionaryModel extends BaseModel {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	private StandardModelManifest modelManifest;
-	private String modelDirectory;
+  private StandardModelManifest modelManifest;
+  private String modelDirectory;
 
-	/**
-	 * Creates a new dictionary model and initializes the {@link TokenNameFinder}.
-	 * @param modelManifest The {@link StandardModelManifest}.
-	 * @param modelDirectory The model directory.
-	 * @throws IOException
-	 */
-	public DictionaryModel(StandardModelManifest modelManifest, String modelDirectory) throws Exception {
-		this.modelManifest = modelManifest;
-		this.modelDirectory = modelDirectory;
-	}
+  /**
+   * Creates a new dictionary model and initializes the {@link TokenNameFinder}.
+   * @param modelManifest The {@link StandardModelManifest}.
+   * @param modelDirectory The model directory.
+   * @throws IOException
+   */
+  public DictionaryModel(StandardModelManifest modelManifest, String modelDirectory) throws Exception {
+    this.modelManifest = modelManifest;
+    this.modelDirectory = modelDirectory;
+  }
 
-	@Override
-	public String getModelId() {
-		return modelManifest.getModelId();
-	}
+  @Override
+  public String getModelId() {
+    return modelManifest.getModelId();
+  }
 
-	/**
-	 * Gets the configured {@link TokenNameFinder} for the dictionary model.
-	 * @param tokenizer A {@link Tokenizer} used to tokenize each line in the dictionary file.
-	 * @return A {@link TokenNameFinder}.
-	 * @throws Exception
-	 */
-	public TokenNameFinder getDictionaryNameFinder(Tokenizer tokenizer) throws Exception {
+  /**
+   * Gets the configured {@link TokenNameFinder} for the dictionary model.
+   * @param tokenizer A {@link Tokenizer} used to tokenize each line in the dictionary file.
+   * @return A {@link TokenNameFinder}.
+   * @throws Exception
+   */
+  public TokenNameFinder getDictionaryNameFinder(Tokenizer tokenizer) throws Exception {
 
-		final boolean caseSensitive = false;
+    final boolean caseSensitive = false;
 
-		final Dictionary dictionary = new Dictionary(caseSensitive);
+    final Dictionary dictionary = new Dictionary(caseSensitive);
 
-		File modelFile = new File(modelDirectory + File.separator + modelManifest.getModelFileName());
+    File modelFile = new File(modelDirectory + File.separator + modelManifest.getModelFileName());
 
-		try (BufferedReader br = new BufferedReader(new FileReader(modelFile))) {
+    try (BufferedReader br = new BufferedReader(new FileReader(modelFile))) {
 
-		    String line;
-		    while ((line = br.readLine()) != null) {
+        String line;
+        while ((line = br.readLine()) != null) {
 
-		    	if(!StringUtils.isEmpty(modelManifest.getEncryptionKey())) {
-		    		line = OpenNLPEncryptionFactory.getDefault().decrypt(line, modelManifest.getEncryptionKey());
-		    	}
+          if(!StringUtils.isEmpty(modelManifest.getEncryptionKey())) {
+            line = OpenNLPEncryptionFactory.getDefault().decrypt(line, modelManifest.getEncryptionKey());
+          }
 
-		    	final String[] tokenized = tokenizer.tokenize(line);
+          final String[] tokenized = tokenizer.tokenize(line);
 
-		    	// StringList tokens = new StringList("George", "Washington");
-		    	StringList tokens = new StringList(tokenized);
+          // StringList tokens = new StringList("George", "Washington");
+          StringList tokens = new StringList(tokenized);
 
-		    	dictionary.put(tokens);
+          dictionary.put(tokens);
 
-		    }
+        }
 
-		}
+    }
 
-		return new DictionaryNameFinder(dictionary, modelManifest.getType());
+    return new DictionaryNameFinder(dictionary, modelManifest.getType());
 
-	}
+  }
 
 }

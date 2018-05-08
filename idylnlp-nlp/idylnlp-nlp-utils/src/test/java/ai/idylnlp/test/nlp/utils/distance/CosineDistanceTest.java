@@ -23,15 +23,15 @@ import ai.idylnlp.nlp.utils.distance.CosineDistance;
 
 public class CosineDistanceTest {
 
-	@Test
-	public void distance() {
+  @Test
+  public void distance() {
 
-		CosineDistance distance = new CosineDistance();
+    CosineDistance distance = new CosineDistance();
 
-		double i = distance.calculate("test", "tst");
+    double i = distance.calculate("test", "tst");
 
-		assertEquals(1.0, i, 0);
+    assertEquals(1.0, i, 0);
 
-	}
+  }
 
 }

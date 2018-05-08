@@ -48,70 +48,70 @@ import opennlp.tools.util.PlainTextByLineStream;
 
 public class ObjectStreamUtils {
 
-	private static final Logger LOGGER = LogManager.getLogger(ObjectStreamUtils.class);
+  private static final Logger LOGGER = LogManager.getLogger(ObjectStreamUtils.class);
 
-	private ObjectStreamUtils() {
-		// This is a utility class.
-	}
+  private ObjectStreamUtils() {
+    // This is a utility class.
+  }
 
-	/**
-	 * Gets the {@link ObjectStream} for training.
-	 * @param subjectOfTraining The {@link SubjectOfTrainingOrEvaluation}.
-	 * @return An {@link ObjectStream} derived from the given {@link SubjectOfTraining}.
-	 * @throws IOException Thrown if any of the input or annotation files cannot be read.
-	 */
-	public static ObjectStream<NameSample> getObjectStream(SubjectOfTrainingOrEvaluation subjectOfTraining) throws IOException {
+  /**
+   * Gets the {@link ObjectStream} for training.
+   * @param subjectOfTraining The {@link SubjectOfTrainingOrEvaluation}.
+   * @return An {@link ObjectStream} derived from the given {@link SubjectOfTraining}.
+   * @throws IOException Thrown if any of the input or annotation files cannot be read.
+   */
+  public static ObjectStream<NameSample> getObjectStream(SubjectOfTrainingOrEvaluation subjectOfTraining) throws IOException {
 
-		ObjectStream<NameSample> sampleStream = null;
+    ObjectStream<NameSample> sampleStream = null;
 
-		if(subjectOfTraining instanceof IdylNLPSubjectOfTrainingOrEvaluation) {
+    if(subjectOfTraining instanceof IdylNLPSubjectOfTrainingOrEvaluation) {
 
-			IdylNLPSubjectOfTrainingOrEvaluation nameFinderSubjectOfTraining = (IdylNLPSubjectOfTrainingOrEvaluation) subjectOfTraining;
+      IdylNLPSubjectOfTrainingOrEvaluation nameFinderSubjectOfTraining = (IdylNLPSubjectOfTrainingOrEvaluation) subjectOfTraining;
 
-			LOGGER.info("Using Idyl NLP formatted annotations.");
+      LOGGER.info("Using Idyl NLP formatted annotations.");
 
-			final AnnotationReader annotationReader = new IdylNLPFileAnnotationReader(nameFinderSubjectOfTraining.getAnnotationsFile());
-			final InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File(subjectOfTraining.getInputFile()));
-			sampleStream = new IdylNLPNameSampleStream(new PlainTextByLineStream(inputStreamFactory, Constants.ENCODING_UTF8), annotationReader);
+      final AnnotationReader annotationReader = new IdylNLPFileAnnotationReader(nameFinderSubjectOfTraining.getAnnotationsFile());
+      final InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File(subjectOfTraining.getInputFile()));
+      sampleStream = new IdylNLPNameSampleStream(new PlainTextByLineStream(inputStreamFactory, Constants.ENCODING_UTF8), annotationReader);
 
-		} else if(subjectOfTraining instanceof BratSubjectOfTrainingOrEvaluation) {
+    } else if(subjectOfTraining instanceof BratSubjectOfTrainingOrEvaluation) {
 
-			BratSubjectOfTrainingOrEvaluation nameFinderSubjectOfTraining = (BratSubjectOfTrainingOrEvaluation) subjectOfTraining;
+      BratSubjectOfTrainingOrEvaluation nameFinderSubjectOfTraining = (BratSubjectOfTrainingOrEvaluation) subjectOfTraining;
 
-			LOGGER.info("Using Brat formatted annotations.");
+      LOGGER.info("Using Brat formatted annotations.");
 
-			Map<String, String> typeToClassMap = new HashMap<>();
-		    typeToClassMap.put("Person", AnnotationConfiguration.ENTITY_TYPE);
-		    typeToClassMap.put("Location", AnnotationConfiguration.ENTITY_TYPE);
-		    typeToClassMap.put("Organization", AnnotationConfiguration.ENTITY_TYPE);
-		    typeToClassMap.put("Date", AnnotationConfiguration.ENTITY_TYPE);
+      Map<String, String> typeToClassMap = new HashMap<>();
+        typeToClassMap.put("Person", AnnotationConfiguration.ENTITY_TYPE);
+        typeToClassMap.put("Location", AnnotationConfiguration.ENTITY_TYPE);
+        typeToClassMap.put("Organization", AnnotationConfiguration.ENTITY_TYPE);
+        typeToClassMap.put("Date", AnnotationConfiguration.ENTITY_TYPE);
 
-			AnnotationConfiguration config = new AnnotationConfiguration(typeToClassMap);
-		    InputStream in = ObjectStreamUtils.class.getResourceAsStream(nameFinderSubjectOfTraining.getInputFile() + ".ann");
+      AnnotationConfiguration config = new AnnotationConfiguration(typeToClassMap);
+        InputStream in = ObjectStreamUtils.class.getResourceAsStream(nameFinderSubjectOfTraining.getInputFile() + ".ann");
 
-		    // TODO: Return the brat annotations stream.
-		    // sampleStream = new BratAnnotationStream(config, "idylnlp", in);
+        // TODO: Return the brat annotations stream.
+        // sampleStream = new BratAnnotationStream(config, "idylnlp", in);
 
-		} else if(subjectOfTraining instanceof CoNLL2003SubjectOfTrainingOrEvaluation) {
+    } else if(subjectOfTraining instanceof CoNLL2003SubjectOfTrainingOrEvaluation) {
 
-			CoNLL2003SubjectOfTrainingOrEvaluation nameFinderSubjectOfTraining = (CoNLL2003SubjectOfTrainingOrEvaluation) subjectOfTraining;
+      CoNLL2003SubjectOfTrainingOrEvaluation nameFinderSubjectOfTraining = (CoNLL2003SubjectOfTrainingOrEvaluation) subjectOfTraining;
 
-			LOGGER.info("Using CoNLL-2003 formatted data.");
+      LOGGER.info("Using CoNLL-2003 formatted data.");
 
-			InputStreamFactory in = new MarkableFileInputStreamFactory(new File(nameFinderSubjectOfTraining.getInputFile()));
-			sampleStream = new Conll03NameSampleStream(Conll03NameSampleStream.LANGUAGE.EN, in, Conll02NameSampleStream.GENERATE_PERSON_ENTITIES);
+      InputStreamFactory in = new MarkableFileInputStreamFactory(new File(nameFinderSubjectOfTraining.getInputFile()));
+      sampleStream = new Conll03NameSampleStream(Conll03NameSampleStream.LANGUAGE.EN, in, Conll02NameSampleStream.GENERATE_PERSON_ENTITIES);
 
-		} else {
+    } else {
 
-			LOGGER.info("Using OpenNLP formatted data.");
+      LOGGER.info("Using OpenNLP formatted data.");
 
-			final InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File(subjectOfTraining.getInputFile()));
-			sampleStream = new NameSampleDataStream(new PlainTextByLineStream(inputStreamFactory, Constants.ENCODING_UTF8));
+      final InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File(subjectOfTraining.getInputFile()));
+      sampleStream = new NameSampleDataStream(new PlainTextByLineStream(inputStreamFactory, Constants.ENCODING_UTF8));
 
-		}
+    }
 
-		return sampleStream;
+    return sampleStream;
 
-	}
+  }
 
 }

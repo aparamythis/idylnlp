@@ -23,42 +23,42 @@ import com.google.gson.annotations.SerializedName;
 
 public class ParallelTraining {
 
-	@SerializedName("PrefetchBuffer")
-	@Expose
-	private int prefetchBuffer = 2;
+  @SerializedName("PrefetchBuffer")
+  @Expose
+  private int prefetchBuffer = 2;
 
-	@SerializedName("Workers")
-	@Expose
-	private int workers = 2;
+  @SerializedName("Workers")
+  @Expose
+  private int workers = 2;
 
-	@SerializedName("AveragingFrequency")
-	@Expose
-	private int averagingFrequency = 3;
+  @SerializedName("AveragingFrequency")
+  @Expose
+  private int averagingFrequency = 3;
 
-	@SerializedName("ReportScoreAfterAveraging")
-	@Expose
-	private boolean reportScoreAfterAveraging = true;
+  @SerializedName("ReportScoreAfterAveraging")
+  @Expose
+  private boolean reportScoreAfterAveraging = true;
 
-	@SerializedName("LegacyAveraging")
-	@Expose
-	private boolean legacyAveraging = false;
+  @SerializedName("LegacyAveraging")
+  @Expose
+  private boolean legacyAveraging = false;
 
-	public ParallelTraining() {
+  public ParallelTraining() {
 
-	}
+  }
 
-	public ParallelTraining(int prefetchBuffer, int workers, int averagingFrequency,
-			boolean reportScoreAfterAveraging, boolean legacyAveraging) {
+  public ParallelTraining(int prefetchBuffer, int workers, int averagingFrequency,
+      boolean reportScoreAfterAveraging, boolean legacyAveraging) {
 
-		this.prefetchBuffer = prefetchBuffer;
-		this.workers = workers;
-		this.averagingFrequency = averagingFrequency;
-		this.reportScoreAfterAveraging = reportScoreAfterAveraging;
-		this.legacyAveraging = legacyAveraging;
+    this.prefetchBuffer = prefetchBuffer;
+    this.workers = workers;
+    this.averagingFrequency = averagingFrequency;
+    this.reportScoreAfterAveraging = reportScoreAfterAveraging;
+    this.legacyAveraging = legacyAveraging;
 
-	}
+  }
 
-	@Override
+  @Override
     public boolean equals(Object o) {
       return EqualsBuilder.reflectionEquals(this, o);
     }
@@ -68,44 +68,44 @@ public class ParallelTraining {
         return HashCodeBuilder.reflectionHashCode(this);
     }
 
-	public int getPrefetchBuffer() {
-		return prefetchBuffer;
-	}
+  public int getPrefetchBuffer() {
+    return prefetchBuffer;
+  }
 
-	public void setPrefetchBuffer(int prefetchBuffer) {
-		this.prefetchBuffer = prefetchBuffer;
-	}
+  public void setPrefetchBuffer(int prefetchBuffer) {
+    this.prefetchBuffer = prefetchBuffer;
+  }
 
-	public int getWorkers() {
-		return workers;
-	}
+  public int getWorkers() {
+    return workers;
+  }
 
-	public void setWorkers(int workers) {
-		this.workers = workers;
-	}
+  public void setWorkers(int workers) {
+    this.workers = workers;
+  }
 
-	public int getAveragingFrequency() {
-		return averagingFrequency;
-	}
+  public int getAveragingFrequency() {
+    return averagingFrequency;
+  }
 
-	public void setAveragingFrequency(int averagingFrequency) {
-		this.averagingFrequency = averagingFrequency;
-	}
+  public void setAveragingFrequency(int averagingFrequency) {
+    this.averagingFrequency = averagingFrequency;
+  }
 
-	public boolean isReportScoreAfterAveraging() {
-		return reportScoreAfterAveraging;
-	}
+  public boolean isReportScoreAfterAveraging() {
+    return reportScoreAfterAveraging;
+  }
 
-	public void setReportScoreAfterAveraging(boolean reportScoreAfterAveraging) {
-		this.reportScoreAfterAveraging = reportScoreAfterAveraging;
-	}
+  public void setReportScoreAfterAveraging(boolean reportScoreAfterAveraging) {
+    this.reportScoreAfterAveraging = reportScoreAfterAveraging;
+  }
 
-	public boolean isLegacyAveraging() {
-		return legacyAveraging;
-	}
+  public boolean isLegacyAveraging() {
+    return legacyAveraging;
+  }
 
-	public void setLegacyAveraging(boolean legacyAveraging) {
-		this.legacyAveraging = legacyAveraging;
-	}
+  public void setLegacyAveraging(boolean legacyAveraging) {
+    this.legacyAveraging = legacyAveraging;
+  }
 
 }

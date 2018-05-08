@@ -31,25 +31,25 @@ import ai.idylnlp.nlp.annotation.reader.IdylNLPFileAnnotationReader;
 
 public class IdylNLPFileAnnotationReaderTest {
 
-	private static final Logger LOGGER = LogManager.getLogger(IdylNLPFileAnnotationReaderTest.class);
+  private static final Logger LOGGER = LogManager.getLogger(IdylNLPFileAnnotationReaderTest.class);
 
-	private static final String TRAINING_DATA_PATH = new File("src/test/resources/").getAbsolutePath();
-	private static final String ANNOTATION_FILE = TRAINING_DATA_PATH + File.separator + "annotations.txt";
+  private static final String TRAINING_DATA_PATH = new File("src/test/resources/").getAbsolutePath();
+  private static final String ANNOTATION_FILE = TRAINING_DATA_PATH + File.separator + "annotations.txt";
 
-	@Test
-	public void read() throws IOException {
+  @Test
+  public void read() throws IOException {
 
-		IdylNLPFileAnnotationReader reader = new IdylNLPFileAnnotationReader(ANNOTATION_FILE);
+    IdylNLPFileAnnotationReader reader = new IdylNLPFileAnnotationReader(ANNOTATION_FILE);
 
-		Collection<IdylNLPAnnotation> annotations = reader.getAnnotations(1);
-		assertEquals(1, annotations.size());
+    Collection<IdylNLPAnnotation> annotations = reader.getAnnotations(1);
+    assertEquals(1, annotations.size());
 
-		annotations = reader.getAnnotations(3);
-		assertEquals(2, annotations.size());
+    annotations = reader.getAnnotations(3);
+    assertEquals(2, annotations.size());
 
-		annotations = reader.getAnnotations(7);
-		assertTrue(annotations.isEmpty());
+    annotations = reader.getAnnotations(7);
+    assertTrue(annotations.isEmpty());
 
-	}
+  }
 
 }

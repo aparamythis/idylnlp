@@ -24,13 +24,13 @@ import ai.idylnlp.model.exceptions.ModelLoaderException;
  */
 public interface EntityRecognizer {
 
-	/**
-	 * Extracts entities. Implementations of this function likely need to be <code>synchronized</code>.
-	 * @param request {@link EntityExtractionRequest} that contains the text to process and input parameters.
-	 * @return {@link EntityExtractionResponse} that contains the extracted entities.
-	 * @throws EntityFinderException Thrown when entity extraction fails.
-	 * @throws ModelLoaderException Thrown when the model cannot be loaded.
-	 */
-	public EntityExtractionResponse extractEntities(EntityExtractionRequest request) throws EntityFinderException, ModelLoaderException;
+  /**
+   * Extracts entities. Implementations of this function likely need to be <code>synchronized</code>.
+   * @param request {@link EntityExtractionRequest} that contains the text to process and input parameters.
+   * @return {@link EntityExtractionResponse} that contains the extracted entities.
+   * @throws EntityFinderException Thrown when entity extraction fails.
+   * @throws ModelLoaderException Thrown when the model cannot be loaded.
+   */
+  public EntityExtractionResponse extractEntities(EntityExtractionRequest request) throws EntityFinderException, ModelLoaderException;
 
 }

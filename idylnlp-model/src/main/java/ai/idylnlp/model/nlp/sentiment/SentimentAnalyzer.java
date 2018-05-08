@@ -23,24 +23,24 @@ package ai.idylnlp.model.nlp.sentiment;
  */
 public interface SentimentAnalyzer {
 
-	/**
-	 * Determine the sentiment of the input text.
-	 * @param request The sentiment analysis {@link SentimentAnalysisRequest request}.
-	 * @return A {@link Sentiment}.
-	 * @throws SentimentAnalysisException Thrown if the sentiment analysis fails.
-	 */
-	public Sentiment analyze(SentimentAnalysisRequest request) throws SentimentAnalysisException;
+  /**
+   * Determine the sentiment of the input text.
+   * @param request The sentiment analysis {@link SentimentAnalysisRequest request}.
+   * @return A {@link Sentiment}.
+   * @throws SentimentAnalysisException Thrown if the sentiment analysis fails.
+   */
+  public Sentiment analyze(SentimentAnalysisRequest request) throws SentimentAnalysisException;
 
-	/**
-	 * Gets the label of the sentiment.
-	 * @return The label of the sentiment.
-	 */
-	public String getSentimentLabel();
+  /**
+   * Gets the label of the sentiment.
+   * @return The label of the sentiment.
+   */
+  public String getSentimentLabel();
 
-	/**
-	 * Gets the name of the sentiment analyzer.
-	 * @return The name of the sentiment analyzer.
-	 */
-	public String getName();
+  /**
+   * Gets the name of the sentiment analyzer.
+   * @return The name of the sentiment analyzer.
+   */
+  public String getName();
 
 }

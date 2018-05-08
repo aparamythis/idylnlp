@@ -24,23 +24,23 @@ package ai.idylnlp.model.exceptions;
  */
 public class ModelLoaderException extends Exception {
 
-	private static final long serialVersionUID = -4170124556878454011L;
+  private static final long serialVersionUID = -4170124556878454011L;
 
-	/**
-	 * Creates a new exception.
-	 * @param message The message of the exception.
-	 * @param ex The underlying exception.
-	 */
-	public ModelLoaderException(String message, Exception ex) {
-		super(message, ex);
-	}
+  /**
+   * Creates a new exception.
+   * @param message The message of the exception.
+   * @param ex The underlying exception.
+   */
+  public ModelLoaderException(String message, Exception ex) {
+    super(message, ex);
+  }
 
-	/**
-	 * Creates a new exception.
-	 * @param message The message of the exception.
-	 */
-	public ModelLoaderException(String message) {
-		super(message);
-	}
+  /**
+   * Creates a new exception.
+   * @param message The message of the exception.
+   */
+  public ModelLoaderException(String message) {
+    super(message);
+  }
 
 }

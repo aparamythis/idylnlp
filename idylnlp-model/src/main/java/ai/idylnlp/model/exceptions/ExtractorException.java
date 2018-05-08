@@ -24,23 +24,23 @@ package ai.idylnlp.model.exceptions;
  */
 public class ExtractorException extends Exception {
 
-	private static final long serialVersionUID = 2325000410259951206L;
+  private static final long serialVersionUID = 2325000410259951206L;
 
-	/**
-	 * Creates a new exception.
-	 * @param message The message of the exception.
-	 */
-	public ExtractorException(String message) {
-		super(message);
-	}
+  /**
+   * Creates a new exception.
+   * @param message The message of the exception.
+   */
+  public ExtractorException(String message) {
+    super(message);
+  }
 
-	/**
-	 * Creates a new exception.
-	 * @param message The message of the exception.
-	 * @param throwable The exception.
-	 */
-	public ExtractorException(String message, Throwable throwable) {
-		super(message, throwable);
-	}
+  /**
+   * Creates a new exception.
+   * @param message The message of the exception.
+   * @param throwable The exception.
+   */
+  public ExtractorException(String message, Throwable throwable) {
+    super(message, throwable);
+  }
 
 }

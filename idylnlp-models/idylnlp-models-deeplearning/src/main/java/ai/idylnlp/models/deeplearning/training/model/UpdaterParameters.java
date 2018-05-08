@@ -25,69 +25,69 @@ import com.google.gson.annotations.SerializedName;
 
 public class UpdaterParameters {
 
-	@SerializedName("Updater")
-	@Expose
-	private String updater;
+  @SerializedName("Updater")
+  @Expose
+  private String updater;
 
-	@SerializedName("Epsilon")
-	@Expose
-	private Integer epsilon;
+  @SerializedName("Epsilon")
+  @Expose
+  private Integer epsilon;
 
-	@SerializedName("Decay")
-	@Expose
-	private Integer decay;
+  @SerializedName("Decay")
+  @Expose
+  private Integer decay;
 
-	public UpdaterParameters() {
+  public UpdaterParameters() {
 
-	}
+  }
 
-	public UpdaterParameters(String updater, int epsilon, int decay, int learningRate) {
+  public UpdaterParameters(String updater, int epsilon, int decay, int learningRate) {
 
-		this.updater = updater;
-		this.epsilon = epsilon;
-		this.decay = decay;
+    this.updater = updater;
+    this.epsilon = epsilon;
+    this.decay = decay;
 
-	}
+  }
 
-	public Updater getUpdaterParam() {
+  public Updater getUpdaterParam() {
 
-		if(StringUtils.equalsIgnoreCase(updater, "adadelta")) {
+    if(StringUtils.equalsIgnoreCase(updater, "adadelta")) {
 
-			return Updater.ADADELTA;
+      return Updater.ADADELTA;
 
-		} else if(StringUtils.equalsIgnoreCase(updater, "adagrad")) {
+    } else if(StringUtils.equalsIgnoreCase(updater, "adagrad")) {
 
-			return Updater.ADAGRAD;
+      return Updater.ADAGRAD;
 
-		} else if(StringUtils.equalsIgnoreCase(updater, "adam")) {
+    } else if(StringUtils.equalsIgnoreCase(updater, "adam")) {
 
-			return Updater.ADAM;
+      return Updater.ADAM;
 
-		} else if(StringUtils.equalsIgnoreCase(updater, "nesterovs")) {
+    } else if(StringUtils.equalsIgnoreCase(updater, "nesterovs")) {
 
-			return Updater.NESTEROVS;
+      return Updater.NESTEROVS;
 
-		} else if(StringUtils.equalsIgnoreCase(updater, "none")) {
+    } else if(StringUtils.equalsIgnoreCase(updater, "none")) {
 
-			return Updater.NONE;
+      return Updater.NONE;
 
-		} else if(StringUtils.equalsIgnoreCase(updater, "rmsprop")) {
+    } else if(StringUtils.equalsIgnoreCase(updater, "rmsprop")) {
 
-			return Updater.RMSPROP;
+      return Updater.RMSPROP;
 
-		} else if(StringUtils.equalsIgnoreCase(updater, "sgd")) {
+    } else if(StringUtils.equalsIgnoreCase(updater, "sgd")) {
 
-			return Updater.SGD;
+      return Updater.SGD;
 
-		} else {
+    } else {
 
-			return Updater.NONE;
+      return Updater.NONE;
 
-		}
+    }
 
-	}
+  }
 
-	@Override
+  @Override
     public boolean equals(Object o) {
       return EqualsBuilder.reflectionEquals(this, o);
     }
@@ -97,28 +97,28 @@ public class UpdaterParameters {
         return HashCodeBuilder.reflectionHashCode(this);
     }
 
-	public String getUpdater() {
-		return updater;
-	}
+  public String getUpdater() {
+    return updater;
+  }
 
-	public void setUpdater(String updater) {
-		this.updater = updater;
-	}
+  public void setUpdater(String updater) {
+    this.updater = updater;
+  }
 
-	public Integer getEpsilon() {
-		return epsilon;
-	}
+  public Integer getEpsilon() {
+    return epsilon;
+  }
 
-	public void setEpsilon(Integer epsilon) {
-		this.epsilon = epsilon;
-	}
+  public void setEpsilon(Integer epsilon) {
+    this.epsilon = epsilon;
+  }
 
-	public Integer getDecay() {
-		return decay;
-	}
+  public Integer getDecay() {
+    return decay;
+  }
 
-	public void setDecay(Integer decay) {
-		this.decay = decay;
-	}
+  public void setDecay(Integer decay) {
+    this.decay = decay;
+  }
 
 }

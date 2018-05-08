@@ -25,17 +25,17 @@ import ai.idylnlp.model.nlp.strings.Similarity;
  */
 public class JaccardSimilarity implements Similarity {
 
-	public static Similarity INSTANCE() {
-		return new JaccardSimilarity();
-	}
+  public static Similarity INSTANCE() {
+    return new JaccardSimilarity();
+  }
 
-	@Override
-	public double calculate(CharSequence s, CharSequence t) {
+  @Override
+  public double calculate(CharSequence s, CharSequence t) {
 
-		org.apache.commons.text.similarity.JaccardSimilarity similatity = new org.apache.commons.text.similarity.JaccardSimilarity();
+    org.apache.commons.text.similarity.JaccardSimilarity similatity = new org.apache.commons.text.similarity.JaccardSimilarity();
 
-		return similatity.apply(s, t);
+    return similatity.apply(s, t);
 
-	}
+  }
 
 }

@@ -39,48 +39,48 @@ import ai.idylnlp.model.nlp.translation.Translator;
  */
 public class JoshuaTranslator implements Translator {
 
-	private static final Logger LOGGER = LogManager.getLogger(JoshuaTranslator.class);
+  private static final Logger LOGGER = LogManager.getLogger(JoshuaTranslator.class);
 
-	private Decoder decoder;
-	private int counter = 0;
+  private Decoder decoder;
+  private int counter = 0;
 
-	/**
-	 * Creates a new translator.
-	 * @param joshuaLanguagePackPath The full path to the Apache Joshua language pack.
-	 * The joshua.config file is expected to be located in this path.
-	 * @throws IOException Thrown if the language pack cannot be loaded.
-	 */
-	public JoshuaTranslator(final String joshuaLanguagePackPath) throws IOException {
+  /**
+   * Creates a new translator.
+   * @param joshuaLanguagePackPath The full path to the Apache Joshua language pack.
+   * The joshua.config file is expected to be located in this path.
+   * @throws IOException Thrown if the language pack cannot be loaded.
+   */
+  public JoshuaTranslator(final String joshuaLanguagePackPath) throws IOException {
 
-		LOGGER.info("Initialize Apache Joshua translator from {}.", joshuaLanguagePackPath);
+    LOGGER.info("Initialize Apache Joshua translator from {}.", joshuaLanguagePackPath);
 
-		String deEnJoshuaConfigFile = joshuaLanguagePackPath + "/joshua.config";
-		JoshuaConfiguration deEnConf = new JoshuaConfiguration();
-		deEnConf.readConfigFile(deEnJoshuaConfigFile);
-		deEnConf.use_structured_output = true;
-		deEnConf.modelRootPath = joshuaLanguagePackPath;
+    String deEnJoshuaConfigFile = joshuaLanguagePackPath + "/joshua.config";
+    JoshuaConfiguration deEnConf = new JoshuaConfiguration();
+    deEnConf.readConfigFile(deEnJoshuaConfigFile);
+    deEnConf.use_structured_output = true;
+    deEnConf.modelRootPath = joshuaLanguagePackPath;
 
-		decoder = new Decoder(deEnConf, deEnJoshuaConfigFile);
+    decoder = new Decoder(deEnConf, deEnJoshuaConfigFile);
 
-	}
+  }
 
-	@Override
-	public LanguageTranslationResponse translate(LanguageTranslationRequest request) {
+  @Override
+  public LanguageTranslationResponse translate(LanguageTranslationRequest request) {
 
-		final String input = request.getInput();
+    final String input = request.getInput();
 
-		Sentence sentence = new Sentence(input, counter++, decoder.getJoshuaConfiguration());
-		Translation translation = decoder.decode(sentence);
-		List<StructuredTranslation> structuredTranslations = translation.getStructuredTranslations();
+    Sentence sentence = new Sentence(input, counter++, decoder.getJoshuaConfiguration());
+    Translation translation = decoder.decode(sentence);
+    List<StructuredTranslation> structuredTranslations = translation.getStructuredTranslations();
 
-		StringBuilder sb = new StringBuilder();
+    StringBuilder sb = new StringBuilder();
 
-		for (StructuredTranslation st : structuredTranslations) {
-			sb.append(st.getTranslationString());
-		}
+    for (StructuredTranslation st : structuredTranslations) {
+      sb.append(st.getTranslationString());
+    }
 
-		return new LanguageTranslationResponse(sb.toString());
+    return new LanguageTranslationResponse(sb.toString());
 
-	}
+  }
 
 }

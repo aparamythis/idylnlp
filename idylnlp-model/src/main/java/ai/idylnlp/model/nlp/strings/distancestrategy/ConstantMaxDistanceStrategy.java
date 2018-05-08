@@ -17,19 +17,19 @@ package ai.idylnlp.model.nlp.strings.distancestrategy;
 
 public class ConstantMaxDistanceStrategy implements MaxDistanceStrategy {
 
-	private int length;
+  private int length;
 
-	public ConstantMaxDistanceStrategy(int length) {
+  public ConstantMaxDistanceStrategy(int length) {
 
-		this.length = length;
+    this.length = length;
 
-	}
+  }
 
-	@Override
-	public int calculateMaxDistance(String word) {
+  @Override
+  public int calculateMaxDistance(String word) {
 
-		return length;
+    return length;
 
-	}
+  }
 
 }

@@ -41,76 +41,76 @@ import ai.idylnlp.model.nlp.annotation.IdylNLPAnnotation;
  */
 public class IdylNLPNameSampleStream implements ObjectStream<NameSample> {
 
-	private final ObjectStream<String> lineStream;
-	private final AnnotationReader annotationReader;
+  private final ObjectStream<String> lineStream;
+  private final AnnotationReader annotationReader;
 
-	private int lineNumber = 1;
+  private int lineNumber = 1;
 
-	public IdylNLPNameSampleStream(ObjectStream<String> lineStream, AnnotationReader annotationReader) {
+  public IdylNLPNameSampleStream(ObjectStream<String> lineStream, AnnotationReader annotationReader) {
 
-		this.lineStream = lineStream;
-		this.annotationReader = annotationReader;
+    this.lineStream = lineStream;
+    this.annotationReader = annotationReader;
 
-	}
+  }
 
-	@Override
-	public NameSample read() throws IOException {
+  @Override
+  public NameSample read() throws IOException {
 
-		final List<String> sentences = new LinkedList<>();
+    final List<String> sentences = new LinkedList<>();
 
-		final String line = lineStream.read();
+    final String line = lineStream.read();
 
-		lineNumber++;
+    lineNumber++;
 
-		if(line != null && !StringUtils.isEmpty(line.trim())) {
+    if(line != null && !StringUtils.isEmpty(line.trim())) {
 
-			// TODO: Should this tokenizer be customizable?
-			for(String token : WhitespaceTokenizer.INSTANCE.tokenize(line)) {
-				sentences.add(token);
-			}
+      // TODO: Should this tokenizer be customizable?
+      for(String token : WhitespaceTokenizer.INSTANCE.tokenize(line)) {
+        sentences.add(token);
+      }
 
-		}
+    }
 
-		if (sentences.size() > 0) {
+    if (sentences.size() > 0) {
 
-			final List<Span> names = new LinkedList<>();
+      final List<Span> names = new LinkedList<>();
 
-			// It is lineNumber - 1 here because we have already incremented the line number above.
-			Collection<IdylNLPAnnotation> annotations = annotationReader.getAnnotations(lineNumber - 1);
+      // It is lineNumber - 1 here because we have already incremented the line number above.
+      Collection<IdylNLPAnnotation> annotations = annotationReader.getAnnotations(lineNumber - 1);
 
-			if(CollectionUtils.isNotEmpty(annotations)) {
+      if(CollectionUtils.isNotEmpty(annotations)) {
 
-				for(IdylNLPAnnotation annotation : annotations) {
+        for(IdylNLPAnnotation annotation : annotations) {
 
-					Span span = new Span(annotation.getTokenStart(), annotation.getTokenEnd(), annotation.getType());
-					names.add(span);
+          Span span = new Span(annotation.getTokenStart(), annotation.getTokenEnd(), annotation.getType());
+          names.add(span);
 
-				}
+        }
 
-			}
+      }
 
-			return new NameSample(sentences.toArray(new String[sentences.size()]), names.toArray(new Span[names.size()]), true);
+      return new NameSample(sentences.toArray(new String[sentences.size()]), names.toArray(new Span[names.size()]), true);
 
-		} else if (line != null) {
-	      // Just filter out empty events, if two lines in a row are empty
-	      return read();
-	    }
-	    else {
-	      // source stream is not returning anymore lines
-	      return null;
-	    }
+    } else if (line != null) {
+        // Just filter out empty events, if two lines in a row are empty
+        return read();
+      }
+      else {
+        // source stream is not returning anymore lines
+        return null;
+      }
 
-	}
+  }
 
-	@Override
-	public void reset() throws IOException, UnsupportedOperationException {
-		lineStream.reset();
-		lineNumber = 1;
-	}
+  @Override
+  public void reset() throws IOException, UnsupportedOperationException {
+    lineStream.reset();
+    lineNumber = 1;
+  }
 
-	@Override
-	public void close() throws IOException {
-		lineStream.close();
-	}
+  @Override
+  public void close() throws IOException {
+    lineStream.close();
+  }
 
 }

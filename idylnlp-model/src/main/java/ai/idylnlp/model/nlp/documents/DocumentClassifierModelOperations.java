@@ -17,12 +17,12 @@ package ai.idylnlp.model.nlp.documents;
 
 public interface DocumentClassifierModelOperations<T extends DocumentClassifierTrainingRequest> {
 
-	/**
-	 * Trains a document classifier model.
-	 * @param request A {@link DocumentClassifierTrainingRequest} containing the details
-	 * of the training request.
-	 * @throws DocumentClassifierException Thrown if the training fails.
-	 */
-	public DocumentClassificationTrainingResponse train(T request) throws DocumentModelTrainingException;
+  /**
+   * Trains a document classifier model.
+   * @param request A {@link DocumentClassifierTrainingRequest} containing the details
+   * of the training request.
+   * @throws DocumentClassifierException Thrown if the training fails.
+   */
+  public DocumentClassificationTrainingResponse train(T request) throws DocumentModelTrainingException;
 
 }

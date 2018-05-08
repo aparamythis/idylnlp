@@ -25,17 +25,17 @@ import ai.idylnlp.model.nlp.strings.Distance;
  */
 public class LevenshteinDistance implements Distance {
 
-	public static Distance INSTANCE() {
-		return new LevenshteinDistance();
-	}
+  public static Distance INSTANCE() {
+    return new LevenshteinDistance();
+  }
 
-	@Override
-	public double calculate(CharSequence s, CharSequence t) {
+  @Override
+  public double calculate(CharSequence s, CharSequence t) {
 
-		org.apache.commons.text.similarity.LevenshteinDistance distance = new org.apache.commons.text.similarity.LevenshteinDistance();
+    org.apache.commons.text.similarity.LevenshteinDistance distance = new org.apache.commons.text.similarity.LevenshteinDistance();
 
-		return distance.apply(s, t);
+    return distance.apply(s, t);
 
-	}
+  }
 
 }

@@ -21,28 +21,28 @@ import com.neovisionaries.i18n.LanguageCode;
 
 public class DocumentModelManifest extends ModelManifest {
 
-	public static final String TYPE = "document";
+  public static final String TYPE = "document";
 
-	private List<String> labels;
+  private List<String> labels;
 
-	// TODO: Change to a builder pattern like StandardModelManifest.
+  // TODO: Change to a builder pattern like StandardModelManifest.
 
-	public DocumentModelManifest(String modelId, String modelFileName, LanguageCode languageCode,
-			String type, String name,
-			String creatorVersion, String source, List<String> labels) {
+  public DocumentModelManifest(String modelId, String modelFileName, LanguageCode languageCode,
+      String type, String name,
+      String creatorVersion, String source, List<String> labels) {
 
-		super(modelId, modelFileName, languageCode, type, name, creatorVersion, source, ModelManifest.SECOND_GENERATION);
+    super(modelId, modelFileName, languageCode, type, name, creatorVersion, source, ModelManifest.SECOND_GENERATION);
 
-		this.labels = labels;
+    this.labels = labels;
 
-	}
+  }
 
-	public List<String> getLabels() {
-		return labels;
-	}
+  public List<String> getLabels() {
+    return labels;
+  }
 
-	public LanguageCode getLanguageCode() {
-		return languageCode;
-	}
+  public LanguageCode getLanguageCode() {
+    return languageCode;
+  }
 
 }

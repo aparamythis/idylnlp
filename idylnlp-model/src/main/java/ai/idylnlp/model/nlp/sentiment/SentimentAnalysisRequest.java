@@ -19,22 +19,22 @@ import java.io.Serializable;
 
 public class SentimentAnalysisRequest implements Serializable {
 
-	private static final long serialVersionUID = -5785895999181600968L;
+  private static final long serialVersionUID = -5785895999181600968L;
 
-	private String text;
+  private String text;
 
-	public SentimentAnalysisRequest(String text) {
+  public SentimentAnalysisRequest(String text) {
 
-		this.text = text;
+    this.text = text;
 
-	}
+  }
 
-	public String getText() {
-		return text;
-	}
+  public String getText() {
+    return text;
+  }
 
-	public void setText(String text) {
-		this.text = text;
-	}
+  public void setText(String text) {
+    this.text = text;
+  }
 
 }

@@ -27,19 +27,19 @@ import org.apache.commons.math3.stat.descriptive.SynchronizedSummaryStatistics;
  */
 public interface ConfidenceFilterSerializer {
 
-	/**
-	 * Serialize the confidence values.
-	 * @param statistics The statistics to serialize.
-	 * @throws Exception Thrown if the values cannot be serialized.
-	 */
-	public int serialize(Map<String, SynchronizedSummaryStatistics> statistics) throws Exception;
+  /**
+   * Serialize the confidence values.
+   * @param statistics The statistics to serialize.
+   * @throws Exception Thrown if the values cannot be serialized.
+   */
+  public int serialize(Map<String, SynchronizedSummaryStatistics> statistics) throws Exception;
 
-	/**
-	 * Deserialize the confidence values.
-	 * @param statistics The statistics to deserialize.
-	 * @return The count of items deserialized.
-	 * @throws Exception Thrown if the values cannot be deserialized.
-	 */
-	public int deserialize(Map<String, SynchronizedSummaryStatistics> statistics) throws Exception;
+  /**
+   * Deserialize the confidence values.
+   * @param statistics The statistics to deserialize.
+   * @return The count of items deserialized.
+   * @throws Exception Thrown if the values cannot be deserialized.
+   */
+  public int deserialize(Map<String, SynchronizedSummaryStatistics> statistics) throws Exception;
 
 }

@@ -40,35 +40,35 @@ import opennlp.tools.util.featuregen.GeneratorFactory.XmlFeatureGeneratorFactory
  */
 public class TokenPartOfSpeechFeatureGeneratorFactory implements XmlFeatureGeneratorFactory {
 
-	private static final String ELEMENT_NAME = "tokenpos";
+  private static final String ELEMENT_NAME = "tokenpos";
 
-	@Override
-	public AdaptiveFeatureGenerator create(Element generatorElement, FeatureGeneratorResourceProvider resourceManager)
-			throws InvalidFormatException {
+  @Override
+  public AdaptiveFeatureGenerator create(Element generatorElement, FeatureGeneratorResourceProvider resourceManager)
+      throws InvalidFormatException {
 
-		final String modelPath = generatorElement.getAttribute("modelPath");
-		final String modelManifestPath = generatorElement.getAttribute("modelManifest");
+    final String modelPath = generatorElement.getAttribute("modelPath");
+    final String modelManifestPath = generatorElement.getAttribute("modelManifest");
 
-		try {
+    try {
 
-			ModelManifest modelManifest = ModelManifestUtils.readManifest(modelPath + modelManifestPath);
+      ModelManifest modelManifest = ModelManifestUtils.readManifest(modelPath + modelManifestPath);
 
-			StandardModelManifest standardModelManifest = (StandardModelManifest) modelManifest;
+      StandardModelManifest standardModelManifest = (StandardModelManifest) modelManifest;
 
-			PartsOfSpeechTagger tagger = new DefaultPartsOfSpeechTagger(modelPath, standardModelManifest, new TrueValidator());
+      PartsOfSpeechTagger tagger = new DefaultPartsOfSpeechTagger(modelPath, standardModelManifest, new TrueValidator());
 
-			return new TokenPartOfSpeechFeatureGenerator(tagger);
+      return new TokenPartOfSpeechFeatureGenerator(tagger);
 
-		} catch (Exception ex) {
+    } catch (Exception ex) {
 
-			throw new InvalidFormatException("Unable to load the parts-of-speech model.", ex);
+      throw new InvalidFormatException("Unable to load the parts-of-speech model.", ex);
 
-		}
+    }
 
-	}
+  }
 
-	public static void register(Map<String, XmlFeatureGeneratorFactory> factoryMap) {
-		factoryMap.put(ELEMENT_NAME, new TokenPartOfSpeechFeatureGeneratorFactory());
-	}
+  public static void register(Map<String, XmlFeatureGeneratorFactory> factoryMap) {
+    factoryMap.put(ELEMENT_NAME, new TokenPartOfSpeechFeatureGeneratorFactory());
+  }
 
 }

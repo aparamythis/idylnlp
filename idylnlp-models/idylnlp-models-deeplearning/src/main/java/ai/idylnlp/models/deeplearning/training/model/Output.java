@@ -26,28 +26,28 @@ import com.google.gson.annotations.SerializedName;
 
 public class Output {
 
-	@SerializedName("OutputFile")
-	@Expose
-	private String outputFile;
+  @SerializedName("OutputFile")
+  @Expose
+  private String outputFile;
 
-	@SerializedName("StatsFile")
-	@Expose
-	private String statsFile;
+  @SerializedName("StatsFile")
+  @Expose
+  private String statsFile;
 
-	public Output() throws IOException {
+  public Output() throws IOException {
 
-		statsFile = File.createTempFile("stats", "dl4j").getAbsolutePath();
+    statsFile = File.createTempFile("stats", "dl4j").getAbsolutePath();
 
-	}
+  }
 
-	public Output(String outputFile, String statsFile) {
+  public Output(String outputFile, String statsFile) {
 
-		this.outputFile = outputFile;
-		this.statsFile = statsFile;
+    this.outputFile = outputFile;
+    this.statsFile = statsFile;
 
-	}
+  }
 
-	@Override
+  @Override
     public boolean equals(Object o) {
       return EqualsBuilder.reflectionEquals(this, o);
     }
@@ -57,20 +57,20 @@ public class Output {
         return HashCodeBuilder.reflectionHashCode(this);
     }
 
-	public String getOutputFile() {
-		return outputFile;
-	}
+  public String getOutputFile() {
+    return outputFile;
+  }
 
-	public void setOutputFile(String outputFile) {
-		this.outputFile = outputFile;
-	}
+  public void setOutputFile(String outputFile) {
+    this.outputFile = outputFile;
+  }
 
-	public String getStatsFile() {
-		return statsFile;
-	}
+  public String getStatsFile() {
+    return statsFile;
+  }
 
-	public void setStatsFile(String statsFile) {
-		this.statsFile = statsFile;
-	}
+  public void setStatsFile(String statsFile) {
+    this.statsFile = statsFile;
+  }
 
 }

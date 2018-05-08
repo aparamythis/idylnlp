@@ -26,67 +26,67 @@ import java.util.List;
  */
 public class NgramUtils {
 
-	private NgramUtils() {
-		// This is a utility class.
-	}
+  private NgramUtils() {
+    // This is a utility class.
+  }
 
-	/**
-	 * Returns the N-Grams for a string of a given length.
-	 * @param tokens An array of tokens.
-	 * @param len The length of the n-grams.
-	 * @return A collection of N-Grams for the input string.
-	 */
-	public static String[] getNgrams(String[] tokens, int len) {
+  /**
+   * Returns the N-Grams for a string of a given length.
+   * @param tokens An array of tokens.
+   * @param len The length of the n-grams.
+   * @return A collection of N-Grams for the input string.
+   */
+  public static String[] getNgrams(String[] tokens, int len) {
 
-		final List<String> ngrams = new LinkedList<>();
+    final List<String> ngrams = new LinkedList<>();
 
-	    for(int i = 0; i < tokens.length - len + 1; i++) {
+      for(int i = 0; i < tokens.length - len + 1; i++) {
 
-	    	StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
 
-	       for(int k = 0; k < len; k++) {
-	           if(k > 0) sb.append(' ');
-	           sb.append(tokens[i+k]);
-	       }
+         for(int k = 0; k < len; k++) {
+             if(k > 0) sb.append(' ');
+             sb.append(tokens[i+k]);
+         }
 
-	       ngrams.add(sb.toString());
+         ngrams.add(sb.toString());
 
-	    }
+      }
 
-	    final String[] n = new String[ngrams.size()];
-	    return ngrams.toArray(n);
+      final String[] n = new String[ngrams.size()];
+      return ngrams.toArray(n);
 
-	}
+  }
 
-	/**
-	 * Gets all n-grams for a given set of tokens.
-	 * @param tokens The tokens.
-	 * @return All n-grams for a given set of tokens.
-	 */
-	public static String[] getNgrams(String[] tokens) {
+  /**
+   * Gets all n-grams for a given set of tokens.
+   * @param tokens The tokens.
+   * @return All n-grams for a given set of tokens.
+   */
+  public static String[] getNgrams(String[] tokens) {
 
-		final List<String> ngrams = new LinkedList<>();
+    final List<String> ngrams = new LinkedList<>();
 
-		for(int len = 1; len <= tokens.length; len++) {
+    for(int len = 1; len <= tokens.length; len++) {
 
-		    for(int i = 0; i < tokens.length - len + 1; i++) {
+        for(int i = 0; i < tokens.length - len + 1; i++) {
 
-		    	StringBuilder sb = new StringBuilder();
+          StringBuilder sb = new StringBuilder();
 
-		       for(int k = 0; k < len; k++) {
-		           if(k > 0) sb.append(' ');
-		           sb.append(tokens[i+k]);
-		       }
+           for(int k = 0; k < len; k++) {
+               if(k > 0) sb.append(' ');
+               sb.append(tokens[i+k]);
+           }
 
-		       ngrams.add(sb.toString());
+           ngrams.add(sb.toString());
 
-	    }
+      }
 
-		}
+    }
 
-	    final String[] n = new String[ngrams.size()];
-	    return ngrams.toArray(n);
+      final String[] n = new String[ngrams.size()];
+      return ngrams.toArray(n);
 
-	}
+  }
 
 }

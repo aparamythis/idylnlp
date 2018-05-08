@@ -25,42 +25,42 @@ import java.util.Iterator;
  */
 public class NgramIterator implements Iterator<String> {
 
-	private String[] tokens;
-	private int pos = 0, n;
+  private String[] tokens;
+  private int pos = 0, n;
 
-	/**
-	 * Creates a new N-gram iterator.
-	 * @param tokens The tokens.
-	 * @param n The size of the n-grams.
-	 */
-	public NgramIterator(String[] tokens, int n) {
-		this.tokens = tokens;
-		this.n = n;
-	}
+  /**
+   * Creates a new N-gram iterator.
+   * @param tokens The tokens.
+   * @param n The size of the n-grams.
+   */
+  public NgramIterator(String[] tokens, int n) {
+    this.tokens = tokens;
+    this.n = n;
+  }
 
-	@Override
-	public boolean hasNext() {
-		return pos < tokens.length - n + 1;
-	}
+  @Override
+  public boolean hasNext() {
+    return pos < tokens.length - n + 1;
+  }
 
-	@Override
-	public String next() {
+  @Override
+  public String next() {
 
-		StringBuilder sb = new StringBuilder();
+    StringBuilder sb = new StringBuilder();
 
-		for (int i = pos; i < pos + n; i++) {
-			sb.append((i > pos ? " " : "") + tokens[i]);
-		}
+    for (int i = pos; i < pos + n; i++) {
+      sb.append((i > pos ? " " : "") + tokens[i]);
+    }
 
-		pos++;
+    pos++;
 
-		return sb.toString();
+    return sb.toString();
 
-	}
+  }
 
-	@Override
-	public void remove() {
-		throw new UnsupportedOperationException();
-	}
+  @Override
+  public void remove() {
+    throw new UnsupportedOperationException();
+  }
 
 }

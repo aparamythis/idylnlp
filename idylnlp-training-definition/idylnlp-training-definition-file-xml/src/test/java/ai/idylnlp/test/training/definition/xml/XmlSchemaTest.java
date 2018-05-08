@@ -33,39 +33,39 @@ import org.xmlunit.validation.Validator;
 
 public class XmlSchemaTest {
 
-	private static final Logger LOGGER = LogManager.getLogger(XmlSchemaTest.class);
+  private static final Logger LOGGER = LogManager.getLogger(XmlSchemaTest.class);
 
-	private static final String PATH = new File("src/test/resources/").getAbsolutePath();
-	private static final String XSD = new File("src/main/xsd/definition.xsd").getAbsolutePath();
+  private static final String PATH = new File("src/test/resources/").getAbsolutePath();
+  private static final String XSD = new File("src/main/xsd/definition.xsd").getAbsolutePath();
 
-	@Test
-	public void test1() throws JAXBException {
+  @Test
+  public void test1() throws JAXBException {
 
-		final String DEFINITION_FILE = PATH + File.separator + "valid-definition-1.xml";
+    final String DEFINITION_FILE = PATH + File.separator + "valid-definition-1.xml";
 
-		assertTrue(validate(DEFINITION_FILE));
+    assertTrue(validate(DEFINITION_FILE));
 
-	}
+  }
 
-	@Test
-	public void test2() throws JAXBException {
+  @Test
+  public void test2() throws JAXBException {
 
-		final String DEFINITION_FILE = PATH + File.separator + "invalid-definition-1.xml";
+    final String DEFINITION_FILE = PATH + File.separator + "invalid-definition-1.xml";
 
-		assertFalse(validate(DEFINITION_FILE));
+    assertFalse(validate(DEFINITION_FILE));
 
-	}
+  }
 
-	private boolean validate(final String xmlFile) {
+  private boolean validate(final String xmlFile) {
 
-		Validator v = Validator.forLanguage(Languages.W3C_XML_SCHEMA_NS_URI);
-		v.setSchemaSources(Input.fromFile(XSD).build());
-		ValidationResult result = v.validateInstance(new StreamSource(new File(xmlFile)));
+    Validator v = Validator.forLanguage(Languages.W3C_XML_SCHEMA_NS_URI);
+    v.setSchemaSources(Input.fromFile(XSD).build());
+    ValidationResult result = v.validateInstance(new StreamSource(new File(xmlFile)));
 
-		result.getProblems().forEach(problem -> LOGGER.error(problem.getMessage()));
+    result.getProblems().forEach(problem -> LOGGER.error(problem.getMessage()));
 
-		return result.isValid();
+    return result.isValid();
 
-	}
+  }
 
 }

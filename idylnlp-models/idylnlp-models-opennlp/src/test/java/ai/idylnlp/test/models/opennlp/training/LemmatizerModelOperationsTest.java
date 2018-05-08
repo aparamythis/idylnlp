@@ -36,75 +36,75 @@ import opennlp.tools.lemmatizer.LemmatizerModel;
 
 public class LemmatizerModelOperationsTest {
 
-	private static final Logger LOGGER = LogManager.getLogger(LemmatizerModelOperationsTest.class);
+  private static final Logger LOGGER = LogManager.getLogger(LemmatizerModelOperationsTest.class);
 
-	private static final String TRAINING_DATA_PATH = new File("src/test/resources/").getAbsolutePath();
-	private static final String INPUT_FILE = TRAINING_DATA_PATH + File.separator + "lemma-train.txt";
+  private static final String TRAINING_DATA_PATH = new File("src/test/resources/").getAbsolutePath();
+  private static final String INPUT_FILE = TRAINING_DATA_PATH + File.separator + "lemma-train.txt";
 
-	@Test
-	public void trainMaxEntQN() throws IOException {
+  @Test
+  public void trainMaxEntQN() throws IOException {
 
-		String encryptionKey = "";
+    String encryptionKey = "";
 
-		File temp = File.createTempFile("model", ".bin");
-		String modelOutputFile = temp.getAbsolutePath();
+    File temp = File.createTempFile("model", ".bin");
+    String modelOutputFile = temp.getAbsolutePath();
 
-		LOGGER.info("Generating output model file to: {}", modelOutputFile);
+    LOGGER.info("Generating output model file to: {}", modelOutputFile);
 
-		SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluation = new DefaultSubjectOfTrainingOrEvaluation(INPUT_FILE);
+    SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluation = new DefaultSubjectOfTrainingOrEvaluation(INPUT_FILE);
 
-		LemmatizerModelOperations ops = new LemmatizerModelOperations();
-		String modelId = ops.trainMaxEntQN(SubjectOfTrainingOrEvaluation, modelOutputFile, LanguageCode.en, encryptionKey, 5, 1, 1, 1, 1, 1, 1);
+    LemmatizerModelOperations ops = new LemmatizerModelOperations();
+    String modelId = ops.trainMaxEntQN(SubjectOfTrainingOrEvaluation, modelOutputFile, LanguageCode.en, encryptionKey, 5, 1, 1, 1, 1, 1, 1);
 
-		LOGGER.info("The generated model's ID is {}.", modelId);
+    LOGGER.info("The generated model's ID is {}.", modelId);
 
-		try {
+    try {
 
-			UUID uuid = UUID.fromString(modelId);
+      UUID uuid = UUID.fromString(modelId);
 
-		} catch (IllegalArgumentException ex) {
+    } catch (IllegalArgumentException ex) {
 
-			fail("The generated model ID is not a valid UUID.");
+      fail("The generated model ID is not a valid UUID.");
 
-		}
+    }
 
-		// Verify that the UUID returned matches what's in the model's properties.
-		LemmatizerModel model = new LemmatizerModelLoader().load(new File(modelOutputFile));
-		assertEquals(modelId, model.getManifestProperty("model.id"));
+    // Verify that the UUID returned matches what's in the model's properties.
+    LemmatizerModel model = new LemmatizerModelLoader().load(new File(modelOutputFile));
+    assertEquals(modelId, model.getManifestProperty("model.id"));
 
-	}
+  }
 
-	@Test
-	public void trainPerceptron() throws IOException {
+  @Test
+  public void trainPerceptron() throws IOException {
 
-		String encryptionKey = "";
+    String encryptionKey = "";
 
-		File temp = File.createTempFile("model", ".bin");
-		String modelOutputFile = temp.getAbsolutePath();
+    File temp = File.createTempFile("model", ".bin");
+    String modelOutputFile = temp.getAbsolutePath();
 
-		LOGGER.info("Generating output model file to: {}", modelOutputFile);
+    LOGGER.info("Generating output model file to: {}", modelOutputFile);
 
-		SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluation = new DefaultSubjectOfTrainingOrEvaluation(INPUT_FILE);
+    SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluation = new DefaultSubjectOfTrainingOrEvaluation(INPUT_FILE);
 
-		LemmatizerModelOperations ops = new LemmatizerModelOperations();
-		String modelId = ops.trainPerceptron(SubjectOfTrainingOrEvaluation, modelOutputFile, LanguageCode.en, encryptionKey, 0, 1);
+    LemmatizerModelOperations ops = new LemmatizerModelOperations();
+    String modelId = ops.trainPerceptron(SubjectOfTrainingOrEvaluation, modelOutputFile, LanguageCode.en, encryptionKey, 0, 1);
 
-		LOGGER.info("The generated model's ID is {}.", modelId);
+    LOGGER.info("The generated model's ID is {}.", modelId);
 
-		try {
+    try {
 
-			UUID uuid = UUID.fromString(modelId);
+      UUID uuid = UUID.fromString(modelId);
 
-		} catch (IllegalArgumentException ex) {
+    } catch (IllegalArgumentException ex) {
 
-			fail("The generated model ID is not a valid UUID.");
+      fail("The generated model ID is not a valid UUID.");
 
-		}
+    }
 
-		// Verify that the UUID returned matches what's in the model's properties.
-		LemmatizerModel model = new LemmatizerModelLoader().load(new File(modelOutputFile));
-		assertEquals(modelId, model.getManifestProperty("model.id"));
+    // Verify that the UUID returned matches what's in the model's properties.
+    LemmatizerModel model = new LemmatizerModelLoader().load(new File(modelOutputFile));
+    assertEquals(modelId, model.getManifestProperty("model.id"));
 
-	}
+  }
 
 }

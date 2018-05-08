@@ -30,32 +30,32 @@ import ai.idylnlp.model.training.FMeasureModelValidationResult;
  */
 public interface ModelCrossValidationOperations<T extends EvaluationResult> {
 
-	/**
-	 * Performs model cross validation using the perceptron algorithm.
-	 * @param subjectOfTraining The {@link SubjectOfTrainingOrEvaluation}.
-	 * @param language The language of the model.
-	 * @param iterations The number of iterations.
-	 * @param cutOff The value of the cutoff.
-	 * @param folds The number of cross validation folds.
-	 * @return A {@link FMeasureModelValidationResult}.
-	 * @throws IOException Thrown if the cross validation fails.
-	 */
-	public FMeasureModelValidationResult crossValidationEvaluatePerceptron(SubjectOfTrainingOrEvaluation subjectOfTraining, LanguageCode language, int iterations, int cutOff, int folds) throws IOException;
+  /**
+   * Performs model cross validation using the perceptron algorithm.
+   * @param subjectOfTraining The {@link SubjectOfTrainingOrEvaluation}.
+   * @param language The language of the model.
+   * @param iterations The number of iterations.
+   * @param cutOff The value of the cutoff.
+   * @param folds The number of cross validation folds.
+   * @return A {@link FMeasureModelValidationResult}.
+   * @throws IOException Thrown if the cross validation fails.
+   */
+  public FMeasureModelValidationResult crossValidationEvaluatePerceptron(SubjectOfTrainingOrEvaluation subjectOfTraining, LanguageCode language, int iterations, int cutOff, int folds) throws IOException;
 
-	/**
-	 * Performs model cross validation using the maxent QN algorithm.
-	 * @param subjectOfTraining The {@link SubjectOfTrainingOrEvaluation}.
-	 * @param language The language of the model.
-	 * @param iterations The number of iterations.
-	 * @param cutOff The value of the cutoff.
-	 * @param folds The number of cross validation folds.
-	 * @param l1
-	 * @param l2
-	 * @param m
-	 * @param max
-	 * @return A {@link FMeasureModelValidationResult}.
-	 * @throws IOException Thrown if the cross validation fails.
-	 */
-	public T crossValidationEvaluateMaxEntQN(SubjectOfTrainingOrEvaluation subjectOfTraining, LanguageCode language, int iterations, int cutOff, int folds, double l1, double l2, int m, int max) throws IOException;
+  /**
+   * Performs model cross validation using the maxent QN algorithm.
+   * @param subjectOfTraining The {@link SubjectOfTrainingOrEvaluation}.
+   * @param language The language of the model.
+   * @param iterations The number of iterations.
+   * @param cutOff The value of the cutoff.
+   * @param folds The number of cross validation folds.
+   * @param l1
+   * @param l2
+   * @param m
+   * @param max
+   * @return A {@link FMeasureModelValidationResult}.
+   * @throws IOException Thrown if the cross validation fails.
+   */
+  public T crossValidationEvaluateMaxEntQN(SubjectOfTrainingOrEvaluation subjectOfTraining, LanguageCode language, int iterations, int cutOff, int folds, double l1, double l2, int m, int max) throws IOException;
 
 }

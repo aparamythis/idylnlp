@@ -23,23 +23,23 @@ package ai.idylnlp.model.nlp.documents;
  */
 public class DocumentClassifierException extends Exception {
 
-	private static final long serialVersionUID = -8390739685887961751L;
+  private static final long serialVersionUID = -8390739685887961751L;
 
-	/**
-	 * Creates a new exception.
-	 * @param message The exception message.
-	 */
-	public DocumentClassifierException(String message) {
-		super(message);
-	}
+  /**
+   * Creates a new exception.
+   * @param message The exception message.
+   */
+  public DocumentClassifierException(String message) {
+    super(message);
+  }
 
-	/**
-	 * Creates a new exception.
-	 * @param message The exception message.
-	 * @param ex The underlying {@link Exception}.
-	 */
-	public DocumentClassifierException(String message, Exception ex) {
-		super(message, ex);
-	}
+  /**
+   * Creates a new exception.
+   * @param message The exception message.
+   * @param ex The underlying {@link Exception}.
+   */
+  public DocumentClassifierException(String message, Exception ex) {
+    super(message, ex);
+  }
 
 }

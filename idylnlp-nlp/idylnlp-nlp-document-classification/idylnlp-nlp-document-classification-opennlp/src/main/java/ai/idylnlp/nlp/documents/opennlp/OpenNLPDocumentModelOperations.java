@@ -55,62 +55,62 @@ import opennlp.tools.util.TrainingParameters;
  */
 public class OpenNLPDocumentModelOperations implements DocumentClassifierModelOperations<OpenNLPDocumentClassifierTrainingRequest> {
 
-	private static final Logger LOGGER = LogManager.getLogger(OpenNLPDocumentModelOperations.class);
+  private static final Logger LOGGER = LogManager.getLogger(OpenNLPDocumentModelOperations.class);
 
-	@Override
-	public DocumentClassificationTrainingResponse train(OpenNLPDocumentClassifierTrainingRequest request) throws DocumentModelTrainingException {
+  @Override
+  public DocumentClassificationTrainingResponse train(OpenNLPDocumentClassifierTrainingRequest request) throws DocumentModelTrainingException {
 
-		try {
+    try {
 
-			InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(request.getTrainingFile());
-			ObjectStream<DocumentSample> sample = new DocumentSampleStream(new PlainTextByLineStream(inputStreamFactory, Constants.ENCODING_UTF8));
+      InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(request.getTrainingFile());
+      ObjectStream<DocumentSample> sample = new DocumentSampleStream(new PlainTextByLineStream(inputStreamFactory, Constants.ENCODING_UTF8));
 
-			final String language = request.getLanguageCode().getAlpha3().toString();
+      final String language = request.getLanguageCode().getAlpha3().toString();
 
-			DoccatModel model = DocumentCategorizerME.train(language, sample, TrainingParameters.defaultParams(), new DoccatFactory());
+      DoccatModel model = DocumentCategorizerME.train(language, sample, TrainingParameters.defaultParams(), new DoccatFactory());
 
-			BufferedOutputStream modelOut = null;
+      BufferedOutputStream modelOut = null;
 
-			// Set the encryption key.
-			OpenNLPEncryptionFactory.getDefault().setKey(request.getEncryptionKey());
+      // Set the encryption key.
+      OpenNLPEncryptionFactory.getDefault().setKey(request.getEncryptionKey());
 
-			// The generated model's ID. Assigned during the training process.
-			String modelId = "";
+      // The generated model's ID. Assigned during the training process.
+      String modelId = "";
 
-			File modelFile = File.createTempFile("model", ".bin");
+      File modelFile = File.createTempFile("model", ".bin");
 
-			try {
+      try {
 
-				modelOut = new BufferedOutputStream(new FileOutputStream(modelFile));
-				modelId = model.serialize(modelOut);
+        modelOut = new BufferedOutputStream(new FileOutputStream(modelFile));
+        modelId = model.serialize(modelOut);
 
-			} catch (Exception ex) {
+      } catch (Exception ex) {
 
-				LOGGER.error("Unable to create the model.", ex);
+        LOGGER.error("Unable to create the model.", ex);
 
-			} finally {
+      } finally {
 
-				if (modelOut != null) {
-					modelOut.close();
-				}
+        if (modelOut != null) {
+          modelOut.close();
+        }
 
-				// Clear the encryption key.
-				OpenNLPEncryptionFactory.getDefault().clearKey();
+        // Clear the encryption key.
+        OpenNLPEncryptionFactory.getDefault().clearKey();
 
-			}
+      }
 
-			final Map<DocumentClassificationFile, File> files = new HashMap<>();
-			files.put(DocumentClassificationFile.MODEL_FILE, modelFile);
+      final Map<DocumentClassificationFile, File> files = new HashMap<>();
+      files.put(DocumentClassificationFile.MODEL_FILE, modelFile);
 
-			// TODO: Get the categories and return them.
-			return new DocumentClassificationTrainingResponse(modelId, files, Collections.emptyList());
+      // TODO: Get the categories and return them.
+      return new DocumentClassificationTrainingResponse(modelId, files, Collections.emptyList());
 
-		} catch (IOException ex) {
+    } catch (IOException ex) {
 
-			throw new DocumentModelTrainingException("Unable to train document classification model.", ex);
+      throw new DocumentModelTrainingException("Unable to train document classification model.", ex);
 
-		}
+    }
 
-	}
+  }
 
 }

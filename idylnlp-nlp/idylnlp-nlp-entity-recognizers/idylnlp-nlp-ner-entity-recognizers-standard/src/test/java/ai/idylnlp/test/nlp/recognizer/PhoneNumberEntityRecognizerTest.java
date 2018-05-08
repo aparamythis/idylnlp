@@ -29,40 +29,40 @@ import ai.idylnlp.nlp.recognizer.PhoneNumberEntityRecognizer;
 
 public class PhoneNumberEntityRecognizerTest {
 
-	private static final Logger LOGGER = LogManager.getLogger(PhoneNumberEntityRecognizerTest.class);
+  private static final Logger LOGGER = LogManager.getLogger(PhoneNumberEntityRecognizerTest.class);
 
-	@Test
-	public void phone() {
+  @Test
+  public void phone() {
 
-		PhoneNumberEntityRecognizer recognizer = new PhoneNumberEntityRecognizer();
+    PhoneNumberEntityRecognizer recognizer = new PhoneNumberEntityRecognizer();
 
-		String input = "George Washington and @jeff was president of the United States at (203) 753-5678";
-		//String input = "George Washington and @jeff was president of the United States at +6403 331 6005";
+    String input = "George Washington and @jeff was president of the United States at (203) 753-5678";
+    //String input = "George Washington and @jeff was president of the United States at +6403 331 6005";
 
-		String[] text = input.split(" ");
+    String[] text = input.split(" ");
 
-		EntityExtractionRequest request = new EntityExtractionRequest(text);
+    EntityExtractionRequest request = new EntityExtractionRequest(text);
 
-		EntityExtractionResponse response = recognizer.extractEntities(request);
+    EntityExtractionResponse response = recognizer.extractEntities(request);
 
-		for(Entity entity : response.getEntities()) {
+    for(Entity entity : response.getEntities()) {
 
-			LOGGER.info("Number: " + entity.getText());
+      LOGGER.info("Number: " + entity.getText());
 
-		}
+    }
 
-		assertEquals(3, response.getEntities().size());
+    assertEquals(3, response.getEntities().size());
 
-		Entity entity = response.getEntities().iterator().next();
+    Entity entity = response.getEntities().iterator().next();
 
-		assertEquals("2037535678", entity.getText());
+    assertEquals("2037535678", entity.getText());
 
-		// Show the response as JSON.
-		Gson gson = new Gson();
-		String json = gson.toJson(response);
+    // Show the response as JSON.
+    Gson gson = new Gson();
+    String json = gson.toJson(response);
 
-		LOGGER.info(json);
+    LOGGER.info(json);
 
-	}
+  }
 
 }

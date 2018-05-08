@@ -25,6 +25,6 @@ package ai.idylnlp.model.nlp.language;
 @FunctionalInterface
 public interface LanguageDetector {
 
-	LanguageDetectionResponse detectLanguage(String text, int limit) throws LanguageDetectionException;
+  LanguageDetectionResponse detectLanguage(String text, int limit) throws LanguageDetectionException;
 
 }

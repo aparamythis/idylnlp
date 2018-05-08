@@ -39,64 +39,64 @@ import ai.idylnlp.nlp.sentence.SentenceDetectorModelLoader;
 
 public class ModelSentenceDetectorTest {
 
-	private static final Logger LOGGER = LogManager.getLogger(ModelSentenceDetectorTest.class);
+  private static final Logger LOGGER = LogManager.getLogger(ModelSentenceDetectorTest.class);
 
-	@Test
-	public void testWithPeriod() throws Exception {
+  @Test
+  public void testWithPeriod() throws Exception {
 
-		ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
-		when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
+    ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
+    when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
 
-		String sentenceModelPath = new File("src/test/resources/").getAbsolutePath();
+    String sentenceModelPath = new File("src/test/resources/").getAbsolutePath();
 
-		StandardModelManifest modelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", "/en-sent.bin", LanguageCode.en, "", StandardModelManifest.SENTENCE, "", "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE).build();
+    StandardModelManifest modelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", "/en-sent.bin", LanguageCode.en, "", StandardModelManifest.SENTENCE, "", "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE).build();
 
-		SentenceDetectorModelLoader modelLoader = new SentenceDetectorModelLoader(modelValidator, sentenceModelPath, modelManifest);
+    SentenceDetectorModelLoader modelLoader = new SentenceDetectorModelLoader(modelValidator, sentenceModelPath, modelManifest);
 
-		SentenceDetector sentenceDetector = new ModelSentenceDetector(modelLoader);
+    SentenceDetector sentenceDetector = new ModelSentenceDetector(modelLoader);
 
-		String sentence = "Bob Ross was a painter. Abraham Lincoln was President of the United States.blue";
+    String sentence = "Bob Ross was a painter. Abraham Lincoln was President of the United States.blue";
 
-		Collection<String> sentences = Arrays.asList(sentenceDetector.sentDetect(sentence));
+    Collection<String> sentences = Arrays.asList(sentenceDetector.sentDetect(sentence));
 
-		for(String s : sentences) {
+    for(String s : sentences) {
 
-			LOGGER.debug("SENTENCE: " + s);
+      LOGGER.debug("SENTENCE: " + s);
 
-		}
+    }
 
-		assertTrue(sentences.contains("Bob Ross was a painter."));
-		assertTrue(sentences.contains("Abraham Lincoln was President of the United States.blue"));
-		//assertTrue(sentences.contains("blue"));
+    assertTrue(sentences.contains("Bob Ross was a painter."));
+    assertTrue(sentences.contains("Abraham Lincoln was President of the United States.blue"));
+    //assertTrue(sentences.contains("blue"));
 
-	}
+  }
 
-	@Test
-	public void testSentence() throws Exception {
+  @Test
+  public void testSentence() throws Exception {
 
-		ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
-		when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
+    ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
+    when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
 
-		String sentenceModelPath = new File("src/test/resources/").getAbsolutePath();
+    String sentenceModelPath = new File("src/test/resources/").getAbsolutePath();
 
-		StandardModelManifest modelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", "/en-sent.bin", LanguageCode.en, "", StandardModelManifest.SENTENCE, "", "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE).build();
+    StandardModelManifest modelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", "/en-sent.bin", LanguageCode.en, "", StandardModelManifest.SENTENCE, "", "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE).build();
 
-		SentenceDetectorModelLoader modelLoader = new SentenceDetectorModelLoader(modelValidator, sentenceModelPath, modelManifest);
+    SentenceDetectorModelLoader modelLoader = new SentenceDetectorModelLoader(modelValidator, sentenceModelPath, modelManifest);
 
-		SentenceDetector sentenceDetector = new ModelSentenceDetector(modelLoader);
+    SentenceDetector sentenceDetector = new ModelSentenceDetector(modelLoader);
 
-		Collection<String> sentences = Arrays.asList(sentenceDetector.sentDetect("This is a sentence. This is another sentence. This is a third sentence."));
+    Collection<String> sentences = Arrays.asList(sentenceDetector.sentDetect("This is a sentence. This is another sentence. This is a third sentence."));
 
-		for(String s : sentences) {
+    for(String s : sentences) {
 
-			LOGGER.debug(s);
+      LOGGER.debug(s);
 
-		}
+    }
 
-		assertTrue(sentences.contains("This is a sentence."));
-		assertTrue(sentences.contains("This is another sentence."));
-		assertTrue(sentences.contains("This is a third sentence."));
+    assertTrue(sentences.contains("This is a sentence."));
+    assertTrue(sentences.contains("This is another sentence."));
+    assertTrue(sentences.contains("This is a third sentence."));
 
-	}
+  }
 
 }

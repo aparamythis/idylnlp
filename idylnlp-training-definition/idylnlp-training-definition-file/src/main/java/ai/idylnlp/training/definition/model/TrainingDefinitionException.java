@@ -24,17 +24,17 @@ package ai.idylnlp.training.definition.model;
  */
 public class TrainingDefinitionException extends Exception {
 
-	private static final long serialVersionUID = 7557243516752367591L;
+  private static final long serialVersionUID = 7557243516752367591L;
 
-	/**
-	 * Creates a new training definition exception.
-	 * @param message The message of the exception.
-	 * @param ex The {@link Exception}.
-	 */
-	public TrainingDefinitionException(String message, Exception ex) {
+  /**
+   * Creates a new training definition exception.
+   * @param message The message of the exception.
+   * @param ex The {@link Exception}.
+   */
+  public TrainingDefinitionException(String message, Exception ex) {
 
-		super(message, ex);
+    super(message, ex);
 
-	}
+  }
 
 }

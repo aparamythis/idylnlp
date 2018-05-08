@@ -25,21 +25,21 @@ import com.google.gson.annotations.SerializedName;
 
 public class Monitoring {
 
-	@SerializedName("ScoreIteration")
-	@Expose
-	private int scoreIteration = 100;
+  @SerializedName("ScoreIteration")
+  @Expose
+  private int scoreIteration = 100;
 
-	public Monitoring() throws IOException {
+  public Monitoring() throws IOException {
 
-	}
+  }
 
-	public Monitoring(int scoreIteration, String statsFile) {
+  public Monitoring(int scoreIteration, String statsFile) {
 
-		this.scoreIteration = scoreIteration;
+    this.scoreIteration = scoreIteration;
 
-	}
+  }
 
-	@Override
+  @Override
     public boolean equals(Object o) {
       return EqualsBuilder.reflectionEquals(this, o);
     }
@@ -49,12 +49,12 @@ public class Monitoring {
         return HashCodeBuilder.reflectionHashCode(this);
     }
 
-	public int getScoreIteration() {
-		return scoreIteration;
-	}
+  public int getScoreIteration() {
+    return scoreIteration;
+  }
 
-	public void setScoreIteration(int scoreIteration) {
-		this.scoreIteration = scoreIteration;
-	}
+  public void setScoreIteration(int scoreIteration) {
+    this.scoreIteration = scoreIteration;
+  }
 
 }

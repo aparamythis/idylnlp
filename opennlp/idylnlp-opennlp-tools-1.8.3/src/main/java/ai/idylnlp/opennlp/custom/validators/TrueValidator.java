@@ -20,9 +20,9 @@ import ai.idylnlp.model.ModelValidator;
 
 public class TrueValidator implements ModelValidator {
 
-	@Override
-	public boolean validateVersion(String creatorVersion) {
-		return true;
-	}
+  @Override
+  public boolean validateVersion(String creatorVersion) {
+    return true;
+  }
 
 }

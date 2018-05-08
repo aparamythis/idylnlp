@@ -26,47 +26,47 @@ import ai.idylnlp.model.nlp.pipeline.PipelineResponse;
  */
 public class EntityExtractionResponse extends PipelineResponse {
 
-	private Set<Entity> entities;
-	private long extractionTime;
-	private boolean successful;
+  private Set<Entity> entities;
+  private long extractionTime;
+  private boolean successful;
 
-	/**
-	 * Creates a response to a request to extract entities.
-	 * @param entities A collection of {@link Entity} objects.
-	 * @param extractionTime The extraction time in milliseconds.
-	 * @param successful Indicates if the extraction was successful.
-	 */
-	public EntityExtractionResponse(Set<Entity> entities, long extractionTime, boolean successful) {
+  /**
+   * Creates a response to a request to extract entities.
+   * @param entities A collection of {@link Entity} objects.
+   * @param extractionTime The extraction time in milliseconds.
+   * @param successful Indicates if the extraction was successful.
+   */
+  public EntityExtractionResponse(Set<Entity> entities, long extractionTime, boolean successful) {
 
-		this.entities = entities;
-		this.extractionTime = extractionTime;
-		this.successful = successful;
+    this.entities = entities;
+    this.extractionTime = extractionTime;
+    this.successful = successful;
 
-	}
+  }
 
-	/**
-	 * Gets the extracted entities.
-	 * @return A collection of extracted entities.
-	 */
-	public Set<Entity> getEntities() {
-		return entities;
-	}
+  /**
+   * Gets the extracted entities.
+   * @return A collection of extracted entities.
+   */
+  public Set<Entity> getEntities() {
+    return entities;
+  }
 
-	/**
-	 * Gets the time spent in milliseconds extracting the entities. This
-	 * value can be monitored to maintain a certain performance level.
-	 * @return The time spent in milliseconds to extract the entities.
-	 */
-	public long getExtractionTime() {
-		return extractionTime;
-	}
+  /**
+   * Gets the time spent in milliseconds extracting the entities. This
+   * value can be monitored to maintain a certain performance level.
+   * @return The time spent in milliseconds to extract the entities.
+   */
+  public long getExtractionTime() {
+    return extractionTime;
+  }
 
-	/**
-	 * Indicates if the extraction was successful.
-	 * @return <code>true</code> if the extraction was successful.
-	 */
-	public boolean isSuccessful() {
-		return successful;
-	}
+  /**
+   * Indicates if the extraction was successful.
+   * @return <code>true</code> if the extraction was successful.
+   */
+  public boolean isSuccessful() {
+    return successful;
+  }
 
 }

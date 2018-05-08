@@ -23,23 +23,23 @@ package ai.idylnlp.model.exceptions;
  */
 public class EntityFinderException extends Exception {
 
-	private static final long serialVersionUID = -4170124556878454011L;
+  private static final long serialVersionUID = -4170124556878454011L;
 
-	/**
-	 * Creates a new exception.
-	 * @param message The message of the exception.
-	 * @param ex The underlying exception.
-	 */
-	public EntityFinderException(String message, Exception ex) {
-		super(message, ex);
-	}
+  /**
+   * Creates a new exception.
+   * @param message The message of the exception.
+   * @param ex The underlying exception.
+   */
+  public EntityFinderException(String message, Exception ex) {
+    super(message, ex);
+  }
 
-	/**
-	 * Creates a new exception.
-	 * @param message The message of the exception.
-	 */
-	public EntityFinderException(String message) {
-		super(message);
-	}
+  /**
+   * Creates a new exception.
+   * @param message The message of the exception.
+   */
+  public EntityFinderException(String message) {
+    super(message);
+  }
 
 }

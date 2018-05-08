@@ -50,254 +50,254 @@ import opennlp.tools.util.model.BaseModel;
  */
 public abstract class ModelLoader<T extends BaseModel> {
 
-	private static final Logger LOGGER = LogManager.getLogger(ModelLoader.class);
+  private static final Logger LOGGER = LogManager.getLogger(ModelLoader.class);
 
-	// This map holds models for all types - tokenizer, sentences, and entity models.
-	private Map<StandardModelManifest, T> models = new HashMap<StandardModelManifest, T>();
+  // This map holds models for all types - tokenizer, sentences, and entity models.
+  private Map<StandardModelManifest, T> models = new HashMap<StandardModelManifest, T>();
 
-	private String modelDirectory;
+  private String modelDirectory;
 
-	private Class<T> typeParameterClass;
+  private Class<T> typeParameterClass;
 
-	private ModelValidator modelValidator;
-	private IdylNLPModelZoo idylNlpModelZoo;
+  private ModelValidator modelValidator;
+  private IdylNLPModelZoo idylNlpModelZoo;
 
-	public ModelLoader(ModelValidator modelValidator) {
-		this.modelValidator = modelValidator;
-	}
+  public ModelLoader(ModelValidator modelValidator) {
+    this.modelValidator = modelValidator;
+  }
 
-	/**
-	 * Gets the model.
-	 * @param modelManifest The model's {@link StandardModelManifest manifest}.
-	 * @param typeParameterClass The class of the model.
-	 * @return A class extending {@link BaseModel}.
-	 * @throws Exception An IOException is thrown if the model can not be loaded. This will happen
-	 * in cases where the model does not exist, the model is corrupted, or the model file can not
-	 * be read by the process.
-	 */
-	public T getModel(StandardModelManifest modelManifest, Class<T> typeParameterClass) throws ModelLoaderException {
+  /**
+   * Gets the model.
+   * @param modelManifest The model's {@link StandardModelManifest manifest}.
+   * @param typeParameterClass The class of the model.
+   * @return A class extending {@link BaseModel}.
+   * @throws Exception An IOException is thrown if the model can not be loaded. This will happen
+   * in cases where the model does not exist, the model is corrupted, or the model file can not
+   * be read by the process.
+   */
+  public T getModel(StandardModelManifest modelManifest, Class<T> typeParameterClass) throws ModelLoaderException {
 
-		this.typeParameterClass = typeParameterClass;
+    this.typeParameterClass = typeParameterClass;
 
-		T tnfm = null;
+    T tnfm = null;
 
-		if(models.get(modelManifest) != null) {
+    if(models.get(modelManifest) != null) {
 
-			// We have previously loaded this model.
-			// Just get it and return it.
-			tnfm = models.get(modelManifest);
+      // We have previously loaded this model.
+      // Just get it and return it.
+      tnfm = models.get(modelManifest);
 
-		} else {
+    } else {
 
-			LOGGER.debug("Model has not been loaded - going to load.");
+      LOGGER.debug("Model has not been loaded - going to load.");
 
-			try {
+      try {
 
-				// We need to load this model first.
-				tnfm = loadModel(modelManifest);
+        // We need to load this model first.
+        tnfm = loadModel(modelManifest);
 
-			} catch (Exception ex) {
+      } catch (Exception ex) {
 
-				LOGGER.error("Unable to load model: " + modelManifest.getModelFileName(), ex);
+        LOGGER.error("Unable to load model: " + modelManifest.getModelFileName(), ex);
 
-				throw new ModelLoaderException("Unable to load model: " + modelManifest.getModelFileName(), ex);
+        throw new ModelLoaderException("Unable to load model: " + modelManifest.getModelFileName(), ex);
 
-			}
+      }
 
-			// Null?
-			if(tnfm == null) {
+      // Null?
+      if(tnfm == null) {
 
-				throw new ModelLoaderException("Unable to load model: " + modelManifest.getModelFileName());
+        throw new ModelLoaderException("Unable to load model: " + modelManifest.getModelFileName());
 
-			} else {
+      } else {
 
-				// Now put the model into the map.
-				models.put(modelManifest, tnfm);
+        // Now put the model into the map.
+        models.put(modelManifest, tnfm);
 
-			}
+      }
 
-		}
+    }
 
-		return tnfm;
+    return tnfm;
 
-	}
+  }
 
-	private T loadModel(StandardModelManifest modelManifest) throws Exception {
+  private T loadModel(StandardModelManifest modelManifest) throws Exception {
 
-		final String fullModelFileName = modelDirectory + modelManifest.getModelFileName();
+    final String fullModelFileName = modelDirectory + modelManifest.getModelFileName();
 
-		LOGGER.debug("Loading model from: " + fullModelFileName);
+    LOGGER.debug("Loading model from: " + fullModelFileName);
 
-		// Does this file exist?
-		final File modelFile = new File(fullModelFileName);
+    // Does this file exist?
+    final File modelFile = new File(fullModelFileName);
 
-		if(!modelFile.exists()) {
+    if(!modelFile.exists()) {
 
-			if(idylNlpModelZoo != null) {
+      if(idylNlpModelZoo != null) {
 
-				LOGGER.info("Attempting to download model {} from the Idyl NLP zoo.", modelManifest.getModelId());
+        LOGGER.info("Attempting to download model {} from the Idyl NLP zoo.", modelManifest.getModelId());
 
-				// Try to download the model from the zoo.
-				idylNlpModelZoo.downloadModel(modelManifest.getModelId(), modelFile);
+        // Try to download the model from the zoo.
+        idylNlpModelZoo.downloadModel(modelManifest.getModelId(), modelFile);
 
-			}
+      }
 
-		}
+    }
 
-		// Model loading will always take a decent amount of time
-		// so milliseconds is a decent measure here.
-		long startTime = System.currentTimeMillis();
+    // Model loading will always take a decent amount of time
+    // so milliseconds is a decent measure here.
+    long startTime = System.currentTimeMillis();
 
-		T tnfm = loadModelFromDisk(modelManifest, modelFile);
+    T tnfm = loadModelFromDisk(modelManifest, modelFile);
 
-		long endTime = System.currentTimeMillis();
-		long duration = endTime - startTime;
+    long endTime = System.currentTimeMillis();
+    long duration = endTime - startTime;
 
-		LOGGER.debug("Model(s) loaded in " + duration + " milliseconds.");
+    LOGGER.debug("Model(s) loaded in " + duration + " milliseconds.");
 
-		return tnfm;
+    return tnfm;
 
-	}
+  }
 
-	/**
-	 * Load the model from the given path.
-	 * @param modelFilePath The file path to the model.
-	 * @return The TokenNameFinderModel of the model.
-	 */
-	@SuppressWarnings("unchecked")
-	private T loadModelFromDisk(StandardModelManifest modelManifest, File modelFile) throws Exception {
+  /**
+   * Load the model from the given path.
+   * @param modelFilePath The file path to the model.
+   * @return The TokenNameFinderModel of the model.
+   */
+  @SuppressWarnings("unchecked")
+  private T loadModelFromDisk(StandardModelManifest modelManifest, File modelFile) throws Exception {
 
-		LOGGER.debug("Loading model from disk: " + modelFile.getAbsolutePath());
+    LOGGER.debug("Loading model from disk: " + modelFile.getAbsolutePath());
 
-		OpenNLPEncryptionFactory.getDefault().setKey(modelManifest.getEncryptionKey());
+    OpenNLPEncryptionFactory.getDefault().setKey(modelManifest.getEncryptionKey());
 
-		T model = null;
+    T model = null;
 
-		// Load the model into memory based on the type.
+    // Load the model into memory based on the type.
 
-		if(typeParameterClass.isAssignableFrom(TokenNameFinderModel.class)) {
+    if(typeParameterClass.isAssignableFrom(TokenNameFinderModel.class)) {
 
-			// Load a token name finder model.
-			model = (T) new TokenNameFinderModelLoader().load(modelFile);
+      // Load a token name finder model.
+      model = (T) new TokenNameFinderModelLoader().load(modelFile);
 
-		} else if(typeParameterClass.isAssignableFrom(SentenceModel.class)) {
+    } else if(typeParameterClass.isAssignableFrom(SentenceModel.class)) {
 
-			// Load a sentence model.
-			model = (T) new SentenceModel(modelFile);
+      // Load a sentence model.
+      model = (T) new SentenceModel(modelFile);
 
-		} else if(typeParameterClass.isAssignableFrom(TokenizerModel.class)) {
+    } else if(typeParameterClass.isAssignableFrom(TokenizerModel.class)) {
 
-			// Load a tokenizer model.
-			model = (T) new TokenizerModel(modelFile);
+      // Load a tokenizer model.
+      model = (T) new TokenizerModel(modelFile);
 
-		} else if(typeParameterClass.isAssignableFrom(POSModel.class)) {
+    } else if(typeParameterClass.isAssignableFrom(POSModel.class)) {
 
-			// Load a part-of-speech model.
-			model = (T) new POSModel(modelFile);
+      // Load a part-of-speech model.
+      model = (T) new POSModel(modelFile);
 
-		} else if(typeParameterClass.isAssignableFrom(LemmatizerModel.class)) {
+    } else if(typeParameterClass.isAssignableFrom(LemmatizerModel.class)) {
 
-			// Load a lemmatizer model.
-			model = (T) new LemmatizerModel(modelFile);
+      // Load a lemmatizer model.
+      model = (T) new LemmatizerModel(modelFile);
 
-		} else if(typeParameterClass.isAssignableFrom(DictionaryModel.class)) {
+    } else if(typeParameterClass.isAssignableFrom(DictionaryModel.class)) {
 
-			// Load a dictionary model.
-			model = (T) new DictionaryModel(modelManifest, this.getModelDirectory());
+      // Load a dictionary model.
+      model = (T) new DictionaryModel(modelManifest, this.getModelDirectory());
 
-		} else {
+    } else {
 
-			LOGGER.warn("Invalid class of model: {}", typeParameterClass.toString());
+      LOGGER.warn("Invalid class of model: {}", typeParameterClass.toString());
 
-		}
+    }
 
-		try {
+    try {
 
-			// Make sure the model.id in the model matches the model.id in the manifest.
-			if(StringUtils.equals(model.getModelId(), modelManifest.getModelId())) {
+      // Make sure the model.id in the model matches the model.id in the manifest.
+      if(StringUtils.equals(model.getModelId(), modelManifest.getModelId())) {
 
-				if(modelValidator != null) {
+        if(modelValidator != null) {
 
-					// Validate the creator version of the model.
-					if(modelValidator.validateVersion(modelManifest.getCreatorVersion())) {
+          // Validate the creator version of the model.
+          if(modelValidator.validateVersion(modelManifest.getCreatorVersion())) {
 
-						LOGGER.info("Model validation successful.");
+            LOGGER.info("Model validation successful.");
 
-					} else {
+          } else {
 
-						LOGGER.warn("Version verification failed. This model is not compatible with this version.");
+            LOGGER.warn("Version verification failed. This model is not compatible with this version.");
 
-						// Since version validation failed we will set the model to null.
-						model = null;
+            // Since version validation failed we will set the model to null.
+            model = null;
 
-					}
+          }
 
-				} else {
+        } else {
 
-					// Even though the validator is null validation is allowed to be successful.
-					LOGGER.warn("The model validator was null.");
+          // Even though the validator is null validation is allowed to be successful.
+          LOGGER.warn("The model validator was null.");
 
-				}
+        }
 
-			} else {
+      } else {
 
-				LOGGER.warn("The model manifest for model {} is not valid.", modelManifest.getModelFileName());
+        LOGGER.warn("The model manifest for model {} is not valid.", modelManifest.getModelFileName());
 
-			}
+      }
 
-		} catch (ValidationException ex) {
+    } catch (ValidationException ex) {
 
-			LOGGER.error("Idyl NLP license key validation failed loading model.", ex);
-			model = null;
+      LOGGER.error("Idyl NLP license key validation failed loading model.", ex);
+      model = null;
 
-		}
+    }
 
-		OpenNLPEncryptionFactory.getDefault().clearKey();
+    OpenNLPEncryptionFactory.getDefault().clearKey();
 
-		return model;
+    return model;
 
-	}
+  }
 
-	/**
-	 * Gets the directory containing the models.
-	 * @return The directory containing the models.
-	 */
-	public String getModelDirectory() {
-		return modelDirectory;
-	}
+  /**
+   * Gets the directory containing the models.
+   * @return The directory containing the models.
+   */
+  public String getModelDirectory() {
+    return modelDirectory;
+  }
 
-	/**
-	 * Sets the model directory.
-	 * @param modelDirectory The directory containing the models. This should be a
-	 * directory on the local file system.
-	 */
-	public void setModelDirectory(String modelDirectory) {
-		this.modelDirectory = modelDirectory;
-	}
+  /**
+   * Sets the model directory.
+   * @param modelDirectory The directory containing the models. This should be a
+   * directory on the local file system.
+   */
+  public void setModelDirectory(String modelDirectory) {
+    this.modelDirectory = modelDirectory;
+  }
 
-	/**
-	 * Sets the {@link IdylNLPModelZoo} client.
-	 * @param idylNLPModelZoo A {@link IdylNLPModelZoo client}.
-	 */
-	public void setIdylNLPModelZoo(IdylNLPModelZoo idylNLPModelZoo) {
-		this.idylNlpModelZoo = idylNLPModelZoo;
-	}
+  /**
+   * Sets the {@link IdylNLPModelZoo} client.
+   * @param idylNLPModelZoo A {@link IdylNLPModelZoo client}.
+   */
+  public void setIdylNLPModelZoo(IdylNLPModelZoo idylNLPModelZoo) {
+    this.idylNlpModelZoo = idylNLPModelZoo;
+  }
 
-	/**
-	 * Gets the map of models to file names.
-	 * @return A map of models to file names.
-	 */
-	public Map<StandardModelManifest, T> getModels() {
-		return models;
-	}
+  /**
+   * Gets the map of models to file names.
+   * @return A map of models to file names.
+   */
+  public Map<StandardModelManifest, T> getModels() {
+    return models;
+  }
 
-	/**
-	 * Sets the model map.
-	 * @param modelMap The model map which is a map of
-	 * models to file names.
-	 */
-	public void setModels(Map<StandardModelManifest, T> modelMap) {
-		this.models = modelMap;
-	}
+  /**
+   * Sets the model map.
+   * @param modelMap The model map which is a map of
+   * models to file names.
+   */
+  public void setModels(Map<StandardModelManifest, T> modelMap) {
+    this.models = modelMap;
+  }
 
 }

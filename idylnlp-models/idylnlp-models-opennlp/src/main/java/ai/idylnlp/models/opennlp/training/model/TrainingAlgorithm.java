@@ -26,70 +26,70 @@ import opennlp.tools.ml.perceptron.PerceptronTrainer;
  */
 public enum TrainingAlgorithm {
 
-	/**
-	 * Uses the maxent algorithm with L-BFGFS.
-	 */
-	MAXENT_QN(QNTrainer.MAXENT_QN_VALUE, "maxent-qn"),
+  /**
+   * Uses the maxent algorithm with L-BFGFS.
+   */
+  MAXENT_QN(QNTrainer.MAXENT_QN_VALUE, "maxent-qn"),
 
-	/**
-	 * Uses the perceptron algorithm.
-	 */
-	PERCEPTRON(PerceptronTrainer.PERCEPTRON_VALUE, "perceptron");
+  /**
+   * Uses the perceptron algorithm.
+   */
+  PERCEPTRON(PerceptronTrainer.PERCEPTRON_VALUE, "perceptron");
 
-	private String algorithm;
-	private String name;
+  private String algorithm;
+  private String name;
 
-	private TrainingAlgorithm(String algorithm, String name) {
-		this.algorithm = algorithm;
-		this.name = name;
-	}
+  private TrainingAlgorithm(String algorithm, String name) {
+    this.algorithm = algorithm;
+    this.name = name;
+  }
 
-	/**
-	 * Gets the algorithm.
-	 * @return The algorithm.
-	 */
-	public String getAlgorithm() {
-		return algorithm;
-	}
+  /**
+   * Gets the algorithm.
+   * @return The algorithm.
+   */
+  public String getAlgorithm() {
+    return algorithm;
+  }
 
-	/**
-	 * Gets the name of the algorithm.
-	 * @return The name of the algorithm.
-	 */
-	public String getName() {
-		return name;
-	}
+  /**
+   * Gets the name of the algorithm.
+   * @return The name of the algorithm.
+   */
+  public String getName() {
+    return name;
+  }
 
-	/**
-	 * Gets the default {@link TrainingAlgorithm}.
-	 * @return The default {@link TrainingAlgorithm}.
-	 */
-	public static TrainingAlgorithm getDefaultAlgorithm() {
-		return PERCEPTRON;
-	}
+  /**
+   * Gets the default {@link TrainingAlgorithm}.
+   * @return The default {@link TrainingAlgorithm}.
+   */
+  public static TrainingAlgorithm getDefaultAlgorithm() {
+    return PERCEPTRON;
+  }
 
-	@Override
-	public String toString() {
-		return algorithm;
-	}
+  @Override
+  public String toString() {
+    return algorithm;
+  }
 
-	/**
-	 * Gets the {@link TrainingAlgorithm} from a string value or
-	 * throws an {@link IllegalArgumentException} if the algorithm
-	 * string value is not a valid algorithm.
-	 * @param algorithm The algorithm.
-	 * @return A {@link TrainingAlgorithm}.
-	 */
-	public static TrainingAlgorithm fromValue(String algorithm) {
+  /**
+   * Gets the {@link TrainingAlgorithm} from a string value or
+   * throws an {@link IllegalArgumentException} if the algorithm
+   * string value is not a valid algorithm.
+   * @param algorithm The algorithm.
+   * @return A {@link TrainingAlgorithm}.
+   */
+  public static TrainingAlgorithm fromValue(String algorithm) {
 
-		if(algorithm.equalsIgnoreCase(MAXENT_QN.getName())) {
-			return MAXENT_QN;
-		} else if(algorithm.equalsIgnoreCase(PERCEPTRON.getName())) {
-			return PERCEPTRON;
-		} else {
-			throw new IllegalArgumentException("Invalid algorithm.");
-		}
+    if(algorithm.equalsIgnoreCase(MAXENT_QN.getName())) {
+      return MAXENT_QN;
+    } else if(algorithm.equalsIgnoreCase(PERCEPTRON.getName())) {
+      return PERCEPTRON;
+    } else {
+      throw new IllegalArgumentException("Invalid algorithm.");
+    }
 
-	}
+  }
 
 }

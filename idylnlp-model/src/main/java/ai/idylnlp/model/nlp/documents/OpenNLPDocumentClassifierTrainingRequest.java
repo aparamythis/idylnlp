@@ -27,44 +27,44 @@ import com.neovisionaries.i18n.LanguageCode;
  */
 public class OpenNLPDocumentClassifierTrainingRequest extends DocumentClassifierTrainingRequest {
 
-	private File trainingFile;
-	private String encryptionKey;
-	private LanguageCode languageCode;
+  private File trainingFile;
+  private String encryptionKey;
+  private LanguageCode languageCode;
 
-	/**
-	 * Creates a new classification request.
-	 * @param trainingFile The {@link File file} containing the training data.
-	 * @param languageCode The {@link LanguageCode language} of the training data.
-	 */
-	public OpenNLPDocumentClassifierTrainingRequest(File trainingFile, LanguageCode languageCode) {
+  /**
+   * Creates a new classification request.
+   * @param trainingFile The {@link File file} containing the training data.
+   * @param languageCode The {@link LanguageCode language} of the training data.
+   */
+  public OpenNLPDocumentClassifierTrainingRequest(File trainingFile, LanguageCode languageCode) {
 
-		this.trainingFile = trainingFile;
-		this.languageCode = languageCode;
+    this.trainingFile = trainingFile;
+    this.languageCode = languageCode;
 
-	}
+  }
 
-	public File getTrainingFile() {
-		return trainingFile;
-	}
+  public File getTrainingFile() {
+    return trainingFile;
+  }
 
-	public void setTrainingFile(File trainingFile) {
-		this.trainingFile = trainingFile;
-	}
+  public void setTrainingFile(File trainingFile) {
+    this.trainingFile = trainingFile;
+  }
 
-	public String getEncryptionKey() {
-		return encryptionKey;
-	}
+  public String getEncryptionKey() {
+    return encryptionKey;
+  }
 
-	public void setEncryptionKey(String encryptionKey) {
-		this.encryptionKey = encryptionKey;
-	}
+  public void setEncryptionKey(String encryptionKey) {
+    this.encryptionKey = encryptionKey;
+  }
 
-	public LanguageCode getLanguageCode() {
-		return languageCode;
-	}
+  public LanguageCode getLanguageCode() {
+    return languageCode;
+  }
 
-	public void setLanguageCode(LanguageCode languageCode) {
-		this.languageCode = languageCode;
-	}
+  public void setLanguageCode(LanguageCode languageCode) {
+    this.languageCode = languageCode;
+  }
 
 }

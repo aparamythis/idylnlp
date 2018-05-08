@@ -20,27 +20,27 @@ import org.apache.logging.log4j.Logger;
 
 public class ConfidenceNormalization {
 
-	private static final Logger LOGGER = LogManager.getLogger(ConfidenceNormalization.class);
+  private static final Logger LOGGER = LogManager.getLogger(ConfidenceNormalization.class);
 
-	/**
-	 * Normalizes the confidence from an integer between 0 and 100
-	 * to a decimal value between 0 and 1.
-	 * @param confidence The confidence to normalize.
-	 * @return The normalized confidence.
-	 */
-	public static double normalizeConfidence(int confidence) {
+  /**
+   * Normalizes the confidence from an integer between 0 and 100
+   * to a decimal value between 0 and 1.
+   * @param confidence The confidence to normalize.
+   * @return The normalized confidence.
+   */
+  public static double normalizeConfidence(int confidence) {
 
-		// The confidence threshold comes in as an integer between 0 and 100. We need to divide it by 100 to make it between 0 and 1.
-		double normalizedConfidenceThreshold = 0;
+    // The confidence threshold comes in as an integer between 0 and 100. We need to divide it by 100 to make it between 0 and 1.
+    double normalizedConfidenceThreshold = 0;
 
-		if(confidence > 0) {
-			normalizedConfidenceThreshold = ((double) confidence / 100);
-		}
+    if(confidence > 0) {
+      normalizedConfidenceThreshold = ((double) confidence / 100);
+    }
 
-		LOGGER.debug("Normalized confidence from {} to {}", confidence, normalizedConfidenceThreshold);
+    LOGGER.debug("Normalized confidence from {} to {}", confidence, normalizedConfidenceThreshold);
 
-		return normalizedConfidenceThreshold;
+    return normalizedConfidenceThreshold;
 
-	}
+  }
 
 }

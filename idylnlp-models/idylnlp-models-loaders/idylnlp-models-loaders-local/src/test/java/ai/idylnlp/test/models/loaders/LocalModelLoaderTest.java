@@ -37,25 +37,25 @@ import ai.idylnlp.model.manifest.StandardModelManifest;
 
 public class LocalModelLoaderTest {
 
-	private static final String MODEL_PATH = new File("src/test/resources/").getAbsolutePath();
-	private static final String MODEL_FILE_NAME = "/model3635140961782910400.bin";
-	private static final String MODEL_BAD_FILE_NAME = "/model-bad.bin";
+  private static final String MODEL_PATH = new File("src/test/resources/").getAbsolutePath();
+  private static final String MODEL_FILE_NAME = "/model3635140961782910400.bin";
+  private static final String MODEL_BAD_FILE_NAME = "/model-bad.bin";
 
-	@Test
-	public void validModelTest() throws ModelLoaderException, ValidationException {
+  @Test
+  public void validModelTest() throws ModelLoaderException, ValidationException {
 
-		ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
-		when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
+    ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
+    when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
 
-		final String modelId = "53121889-2d0f-412a-be67-476ce4a69843";
+    final String modelId = "53121889-2d0f-412a-be67-476ce4a69843";
 
-		StandardModelManifest modelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MODEL_FILE_NAME, LanguageCode.en, "", "person", "entity", "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE).build();
+    StandardModelManifest modelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MODEL_FILE_NAME, LanguageCode.en, "", "person", "entity", "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE).build();
 
-		LocalModelLoader<TokenNameFinderModel> loader = new LocalModelLoader<TokenNameFinderModel>(modelValidator, MODEL_PATH);
-		TokenNameFinderModel model = loader.getModel(modelManifest, TokenNameFinderModel.class);
+    LocalModelLoader<TokenNameFinderModel> loader = new LocalModelLoader<TokenNameFinderModel>(modelValidator, MODEL_PATH);
+    TokenNameFinderModel model = loader.getModel(modelManifest, TokenNameFinderModel.class);
 
-		assertEquals(model.getManifestProperty("model.id"), modelId);
+    assertEquals(model.getManifestProperty("model.id"), modelId);
 
-	}
+  }
 
 }

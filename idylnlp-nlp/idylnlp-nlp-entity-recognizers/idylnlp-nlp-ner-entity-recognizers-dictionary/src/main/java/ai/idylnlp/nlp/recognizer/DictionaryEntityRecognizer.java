@@ -48,151 +48,151 @@ import com.neovisionaries.i18n.LanguageCode;
  */
 public class DictionaryEntityRecognizer implements EntityRecognizer {
 
-	private static final Logger LOGGER = LogManager.getLogger(DictionaryEntityRecognizer.class);
+  private static final Logger LOGGER = LogManager.getLogger(DictionaryEntityRecognizer.class);
 
-	private LanguageCode languageCode;
-	private Set<String> dictionary;
-	private String type;
-	private double fpp = 0.1;
-	private boolean caseSensitive;
+  private LanguageCode languageCode;
+  private Set<String> dictionary;
+  private String type;
+  private double fpp = 0.1;
+  private boolean caseSensitive;
 
-	/**
-	 * Creates a new dictionary entity recognizer.
-	 * @param dictionary A list of strings, one per line, for the dictionary.
-	 * @param type The type of entity being extracted. There is a one-to-one relationship
-	 * between dictionary and entity type.
-	 * @param fpp The desired false positive probability. Use this to tune the performance.
-	 */
-	public DictionaryEntityRecognizer(LanguageCode languageCode, Set<String> dictionary,
-			String type, double fpp, boolean caseSensitive) {
+  /**
+   * Creates a new dictionary entity recognizer.
+   * @param dictionary A list of strings, one per line, for the dictionary.
+   * @param type The type of entity being extracted. There is a one-to-one relationship
+   * between dictionary and entity type.
+   * @param fpp The desired false positive probability. Use this to tune the performance.
+   */
+  public DictionaryEntityRecognizer(LanguageCode languageCode, Set<String> dictionary,
+      String type, double fpp, boolean caseSensitive) {
 
-		this.languageCode = languageCode;
-		this.dictionary = dictionary;
-		this.type = type;
-		this.fpp = fpp;
-		this.caseSensitive = caseSensitive;
+    this.languageCode = languageCode;
+    this.dictionary = dictionary;
+    this.type = type;
+    this.fpp = fpp;
+    this.caseSensitive = caseSensitive;
 
-	}
+  }
 
-	/**
-	 * Creates a new dictionary entity recognizer.
-	 * @param dictionaryFile The {@link File file} defining the dictionary.
-	 * @param type The type of entity being extracted. There is a one-to-one relationship
-	 * between dictionary and entity type.
-	 * @param fpp The desired false positive probability. Use this to tune the performance.
-	 * @throws IOException Thrown if the dictionary file cannot be accessed.
-	 */
-	public DictionaryEntityRecognizer(LanguageCode languageCode, File dictionaryFile, String type,
-			double fpp, boolean caseSensitive) throws IOException {
+  /**
+   * Creates a new dictionary entity recognizer.
+   * @param dictionaryFile The {@link File file} defining the dictionary.
+   * @param type The type of entity being extracted. There is a one-to-one relationship
+   * between dictionary and entity type.
+   * @param fpp The desired false positive probability. Use this to tune the performance.
+   * @throws IOException Thrown if the dictionary file cannot be accessed.
+   */
+  public DictionaryEntityRecognizer(LanguageCode languageCode, File dictionaryFile, String type,
+      double fpp, boolean caseSensitive) throws IOException {
 
-		this.languageCode = languageCode;
-		this.type = type;
-		this.fpp = fpp;
-		this.caseSensitive = caseSensitive;
+    this.languageCode = languageCode;
+    this.type = type;
+    this.fpp = fpp;
+    this.caseSensitive = caseSensitive;
 
-		try(BufferedReader br = Files.newBufferedReader(dictionaryFile.toPath(), StandardCharsets.UTF_8)) {
+    try(BufferedReader br = Files.newBufferedReader(dictionaryFile.toPath(), StandardCharsets.UTF_8)) {
 
-		    for(String line = null; (line = br.readLine()) != null;) {
+        for(String line = null; (line = br.readLine()) != null;) {
 
-		    	if(!line.startsWith("#")) {
+          if(!line.startsWith("#")) {
 
-			    	if(!caseSensitive) {
-			    		dictionary.add(line.toLowerCase());
-			    	} else {
-			    		dictionary.add(line);
-			    	}
+            if(!caseSensitive) {
+              dictionary.add(line.toLowerCase());
+            } else {
+              dictionary.add(line);
+            }
 
-		    	}
+          }
 
-		    }
+        }
 
-		}
+    }
 
-	}
+  }
 
-	@Override
-	public EntityExtractionResponse extractEntities(EntityExtractionRequest request) throws EntityFinderException {
+  @Override
+  public EntityExtractionResponse extractEntities(EntityExtractionRequest request) throws EntityFinderException {
 
-		final Set<Entity> entities = new LinkedHashSet<Entity>();
+    final Set<Entity> entities = new LinkedHashSet<Entity>();
 
-		long startTime = System.currentTimeMillis();
+    long startTime = System.currentTimeMillis();
 
-		final String[] tokens = request.getText();
+    final String[] tokens = request.getText();
 
-		try {
+    try {
 
-			final BloomFilter<String> filter = BloomFilter.create(
-					Funnels.stringFunnel(Charset.defaultCharset()), dictionary.size(), fpp);
+      final BloomFilter<String> filter = BloomFilter.create(
+          Funnels.stringFunnel(Charset.defaultCharset()), dictionary.size(), fpp);
 
-			for(String entry : dictionary) {
+      for(String entry : dictionary) {
 
-				if(!caseSensitive) {
-					filter.put(entry.toLowerCase());
-				} else {
-					filter.put(entry);
-				}
+        if(!caseSensitive) {
+          filter.put(entry.toLowerCase());
+        } else {
+          filter.put(entry);
+        }
 
-			}
+      }
 
-			// Break the tokens into n-grams because some dictionary entries
-			// may be more than one token.
-			final String[] ngrams = NgramUtils.getNgrams(tokens);
+      // Break the tokens into n-grams because some dictionary entries
+      // may be more than one token.
+      final String[] ngrams = NgramUtils.getNgrams(tokens);
 
-			for(String ngram : ngrams) {
+      for(String ngram : ngrams) {
 
-				boolean mightContain;
+        boolean mightContain;
 
-				if(!caseSensitive) {
-					mightContain = filter.mightContain(ngram.toLowerCase());
-				} else {
-					mightContain = filter.mightContain(ngram);
-				}
+        if(!caseSensitive) {
+          mightContain = filter.mightContain(ngram.toLowerCase());
+        } else {
+          mightContain = filter.mightContain(ngram);
+        }
 
-				if(mightContain) {
+        if(mightContain) {
 
-					// Make sure it does exist in the dictionary.
-					boolean contains;
+          // Make sure it does exist in the dictionary.
+          boolean contains;
 
-					if(!caseSensitive) {
-						contains = dictionary.contains(ngram.toLowerCase());
-					} else {
-						contains = dictionary.contains(ngram);
-					}
+          if(!caseSensitive) {
+            contains = dictionary.contains(ngram.toLowerCase());
+          } else {
+            contains = dictionary.contains(ngram);
+          }
 
-					if(contains) {
+          if(contains) {
 
-						// Find the span for this entity.
-						String[] d = ngram.split(" ");
-						int start = Collections.indexOfSubList(Arrays.asList(ngrams), Arrays.asList(d));
+            // Find the span for this entity.
+            String[] d = ngram.split(" ");
+            int start = Collections.indexOfSubList(Arrays.asList(ngrams), Arrays.asList(d));
 
-						// Create a new entity object.
-						final Entity entity = new Entity(ngram, 100.0, type, languageCode.getAlpha3().toString());
-						entity.setSpan(new ai.idylnlp.model.entity.Span(start, start + d.length - 1));
-						entity.setContext(request.getContext());
-						entity.setExtractionDate(System.currentTimeMillis());
+            // Create a new entity object.
+            final Entity entity = new Entity(ngram, 100.0, type, languageCode.getAlpha3().toString());
+            entity.setSpan(new ai.idylnlp.model.entity.Span(start, start + d.length - 1));
+            entity.setContext(request.getContext());
+            entity.setExtractionDate(System.currentTimeMillis());
 
-						LOGGER.debug("Found entity with text: {}", ngram);
+            LOGGER.debug("Found entity with text: {}", ngram);
 
-						entities.add(entity);
+            entities.add(entity);
 
-					}
+          }
 
-				}
+        }
 
-			}
+      }
 
-			final long extractionTime = (System.currentTimeMillis() - startTime);
+      final long extractionTime = (System.currentTimeMillis() - startTime);
 
-			return new EntityExtractionResponse(entities, extractionTime, true);
+      return new EntityExtractionResponse(entities, extractionTime, true);
 
-		} catch (Exception ex) {
+    } catch (Exception ex) {
 
-			LOGGER.error("Unable to find entities with the DictionaryEntityRecognizer.", ex);
+      LOGGER.error("Unable to find entities with the DictionaryEntityRecognizer.", ex);
 
-			throw new EntityFinderException("Unable to find entities with the DictionaryEntityRecognizer.", ex);
+      throw new EntityFinderException("Unable to find entities with the DictionaryEntityRecognizer.", ex);
 
-		}
+    }
 
-	}
+  }
 
 }

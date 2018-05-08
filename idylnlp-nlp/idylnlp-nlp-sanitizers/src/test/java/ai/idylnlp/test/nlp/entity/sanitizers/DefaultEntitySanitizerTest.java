@@ -28,26 +28,26 @@ import ai.idylnlp.nlp.entity.sanitizers.DefaultEntitySanitizer;
 
 public class DefaultEntitySanitizerTest {
 
-	@Test
-	public void sanitizeEntities() {
+  @Test
+  public void sanitizeEntities() {
 
-		DefaultEntitySanitizer sanitizer = new DefaultEntitySanitizer();
+    DefaultEntitySanitizer sanitizer = new DefaultEntitySanitizer();
 
-		Set<Entity> entities = new HashSet<Entity>();
-		entities.add(new Entity("George."));
-		entities.add(new Entity("Abe,"));
+    Set<Entity> entities = new HashSet<Entity>();
+    entities.add(new Entity("George."));
+    entities.add(new Entity("Abe,"));
 
-		Set<Entity> sanitizedEntities = sanitizer.sanitizeEntities(entities);
+    Set<Entity> sanitizedEntities = sanitizer.sanitizeEntities(entities);
 
-		for(Entity entity : sanitizedEntities) {
+    for(Entity entity : sanitizedEntities) {
 
-			assertFalse(entity.getText().endsWith("."));
-			assertFalse(entity.getText().endsWith(","));
-			assertFalse(entity.getText().contains("."));
-			assertFalse(entity.getText().contains(","));
+      assertFalse(entity.getText().endsWith("."));
+      assertFalse(entity.getText().endsWith(","));
+      assertFalse(entity.getText().contains("."));
+      assertFalse(entity.getText().contains(","));
 
-		}
+    }
 
-	}
+  }
 
 }

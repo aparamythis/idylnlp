@@ -60,139 +60,139 @@ import ai.idylnlp.nlp.documents.dl4j.utils.MeansBuilder;
  *
  */
 public class DeepLearningDocumentClassifier
-	implements DocumentClassifier<DeepLearningDocumentClassifierConfiguration, DeepLearningDocumentClassificationRequest> {
+  implements DocumentClassifier<DeepLearningDocumentClassifierConfiguration, DeepLearningDocumentClassificationRequest> {
 
-	private static final Logger LOGGER = LogManager.getLogger(DeepLearningDocumentClassifier.class);
+  private static final Logger LOGGER = LogManager.getLogger(DeepLearningDocumentClassifier.class);
 
-	private DeepLearningDocumentClassifierConfiguration configuration;
-	private Map<LanguageCode, ParagraphVectors> models;
+  private DeepLearningDocumentClassifierConfiguration configuration;
+  private Map<LanguageCode, ParagraphVectors> models;
 
-	/**
-	 * Creates a new deep learning document classifier.
-	 * @param configuration A {@link DeepLearningDocumentClassifierConfiguration}.
-	 * @throws DocumentClassifierException Thrown if the models cannot be preloaded.
-	 * @throws IOException
-	 */
-	public DeepLearningDocumentClassifier(DeepLearningDocumentClassifierConfiguration configuration) throws DocumentClassifierException {
+  /**
+   * Creates a new deep learning document classifier.
+   * @param configuration A {@link DeepLearningDocumentClassifierConfiguration}.
+   * @throws DocumentClassifierException Thrown if the models cannot be preloaded.
+   * @throws IOException
+   */
+  public DeepLearningDocumentClassifier(DeepLearningDocumentClassifierConfiguration configuration) throws DocumentClassifierException {
 
-		this.configuration = configuration;
-		models = new HashMap<>();
+    this.configuration = configuration;
+    models = new HashMap<>();
 
-		for(DocumentModelManifest model : configuration.getModels()) {
+    for(DocumentModelManifest model : configuration.getModels()) {
 
-			// If the file is not found an IOException will be thrown.
-			final File modelFile = new File(model.getModelFileName());
+      // If the file is not found an IOException will be thrown.
+      final File modelFile = new File(model.getModelFileName());
 
-			try {
+      try {
 
-				LOGGER.info("Loading model {}", modelFile.getAbsolutePath());
-				final ParagraphVectors paragraphVectors = WordVectorSerializer.readParagraphVectors(modelFile);
-				models.put(model.getLanguageCode(), paragraphVectors);
+        LOGGER.info("Loading model {}", modelFile.getAbsolutePath());
+        final ParagraphVectors paragraphVectors = WordVectorSerializer.readParagraphVectors(modelFile);
+        models.put(model.getLanguageCode(), paragraphVectors);
 
-			} catch (IOException ex) {
+      } catch (IOException ex) {
 
-				LOGGER.error("Unable to load document classification model {}. Verify the file exists.", ex, model.getModelFileName());
+        LOGGER.error("Unable to load document classification model {}. Verify the file exists.", ex, model.getModelFileName());
 
-			}
+      }
 
-		}
+    }
 
-	}
+  }
 
-	@Override
-	public DocumentClassificationResponse classify(DeepLearningDocumentClassificationRequest request) throws DocumentClassifierException {
+  @Override
+  public DocumentClassificationResponse classify(DeepLearningDocumentClassificationRequest request) throws DocumentClassifierException {
 
-		try {
+    try {
 
-			// TODO: Allow the user to pass in a String[] instead of a String in the request.
-			// The String[] is tokens.
+      // TODO: Allow the user to pass in a String[] instead of a String in the request.
+      // The String[] is tokens.
 
-			ParagraphVectors paragraphVectors = models.get(request.getLanguageCode());
+      ParagraphVectors paragraphVectors = models.get(request.getLanguageCode());
 
-			if(paragraphVectors != null) {
+      if(paragraphVectors != null) {
 
-				// Get the matching manifest for this model.
-				// TODO: Should the manifest be the object in the map's key? I don't think so.
-				Optional<DocumentModelManifest> matchingObjects = configuration.getModels().stream()
-					    .filter(p -> p.getLanguageCode().equals(request.getLanguageCode()))
-					    .findFirst();
+        // Get the matching manifest for this model.
+        // TODO: Should the manifest be the object in the map's key? I don't think so.
+        Optional<DocumentModelManifest> matchingObjects = configuration.getModels().stream()
+              .filter(p -> p.getLanguageCode().equals(request.getLanguageCode()))
+              .findFirst();
 
-				// Should never return null.
-				final DocumentModelManifest model = matchingObjects.get();
+        // Should never return null.
+        final DocumentModelManifest model = matchingObjects.get();
 
-		        final TokenizerFactory tokenizerFactory = new DefaultTokenizerFactory();
-		        tokenizerFactory.setTokenPreProcessor(new CommonPreprocessor());
+            final TokenizerFactory tokenizerFactory = new DefaultTokenizerFactory();
+            tokenizerFactory.setTokenPreProcessor(new CommonPreprocessor());
 
-		        final InMemoryLookupTable<VocabWord> tab = (InMemoryLookupTable<VocabWord>) paragraphVectors.getLookupTable();
+            final InMemoryLookupTable<VocabWord> tab = (InMemoryLookupTable<VocabWord>) paragraphVectors.getLookupTable();
 
-		        final MeansBuilder meansBuilder = new MeansBuilder(tab, tokenizerFactory);
+            final MeansBuilder meansBuilder = new MeansBuilder(tab, tokenizerFactory);
 
-		        final LabelSeeker seeker = new LabelSeeker(model.getLabels(), tab);
+            final LabelSeeker seeker = new LabelSeeker(model.getLabels(), tab);
 
-		        final LabelledDocument document = new LabelledDocument();
-	            document.setContent(request.getText());
+            final LabelledDocument document = new LabelledDocument();
+              document.setContent(request.getText());
 
-	            final INDArray documentAsCentroid = meansBuilder.documentAsVector(document);
-	            final List<Pair<String, Double>> scores = seeker.getScores(documentAsCentroid);
+              final INDArray documentAsCentroid = meansBuilder.documentAsVector(document);
+              final List<Pair<String, Double>> scores = seeker.getScores(documentAsCentroid);
 
-	            final Map<String, Double> sc = new HashMap<>();
+              final Map<String, Double> sc = new HashMap<>();
 
-	            for(Pair<String, Double> score : scores) {
+              for(Pair<String, Double> score : scores) {
 
-	            	sc.put(score.getFirst(), score.getSecond());
+                sc.put(score.getFirst(), score.getSecond());
 
-	            }
+              }
 
-		        return new DocumentClassificationResponse(new DocumentClassificationScores(sc));
+            return new DocumentClassificationResponse(new DocumentClassificationScores(sc));
 
-			} else {
+      } else {
 
-				throw new DocumentClassifierException("No model for language " + request.getLanguageCode().getAlpha3().toString() + ".");
+        throw new DocumentClassifierException("No model for language " + request.getLanguageCode().getAlpha3().toString() + ".");
 
-			}
+      }
 
-		} catch (Exception ex) {
+    } catch (Exception ex) {
 
-			throw new DocumentClassifierException("Unable to classify document.", ex);
+      throw new DocumentClassifierException("Unable to classify document.", ex);
 
-		}
+    }
 
-	}
+  }
 
-	@Override
-	public DocumentClassificationEvaluationResponse evaluate(DocumentClassificationEvaluationRequest request) throws DocumentClassifierException {
+  @Override
+  public DocumentClassificationEvaluationResponse evaluate(DocumentClassificationEvaluationRequest request) throws DocumentClassifierException {
 
-		// Actual class -> <Predicted class, Number of times>, for example:
-		// positive -> negative, 10
-		// Means, documents from the positive class were classified as negative 10 times.
-		Map<String, Map<String, AtomicInteger>> results = new LinkedHashMap<>();
+    // Actual class -> <Predicted class, Number of times>, for example:
+    // positive -> negative, 10
+    // Means, documents from the positive class were classified as negative 10 times.
+    Map<String, Map<String, AtomicInteger>> results = new LinkedHashMap<>();
 
-		final FileLabelAwareIterator iterator = new FileLabelAwareIterator.Builder().addSourceFolder(new File(request.getDirectory())).build();
+    final FileLabelAwareIterator iterator = new FileLabelAwareIterator.Builder().addSourceFolder(new File(request.getDirectory())).build();
 
-		LOGGER.info("Beginning model evaluation using directory {}", request.getDirectory());
+    LOGGER.info("Beginning model evaluation using directory {}", request.getDirectory());
 
-		while(iterator.hasNext()) {
+    while(iterator.hasNext()) {
 
-			final LabelledDocument document = iterator.nextDocument();
+      final LabelledDocument document = iterator.nextDocument();
 
-			final String text = document.getContent();
+      final String text = document.getContent();
 
-			final DocumentClassificationResponse response = classify(new DeepLearningDocumentClassificationRequest(text, request.getLanguageCode()));
+      final DocumentClassificationResponse response = classify(new DeepLearningDocumentClassificationRequest(text, request.getLanguageCode()));
 
-			// TODO: Is it possible to not be assigned to any category?
-			final String actualCategory = document.getLabels().get(0);
-			final String predictedCategory = response.getScores().getPredictedCategory().getLeft();
+      // TODO: Is it possible to not be assigned to any category?
+      final String actualCategory = document.getLabels().get(0);
+      final String predictedCategory = response.getScores().getPredictedCategory().getLeft();
 
-			// LOGGER.trace("Actual: " + actualCategory + "; Predicted: " + predictedCategory);
+      // LOGGER.trace("Actual: " + actualCategory + "; Predicted: " + predictedCategory);
 
-			results.putIfAbsent(actualCategory, new HashMap<String, AtomicInteger>());
-			results.get(actualCategory).putIfAbsent(predictedCategory, new AtomicInteger(0));
-			results.get(actualCategory).get(predictedCategory).incrementAndGet();
+      results.putIfAbsent(actualCategory, new HashMap<String, AtomicInteger>());
+      results.get(actualCategory).putIfAbsent(predictedCategory, new AtomicInteger(0));
+      results.get(actualCategory).get(predictedCategory).incrementAndGet();
 
-		}
+    }
 
-		return new DocumentClassificationEvaluationResponse(results);
+    return new DocumentClassificationEvaluationResponse(results);
 
-	}
+  }
 
 }

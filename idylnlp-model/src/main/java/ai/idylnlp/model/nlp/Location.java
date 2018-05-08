@@ -26,39 +26,39 @@ import ai.idylnlp.model.nlp.ner.EntityExtractionRequest;
  */
 public class Location {
 
-	private double latitude;
-	private double longitude;
+  private double latitude;
+  private double longitude;
 
-	/**
-	 * Creates a new location.
-	 * @param latitude The location's latitude.
-	 * @param longitude THe location's longitude.
-	 */
-	public Location(double latitude, double longitude) {
+  /**
+   * Creates a new location.
+   * @param latitude The location's latitude.
+   * @param longitude THe location's longitude.
+   */
+  public Location(double latitude, double longitude) {
 
-		this.latitude = latitude;
-		this.longitude = longitude;
+    this.latitude = latitude;
+    this.longitude = longitude;
 
-	}
+  }
 
-	/**
-	 * Gets the location's latitude.
-	 * @return The location's latitude.
-	 */
-	public double getLatitude() {
+  /**
+   * Gets the location's latitude.
+   * @return The location's latitude.
+   */
+  public double getLatitude() {
 
-		return latitude;
+    return latitude;
 
-	}
+  }
 
-	/**
-	 * Gets the location's longitude.
-	 * @return The location's longitude.
-	 */
-	public double getLongitude() {
+  /**
+   * Gets the location's longitude.
+   * @return The location's longitude.
+   */
+  public double getLongitude() {
 
-		return longitude;
+    return longitude;
 
-	}
+  }
 
 }

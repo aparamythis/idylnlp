@@ -23,15 +23,15 @@ import ai.idylnlp.nlp.utils.distance.LevenshteinDistance;
 
 public class LevenshteinDistanceTest {
 
-	@Test
-	public void distance() {
+  @Test
+  public void distance() {
 
-		LevenshteinDistance distance = new LevenshteinDistance();
+    LevenshteinDistance distance = new LevenshteinDistance();
 
-		double i = distance.calculate("test", "tst");
+    double i = distance.calculate("test", "tst");
 
-		assertEquals(1, i, 0);
+    assertEquals(1, i, 0);
 
-	}
+  }
 
 }

@@ -58,222 +58,222 @@ import opennlp.tools.namefind.TokenNameFinderModel;
  */
 public class OpenNLPEntityRecognizer extends AbstractEntityRecognizer<OpenNLPEntityRecognizerConfiguration> implements EntityRecognizer {
 
-	private static final Logger LOGGER = LogManager.getLogger(OpenNLPEntityRecognizer.class);
+  private static final Logger LOGGER = LogManager.getLogger(OpenNLPEntityRecognizer.class);
 
-	/**
-	 * Create a new ModelEntityRecognizer class that is configured
-	 * per the {@link OpenNLPEntityRecognizerConfiguration}.
-	 * @param configuration The {@link OpenNLPEntityRecognizerConfiguration configuration}.
-	 * @param tokenizer The {@link Tokenizer tokenizer} for the text.
-	 */
-	public OpenNLPEntityRecognizer(OpenNLPEntityRecognizerConfiguration configuration) {
+  /**
+   * Create a new ModelEntityRecognizer class that is configured
+   * per the {@link OpenNLPEntityRecognizerConfiguration}.
+   * @param configuration The {@link OpenNLPEntityRecognizerConfiguration configuration}.
+   * @param tokenizer The {@link Tokenizer tokenizer} for the text.
+   */
+  public OpenNLPEntityRecognizer(OpenNLPEntityRecognizerConfiguration configuration) {
 
-		super(configuration);
+    super(configuration);
 
-		// If preload is enabled and there are models to use.
-		// If there are no models to use then we can only do dictionary-based extraction.
-		if(configuration.isPreloadModels() && configuration.getEntityModels().size() > 0) {
+    // If preload is enabled and there are models to use.
+    // If there are no models to use then we can only do dictionary-based extraction.
+    if(configuration.isPreloadModels() && configuration.getEntityModels().size() > 0) {
 
-			// Load the models into memory.
-			LOGGER.debug("Preloading the models.");
+      // Load the models into memory.
+      LOGGER.debug("Preloading the models.");
 
-			// Preload the entity models by looping over all of the entity model types.
-			for(String type : configuration.getEntityModels().keySet()) {
+      // Preload the entity models by looping over all of the entity model types.
+      for(String type : configuration.getEntityModels().keySet()) {
 
-				LOGGER.debug("Preloading models for entity type {}.", type);
+        LOGGER.debug("Preloading models for entity type {}.", type);
 
-				// Loop over all languages for this entity type.
-				for(LanguageCode language : configuration.getEntityModels().get(type).keySet()) {
+        // Loop over all languages for this entity type.
+        for(LanguageCode language : configuration.getEntityModels().get(type).keySet()) {
 
-					// Get the model file name for this entity type for this language.
-					Set<StandardModelManifest> modelManifests = configuration.getEntityModels().get(type).get(language);
+          // Get the model file name for this entity type for this language.
+          Set<StandardModelManifest> modelManifests = configuration.getEntityModels().get(type).get(language);
 
-					LOGGER.debug("There are {} model manifests to preload for entity type {}.", modelManifests.size(), type);
+          LOGGER.debug("There are {} model manifests to preload for entity type {}.", modelManifests.size(), type);
 
-					for(StandardModelManifest modelManifest : modelManifests) {
+          for(StandardModelManifest modelManifest : modelManifests) {
 
-						if(!configuration.getBlacklistedModelIDs().contains(modelManifest.getModelId())) {
+            if(!configuration.getBlacklistedModelIDs().contains(modelManifest.getModelId())) {
 
-							LOGGER.debug("Preloading model file {}.", modelManifest.getModelFileName());
+              LOGGER.debug("Preloading model file {}.", modelManifest.getModelFileName());
 
-							try {
+              try {
 
-								// TODO: Necessary to check the subtype?
-								// if(StringUtils.equalsIgnoreCase(modelManifest.getSubtype(), ModelManifest.DICTIONARY_SUBTYPE)) {
-								configuration.getEntityModelLoader().getModel(modelManifest, TokenNameFinderModel.class);
+                // TODO: Necessary to check the subtype?
+                // if(StringUtils.equalsIgnoreCase(modelManifest.getSubtype(), ModelManifest.DICTIONARY_SUBTYPE)) {
+                configuration.getEntityModelLoader().getModel(modelManifest, TokenNameFinderModel.class);
 
-							} catch (ModelLoaderException ex) {
+              } catch (ModelLoaderException ex) {
 
-								LOGGER.error("Unable to load model: " + modelManifest.getModelFileName(), ex);
-								LOGGER.warn("Model {} is blacklisted. Loading will not be attempted until restart.", modelManifest.getModelFileName());
+                LOGGER.error("Unable to load model: " + modelManifest.getModelFileName(), ex);
+                LOGGER.warn("Model {} is blacklisted. Loading will not be attempted until restart.", modelManifest.getModelFileName());
 
-								// Automatically blacklist this model.
-								configuration.getBlacklistedModelIDs().add(modelManifest.getModelId());
+                // Automatically blacklist this model.
+                configuration.getBlacklistedModelIDs().add(modelManifest.getModelId());
 
-							}
+              }
 
-						}
+            }
 
-					}
+          }
 
-				}
+        }
 
-			}
+      }
 
-		} else {
+    } else {
 
-			if(configuration.getEntityModels().size() > 0) {
+      if(configuration.getEntityModels().size() > 0) {
 
-				LOGGER.info("Model preloading is disabled.");
+        LOGGER.info("Model preloading is disabled.");
 
-			} else {
+      } else {
 
-				// Model preloading was enabled but no models were specified.
+        // Model preloading was enabled but no models were specified.
 
-				LOGGER.warn("Model preloading was enabled but no entity models were specified.");
+        LOGGER.warn("Model preloading was enabled but no entity models were specified.");
 
-			}
+      }
 
-		}
+    }
 
-	}
+  }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public EntityExtractionResponse extractEntities(EntityExtractionRequest request) throws EntityFinderException, ModelLoaderException {
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public EntityExtractionResponse extractEntities(EntityExtractionRequest request) throws EntityFinderException, ModelLoaderException {
 
-		if(request.getText().length == 0) {
+    if(request.getText().length == 0) {
 
-			throw new IllegalArgumentException("Input text cannot be empty.");
+      throw new IllegalArgumentException("Input text cannot be empty.");
 
-		}
+    }
 
-		if(request.getConfidenceThreshold() < 0 || request.getConfidenceThreshold() > 100) {
+    if(request.getConfidenceThreshold() < 0 || request.getConfidenceThreshold() > 100) {
 
-			throw new IllegalArgumentException("Confidence threshold must be an integer between 0 and 100.");
+      throw new IllegalArgumentException("Confidence threshold must be an integer between 0 and 100.");
 
-		}
+    }
 
-		// The sanitizer without any properties set does not do anything.
-		SentenceSanitizer sentenceSanitizer = new DefaultSentenceSanitizer.Builder().build();
+    // The sanitizer without any properties set does not do anything.
+    SentenceSanitizer sentenceSanitizer = new DefaultSentenceSanitizer.Builder().build();
 
-		// All of the extracted entities.
-		Set<Entity> entities = new LinkedHashSet<Entity>();
+    // All of the extracted entities.
+    Set<Entity> entities = new LinkedHashSet<Entity>();
 
-		// Keep track of the extraction time.
-		long startTime = System.currentTimeMillis();
+    // Keep track of the extraction time.
+    long startTime = System.currentTimeMillis();
 
-		String types[] = {};
+    String types[] = {};
 
-		if(!StringUtils.isEmpty(request.getType())) {
-			types = request.getType().split(",");
-		}
+    if(!StringUtils.isEmpty(request.getType())) {
+      types = request.getType().split(",");
+    }
 
-		for(String type : getConfiguration().getEntityModels().keySet()) {
+    for(String type : getConfiguration().getEntityModels().keySet()) {
 
-			if(types.length == 0 || ArrayUtils.contains(types, type)) {
+      if(types.length == 0 || ArrayUtils.contains(types, type)) {
 
-				LOGGER.trace("Processing entity class {}.", type);
+        LOGGER.trace("Processing entity class {}.", type);
 
-				LanguageCode language = request.getLanguage();
+        LanguageCode language = request.getLanguage();
 
-				// The manifests of the models that will be used for this extraction.
-				Set<StandardModelManifest> modelManifests = new HashSet<StandardModelManifest>();
+        // The manifests of the models that will be used for this extraction.
+        Set<StandardModelManifest> modelManifests = new HashSet<StandardModelManifest>();
 
-				if(request.getLanguage() == null) {
+        if(request.getLanguage() == null) {
 
-					// TODO: Run all languages to support multilingual documents.
-					Set<LanguageCode> languages = getConfiguration().getEntityModels().get(type).keySet();
+          // TODO: Run all languages to support multilingual documents.
+          Set<LanguageCode> languages = getConfiguration().getEntityModels().get(type).keySet();
 
-					for(LanguageCode l : languages) {
-						modelManifests.addAll(getConfiguration().getEntityModels().get(type).get(l));
-					}
+          for(LanguageCode l : languages) {
+            modelManifests.addAll(getConfiguration().getEntityModels().get(type).get(l));
+          }
 
-				} else {
+        } else {
 
-					// We are doing a single language.
+          // We are doing a single language.
 
-					Map<LanguageCode, Set<StandardModelManifest>> models = getConfiguration().getEntityModels().get(type);
+          Map<LanguageCode, Set<StandardModelManifest>> models = getConfiguration().getEntityModels().get(type);
 
-					// If there are not any models for this entity type <code>models</code> will be null.
-					if(models != null) {
+          // If there are not any models for this entity type <code>models</code> will be null.
+          if(models != null) {
 
-						Set<StandardModelManifest> manifests = models.get(language);
+            Set<StandardModelManifest> manifests = models.get(language);
 
-						// If <code>manifests</code> is not null add those manifests to the set.
-						if(manifests != null) {
+            // If <code>manifests</code> is not null add those manifests to the set.
+            if(manifests != null) {
 
-							modelManifests.addAll(manifests);
+              modelManifests.addAll(manifests);
 
-						}
+            }
 
-					}
+          }
 
-				}
+        }
 
-				if(CollectionUtils.isNotEmpty(modelManifests)) {
+        if(CollectionUtils.isNotEmpty(modelManifests)) {
 
-					for(StandardModelManifest modelManifest : modelManifests) {
+          for(StandardModelManifest modelManifest : modelManifests) {
 
-						LOGGER.trace("{} has {} entity models.", type, modelManifests.size());
+            LOGGER.trace("{} has {} entity models.", type, modelManifests.size());
 
-						if(!configuration.getBlacklistedModelIDs().contains(modelManifest.getModelId())) {
+            if(!configuration.getBlacklistedModelIDs().contains(modelManifest.getModelId())) {
 
-							// Create the token name finder model.
-							final TokenNameFinderModel tokenNameFinderModel = getConfiguration().getEntityModelLoader().getModel(modelManifest, TokenNameFinderModel.class);
+              // Create the token name finder model.
+              final TokenNameFinderModel tokenNameFinderModel = getConfiguration().getEntityModelLoader().getModel(modelManifest, TokenNameFinderModel.class);
 
-							// The tokenNameFinderModel can be null in cases in which model validation failed.
-							if(tokenNameFinderModel != null) {
+              // The tokenNameFinderModel can be null in cases in which model validation failed.
+              if(tokenNameFinderModel != null) {
 
-								// Get the nameFinder for this model if it exists.
-								TokenNameFinder nameFinderMe = nameFinders.get(modelManifest);
+                // Get the nameFinder for this model if it exists.
+                TokenNameFinder nameFinderMe = nameFinders.get(modelManifest);
 
-								if(nameFinderMe == null) {
-									// Create a new namefinder and put it in the map of model manifests to name finders.
-									nameFinderMe = new NameFinderME(tokenNameFinderModel);
-									nameFinders.put(modelManifest, nameFinderMe);
-								}
+                if(nameFinderMe == null) {
+                  // Create a new namefinder and put it in the map of model manifests to name finders.
+                  nameFinderMe = new NameFinderME(tokenNameFinderModel);
+                  nameFinders.put(modelManifest, nameFinderMe);
+                }
 
-								// Extract the entities.
-								final Collection<Entity> extractedEntities = findEntities(nameFinderMe, request, modelManifest, sentenceSanitizer);
+                // Extract the entities.
+                final Collection<Entity> extractedEntities = findEntities(nameFinderMe, request, modelManifest, sentenceSanitizer);
 
-								// TODO: Clear the adaptive data after each entity extraction.
-								// This really has no effect because the NameFinderME is reinstantiated for every entity extraction request.
-								// Having a single NameFinderME would run into the threadsafe issue.
-								nameFinderMe.clearAdaptiveData();
+                // TODO: Clear the adaptive data after each entity extraction.
+                // This really has no effect because the NameFinderME is reinstantiated for every entity extraction request.
+                // Having a single NameFinderME would run into the threadsafe issue.
+                nameFinderMe.clearAdaptiveData();
 
-								// Want to return all entities.
-								entities.addAll(extractedEntities);
+                // Want to return all entities.
+                entities.addAll(extractedEntities);
 
-							}
+              }
 
-						} else {
+            } else {
 
-							LOGGER.warn("Entity model {} is blacklisted. Reload will not be attempted until restart.", modelManifest.getModelFileName());
+              LOGGER.warn("Entity model {} is blacklisted. Reload will not be attempted until restart.", modelManifest.getModelFileName());
 
-						}
+            }
 
-					}
+          }
 
-				} else {
+        } else {
 
-					LOGGER.warn("No entity models available for language {}.", language.getAlpha3().toString());
+          LOGGER.warn("No entity models available for language {}.", language.getAlpha3().toString());
 
-				}
+        }
 
-			}
+      }
 
-		}
+    }
 
-		long extractionTime = (System.currentTimeMillis() - startTime);
+    long extractionTime = (System.currentTimeMillis() - startTime);
 
-		// Create the response with the extracted entities and the time it took to extract them.
-		EntityExtractionResponse response = new EntityExtractionResponse(entities, extractionTime, true);
+    // Create the response with the extracted entities and the time it took to extract them.
+    EntityExtractionResponse response = new EntityExtractionResponse(entities, extractionTime, true);
 
-		return response;
+    return response;
 
-	}
+  }
 
 }

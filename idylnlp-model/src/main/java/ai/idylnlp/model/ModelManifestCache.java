@@ -31,37 +31,37 @@ import ai.idylnlp.model.manifest.StandardModelManifest;
  */
 public class ModelManifestCache {
 
-	private Map<String, Map<LanguageCode, Set<StandardModelManifest>>> cache;
+  private Map<String, Map<LanguageCode, Set<StandardModelManifest>>> cache;
 
-	public ModelManifestCache() {
+  public ModelManifestCache() {
 
-		cache = new HashMap<String, Map<LanguageCode, Set<StandardModelManifest>>>();
+    cache = new HashMap<String, Map<LanguageCode, Set<StandardModelManifest>>>();
 
-	}
+  }
 
-	public void add(String type, LanguageCode language, Set<StandardModelManifest> modelManifests) {
+  public void add(String type, LanguageCode language, Set<StandardModelManifest> modelManifests) {
 
-		Map<LanguageCode, Set<StandardModelManifest>> models = new HashMap<>();
-		models.put(language, modelManifests);
+    Map<LanguageCode, Set<StandardModelManifest>> models = new HashMap<>();
+    models.put(language, modelManifests);
 
-		cache.put(type, models);
+    cache.put(type, models);
 
-	}
+  }
 
-	public Set<StandardModelManifest> get(String type, LanguageCode language) {
+  public Set<StandardModelManifest> get(String type, LanguageCode language) {
 
-		Set<StandardModelManifest> modelManifests = null;
+    Set<StandardModelManifest> modelManifests = null;
 
-		Map<LanguageCode, Set<StandardModelManifest>> models = cache.get(type);
+    Map<LanguageCode, Set<StandardModelManifest>> models = cache.get(type);
 
-		if(models != null) {
+    if(models != null) {
 
-			modelManifests = models.get(language);
+      modelManifests = models.get(language);
 
-		}
+    }
 
-		return modelManifests;
+    return modelManifests;
 
-	}
+  }
 
 }

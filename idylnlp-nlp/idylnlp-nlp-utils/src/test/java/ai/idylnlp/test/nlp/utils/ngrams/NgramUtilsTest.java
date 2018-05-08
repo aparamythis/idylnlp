@@ -27,40 +27,40 @@ import ai.idylnlp.nlp.utils.ngrams.NgramUtils;
 
 public class NgramUtilsTest {
 
-	private static final Logger LOGGER = LogManager.getLogger(NgramUtilsTest.class);
+  private static final Logger LOGGER = LogManager.getLogger(NgramUtilsTest.class);
 
-	@Test
-	public void getNgrams() {
+  @Test
+  public void getNgrams() {
 
-		String[] tokens = {"George", "Washington", "was", "president"};
+    String[] tokens = {"George", "Washington", "was", "president"};
 
-		String[] ngrams = NgramUtils.getNgrams(tokens, 2);
+    String[] ngrams = NgramUtils.getNgrams(tokens, 2);
 
-		for(String ngram : ngrams) {
-			LOGGER.info(ngram);
-		}
+    for(String ngram : ngrams) {
+      LOGGER.info(ngram);
+    }
 
-		assertEquals(3, ngrams.length);
+    assertEquals(3, ngrams.length);
 
-		assertTrue(ArrayUtils.contains(ngrams, "George Washington"));
-		assertTrue(ArrayUtils.contains(ngrams, "Washington was"));
-		assertTrue(ArrayUtils.contains(ngrams, "was president"));
+    assertTrue(ArrayUtils.contains(ngrams, "George Washington"));
+    assertTrue(ArrayUtils.contains(ngrams, "Washington was"));
+    assertTrue(ArrayUtils.contains(ngrams, "was president"));
 
-	}
+  }
 
-	@Test
-	public void getAllNgrams() {
+  @Test
+  public void getAllNgrams() {
 
-		String[] tokens = {"George", "Washington", "was", "president"};
+    String[] tokens = {"George", "Washington", "was", "president"};
 
-		String[] ngrams = NgramUtils.getNgrams(tokens);
+    String[] ngrams = NgramUtils.getNgrams(tokens);
 
-		for(String ngram : ngrams) {
-			LOGGER.info(ngram);
-		}
+    for(String ngram : ngrams) {
+      LOGGER.info(ngram);
+    }
 
-		assertEquals(10, ngrams.length);
+    assertEquals(10, ngrams.length);
 
-	}
+  }
 
 }

@@ -19,30 +19,30 @@ import com.neovisionaries.i18n.LanguageCode;
 
 public class Language {
 
-	private Language() {
-		// Utility class.
-	}
+  private Language() {
+    // Utility class.
+  }
 
-	/**
-	 * Determines if a string is a valid language code.
-	 * @param languageCode A language code.
-	 * @return <code>true</code> if the string is a valid 3-letter language code;
-	 * otherwise <code>false</code>.
-	 */
-	public static boolean validate(String languageCode) {
+  /**
+   * Determines if a string is a valid language code.
+   * @param languageCode A language code.
+   * @return <code>true</code> if the string is a valid 3-letter language code;
+   * otherwise <code>false</code>.
+   */
+  public static boolean validate(String languageCode) {
 
-		LanguageCode code = LanguageCode.getByCodeIgnoreCase(languageCode);
+    LanguageCode code = LanguageCode.getByCodeIgnoreCase(languageCode);
 
-		if(code == null) {
+    if(code == null) {
 
-			return false;
+      return false;
 
-		} else {
+    } else {
 
-			return true;
+      return true;
 
-		}
+    }
 
-	}
+  }
 
 }

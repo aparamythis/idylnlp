@@ -46,78 +46,78 @@ import ai.idylnlp.model.nlp.documents.DocumentModelTrainingException;
  */
 public class DeepLearningDocumentModelOperations implements DocumentClassifierModelOperations<DeepLearningDocumentClassifierTrainingRequest> {
 
-	private static final Logger LOGGER = LogManager.getLogger(DeepLearningDocumentModelOperations.class);
+  private static final Logger LOGGER = LogManager.getLogger(DeepLearningDocumentModelOperations.class);
 
-	@Override
-	public DocumentClassificationTrainingResponse train(DeepLearningDocumentClassifierTrainingRequest request) throws DocumentModelTrainingException {
+  @Override
+  public DocumentClassificationTrainingResponse train(DeepLearningDocumentClassifierTrainingRequest request) throws DocumentModelTrainingException {
 
         // https://deeplearning4j.org/workspaces
         Nd4j.getMemoryManager().setAutoGcWindow(10000);
 
         try {
 
-	        LOGGER.info("Loading training iterator...");
+          LOGGER.info("Loading training iterator...");
 
-	        FileLabelAwareIterator.Builder builder = new FileLabelAwareIterator.Builder();
+          FileLabelAwareIterator.Builder builder = new FileLabelAwareIterator.Builder();
 
-	        for(String directory : request.getDirectories()) {
+          for(String directory : request.getDirectories()) {
 
-	        	final File d = new File(directory);
+            final File d = new File(directory);
 
-	        	// Make sure the directory exists and is a directory.
-	        	if(d.exists() && d.isDirectory()) {
+            // Make sure the directory exists and is a directory.
+            if(d.exists() && d.isDirectory()) {
 
-	        		LOGGER.info("Adding training directory {}", d.getAbsolutePath());
+              LOGGER.info("Adding training directory {}", d.getAbsolutePath());
 
-	        		builder.addSourceFolder(d);
+              builder.addSourceFolder(d);
 
-	        	} else {
+            } else {
 
-	        		LOGGER.warn("Training directory {} does not exist and will be skipped.", directory);
+              LOGGER.warn("Training directory {} does not exist and will be skipped.", directory);
 
-	        	}
+            }
 
-	        }
+          }
 
-	        final FileLabelAwareIterator iterator = builder.build();
+          final FileLabelAwareIterator iterator = builder.build();
 
-	        TokenizerFactory tokenizerFactory = new DefaultTokenizerFactory();
-	        tokenizerFactory.setTokenPreProcessor(new CommonPreprocessor());
+          TokenizerFactory tokenizerFactory = new DefaultTokenizerFactory();
+          tokenizerFactory.setTokenPreProcessor(new CommonPreprocessor());
 
-	        final ParagraphVectors paragraphVectors = new ParagraphVectors.Builder()
-	                .learningRate(request.getLearningRate())
-	                .minLearningRate(request.getMinLearningRate())
-	                .minWordFrequency(request.getMinWordFrequency())
-	                .layerSize(request.getLayerSize())
-	                .batchSize(request.getBatchSize())
-	                .epochs(request.getEpochs())
-	                .iterations(5)
-	                .iterate(iterator)
-	                .tokenizerFactory(tokenizerFactory)
-	                .sampling(0)
-	                .windowSize(5)
-	                .build();
+          final ParagraphVectors paragraphVectors = new ParagraphVectors.Builder()
+                  .learningRate(request.getLearningRate())
+                  .minLearningRate(request.getMinLearningRate())
+                  .minWordFrequency(request.getMinWordFrequency())
+                  .layerSize(request.getLayerSize())
+                  .batchSize(request.getBatchSize())
+                  .epochs(request.getEpochs())
+                  .iterations(5)
+                  .iterate(iterator)
+                  .tokenizerFactory(tokenizerFactory)
+                  .sampling(0)
+                  .windowSize(5)
+                  .build();
 
-	        LOGGER.info("Starting training...");
-	        paragraphVectors.fit();
+          LOGGER.info("Starting training...");
+          paragraphVectors.fit();
 
-	        final File serializedModelFile = File.createTempFile("model", ".bin");
-	        WordVectorSerializer.writeParagraphVectors(paragraphVectors, serializedModelFile);
-	        LOGGER.info("Model serialized to {}", serializedModelFile.getAbsolutePath());
+          final File serializedModelFile = File.createTempFile("model", ".bin");
+          WordVectorSerializer.writeParagraphVectors(paragraphVectors, serializedModelFile);
+          LOGGER.info("Model serialized to {}", serializedModelFile.getAbsolutePath());
 
-	        Map<DocumentClassificationFile, File> files = new HashMap<>();
-	        files.put(DocumentClassificationFile.MODEL_FILE, serializedModelFile);
+          Map<DocumentClassificationFile, File> files = new HashMap<>();
+          files.put(DocumentClassificationFile.MODEL_FILE, serializedModelFile);
 
-	        final String modelId = UUID.randomUUID().toString();
+          final String modelId = UUID.randomUUID().toString();
 
-	        return new DocumentClassificationTrainingResponse(modelId, files, iterator.getLabelsSource().getLabels());
+          return new DocumentClassificationTrainingResponse(modelId, files, iterator.getLabelsSource().getLabels());
 
         } catch(Exception ex) {
 
-        	throw new DocumentModelTrainingException("Unable to train document classification model.", ex);
+          throw new DocumentModelTrainingException("Unable to train document classification model.", ex);
 
         }
 
-	}
+  }
 
 }

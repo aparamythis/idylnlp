@@ -28,28 +28,28 @@ import ai.idylnlp.model.nlp.Tokenizer;
  */
 public interface PartsOfSpeechTagger {
 
-	/**
-	 * Tags the tokens in the input. The input is broken into sentences and tokenized.
-	 * @param input The input.
-	 * @param sentenceDetector A {@link SentenceDetector}.
-	 * @param tokenizer A {@link Tokenizer}.
-	 * @return A list of {@link PartsOfSpeechToken}.
-	 */
-	public List<PartsOfSpeechToken> tag(String input, SentenceDetector sentenceDetector, Tokenizer tokenizer);
+  /**
+   * Tags the tokens in the input. The input is broken into sentences and tokenized.
+   * @param input The input.
+   * @param sentenceDetector A {@link SentenceDetector}.
+   * @param tokenizer A {@link Tokenizer}.
+   * @return A list of {@link PartsOfSpeechToken}.
+   */
+  public List<PartsOfSpeechToken> tag(String input, SentenceDetector sentenceDetector, Tokenizer tokenizer);
 
-	/**
-	 * Tags the tokens in the sentences. Each sentence will be tokenized.
-	 * @param sentences An array of sentences.
-	 * @param tokenizer A {@link Tokenizer}.
-	 * @return A list of {@link PartsOfSpeechToken}.
-	 */
-	public List<PartsOfSpeechToken> tag(String[] sentences, Tokenizer tokenizer);
+  /**
+   * Tags the tokens in the sentences. Each sentence will be tokenized.
+   * @param sentences An array of sentences.
+   * @param tokenizer A {@link Tokenizer}.
+   * @return A list of {@link PartsOfSpeechToken}.
+   */
+  public List<PartsOfSpeechToken> tag(String[] sentences, Tokenizer tokenizer);
 
-	/**
-	 * Tags the tokens in the tokenized sentence.
-	 * @param tokenizedSentence A single tokenized sentence.
-	 * @return A list of {@link PartsOfSpeechToken}.
-	 */
-	public List<PartsOfSpeechToken> tag(String[] tokenizedSentence);
+  /**
+   * Tags the tokens in the tokenized sentence.
+   * @param tokenizedSentence A single tokenized sentence.
+   * @return A list of {@link PartsOfSpeechToken}.
+   */
+  public List<PartsOfSpeechToken> tag(String[] tokenizedSentence);
 
 }

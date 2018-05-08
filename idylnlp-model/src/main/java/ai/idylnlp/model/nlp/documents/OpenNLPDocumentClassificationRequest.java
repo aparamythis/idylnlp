@@ -26,8 +26,8 @@ import com.neovisionaries.i18n.LanguageCode;
  */
 public class OpenNLPDocumentClassificationRequest extends AbstractDocumentClassificationRequest {
 
-	public OpenNLPDocumentClassificationRequest(String text, LanguageCode languageCode) {
-		super(text, languageCode);
-	}
+  public OpenNLPDocumentClassificationRequest(String text, LanguageCode languageCode) {
+    super(text, languageCode);
+  }
 
 }

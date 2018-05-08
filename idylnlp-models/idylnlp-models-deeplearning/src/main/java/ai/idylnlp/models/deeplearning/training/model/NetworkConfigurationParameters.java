@@ -27,203 +27,203 @@ import com.google.gson.annotations.SerializedName;
 
 public class NetworkConfigurationParameters {
 
-	@SerializedName("BiasInit")
-	@Expose
-	private double biasInit = 0.0;
+  @SerializedName("BiasInit")
+  @Expose
+  private double biasInit = 0.0;
 
-	@SerializedName("BiasLearningRate")
-	@Expose
-	private Integer biasLearningRate = 0;
+  @SerializedName("BiasLearningRate")
+  @Expose
+  private Integer biasLearningRate = 0;
 
-	@SerializedName("ConvolutionMode")
-	@Expose
-	private String convolutionMode;
+  @SerializedName("ConvolutionMode")
+  @Expose
+  private String convolutionMode;
 
-	@SerializedName("UseDropConnect")
-	@Expose
-	private boolean useDropConnect = false;
+  @SerializedName("UseDropConnect")
+  @Expose
+  private boolean useDropConnect = false;
 
-	@SerializedName("DropOut")
-	@Expose
-	private double dropOut = 0.0;
+  @SerializedName("DropOut")
+  @Expose
+  private double dropOut = 0.0;
 
-	@SerializedName("Iterations")
-	@Expose
-	private int iterations = 1;
+  @SerializedName("Iterations")
+  @Expose
+  private int iterations = 1;
 
-	@SerializedName("OptimizationAlgorithm")
-	@Expose
-	private String optimizationAlgorithm = "stochastic_gradient_descent";
+  @SerializedName("OptimizationAlgorithm")
+  @Expose
+  private String optimizationAlgorithm = "stochastic_gradient_descent";
 
-	@SerializedName("WeightInit")
-	@Expose
-	private String weightInit;
+  @SerializedName("WeightInit")
+  @Expose
+  private String weightInit;
 
-	@SerializedName("Pretrain")
-	@Expose
-	private boolean pretrain = false;
+  @SerializedName("Pretrain")
+  @Expose
+  private boolean pretrain = false;
 
-	@SerializedName("Backprop")
-	@Expose
-	private boolean backprop = true;
+  @SerializedName("Backprop")
+  @Expose
+  private boolean backprop = true;
 
-	@SerializedName("RegularizationParameters")
-	@Expose
-	private RegularizationParameters regularizationParameters;
+  @SerializedName("RegularizationParameters")
+  @Expose
+  private RegularizationParameters regularizationParameters;
 
-	@SerializedName("UpdaterParameters")
-	@Expose
-	private UpdaterParameters updaterParameters;
+  @SerializedName("UpdaterParameters")
+  @Expose
+  private UpdaterParameters updaterParameters;
 
-	@SerializedName("Layers")
-	@Expose
-	private Layers layers;
+  @SerializedName("Layers")
+  @Expose
+  private Layers layers;
 
-	@SerializedName("GradientNormalization")
-	@Expose
-	private String gradientNormalization;
+  @SerializedName("GradientNormalization")
+  @Expose
+  private String gradientNormalization;
 
-	@SerializedName("GradientNormalizationThreshold")
-	@Expose
-	private double gradientNormalizationThreshold = 0.0;
+  @SerializedName("GradientNormalizationThreshold")
+  @Expose
+  private double gradientNormalizationThreshold = 0.0;
 
-	public NetworkConfigurationParameters() {
+  public NetworkConfigurationParameters() {
 
-	}
+  }
 
-	public NetworkConfigurationParameters(double biasInit, int biasLearningRate, String convolutionMode, boolean useDropConnect,
-			int dropOut, int iterations, String optimizationAlgorithm, String weightInit, double learningRate,
-			boolean pretrain, boolean backprop, RegularizationParameters regularizationParameters,
-			UpdaterParameters updaterParameters, Layers layers, String gradientNormalization, double gradientNormalizationThreshold) {
+  public NetworkConfigurationParameters(double biasInit, int biasLearningRate, String convolutionMode, boolean useDropConnect,
+      int dropOut, int iterations, String optimizationAlgorithm, String weightInit, double learningRate,
+      boolean pretrain, boolean backprop, RegularizationParameters regularizationParameters,
+      UpdaterParameters updaterParameters, Layers layers, String gradientNormalization, double gradientNormalizationThreshold) {
 
-		this.biasInit = biasInit;
-		this.biasLearningRate = biasLearningRate;
-		this.convolutionMode = convolutionMode;
-		this.useDropConnect = useDropConnect;
-		this.iterations = iterations;
-		this.optimizationAlgorithm = optimizationAlgorithm;
-		this.weightInit = weightInit;
-		this.pretrain = pretrain;
-		this.backprop = backprop;
-		this.regularizationParameters = regularizationParameters;
-		this.updaterParameters = updaterParameters;
-		this.layers = layers;
-		this.gradientNormalization = gradientNormalization;
-		this.gradientNormalizationThreshold = gradientNormalizationThreshold;
+    this.biasInit = biasInit;
+    this.biasLearningRate = biasLearningRate;
+    this.convolutionMode = convolutionMode;
+    this.useDropConnect = useDropConnect;
+    this.iterations = iterations;
+    this.optimizationAlgorithm = optimizationAlgorithm;
+    this.weightInit = weightInit;
+    this.pretrain = pretrain;
+    this.backprop = backprop;
+    this.regularizationParameters = regularizationParameters;
+    this.updaterParameters = updaterParameters;
+    this.layers = layers;
+    this.gradientNormalization = gradientNormalization;
+    this.gradientNormalizationThreshold = gradientNormalizationThreshold;
 
-	}
+  }
 
-	public OptimizationAlgorithm getOptimizationAlgorithmParam() {
+  public OptimizationAlgorithm getOptimizationAlgorithmParam() {
 
-		if(StringUtils.equalsIgnoreCase(optimizationAlgorithm, "conjugate_gradient")) {
+    if(StringUtils.equalsIgnoreCase(optimizationAlgorithm, "conjugate_gradient")) {
 
-			return OptimizationAlgorithm.CONJUGATE_GRADIENT;
+      return OptimizationAlgorithm.CONJUGATE_GRADIENT;
 
-		} else if(StringUtils.equalsIgnoreCase(optimizationAlgorithm, "lbfgs")) {
+    } else if(StringUtils.equalsIgnoreCase(optimizationAlgorithm, "lbfgs")) {
 
-			return OptimizationAlgorithm.LBFGS;
+      return OptimizationAlgorithm.LBFGS;
 
-		} else if(StringUtils.equalsIgnoreCase(optimizationAlgorithm, "line_gradient_descent")) {
+    } else if(StringUtils.equalsIgnoreCase(optimizationAlgorithm, "line_gradient_descent")) {
 
-			return OptimizationAlgorithm.LINE_GRADIENT_DESCENT;
+      return OptimizationAlgorithm.LINE_GRADIENT_DESCENT;
 
-		} else if(StringUtils.equalsIgnoreCase(optimizationAlgorithm, "stochastic_gradient_descent")) {
+    } else if(StringUtils.equalsIgnoreCase(optimizationAlgorithm, "stochastic_gradient_descent")) {
 
-			return OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT;
+      return OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT;
 
-		} else {
+    } else {
 
-			return null;
+      return null;
 
-		}
+    }
 
-	}
+  }
 
-	public WeightInit getWeightInitParam() {
+  public WeightInit getWeightInitParam() {
 
-		if(StringUtils.equalsIgnoreCase(weightInit, "xavier")) {
+    if(StringUtils.equalsIgnoreCase(weightInit, "xavier")) {
 
-			return WeightInit.XAVIER;
+      return WeightInit.XAVIER;
 
-		} else if(StringUtils.equalsIgnoreCase(weightInit, "distribution")) {
+    } else if(StringUtils.equalsIgnoreCase(weightInit, "distribution")) {
 
-			return WeightInit.DISTRIBUTION;
+      return WeightInit.DISTRIBUTION;
 
-		} else if(StringUtils.equalsIgnoreCase(weightInit, "relu")) {
+    } else if(StringUtils.equalsIgnoreCase(weightInit, "relu")) {
 
-			return WeightInit.RELU;
+      return WeightInit.RELU;
 
-		} else if(StringUtils.equalsIgnoreCase(weightInit, "relu_uniform")) {
+    } else if(StringUtils.equalsIgnoreCase(weightInit, "relu_uniform")) {
 
-			return WeightInit.RELU_UNIFORM;
+      return WeightInit.RELU_UNIFORM;
 
-		} else if(StringUtils.equalsIgnoreCase(weightInit, "sigmoid_uniform")) {
+    } else if(StringUtils.equalsIgnoreCase(weightInit, "sigmoid_uniform")) {
 
-			return WeightInit.SIGMOID_UNIFORM;
+      return WeightInit.SIGMOID_UNIFORM;
 
-		} else if(StringUtils.equalsIgnoreCase(weightInit, "uniform")) {
+    } else if(StringUtils.equalsIgnoreCase(weightInit, "uniform")) {
 
-			return WeightInit.UNIFORM;
+      return WeightInit.UNIFORM;
 
-		} else if(StringUtils.equalsIgnoreCase(weightInit, "xavier_fan_in")) {
+    } else if(StringUtils.equalsIgnoreCase(weightInit, "xavier_fan_in")) {
 
-			return WeightInit.XAVIER_FAN_IN;
+      return WeightInit.XAVIER_FAN_IN;
 
-		} else if(StringUtils.equalsIgnoreCase(weightInit, "xavier_legacy")) {
+    } else if(StringUtils.equalsIgnoreCase(weightInit, "xavier_legacy")) {
 
-			return WeightInit.XAVIER_LEGACY;
+      return WeightInit.XAVIER_LEGACY;
 
-		} else if(StringUtils.equalsIgnoreCase(weightInit, "xavier_uniform")) {
+    } else if(StringUtils.equalsIgnoreCase(weightInit, "xavier_uniform")) {
 
-			return WeightInit.XAVIER_UNIFORM;
+      return WeightInit.XAVIER_UNIFORM;
 
-		} else if(StringUtils.equalsIgnoreCase(weightInit, "zero")) {
+    } else if(StringUtils.equalsIgnoreCase(weightInit, "zero")) {
 
-			return WeightInit.ZERO;
+      return WeightInit.ZERO;
 
-		} else {
+    } else {
 
-			return null;
+      return null;
 
-		}
+    }
 
-	}
+  }
 
-	public GradientNormalization getGradientNormalizationParam() {
+  public GradientNormalization getGradientNormalizationParam() {
 
-		if(StringUtils.equalsIgnoreCase(gradientNormalization, "clipelementwiseabsolutevalue")) {
+    if(StringUtils.equalsIgnoreCase(gradientNormalization, "clipelementwiseabsolutevalue")) {
 
-			return GradientNormalization.ClipElementWiseAbsoluteValue;
+      return GradientNormalization.ClipElementWiseAbsoluteValue;
 
-		} else if(StringUtils.equalsIgnoreCase(gradientNormalization, "clipl2perlayer")) {
+    } else if(StringUtils.equalsIgnoreCase(gradientNormalization, "clipl2perlayer")) {
 
-			return GradientNormalization.ClipL2PerLayer;
+      return GradientNormalization.ClipL2PerLayer;
 
-		} else if(StringUtils.equalsIgnoreCase(gradientNormalization, "clipl2perparamtype")) {
+    } else if(StringUtils.equalsIgnoreCase(gradientNormalization, "clipl2perparamtype")) {
 
-			return GradientNormalization.ClipL2PerParamType;
+      return GradientNormalization.ClipL2PerParamType;
 
-		} else if(StringUtils.equalsIgnoreCase(gradientNormalization, "none")) {
+    } else if(StringUtils.equalsIgnoreCase(gradientNormalization, "none")) {
 
-			return GradientNormalization.None;
+      return GradientNormalization.None;
 
-		} else if(StringUtils.equalsIgnoreCase(gradientNormalization, "renormalizel2perlayer")) {
+    } else if(StringUtils.equalsIgnoreCase(gradientNormalization, "renormalizel2perlayer")) {
 
-			return GradientNormalization.RenormalizeL2PerLayer;
+      return GradientNormalization.RenormalizeL2PerLayer;
 
-		} else if(StringUtils.equalsIgnoreCase(gradientNormalization, "renormalizel2perparamtype")) {
+    } else if(StringUtils.equalsIgnoreCase(gradientNormalization, "renormalizel2perparamtype")) {
 
-			return GradientNormalization.RenormalizeL2PerParamType;
+      return GradientNormalization.RenormalizeL2PerParamType;
 
-		} else {
+    } else {
 
-			return null;
+      return null;
 
-		}
+    }
 
-	}
+  }
 
-	@Override
+  @Override
     public boolean equals(Object o) {
       return EqualsBuilder.reflectionEquals(this, o);
     }
@@ -233,124 +233,124 @@ public class NetworkConfigurationParameters {
         return HashCodeBuilder.reflectionHashCode(this);
     }
 
-	public double getBiasInit() {
-		return biasInit;
-	}
+  public double getBiasInit() {
+    return biasInit;
+  }
 
-	public void setBiasInit(double biasInit) {
-		this.biasInit = biasInit;
-	}
+  public void setBiasInit(double biasInit) {
+    this.biasInit = biasInit;
+  }
 
-	public Integer getBiasLearningRate() {
-		return biasLearningRate;
-	}
+  public Integer getBiasLearningRate() {
+    return biasLearningRate;
+  }
 
-	public void setBiasLearningRate(Integer biasLearningRate) {
-		this.biasLearningRate = biasLearningRate;
-	}
+  public void setBiasLearningRate(Integer biasLearningRate) {
+    this.biasLearningRate = biasLearningRate;
+  }
 
-	public String getConvolutionMode() {
-		return convolutionMode;
-	}
+  public String getConvolutionMode() {
+    return convolutionMode;
+  }
 
-	public void setConvolutionMode(String convolutionMode) {
-		this.convolutionMode = convolutionMode;
-	}
+  public void setConvolutionMode(String convolutionMode) {
+    this.convolutionMode = convolutionMode;
+  }
 
-	public Boolean isUseDropConnect() {
-		return useDropConnect;
-	}
+  public Boolean isUseDropConnect() {
+    return useDropConnect;
+  }
 
-	public void setUseDropConnect(boolean useDropConnect) {
-		this.useDropConnect = useDropConnect;
-	}
+  public void setUseDropConnect(boolean useDropConnect) {
+    this.useDropConnect = useDropConnect;
+  }
 
-	public double getDropOut() {
-		return dropOut;
-	}
+  public double getDropOut() {
+    return dropOut;
+  }
 
-	public void setDropOut(double dropOut) {
-		this.dropOut = dropOut;
-	}
+  public void setDropOut(double dropOut) {
+    this.dropOut = dropOut;
+  }
 
-	public int getIterations() {
-		return iterations;
-	}
+  public int getIterations() {
+    return iterations;
+  }
 
-	public void setIterations(int iterations) {
-		this.iterations = iterations;
-	}
+  public void setIterations(int iterations) {
+    this.iterations = iterations;
+  }
 
-	public String getOptimizationAlgorithm() {
-		return optimizationAlgorithm;
-	}
+  public String getOptimizationAlgorithm() {
+    return optimizationAlgorithm;
+  }
 
-	public void setOptimizationAlgorithm(String optimizationAlgorithm) {
-		this.optimizationAlgorithm = optimizationAlgorithm;
-	}
+  public void setOptimizationAlgorithm(String optimizationAlgorithm) {
+    this.optimizationAlgorithm = optimizationAlgorithm;
+  }
 
-	public String getWeightInit() {
-		return weightInit;
-	}
+  public String getWeightInit() {
+    return weightInit;
+  }
 
-	public void setWeightInit(String weightInit) {
-		this.weightInit = weightInit;
-	}
+  public void setWeightInit(String weightInit) {
+    this.weightInit = weightInit;
+  }
 
-	public boolean isPretrain() {
-		return pretrain;
-	}
+  public boolean isPretrain() {
+    return pretrain;
+  }
 
-	public void setPretrain(boolean pretrain) {
-		this.pretrain = pretrain;
-	}
+  public void setPretrain(boolean pretrain) {
+    this.pretrain = pretrain;
+  }
 
-	public boolean isBackprop() {
-		return backprop;
-	}
+  public boolean isBackprop() {
+    return backprop;
+  }
 
-	public void setBackprop(boolean backprop) {
-		this.backprop = backprop;
-	}
+  public void setBackprop(boolean backprop) {
+    this.backprop = backprop;
+  }
 
-	public RegularizationParameters getRegularizationParameters() {
-		return regularizationParameters;
-	}
+  public RegularizationParameters getRegularizationParameters() {
+    return regularizationParameters;
+  }
 
-	public void setRegularizationParameters(RegularizationParameters regularizationParameters) {
-		this.regularizationParameters = regularizationParameters;
-	}
+  public void setRegularizationParameters(RegularizationParameters regularizationParameters) {
+    this.regularizationParameters = regularizationParameters;
+  }
 
-	public UpdaterParameters getUpdaterParameters() {
-		return updaterParameters;
-	}
+  public UpdaterParameters getUpdaterParameters() {
+    return updaterParameters;
+  }
 
-	public void setUpdaterParameters(UpdaterParameters updaterParameters) {
-		this.updaterParameters = updaterParameters;
-	}
+  public void setUpdaterParameters(UpdaterParameters updaterParameters) {
+    this.updaterParameters = updaterParameters;
+  }
 
-	public Layers getLayers() {
-		return layers;
-	}
+  public Layers getLayers() {
+    return layers;
+  }
 
-	public void setLayers(Layers layers) {
-		this.layers = layers;
-	}
+  public void setLayers(Layers layers) {
+    this.layers = layers;
+  }
 
-	public String getGradientNormalization() {
-		return gradientNormalization;
-	}
+  public String getGradientNormalization() {
+    return gradientNormalization;
+  }
 
-	public void setGradientNormalization(String gradientNormalization) {
-		this.gradientNormalization = gradientNormalization;
-	}
+  public void setGradientNormalization(String gradientNormalization) {
+    this.gradientNormalization = gradientNormalization;
+  }
 
-	public double getGradientNormalizationThreshold() {
-		return gradientNormalizationThreshold;
-	}
+  public double getGradientNormalizationThreshold() {
+    return gradientNormalizationThreshold;
+  }
 
-	public void setGradientNormalizationThreshold(double gradientNormalizationThreshold) {
-		this.gradientNormalizationThreshold = gradientNormalizationThreshold;
-	}
+  public void setGradientNormalizationThreshold(double gradientNormalizationThreshold) {
+    this.gradientNormalizationThreshold = gradientNormalizationThreshold;
+  }
 
 }

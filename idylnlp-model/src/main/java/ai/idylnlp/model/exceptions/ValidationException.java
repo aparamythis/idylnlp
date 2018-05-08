@@ -21,23 +21,23 @@ package ai.idylnlp.model.exceptions;
  */
 public class ValidationException extends Exception {
 
-	private static final long serialVersionUID = 5161843297983375847L;
+  private static final long serialVersionUID = 5161843297983375847L;
 
-	/**
-	 * Creates a new exception.
-	 * @param message The message of the exception.
-	 */
-	public ValidationException(String message) {
-		super(message);
-	}
+  /**
+   * Creates a new exception.
+   * @param message The message of the exception.
+   */
+  public ValidationException(String message) {
+    super(message);
+  }
 
-	/**
-	 * Creates a new exception.
-	 * @param message The message of the exception.
-	 * @param ex The exception.
-	 */
-	public ValidationException(String message, Exception ex) {
-		super(message, ex);
-	}
+  /**
+   * Creates a new exception.
+   * @param message The message of the exception.
+   * @param ex The exception.
+   */
+  public ValidationException(String message, Exception ex) {
+    super(message, ex);
+  }
 
 }

@@ -26,63 +26,63 @@ import ai.idylnlp.custom.encryption.AbstractEncryption;
  */
 public class OpenNLP183Encryption extends AbstractEncryption implements OpenNLPEncryption {
 
-	private String encryptionKey;
+  private String encryptionKey;
 
-	@Override
-	public String encrypt(String strToEncrypt) throws Exception {
+  @Override
+  public String encrypt(String strToEncrypt) throws Exception {
 
-		SecretKeySpec key = generateKey(encryptionKey);
+    SecretKeySpec key = generateKey(encryptionKey);
 
-		Cipher cipher = Cipher.getInstance("AES");
+    Cipher cipher = Cipher.getInstance("AES");
 
-		cipher.init(Cipher.ENCRYPT_MODE, key);
+    cipher.init(Cipher.ENCRYPT_MODE, key);
 
-		return Base64.encodeBase64String(cipher.doFinal(strToEncrypt.getBytes("UTF-8")));
+    return Base64.encodeBase64String(cipher.doFinal(strToEncrypt.getBytes("UTF-8")));
 
-	}
+  }
 
-	@Override
-	public String decrypt(String strToDecrypt) throws Exception {
+  @Override
+  public String decrypt(String strToDecrypt) throws Exception {
 
-		return decrypt(strToDecrypt, encryptionKey);
+    return decrypt(strToDecrypt, encryptionKey);
 
-	}
+  }
 
-	private SecretKeySpec generateKey(String key) throws Exception {
+  private SecretKeySpec generateKey(String key) throws Exception {
 
-		String encryptionKey = DigestUtils.sha256Hex(key + "uGrClE0GW1Sm7DRsiavg");
+    String encryptionKey = DigestUtils.sha256Hex(key + "uGrClE0GW1Sm7DRsiavg");
 
-		// Generate the encryption key based on the string value.
-		return new SecretKeySpec(stringToBytes(encryptionKey), "AES");
+    // Generate the encryption key based on the string value.
+    return new SecretKeySpec(stringToBytes(encryptionKey), "AES");
 
-	}
+  }
 
-	@Override
-	public void setKey(String encryptionKey) {
-		this.encryptionKey = encryptionKey;
-	}
+  @Override
+  public void setKey(String encryptionKey) {
+    this.encryptionKey = encryptionKey;
+  }
 
-	@Override
-	public String getKey() {
-		return encryptionKey;
-	}
+  @Override
+  public String getKey() {
+    return encryptionKey;
+  }
 
-	@Override
-	public void clearKey() {
-		this.encryptionKey = null;
-	}
+  @Override
+  public void clearKey() {
+    this.encryptionKey = null;
+  }
 
-	@Override
-	public String decrypt(String text, String encryptionKey) throws Exception {
+  @Override
+  public String decrypt(String text, String encryptionKey) throws Exception {
 
-		SecretKeySpec key = generateKey(encryptionKey);
+    SecretKeySpec key = generateKey(encryptionKey);
 
-		Cipher cipher = Cipher.getInstance("AES");
+    Cipher cipher = Cipher.getInstance("AES");
 
-		cipher.init(Cipher.DECRYPT_MODE, key);
+    cipher.init(Cipher.DECRYPT_MODE, key);
 
-		return new String(cipher.doFinal(Base64.decodeBase64(text)));
+    return new String(cipher.doFinal(Base64.decodeBase64(text)));
 
-	}
+  }
 
 }

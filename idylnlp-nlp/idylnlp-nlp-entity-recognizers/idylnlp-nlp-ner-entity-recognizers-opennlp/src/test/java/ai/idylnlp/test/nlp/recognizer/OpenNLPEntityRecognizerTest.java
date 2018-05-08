@@ -56,420 +56,420 @@ import opennlp.tools.namefind.TokenNameFinderModel;
 
 public class OpenNLPEntityRecognizerTest {
 
-	private static final Logger LOGGER = LogManager.getLogger(OpenNLPEntityRecognizerTest.class);
+  private static final Logger LOGGER = LogManager.getLogger(OpenNLPEntityRecognizerTest.class);
 
-	private static final String MODEL_PATH = new File("src/test/resources/models/").getAbsolutePath();
-	private static final String MTNFOG_EN_PERSON_MODEL = "mtnfog-en-person-test.bin";
-	private static final String MTNFOG_EN_COUNTRY_MODEL = "mtnfog-en-country-test.bin";
-	private static final String MTNFOG_DE_PERSON_MODEL = "mtnfog-de-person-test.bin";
+  private static final String MODEL_PATH = new File("src/test/resources/models/").getAbsolutePath();
+  private static final String MTNFOG_EN_PERSON_MODEL = "mtnfog-en-person-test.bin";
+  private static final String MTNFOG_EN_COUNTRY_MODEL = "mtnfog-en-country-test.bin";
+  private static final String MTNFOG_DE_PERSON_MODEL = "mtnfog-de-person-test.bin";
 
-	private static final LocalConfidenceFilterSerializer serializer = new LocalConfidenceFilterSerializer();
-	private static final ConfidenceFilter confidenceFilter = new HeuristicConfidenceFilter(serializer);
+  private static final LocalConfidenceFilterSerializer serializer = new LocalConfidenceFilterSerializer();
+  private static final ConfidenceFilter confidenceFilter = new HeuristicConfidenceFilter(serializer);
 
-	@Test
-	public void extract() throws EntityFinderException, ModelLoaderException, LanguageDetectionException, ValidationException {
+  @Test
+  public void extract() throws EntityFinderException, ModelLoaderException, LanguageDetectionException, ValidationException {
 
-		ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
+    ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
 
-		when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
+    when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
 
-		// Adding two language models here but should only get an English entity back.
+    // Adding two language models here but should only get an English entity back.
 
-		StandardModelManifest englishModelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MTNFOG_EN_PERSON_MODEL, LanguageCode.en, "idylami589012347", "person", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE).build();
-		StandardModelManifest germanModelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MTNFOG_DE_PERSON_MODEL, LanguageCode.de, "idylami589012347", "person", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE).build();
+    StandardModelManifest englishModelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MTNFOG_EN_PERSON_MODEL, LanguageCode.en, "idylami589012347", "person", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE).build();
+    StandardModelManifest germanModelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MTNFOG_DE_PERSON_MODEL, LanguageCode.de, "idylami589012347", "person", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE).build();
 
-		Set<StandardModelManifest> englishModelManifests = new HashSet<StandardModelManifest>();
-		englishModelManifests.add(englishModelManifest);
+    Set<StandardModelManifest> englishModelManifests = new HashSet<StandardModelManifest>();
+    englishModelManifests.add(englishModelManifest);
 
-		Set<StandardModelManifest> germanModelManifests = new HashSet<StandardModelManifest>();
-		germanModelManifests.add(germanModelManifest);
+    Set<StandardModelManifest> germanModelManifests = new HashSet<StandardModelManifest>();
+    germanModelManifests.add(germanModelManifest);
 
-		LocalModelLoader<TokenNameFinderModel> entityModelLoader = new LocalModelLoader<TokenNameFinderModel>(modelValidator, MODEL_PATH);
-		LocalModelLoader<DictionaryModel> dictionaryModelLoader = new LocalModelLoader<DictionaryModel>(modelValidator, MODEL_PATH);
+    LocalModelLoader<TokenNameFinderModel> entityModelLoader = new LocalModelLoader<TokenNameFinderModel>(modelValidator, MODEL_PATH);
+    LocalModelLoader<DictionaryModel> dictionaryModelLoader = new LocalModelLoader<DictionaryModel>(modelValidator, MODEL_PATH);
 
-		Map<String, Map<LanguageCode, Set<StandardModelManifest>>> models = new HashMap<>();
+    Map<String, Map<LanguageCode, Set<StandardModelManifest>>> models = new HashMap<>();
 
-		Map<LanguageCode, Set<StandardModelManifest>> languagesToManifests = new HashMap<>();
-		languagesToManifests.put(LanguageCode.en, englishModelManifests);
-		languagesToManifests.put(LanguageCode.de, germanModelManifests);
+    Map<LanguageCode, Set<StandardModelManifest>> languagesToManifests = new HashMap<>();
+    languagesToManifests.put(LanguageCode.en, englishModelManifests);
+    languagesToManifests.put(LanguageCode.de, germanModelManifests);
 
-		models.put("person", languagesToManifests);
+    models.put("person", languagesToManifests);
 
-		OpenNLPEntityRecognizerConfiguration config = new Builder()
-			.withEntityModelLoader(entityModelLoader)
-			.withDictionaryFinderModelLoader(dictionaryModelLoader)
-			.withConfidenceFilter(confidenceFilter)
-			.withEntityModels(models)
-			.build();
+    OpenNLPEntityRecognizerConfiguration config = new Builder()
+      .withEntityModelLoader(entityModelLoader)
+      .withDictionaryFinderModelLoader(dictionaryModelLoader)
+      .withConfidenceFilter(confidenceFilter)
+      .withEntityModels(models)
+      .build();
 
-		OpenNLPEntityRecognizer recognizer = new OpenNLPEntityRecognizer(config);
+    OpenNLPEntityRecognizer recognizer = new OpenNLPEntityRecognizer(config);
 
-		final String input = "George Washington was president.";
-		final String[] text = input.split(" ");
+    final String input = "George Washington was president.";
+    final String[] text = input.split(" ");
 
-		// EntityExtractionRequest defaults to English if not explicity set.
-		EntityExtractionRequest request = new EntityExtractionRequest(text);
+    // EntityExtractionRequest defaults to English if not explicity set.
+    EntityExtractionRequest request = new EntityExtractionRequest(text);
 
-		EntityExtractionResponse response = recognizer.extractEntities(request);
+    EntityExtractionResponse response = recognizer.extractEntities(request);
 
-		assertEquals(1, response.getEntities().size());
+    assertEquals(1, response.getEntities().size());
 
-		Entity entity = response.getEntities().iterator().next();
-		assertEquals("[0..2)", entity.getSpan().toString());
-		assertEquals(LanguageCode.en.getAlpha3().toString(), entity.getLanguageCode());
-		assertEquals(englishModelManifest.getModelFileName(), entity.getMetadata().get(AbstractEntityRecognizer.METADATA_MODEL_FILENAME_KEY));
+    Entity entity = response.getEntities().iterator().next();
+    assertEquals("[0..2)", entity.getSpan().toString());
+    assertEquals(LanguageCode.en.getAlpha3().toString(), entity.getLanguageCode());
+    assertEquals(englishModelManifest.getModelFileName(), entity.getMetadata().get(AbstractEntityRecognizer.METADATA_MODEL_FILENAME_KEY));
 
-		// Show the response as JSON.
-		Gson gson = new Gson();
-		String json = gson.toJson(response);
+    // Show the response as JSON.
+    Gson gson = new Gson();
+    String json = gson.toJson(response);
 
-		LOGGER.info(json);
+    LOGGER.info(json);
 
-	}
+  }
 
-	@Test
-	public void extractPersonAndPlace() throws EntityFinderException, ModelLoaderException, LanguageDetectionException, ValidationException {
+  @Test
+  public void extractPersonAndPlace() throws EntityFinderException, ModelLoaderException, LanguageDetectionException, ValidationException {
 
-		ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
+    ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
 
 
-		StandardModelManifest englishModelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MTNFOG_EN_PERSON_MODEL, LanguageCode.en, "idylami589012347", "person", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE).build();
+    StandardModelManifest englishModelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MTNFOG_EN_PERSON_MODEL, LanguageCode.en, "idylami589012347", "person", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE).build();
 
-		// Not really a place model but we just want to make sure both person and place models are looked at.
-		StandardModelManifest germanModelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MTNFOG_DE_PERSON_MODEL, LanguageCode.de, "idylami589012347", "place", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE).build();
+    // Not really a place model but we just want to make sure both person and place models are looked at.
+    StandardModelManifest germanModelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MTNFOG_DE_PERSON_MODEL, LanguageCode.de, "idylami589012347", "place", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE).build();
 
-		Set<StandardModelManifest> englishModelManifests = new HashSet<StandardModelManifest>();
-		englishModelManifests.add(englishModelManifest);
+    Set<StandardModelManifest> englishModelManifests = new HashSet<StandardModelManifest>();
+    englishModelManifests.add(englishModelManifest);
 
-		Set<StandardModelManifest> germanModelManifests = new HashSet<StandardModelManifest>();
-		germanModelManifests.add(germanModelManifest);
+    Set<StandardModelManifest> germanModelManifests = new HashSet<StandardModelManifest>();
+    germanModelManifests.add(germanModelManifest);
 
-		LocalModelLoader<TokenNameFinderModel> entityModelLoader = new LocalModelLoader<TokenNameFinderModel>(modelValidator, MODEL_PATH);
-		LocalModelLoader<DictionaryModel> dictionaryModelLoader = new LocalModelLoader<DictionaryModel>(modelValidator, MODEL_PATH);
+    LocalModelLoader<TokenNameFinderModel> entityModelLoader = new LocalModelLoader<TokenNameFinderModel>(modelValidator, MODEL_PATH);
+    LocalModelLoader<DictionaryModel> dictionaryModelLoader = new LocalModelLoader<DictionaryModel>(modelValidator, MODEL_PATH);
 
-		Map<String, Map<LanguageCode, Set<StandardModelManifest>>> models = new HashMap<>();
+    Map<String, Map<LanguageCode, Set<StandardModelManifest>>> models = new HashMap<>();
 
-		Map<LanguageCode, Set<StandardModelManifest>> personLanguagesToManifests = new HashMap<>();
-		personLanguagesToManifests.put(LanguageCode.en, englishModelManifests);
-		models.put("person", personLanguagesToManifests);
+    Map<LanguageCode, Set<StandardModelManifest>> personLanguagesToManifests = new HashMap<>();
+    personLanguagesToManifests.put(LanguageCode.en, englishModelManifests);
+    models.put("person", personLanguagesToManifests);
 
-		Map<LanguageCode, Set<StandardModelManifest>> placeLanguagesToManifests = new HashMap<>();
-		placeLanguagesToManifests.put(LanguageCode.de, germanModelManifests);
-		models.put("place", placeLanguagesToManifests);
+    Map<LanguageCode, Set<StandardModelManifest>> placeLanguagesToManifests = new HashMap<>();
+    placeLanguagesToManifests.put(LanguageCode.de, germanModelManifests);
+    models.put("place", placeLanguagesToManifests);
 
-		OpenNLPEntityRecognizerConfiguration config = new Builder()
-			.withEntityModelLoader(entityModelLoader)
-			.withDictionaryFinderModelLoader(dictionaryModelLoader)
-			.withConfidenceFilter(confidenceFilter)
-			.withEntityModels(models)
-			.build();
+    OpenNLPEntityRecognizerConfiguration config = new Builder()
+      .withEntityModelLoader(entityModelLoader)
+      .withDictionaryFinderModelLoader(dictionaryModelLoader)
+      .withConfidenceFilter(confidenceFilter)
+      .withEntityModels(models)
+      .build();
 
-		OpenNLPEntityRecognizer recognizer = new OpenNLPEntityRecognizer(config);
+    OpenNLPEntityRecognizer recognizer = new OpenNLPEntityRecognizer(config);
 
-		final String input = "George Washington was president.";
-		final String[] text = input.split(" ");
+    final String input = "George Washington was president.";
+    final String[] text = input.split(" ");
 
-		// EntityExtractionRequest defaults to English if not explicity set.
-		EntityExtractionRequest request = new EntityExtractionRequest(text);
-		request.setType("person,place");
+    // EntityExtractionRequest defaults to English if not explicity set.
+    EntityExtractionRequest request = new EntityExtractionRequest(text);
+    request.setType("person,place");
 
-		EntityExtractionResponse response = recognizer.extractEntities(request);
+    EntityExtractionResponse response = recognizer.extractEntities(request);
 
-		assertEquals(1, response.getEntities().size());
+    assertEquals(1, response.getEntities().size());
 
-		Entity entity = response.getEntities().iterator().next();
-		assertEquals("[0..2)", entity.getSpan().toString());
-		assertEquals(LanguageCode.en.getAlpha3().toString(), entity.getLanguageCode());
-		assertEquals(englishModelManifest.getModelFileName(), entity.getMetadata().get(AbstractEntityRecognizer.METADATA_MODEL_FILENAME_KEY));
+    Entity entity = response.getEntities().iterator().next();
+    assertEquals("[0..2)", entity.getSpan().toString());
+    assertEquals(LanguageCode.en.getAlpha3().toString(), entity.getLanguageCode());
+    assertEquals(englishModelManifest.getModelFileName(), entity.getMetadata().get(AbstractEntityRecognizer.METADATA_MODEL_FILENAME_KEY));
 
-		// Show the response as JSON.
-		Gson gson = new Gson();
-		String json = gson.toJson(response);
+    // Show the response as JSON.
+    Gson gson = new Gson();
+    String json = gson.toJson(response);
 
-		LOGGER.info(json);
+    LOGGER.info(json);
 
-	}
+  }
 
-	@Test
-	public void extractNullContext() throws EntityFinderException, ModelLoaderException, LanguageDetectionException, ValidationException {
+  @Test
+  public void extractNullContext() throws EntityFinderException, ModelLoaderException, LanguageDetectionException, ValidationException {
 
-		ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
+    ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
 
-		when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
+    when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
 
-		// Adding two language models here but should only get an English entity back.
+    // Adding two language models here but should only get an English entity back.
 
-		StandardModelManifest englishModelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MTNFOG_EN_PERSON_MODEL, LanguageCode.en, "idylami589012347", "person", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE).build();
+    StandardModelManifest englishModelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MTNFOG_EN_PERSON_MODEL, LanguageCode.en, "idylami589012347", "person", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE).build();
 
-		Set<StandardModelManifest> englishModelManifests = new HashSet<StandardModelManifest>();
-		englishModelManifests.add(englishModelManifest);
+    Set<StandardModelManifest> englishModelManifests = new HashSet<StandardModelManifest>();
+    englishModelManifests.add(englishModelManifest);
 
-		LocalModelLoader<TokenNameFinderModel> entityModelLoader = new LocalModelLoader<TokenNameFinderModel>(modelValidator, MODEL_PATH);
-		LocalModelLoader<DictionaryModel> dictionaryModelLoader = new LocalModelLoader<DictionaryModel>(modelValidator, MODEL_PATH);
+    LocalModelLoader<TokenNameFinderModel> entityModelLoader = new LocalModelLoader<TokenNameFinderModel>(modelValidator, MODEL_PATH);
+    LocalModelLoader<DictionaryModel> dictionaryModelLoader = new LocalModelLoader<DictionaryModel>(modelValidator, MODEL_PATH);
 
-		Map<String, Map<LanguageCode, Set<StandardModelManifest>>> models = new HashMap<>();
+    Map<String, Map<LanguageCode, Set<StandardModelManifest>>> models = new HashMap<>();
 
-		Map<LanguageCode, Set<StandardModelManifest>> languagesToManifests = new HashMap<>();
-		languagesToManifests.put(LanguageCode.en, englishModelManifests);
+    Map<LanguageCode, Set<StandardModelManifest>> languagesToManifests = new HashMap<>();
+    languagesToManifests.put(LanguageCode.en, englishModelManifests);
 
-		models.put("person", languagesToManifests);
+    models.put("person", languagesToManifests);
 
-		OpenNLPEntityRecognizerConfiguration config = new Builder()
-			.withEntityModelLoader(entityModelLoader)
-			.withDictionaryFinderModelLoader(dictionaryModelLoader)
-			.withConfidenceFilter(confidenceFilter)
-			.withEntityModels(models)
-			.build();
+    OpenNLPEntityRecognizerConfiguration config = new Builder()
+      .withEntityModelLoader(entityModelLoader)
+      .withDictionaryFinderModelLoader(dictionaryModelLoader)
+      .withConfidenceFilter(confidenceFilter)
+      .withEntityModels(models)
+      .build();
 
-		OpenNLPEntityRecognizer recognizer = new OpenNLPEntityRecognizer(config);
+    OpenNLPEntityRecognizer recognizer = new OpenNLPEntityRecognizer(config);
 
-		final String input = "George Washington was president.";
-		final String[] text = input.split(" ");
+    final String input = "George Washington was president.";
+    final String[] text = input.split(" ");
 
-		// EntityExtractionRequest defaults to English if not explicity set.
-		EntityExtractionRequest request = new EntityExtractionRequest(text);
-		request.setContext(null);
+    // EntityExtractionRequest defaults to English if not explicity set.
+    EntityExtractionRequest request = new EntityExtractionRequest(text);
+    request.setContext(null);
 
-		EntityExtractionResponse response = recognizer.extractEntities(request);
+    EntityExtractionResponse response = recognizer.extractEntities(request);
 
-		assertEquals(1, response.getEntities().size());
+    assertEquals(1, response.getEntities().size());
 
-		Entity entity = response.getEntities().iterator().next();
-		assertEquals("[0..2)", entity.getSpan().toString());
-		assertEquals(LanguageCode.en.getAlpha3().toString(), entity.getLanguageCode());
-		assertEquals(englishModelManifest.getModelFileName(), entity.getMetadata().get(AbstractEntityRecognizer.METADATA_MODEL_FILENAME_KEY));
+    Entity entity = response.getEntities().iterator().next();
+    assertEquals("[0..2)", entity.getSpan().toString());
+    assertEquals(LanguageCode.en.getAlpha3().toString(), entity.getLanguageCode());
+    assertEquals(englishModelManifest.getModelFileName(), entity.getMetadata().get(AbstractEntityRecognizer.METADATA_MODEL_FILENAME_KEY));
 
-		// Show the response as JSON.
-		Gson gson = new Gson();
-		String json = gson.toJson(response);
+    // Show the response as JSON.
+    Gson gson = new Gson();
+    String json = gson.toJson(response);
 
-		LOGGER.info(json);
+    LOGGER.info(json);
 
-	}
+  }
 
-	@Test
-	public void extractNoLanguage() throws EntityFinderException, ModelLoaderException, LanguageDetectionException, ValidationException {
+  @Test
+  public void extractNoLanguage() throws EntityFinderException, ModelLoaderException, LanguageDetectionException, ValidationException {
 
-		ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
+    ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
 
-		when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
+    when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
 
-		// Adding two language models here but should only get an English entity back.
+    // Adding two language models here but should only get an English entity back.
 
-		StandardModelManifest englishModelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MTNFOG_EN_PERSON_MODEL, LanguageCode.en, "idylami589012347", "person", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE).build();
+    StandardModelManifest englishModelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MTNFOG_EN_PERSON_MODEL, LanguageCode.en, "idylami589012347", "person", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE).build();
 
-		Set<StandardModelManifest> englishModelManifests = new HashSet<StandardModelManifest>();
-		englishModelManifests.add(englishModelManifest);
+    Set<StandardModelManifest> englishModelManifests = new HashSet<StandardModelManifest>();
+    englishModelManifests.add(englishModelManifest);
 
-		LocalModelLoader<TokenNameFinderModel> entityModelLoader = new LocalModelLoader<TokenNameFinderModel>(modelValidator, MODEL_PATH);
-		LocalModelLoader<DictionaryModel> dictionaryModelLoader = new LocalModelLoader<DictionaryModel>(modelValidator, MODEL_PATH);
+    LocalModelLoader<TokenNameFinderModel> entityModelLoader = new LocalModelLoader<TokenNameFinderModel>(modelValidator, MODEL_PATH);
+    LocalModelLoader<DictionaryModel> dictionaryModelLoader = new LocalModelLoader<DictionaryModel>(modelValidator, MODEL_PATH);
 
-		Map<String, Map<LanguageCode, Set<StandardModelManifest>>> models = new HashMap<String, Map<LanguageCode, Set<StandardModelManifest>>>();
+    Map<String, Map<LanguageCode, Set<StandardModelManifest>>> models = new HashMap<String, Map<LanguageCode, Set<StandardModelManifest>>>();
 
-		Map<LanguageCode, Set<StandardModelManifest>> languagesToManifests = new HashMap<LanguageCode, Set<StandardModelManifest>>();
-		languagesToManifests.put(LanguageCode.en, englishModelManifests);
+    Map<LanguageCode, Set<StandardModelManifest>> languagesToManifests = new HashMap<LanguageCode, Set<StandardModelManifest>>();
+    languagesToManifests.put(LanguageCode.en, englishModelManifests);
 
-		models.put("person", languagesToManifests);
+    models.put("person", languagesToManifests);
 
-		OpenNLPEntityRecognizerConfiguration config = new Builder()
-			.withEntityModelLoader(entityModelLoader)
-			.withDictionaryFinderModelLoader(dictionaryModelLoader)
-			.withConfidenceFilter(confidenceFilter)
-			.withEntityModels(models)
-			.build();
+    OpenNLPEntityRecognizerConfiguration config = new Builder()
+      .withEntityModelLoader(entityModelLoader)
+      .withDictionaryFinderModelLoader(dictionaryModelLoader)
+      .withConfidenceFilter(confidenceFilter)
+      .withEntityModels(models)
+      .build();
 
-		OpenNLPEntityRecognizer recognizer = new OpenNLPEntityRecognizer(config);
+    OpenNLPEntityRecognizer recognizer = new OpenNLPEntityRecognizer(config);
 
-		final String input = "George Washington was president.";
-		final String[] text = input.split(" ");
+    final String input = "George Washington was president.";
+    final String[] text = input.split(" ");
 
-		// EntityExtractionRequest defaults to English if not explicity set.
-		EntityExtractionRequest request = new EntityExtractionRequest(text).withLanguage(LanguageCode.fr);
+    // EntityExtractionRequest defaults to English if not explicity set.
+    EntityExtractionRequest request = new EntityExtractionRequest(text).withLanguage(LanguageCode.fr);
 
-		EntityExtractionResponse response = recognizer.extractEntities(request);
+    EntityExtractionResponse response = recognizer.extractEntities(request);
 
-		assertEquals(0, response.getEntities().size());
+    assertEquals(0, response.getEntities().size());
 
-	}
+  }
 
-	@Test
-	public void extractDuplicateEntities() throws EntityFinderException, ModelLoaderException, LanguageDetectionException, ValidationException {
+  @Test
+  public void extractDuplicateEntities() throws EntityFinderException, ModelLoaderException, LanguageDetectionException, ValidationException {
 
-		ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
+    ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
 
-		when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
+    when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
 
-		// Adding two language models here but should only get an English entity back.
+    // Adding two language models here but should only get an English entity back.
 
-		StandardModelManifest englishModelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MTNFOG_EN_PERSON_MODEL, LanguageCode.en, "idylami589012347", "person", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE).build();
-		StandardModelManifest germanModelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MTNFOG_DE_PERSON_MODEL, LanguageCode.de, "idylami589012347", "person", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE).build();
+    StandardModelManifest englishModelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MTNFOG_EN_PERSON_MODEL, LanguageCode.en, "idylami589012347", "person", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE).build();
+    StandardModelManifest germanModelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MTNFOG_DE_PERSON_MODEL, LanguageCode.de, "idylami589012347", "person", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE).build();
 
-		Set<StandardModelManifest> englishModelManifests = new HashSet<StandardModelManifest>();
-		englishModelManifests.add(englishModelManifest);
+    Set<StandardModelManifest> englishModelManifests = new HashSet<StandardModelManifest>();
+    englishModelManifests.add(englishModelManifest);
 
-		Set<StandardModelManifest> germanModelManifests = new HashSet<StandardModelManifest>();
-		germanModelManifests.add(germanModelManifest);
+    Set<StandardModelManifest> germanModelManifests = new HashSet<StandardModelManifest>();
+    germanModelManifests.add(germanModelManifest);
 
-		LocalModelLoader<TokenNameFinderModel> entityModelLoader = new LocalModelLoader<TokenNameFinderModel>(modelValidator, MODEL_PATH);
-		LocalModelLoader<DictionaryModel> dictionaryModelLoader = new LocalModelLoader<DictionaryModel>(modelValidator, MODEL_PATH);
+    LocalModelLoader<TokenNameFinderModel> entityModelLoader = new LocalModelLoader<TokenNameFinderModel>(modelValidator, MODEL_PATH);
+    LocalModelLoader<DictionaryModel> dictionaryModelLoader = new LocalModelLoader<DictionaryModel>(modelValidator, MODEL_PATH);
 
-		Map<String, Map<LanguageCode, Set<StandardModelManifest>>> models = new HashMap<String, Map<LanguageCode, Set<StandardModelManifest>>>();
+    Map<String, Map<LanguageCode, Set<StandardModelManifest>>> models = new HashMap<String, Map<LanguageCode, Set<StandardModelManifest>>>();
 
-		Map<LanguageCode, Set<StandardModelManifest>> languagesToManifests = new HashMap<LanguageCode, Set<StandardModelManifest>>();
-		languagesToManifests.put(LanguageCode.en, englishModelManifests);
-		languagesToManifests.put(LanguageCode.de, germanModelManifests);
+    Map<LanguageCode, Set<StandardModelManifest>> languagesToManifests = new HashMap<LanguageCode, Set<StandardModelManifest>>();
+    languagesToManifests.put(LanguageCode.en, englishModelManifests);
+    languagesToManifests.put(LanguageCode.de, germanModelManifests);
 
-		models.put("person", languagesToManifests);
+    models.put("person", languagesToManifests);
 
-		OpenNLPEntityRecognizerConfiguration config = new Builder()
-			.withEntityModelLoader(entityModelLoader)
-			.withDictionaryFinderModelLoader(dictionaryModelLoader)
-			.withConfidenceFilter(confidenceFilter)
-			.withEntityModels(models)
-			.build();
+    OpenNLPEntityRecognizerConfiguration config = new Builder()
+      .withEntityModelLoader(entityModelLoader)
+      .withDictionaryFinderModelLoader(dictionaryModelLoader)
+      .withConfidenceFilter(confidenceFilter)
+      .withEntityModels(models)
+      .build();
 
-		OpenNLPEntityRecognizer recognizer = new OpenNLPEntityRecognizer(config);
+    OpenNLPEntityRecognizer recognizer = new OpenNLPEntityRecognizer(config);
 
-		final String input = "George Washington and George Washington were friends.";
-		final String[] text = input.split(" ");
+    final String input = "George Washington and George Washington were friends.";
+    final String[] text = input.split(" ");
 
-		// EntityExtractionRequest defaults to English if not explicitly set.
-		EntityExtractionRequest request = new EntityExtractionRequest(text);
+    // EntityExtractionRequest defaults to English if not explicitly set.
+    EntityExtractionRequest request = new EntityExtractionRequest(text);
 
-		EntityExtractionResponse response = recognizer.extractEntities(request);
+    EntityExtractionResponse response = recognizer.extractEntities(request);
 
-		for(Entity entity : response.getEntities()) {
+    for(Entity entity : response.getEntities()) {
 
-			LOGGER.info("Entity: " + entity.toString());
+      LOGGER.info("Entity: " + entity.toString());
 
-		}
+    }
 
-		assertEquals(2, response.getEntities().size());
+    assertEquals(2, response.getEntities().size());
 
-		Entity entity = response.getEntities().iterator().next();
-		assertEquals("[0..2)", entity.getSpan().toString());
-		assertEquals(LanguageCode.en.getAlpha3().toString(), entity.getLanguageCode());
+    Entity entity = response.getEntities().iterator().next();
+    assertEquals("[0..2)", entity.getSpan().toString());
+    assertEquals(LanguageCode.en.getAlpha3().toString(), entity.getLanguageCode());
 
-		// Show the response as JSON.
-		Gson gson = new Gson();
-		String json = gson.toJson(response);
+    // Show the response as JSON.
+    Gson gson = new Gson();
+    String json = gson.toJson(response);
 
-		LOGGER.info(json);
+    LOGGER.info(json);
 
-	}
+  }
 
-	@Test(expected = IllegalArgumentException.class)
-	public void extractWithEmptyText() throws EntityFinderException, ModelLoaderException, LanguageDetectionException, ValidationException {
+  @Test(expected = IllegalArgumentException.class)
+  public void extractWithEmptyText() throws EntityFinderException, ModelLoaderException, LanguageDetectionException, ValidationException {
 
-		ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
+    ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
 
-		when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
+    when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
 
-		StandardModelManifest modelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MTNFOG_EN_PERSON_MODEL, LanguageCode.en, "idylami589012347", "person", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE).build();
+    StandardModelManifest modelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MTNFOG_EN_PERSON_MODEL, LanguageCode.en, "idylami589012347", "person", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE).build();
 
-		Set<StandardModelManifest> manifests = new HashSet<StandardModelManifest>();
-		manifests.add(modelManifest);
+    Set<StandardModelManifest> manifests = new HashSet<StandardModelManifest>();
+    manifests.add(modelManifest);
 
-		LocalModelLoader<TokenNameFinderModel> entityModelLoader = new LocalModelLoader<TokenNameFinderModel>(modelValidator, MODEL_PATH);
-		LocalModelLoader<DictionaryModel> dictionaryModelLoader = new LocalModelLoader<DictionaryModel>(modelValidator, MODEL_PATH);
+    LocalModelLoader<TokenNameFinderModel> entityModelLoader = new LocalModelLoader<TokenNameFinderModel>(modelValidator, MODEL_PATH);
+    LocalModelLoader<DictionaryModel> dictionaryModelLoader = new LocalModelLoader<DictionaryModel>(modelValidator, MODEL_PATH);
 
-		Map<String, Map<LanguageCode, Set<StandardModelManifest>>> models = new HashMap<String, Map<LanguageCode, Set<StandardModelManifest>>>();
+    Map<String, Map<LanguageCode, Set<StandardModelManifest>>> models = new HashMap<String, Map<LanguageCode, Set<StandardModelManifest>>>();
 
-		Map<LanguageCode, Set<StandardModelManifest>> lang = new HashMap<LanguageCode, Set<StandardModelManifest>>();
-		lang.put(LanguageCode.en, manifests);
+    Map<LanguageCode, Set<StandardModelManifest>> lang = new HashMap<LanguageCode, Set<StandardModelManifest>>();
+    lang.put(LanguageCode.en, manifests);
 
-		models.put("person", lang);
+    models.put("person", lang);
 
-		OpenNLPEntityRecognizerConfiguration config = new Builder()
-			.withEntityModelLoader(entityModelLoader)
-			.withDictionaryFinderModelLoader(dictionaryModelLoader)
-			.withConfidenceFilter(confidenceFilter)
-			.withEntityModels(models)
-			.build();
+    OpenNLPEntityRecognizerConfiguration config = new Builder()
+      .withEntityModelLoader(entityModelLoader)
+      .withDictionaryFinderModelLoader(dictionaryModelLoader)
+      .withConfidenceFilter(confidenceFilter)
+      .withEntityModels(models)
+      .build();
 
-		OpenNLPEntityRecognizer recognizer = new OpenNLPEntityRecognizer(config);
+    OpenNLPEntityRecognizer recognizer = new OpenNLPEntityRecognizer(config);
 
-		String text[] = {};
+    String text[] = {};
 
-		EntityExtractionRequest request = new EntityExtractionRequest(text);
+    EntityExtractionRequest request = new EntityExtractionRequest(text);
 
-		EntityExtractionResponse response = recognizer.extractEntities(request);
+    EntityExtractionResponse response = recognizer.extractEntities(request);
 
-	}
+  }
 
-	@Test(expected = IllegalArgumentException.class)
-	public void extractBadConfidence() throws EntityFinderException, ModelLoaderException, LanguageDetectionException, ValidationException {
+  @Test(expected = IllegalArgumentException.class)
+  public void extractBadConfidence() throws EntityFinderException, ModelLoaderException, LanguageDetectionException, ValidationException {
 
-		ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
+    ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
 
-		when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
+    when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
 
-		StandardModelManifest modelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name",  MTNFOG_EN_PERSON_MODEL, LanguageCode.en, "idylami589012347", "person", "", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", StandardModelManifest.DEFAULT_BEAM_SIZE).build();
+    StandardModelManifest modelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name",  MTNFOG_EN_PERSON_MODEL, LanguageCode.en, "idylami589012347", "person", "", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", StandardModelManifest.DEFAULT_BEAM_SIZE).build();
 
-		Set<StandardModelManifest> manifests = new HashSet<StandardModelManifest>();
-		manifests.add(modelManifest);
+    Set<StandardModelManifest> manifests = new HashSet<StandardModelManifest>();
+    manifests.add(modelManifest);
 
-		LocalModelLoader<TokenNameFinderModel> entityModelLoader = new LocalModelLoader<TokenNameFinderModel>(modelValidator, MODEL_PATH);
-		LocalModelLoader<DictionaryModel> dictionaryModelLoader = new LocalModelLoader<DictionaryModel>(modelValidator, MODEL_PATH);
+    LocalModelLoader<TokenNameFinderModel> entityModelLoader = new LocalModelLoader<TokenNameFinderModel>(modelValidator, MODEL_PATH);
+    LocalModelLoader<DictionaryModel> dictionaryModelLoader = new LocalModelLoader<DictionaryModel>(modelValidator, MODEL_PATH);
 
-		Map<String, Map<LanguageCode, Set<StandardModelManifest>>> models = new HashMap<String, Map<LanguageCode, Set<StandardModelManifest>>>();
+    Map<String, Map<LanguageCode, Set<StandardModelManifest>>> models = new HashMap<String, Map<LanguageCode, Set<StandardModelManifest>>>();
 
-		Map<LanguageCode, Set<StandardModelManifest>> lang = new HashMap<LanguageCode, Set<StandardModelManifest>>();
-		lang.put(LanguageCode.en, manifests);
+    Map<LanguageCode, Set<StandardModelManifest>> lang = new HashMap<LanguageCode, Set<StandardModelManifest>>();
+    lang.put(LanguageCode.en, manifests);
 
-		models.put("person", lang);
+    models.put("person", lang);
 
-		OpenNLPEntityRecognizerConfiguration config = new Builder()
-			.withEntityModelLoader(entityModelLoader)
-			.withDictionaryFinderModelLoader(dictionaryModelLoader)
-			.withConfidenceFilter(confidenceFilter)
-			.withEntityModels(models)
-			.build();
+    OpenNLPEntityRecognizerConfiguration config = new Builder()
+      .withEntityModelLoader(entityModelLoader)
+      .withDictionaryFinderModelLoader(dictionaryModelLoader)
+      .withConfidenceFilter(confidenceFilter)
+      .withEntityModels(models)
+      .build();
 
-		OpenNLPEntityRecognizer recognizer = new OpenNLPEntityRecognizer(config);
+    OpenNLPEntityRecognizer recognizer = new OpenNLPEntityRecognizer(config);
 
-		final String input = "George Washington was president.";
-		final String[] text = input.split(" ");
+    final String input = "George Washington was president.";
+    final String[] text = input.split(" ");
 
-		EntityExtractionRequest request = new EntityExtractionRequest(text);
-		request.setConfidenceThreshold(150);
+    EntityExtractionRequest request = new EntityExtractionRequest(text);
+    request.setConfidenceThreshold(150);
 
-		EntityExtractionResponse response = recognizer.extractEntities(request);
+    EntityExtractionResponse response = recognizer.extractEntities(request);
 
-	}
+  }
 
-	@Test
-	public void extractModeFileNotExist() throws EntityFinderException, ModelLoaderException, ValidationException {
+  @Test
+  public void extractModeFileNotExist() throws EntityFinderException, ModelLoaderException, ValidationException {
 
-		ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
+    ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
 
-		when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
+    when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
 
-		StandardModelManifest modelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", "not-exist", LanguageCode.en, "idylami589012347", "person", "", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", StandardModelManifest.DEFAULT_BEAM_SIZE).build();
+    StandardModelManifest modelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", "not-exist", LanguageCode.en, "idylami589012347", "person", "", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", StandardModelManifest.DEFAULT_BEAM_SIZE).build();
 
-		Set<StandardModelManifest> manifests = new HashSet<StandardModelManifest>();
-		manifests.add(modelManifest);
+    Set<StandardModelManifest> manifests = new HashSet<StandardModelManifest>();
+    manifests.add(modelManifest);
 
-		LocalModelLoader<TokenNameFinderModel> entityModelLoader = new LocalModelLoader<TokenNameFinderModel>(modelValidator, "f:\\invalidpath");
-		LocalModelLoader<DictionaryModel> dictionaryModelLoader = new LocalModelLoader<DictionaryModel>(modelValidator, "f:\\invalidpath");
+    LocalModelLoader<TokenNameFinderModel> entityModelLoader = new LocalModelLoader<TokenNameFinderModel>(modelValidator, "f:\\invalidpath");
+    LocalModelLoader<DictionaryModel> dictionaryModelLoader = new LocalModelLoader<DictionaryModel>(modelValidator, "f:\\invalidpath");
 
-		Map<String, Map<LanguageCode, Set<StandardModelManifest>>> models = new HashMap<String, Map<LanguageCode, Set<StandardModelManifest>>>();
+    Map<String, Map<LanguageCode, Set<StandardModelManifest>>> models = new HashMap<String, Map<LanguageCode, Set<StandardModelManifest>>>();
 
-		Map<LanguageCode, Set<StandardModelManifest>> lang = new HashMap<LanguageCode, Set<StandardModelManifest>>();
-		lang.put(LanguageCode.en, manifests);
-		models.put("person", lang);
+    Map<LanguageCode, Set<StandardModelManifest>> lang = new HashMap<LanguageCode, Set<StandardModelManifest>>();
+    lang.put(LanguageCode.en, manifests);
+    models.put("person", lang);
 
-		OpenNLPEntityRecognizerConfiguration config = new Builder()
-			.withEntityModelLoader(entityModelLoader)
-			.withDictionaryFinderModelLoader(dictionaryModelLoader)
-			.withConfidenceFilter(confidenceFilter)
-			.withEntityModels(models)
-			.build();
+    OpenNLPEntityRecognizerConfiguration config = new Builder()
+      .withEntityModelLoader(entityModelLoader)
+      .withDictionaryFinderModelLoader(dictionaryModelLoader)
+      .withConfidenceFilter(confidenceFilter)
+      .withEntityModels(models)
+      .build();
 
-		OpenNLPEntityRecognizer recognizer = new OpenNLPEntityRecognizer(config);
+    OpenNLPEntityRecognizer recognizer = new OpenNLPEntityRecognizer(config);
 
-		assertEquals(1, config.getBlacklistedModelIDs().size());
+    assertEquals(1, config.getBlacklistedModelIDs().size());
 
-	}
+  }
 
 }

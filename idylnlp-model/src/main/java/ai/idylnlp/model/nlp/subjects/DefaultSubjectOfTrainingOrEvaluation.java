@@ -17,8 +17,8 @@ package ai.idylnlp.model.nlp.subjects;
 
 public class DefaultSubjectOfTrainingOrEvaluation extends SubjectOfTrainingOrEvaluation {
 
-	public DefaultSubjectOfTrainingOrEvaluation(String inputFile) {
-		super(inputFile);
-	}
+  public DefaultSubjectOfTrainingOrEvaluation(String inputFile) {
+    super(inputFile);
+  }
 
 }

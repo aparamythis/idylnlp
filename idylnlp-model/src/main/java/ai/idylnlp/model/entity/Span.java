@@ -26,80 +26,80 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  */
 public class Span {
 
-	private int tokenStart;
-	private int tokenEnd;
+  private int tokenStart;
+  private int tokenEnd;
 
-	/**
-	 * Creates a new span.
-	 * @param tokenStart The position of the start of the token's span.
-	 *
-	 */
-	public Span(int tokenStart, int tokenEnd) {
+  /**
+   * Creates a new span.
+   * @param tokenStart The position of the start of the token's span.
+   *
+   */
+  public Span(int tokenStart, int tokenEnd) {
 
-		this.tokenStart = tokenStart;
-		this.tokenEnd = tokenEnd;
+    this.tokenStart = tokenStart;
+    this.tokenEnd = tokenEnd;
 
-	}
+  }
 
-	/**
-	 * Returns the token-based span as a formatted string.
-	 * An example is: [3..5)
-	 */
-	@Override
-	public String toString() {
+  /**
+   * Returns the token-based span as a formatted string.
+   * An example is: [3..5)
+   */
+  @Override
+  public String toString() {
 
-		return "[" + tokenStart + ".." + tokenEnd + ")";
+    return "[" + tokenStart + ".." + tokenEnd + ")";
 
-	}
+  }
 
-	/**
+  /**
      * {@inheritDoc}
      */
-	@Override
-	public int hashCode() {
+  @Override
+  public int hashCode() {
 
-		return new HashCodeBuilder(17, 31)
-			.append(tokenStart)
+    return new HashCodeBuilder(17, 31)
+      .append(tokenStart)
             .append(tokenEnd)
             .toHashCode();
 
-	}
+  }
 
-	/**
+  /**
      * {@inheritDoc}
      */
-	@Override
-	public boolean equals(Object obj) {
+  @Override
+  public boolean equals(Object obj) {
 
-	    if(obj != null && obj instanceof Span) {
+      if(obj != null && obj instanceof Span) {
 
-	        final Span other = (Span) obj;
+          final Span other = (Span) obj;
 
-	        return new EqualsBuilder()
-	            .append(tokenStart, other.tokenStart)
-	            .append(tokenEnd, other.tokenEnd)
-	            .isEquals();
+          return new EqualsBuilder()
+              .append(tokenStart, other.tokenStart)
+              .append(tokenEnd, other.tokenEnd)
+              .isEquals();
 
-	    }
+      }
 
-	    return false;
+      return false;
 
-	}
+  }
 
-	/**
-	 * Gets the token's start of the span.
-	 * @return The token's start of the span.
-	 */
-	public int getTokenStart() {
-		return tokenStart;
-	}
+  /**
+   * Gets the token's start of the span.
+   * @return The token's start of the span.
+   */
+  public int getTokenStart() {
+    return tokenStart;
+  }
 
-	/**
-	 * Gets the end of the span.
-	 * @return The end of the span.
-	 */
-	public int getTokenEnd() {
-		return tokenEnd;
-	}
+  /**
+   * Gets the end of the span.
+   * @return The end of the span.
+   */
+  public int getTokenEnd() {
+    return tokenEnd;
+  }
 
 }

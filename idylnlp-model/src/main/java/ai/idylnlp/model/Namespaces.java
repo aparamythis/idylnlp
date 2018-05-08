@@ -17,11 +17,11 @@ package ai.idylnlp.model;
 
 public class Namespaces {
 
-	public static final String MTNFOG = "http://www.mtnfog.com/idyl/1.0/";
-	public static final String DBPEDIA = "http://dbpedia.org/resource/";
+  public static final String MTNFOG = "http://www.mtnfog.com/idyl/1.0/";
+  public static final String DBPEDIA = "http://dbpedia.org/resource/";
 
-	private Namespaces() {
-		// Utility class.
-	}
+  private Namespaces() {
+    // Utility class.
+  }
 
 }

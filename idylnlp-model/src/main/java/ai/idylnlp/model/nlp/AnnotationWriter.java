@@ -30,12 +30,12 @@ import ai.idylnlp.model.entity.Entity;
 @FunctionalInterface
 public interface AnnotationWriter {
 
-	/**
-	 * Annotate the entities in the text.
-	 * @param entities The set of {@link Entity entities}.
-	 * @param text The text containing the entities.
-	 * @return Text containing the annotated entities.
-	 */
-	public String annotateText(Collection<Entity> entities, String text);
+  /**
+   * Annotate the entities in the text.
+   * @param entities The set of {@link Entity entities}.
+   * @param text The text containing the entities.
+   * @return Text containing the annotated entities.
+   */
+  public String annotateText(Collection<Entity> entities, String text);
 
 }

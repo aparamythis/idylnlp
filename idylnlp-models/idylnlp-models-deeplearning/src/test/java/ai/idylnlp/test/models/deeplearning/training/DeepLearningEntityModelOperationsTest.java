@@ -59,125 +59,125 @@ import ai.idylnlp.testing.markers.HighMemoryUsage;
 
 public class DeepLearningEntityModelOperationsTest {
 
-	private static final Logger LOGGER = LogManager.getLogger(DeepLearningEntityModelOperationsTest.class);
+  private static final Logger LOGGER = LogManager.getLogger(DeepLearningEntityModelOperationsTest.class);
 
-	private static final String TRAINING_DATA_PATH = System.getProperty("testDataPath");
+  private static final String TRAINING_DATA_PATH = System.getProperty("testDataPath");
 
-	@Ignore
-	@Category({ExternalData.class, HighMemoryUsage.class})
-	@Test
-	public void trainAndUseOpenNLPFormat() throws Exception {
+  @Ignore
+  @Category({ExternalData.class, HighMemoryUsage.class})
+  @Test
+  public void trainAndUseOpenNLPFormat() throws Exception {
 
-		DeepLearningTrainingDefinition definition = getSampleDefinition();
+    DeepLearningTrainingDefinition definition = getSampleDefinition();
 
-		DeepLearningEntityModelOperations ops = new DeepLearningEntityModelOperations();
+    DeepLearningEntityModelOperations ops = new DeepLearningEntityModelOperations();
 
-		long startTime = System.currentTimeMillis();
+    long startTime = System.currentTimeMillis();
 
-		String modelId = ops.train(definition);
+    String modelId = ops.train(definition);
 
-		LOGGER.info("Elapsed time: {}", (System.currentTimeMillis() - startTime));
+    LOGGER.info("Elapsed time: {}", (System.currentTimeMillis() - startTime));
 
-		//  Generate a model manifest.
-		SecondGenModelManifest manifest = new SecondGenModelManifest(modelId, definition.getOutput().getOutputFile(), LanguageCode.en,
-				"person", "model", "2", definition.getTrainingData().getWordVectorsFile(),
-				definition.getHyperParameters().getWindowSize(), "", "");
+    //  Generate a model manifest.
+    SecondGenModelManifest manifest = new SecondGenModelManifest(modelId, definition.getOutput().getOutputFile(), LanguageCode.en,
+        "person", "model", "2", definition.getTrainingData().getWordVectorsFile(),
+        definition.getHyperParameters().getWindowSize(), "", "");
 
-		File secondGenModelManifest = File.createTempFile("model", ".manifest");
-		ModelManifestUtils.generateSecondGenModelManifest(secondGenModelManifest, manifest);
-		LOGGER.info("Model manifest written to {}", secondGenModelManifest.getAbsolutePath());
+    File secondGenModelManifest = File.createTempFile("model", ".manifest");
+    ModelManifestUtils.generateSecondGenModelManifest(secondGenModelManifest, manifest);
+    LOGGER.info("Model manifest written to {}", secondGenModelManifest.getAbsolutePath());
 
-		// Use the model.
+    // Use the model.
 
-		ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
+    ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
 
-		when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
+    when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
 
-		DeepLearningEntityRecognizerConfiguration configuration = new  DeepLearningEntityRecognizerConfiguration.Builder().build(TRAINING_DATA_PATH);
+    DeepLearningEntityRecognizerConfiguration configuration = new  DeepLearningEntityRecognizerConfiguration.Builder().build(TRAINING_DATA_PATH);
 
-		configuration.addEntityModel("person", LanguageCode.en, manifest);
+    configuration.addEntityModel("person", LanguageCode.en, manifest);
 
-		DeepLearningEntityRecognizer recognizer = new DeepLearningEntityRecognizer(configuration);
+    DeepLearningEntityRecognizer recognizer = new DeepLearningEntityRecognizer(configuration);
 
-		String input = "George Washington was president.";
-		String[] text = input.split(" ");
+    String input = "George Washington was president.";
+    String[] text = input.split(" ");
 
-		EntityExtractionRequest request = new EntityExtractionRequest(text)
-			.withType("person")
-			.withLanguage(LanguageCode.en);
+    EntityExtractionRequest request = new EntityExtractionRequest(text)
+      .withType("person")
+      .withLanguage(LanguageCode.en);
 
-		EntityExtractionResponse response = recognizer.extractEntities(request);
+    EntityExtractionResponse response = recognizer.extractEntities(request);
 
-		//assertTrue(response.getEntities().size() > 0);
-		//assertTrue(response.getExtractionTime() > 0);
+    //assertTrue(response.getEntities().size() > 0);
+    //assertTrue(response.getExtractionTime() > 0);
 
-		for(Entity entity : response.getEntities()) {
-			LOGGER.info(entity.toString());
-		}
+    for(Entity entity : response.getEntities()) {
+      LOGGER.info(entity.toString());
+    }
 
-	}
+  }
 
-	private DeepLearningTrainingDefinition getSampleDefinition() throws IOException {
+  private DeepLearningTrainingDefinition getSampleDefinition() throws IOException {
 
-		UpdaterParameters updaterParameters = new UpdaterParameters();
-		updaterParameters.setUpdater("rmsprop");
+    UpdaterParameters updaterParameters = new UpdaterParameters();
+    updaterParameters.setUpdater("rmsprop");
 
-		RegularizationParameters regularizationParameters = new RegularizationParameters();
-		regularizationParameters.setRegularization(true);
-		regularizationParameters.setL2(1e-5);
+    RegularizationParameters regularizationParameters = new RegularizationParameters();
+    regularizationParameters.setRegularization(true);
+    regularizationParameters.setL2(1e-5);
 
-		Map<String, Double> learningRateSchedule = new HashMap<String, Double>();
-		learningRateSchedule.put("0", 0.01);
-		learningRateSchedule.put("1000", 0.005);
-		learningRateSchedule.put("2000", 0.001);
-		learningRateSchedule.put("3000", 0.0001);
-		learningRateSchedule.put("4000", 0.00001);
+    Map<String, Double> learningRateSchedule = new HashMap<String, Double>();
+    learningRateSchedule.put("0", 0.01);
+    learningRateSchedule.put("1000", 0.005);
+    learningRateSchedule.put("2000", 0.001);
+    learningRateSchedule.put("3000", 0.0001);
+    learningRateSchedule.put("4000", 0.00001);
 
-		Layer layer1 = new Layer();
-		layer1.setLearningRate(0.00001);
-		layer1.setLearningRateSchedule(learningRateSchedule);
+    Layer layer1 = new Layer();
+    layer1.setLearningRate(0.00001);
+    layer1.setLearningRateSchedule(learningRateSchedule);
 
-		Layer layer2 = new Layer();
-		layer2.setLearningRate(0.00001);
-		layer2.setLearningRateSchedule(learningRateSchedule);
+    Layer layer2 = new Layer();
+    layer2.setLearningRate(0.00001);
+    layer2.setLearningRateSchedule(learningRateSchedule);
 
-		Layers layers = new Layers(layer1, layer2);
+    Layers layers = new Layers(layer1, layer2);
 
-		NetworkConfigurationParameters networkConfigurationParameters = new NetworkConfigurationParameters();
-		networkConfigurationParameters.setOptimizationAlgorithm("stochastic_gradient_descent");
-		networkConfigurationParameters.setGradientNormalization("clipelementwiseabsolutevalue");
-		networkConfigurationParameters.setGradientNormalizationThreshold(1.0);
-		networkConfigurationParameters.setUpdaterParameters(updaterParameters);
-		networkConfigurationParameters.setRegularizationParameters(regularizationParameters);
-		networkConfigurationParameters.setLayers(layers);
-		networkConfigurationParameters.setPretrain(false);
-		networkConfigurationParameters.setBackprop(true);
-		networkConfigurationParameters.setWeightInit("xavier");
+    NetworkConfigurationParameters networkConfigurationParameters = new NetworkConfigurationParameters();
+    networkConfigurationParameters.setOptimizationAlgorithm("stochastic_gradient_descent");
+    networkConfigurationParameters.setGradientNormalization("clipelementwiseabsolutevalue");
+    networkConfigurationParameters.setGradientNormalizationThreshold(1.0);
+    networkConfigurationParameters.setUpdaterParameters(updaterParameters);
+    networkConfigurationParameters.setRegularizationParameters(regularizationParameters);
+    networkConfigurationParameters.setLayers(layers);
+    networkConfigurationParameters.setPretrain(false);
+    networkConfigurationParameters.setBackprop(true);
+    networkConfigurationParameters.setWeightInit("xavier");
 
-		HyperParameters hyperParameters = new HyperParameters();
-		hyperParameters.setEpochs(1);
-		hyperParameters.setWindowSize(5);
-		hyperParameters.setSeed(1497630814976308L);
-		hyperParameters.setBatchSize(32);
-		hyperParameters.setNetworkConfigurationParameters(networkConfigurationParameters);
+    HyperParameters hyperParameters = new HyperParameters();
+    hyperParameters.setEpochs(1);
+    hyperParameters.setWindowSize(5);
+    hyperParameters.setSeed(1497630814976308L);
+    hyperParameters.setBatchSize(32);
+    hyperParameters.setNetworkConfigurationParameters(networkConfigurationParameters);
 
-		Monitoring monitoring = new Monitoring();
-		monitoring.setScoreIteration(100);
+    Monitoring monitoring = new Monitoring();
+    monitoring.setScoreIteration(100);
 
-		//hyperParameters.setWordVectorsFile(TRAINING_DATA_PATH + "/glove.6B.50d.glv");
-		String wordVectorsFile = TRAINING_DATA_PATH + "/reuters-vectors.txt";
+    //hyperParameters.setWordVectorsFile(TRAINING_DATA_PATH + "/glove.6B.50d.glv");
+    String wordVectorsFile = TRAINING_DATA_PATH + "/reuters-vectors.txt";
 
-		DeepLearningTrainingDefinition definition = new DeepLearningTrainingDefinition();
-		definition.setTrainingData(new TrainingData(AnnotationTypes.CONLL2003.getName(), TRAINING_DATA_PATH + "/conll2003-eng.train", wordVectorsFile));
-		definition.setEvaluationData(new EvaluationData(AnnotationTypes.CONLL2003.getName(), TRAINING_DATA_PATH + "/conll2003-eng.testa"));
-		definition.setOutput(new Output(File.createTempFile("multilayernetwork", ".zip").getAbsolutePath(), "/tmp/stats.dl4j"));
-		//definition.setEarlyTermination(new EarlyTermination(20, 180));
-		definition.setEntityType("person");
-		definition.setHyperParameters(hyperParameters);
-		definition.setMonitoring(monitoring);
+    DeepLearningTrainingDefinition definition = new DeepLearningTrainingDefinition();
+    definition.setTrainingData(new TrainingData(AnnotationTypes.CONLL2003.getName(), TRAINING_DATA_PATH + "/conll2003-eng.train", wordVectorsFile));
+    definition.setEvaluationData(new EvaluationData(AnnotationTypes.CONLL2003.getName(), TRAINING_DATA_PATH + "/conll2003-eng.testa"));
+    definition.setOutput(new Output(File.createTempFile("multilayernetwork", ".zip").getAbsolutePath(), "/tmp/stats.dl4j"));
+    //definition.setEarlyTermination(new EarlyTermination(20, 180));
+    definition.setEntityType("person");
+    definition.setHyperParameters(hyperParameters);
+    definition.setMonitoring(monitoring);
 
-		return definition;
+    return definition;
 
-	}
+  }
 
 }

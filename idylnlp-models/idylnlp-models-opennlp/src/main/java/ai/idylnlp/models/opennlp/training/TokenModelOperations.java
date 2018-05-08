@@ -62,280 +62,280 @@ import opennlp.tools.util.TrainingParameters;
  */
 public class TokenModelOperations implements ModelTrainingOperations, ModelSeparateDataValidationOperations<FMeasureModelValidationResult>, ModelCrossValidationOperations<FMeasureModelValidationResult> {
 
-	private static final Logger LOGGER = LogManager.getLogger(TokenModelOperations.class);
+  private static final Logger LOGGER = LogManager.getLogger(TokenModelOperations.class);
 
-	/**
-	 * Performs token model training using a training definition file.
-	 * @param reader A {@link TrainingDefinitionReader}.
-	 * @return The generated model's ID.
-	 * @throws IOException Thrown if the model creation fails.
-	 */
-	public static String train(TrainingDefinitionReader reader) throws IOException {
+  /**
+   * Performs token model training using a training definition file.
+   * @param reader A {@link TrainingDefinitionReader}.
+   * @return The generated model's ID.
+   * @throws IOException Thrown if the model creation fails.
+   */
+  public static String train(TrainingDefinitionReader reader) throws IOException {
 
-		final TokenModelOperations ops = new TokenModelOperations();
+    final TokenModelOperations ops = new TokenModelOperations();
 
-		final SubjectOfTrainingOrEvaluation subjectOfTraining = ModelOperationsUtils.getSubjectOfTrainingOrEvaluation(reader);
+    final SubjectOfTrainingOrEvaluation subjectOfTraining = ModelOperationsUtils.getSubjectOfTrainingOrEvaluation(reader);
 
-		final String modelFile = reader.getTrainingDefinition().getModel().getFile();
-		final String language = reader.getTrainingDefinition().getModel().getLanguage();
-		final String encryptionKey = reader.getTrainingDefinition().getModel().getEncryptionkey();
-		final int cutOff = reader.getTrainingDefinition().getAlgorithm().getCutoff().intValue();
-		final int iterations = reader.getTrainingDefinition().getAlgorithm().getIterations().intValue();
-		final int threads = reader.getTrainingDefinition().getAlgorithm().getThreads().intValue();
-		final String algorithm = reader.getTrainingDefinition().getAlgorithm().getName();
+    final String modelFile = reader.getTrainingDefinition().getModel().getFile();
+    final String language = reader.getTrainingDefinition().getModel().getLanguage();
+    final String encryptionKey = reader.getTrainingDefinition().getModel().getEncryptionkey();
+    final int cutOff = reader.getTrainingDefinition().getAlgorithm().getCutoff().intValue();
+    final int iterations = reader.getTrainingDefinition().getAlgorithm().getIterations().intValue();
+    final int threads = reader.getTrainingDefinition().getAlgorithm().getThreads().intValue();
+    final String algorithm = reader.getTrainingDefinition().getAlgorithm().getName();
 
-		final LanguageCode languageCode = LanguageCode.getByCodeIgnoreCase(language);
+    final LanguageCode languageCode = LanguageCode.getByCodeIgnoreCase(language);
 
-		if(algorithm.equalsIgnoreCase(TrainingAlgorithm.PERCEPTRON.getName())) {
+    if(algorithm.equalsIgnoreCase(TrainingAlgorithm.PERCEPTRON.getName())) {
 
-			return ops.trainPerceptron(subjectOfTraining, modelFile, languageCode, encryptionKey, cutOff, iterations);
+      return ops.trainPerceptron(subjectOfTraining, modelFile, languageCode, encryptionKey, cutOff, iterations);
 
-		} else if(algorithm.equalsIgnoreCase(TrainingAlgorithm.MAXENT_QN.getName())) {
+    } else if(algorithm.equalsIgnoreCase(TrainingAlgorithm.MAXENT_QN.getName())) {
 
-			final double l1 = reader.getTrainingDefinition().getAlgorithm().getL1().doubleValue();
-			final double l2 = reader.getTrainingDefinition().getAlgorithm().getL2().doubleValue();
-			int m = reader.getTrainingDefinition().getAlgorithm().getM().intValue();
-			int max = reader.getTrainingDefinition().getAlgorithm().getMax().intValue();
+      final double l1 = reader.getTrainingDefinition().getAlgorithm().getL1().doubleValue();
+      final double l2 = reader.getTrainingDefinition().getAlgorithm().getL2().doubleValue();
+      int m = reader.getTrainingDefinition().getAlgorithm().getM().intValue();
+      int max = reader.getTrainingDefinition().getAlgorithm().getMax().intValue();
 
-			return ops.trainMaxEntQN(subjectOfTraining, modelFile, languageCode, encryptionKey, cutOff, iterations, threads, l1, l2, m, max);
+      return ops.trainMaxEntQN(subjectOfTraining, modelFile, languageCode, encryptionKey, cutOff, iterations, threads, l1, l2, m, max);
 
-		} else {
+    } else {
 
-			throw new IOException("Invalid algorithm specified in the training definition file: " + algorithm);
+      throw new IOException("Invalid algorithm specified in the training definition file: " + algorithm);
 
-		}
+    }
 
-	}
+  }
 
-	/**
-	 * Performs cross-validation of a token model.
-	 * @param reader A {@link TrainingDefinitionReader}.
-	 * @param folds The number of cross-validation folds.
-	 * @return A {@link FMeasureModelValidationResult}.
-	 * @throws IOException Thrown if the model cannot be validated.
-	 */
-	public static FMeasureModelValidationResult crossValidate(TrainingDefinitionReader reader, int folds) throws IOException {
+  /**
+   * Performs cross-validation of a token model.
+   * @param reader A {@link TrainingDefinitionReader}.
+   * @param folds The number of cross-validation folds.
+   * @return A {@link FMeasureModelValidationResult}.
+   * @throws IOException Thrown if the model cannot be validated.
+   */
+  public static FMeasureModelValidationResult crossValidate(TrainingDefinitionReader reader, int folds) throws IOException {
 
-		final String language = reader.getTrainingDefinition().getModel().getLanguage();
-		final int iterations = reader.getTrainingDefinition().getAlgorithm().getIterations().intValue();
-		final int cutoff = reader.getTrainingDefinition().getAlgorithm().getCutoff().intValue();
-		final String algorithm = reader.getTrainingDefinition().getAlgorithm().getName();
-		final double l1 = reader.getTrainingDefinition().getAlgorithm().getL1().doubleValue();
-		final double l2 = reader.getTrainingDefinition().getAlgorithm().getL2().doubleValue();
-		final int m = reader.getTrainingDefinition().getAlgorithm().getM().intValue();
-		final int max = reader.getTrainingDefinition().getAlgorithm().getMax().intValue();
+    final String language = reader.getTrainingDefinition().getModel().getLanguage();
+    final int iterations = reader.getTrainingDefinition().getAlgorithm().getIterations().intValue();
+    final int cutoff = reader.getTrainingDefinition().getAlgorithm().getCutoff().intValue();
+    final String algorithm = reader.getTrainingDefinition().getAlgorithm().getName();
+    final double l1 = reader.getTrainingDefinition().getAlgorithm().getL1().doubleValue();
+    final double l2 = reader.getTrainingDefinition().getAlgorithm().getL2().doubleValue();
+    final int m = reader.getTrainingDefinition().getAlgorithm().getM().intValue();
+    final int max = reader.getTrainingDefinition().getAlgorithm().getMax().intValue();
 
-		final LanguageCode languageCode = LanguageCode.getByCodeIgnoreCase(language);
+    final LanguageCode languageCode = LanguageCode.getByCodeIgnoreCase(language);
 
-		// Get the subject of training based on what's specified in the training definition file.
-		final SubjectOfTrainingOrEvaluation subjectOfTraining = ModelOperationsUtils.getSubjectOfTrainingOrEvaluation(reader);
+    // Get the subject of training based on what's specified in the training definition file.
+    final SubjectOfTrainingOrEvaluation subjectOfTraining = ModelOperationsUtils.getSubjectOfTrainingOrEvaluation(reader);
 
-		// Now we can set up the entity model operations.
-		final TokenModelOperations tokenModelOperations = new TokenModelOperations();
+    // Now we can set up the entity model operations.
+    final TokenModelOperations tokenModelOperations = new TokenModelOperations();
 
-		FMeasureModelValidationResult result = null;
+    FMeasureModelValidationResult result = null;
 
-		if(StringUtils.equalsIgnoreCase(algorithm, TrainingAlgorithm.PERCEPTRON.getName())) {
+    if(StringUtils.equalsIgnoreCase(algorithm, TrainingAlgorithm.PERCEPTRON.getName())) {
 
-			result = tokenModelOperations.crossValidationEvaluatePerceptron(subjectOfTraining, languageCode, iterations, cutoff, folds);
+      result = tokenModelOperations.crossValidationEvaluatePerceptron(subjectOfTraining, languageCode, iterations, cutoff, folds);
 
-		} else if(StringUtils.equalsIgnoreCase(algorithm, TrainingAlgorithm.MAXENT_QN.getName())) {
+    } else if(StringUtils.equalsIgnoreCase(algorithm, TrainingAlgorithm.MAXENT_QN.getName())) {
 
-			result = tokenModelOperations.crossValidationEvaluateMaxEntQN(subjectOfTraining, languageCode, iterations, cutoff, folds, l1, l2, m, max);
+      result = tokenModelOperations.crossValidationEvaluateMaxEntQN(subjectOfTraining, languageCode, iterations, cutoff, folds, l1, l2, m, max);
 
-		} else {
+    } else {
 
-			throw new IOException("Invalid algorithm specified in the training definition file: " + algorithm);
+      throw new IOException("Invalid algorithm specified in the training definition file: " + algorithm);
 
-		}
+    }
 
-		return result;
+    return result;
 
-	}
+  }
 
-	@Override
-	public FMeasureModelValidationResult crossValidationEvaluateMaxEntQN(SubjectOfTrainingOrEvaluation subjectOfTraining, LanguageCode language, int iterations, int cutOff, int folds, double l1, double l2, int m, int max) throws IOException {
+  @Override
+  public FMeasureModelValidationResult crossValidationEvaluateMaxEntQN(SubjectOfTrainingOrEvaluation subjectOfTraining, LanguageCode language, int iterations, int cutOff, int folds, double l1, double l2, int m, int max) throws IOException {
 
-		LOGGER.info("Doing model evaluation using cross-validation with {} folds.", folds);
+    LOGGER.info("Doing model evaluation using cross-validation with {} folds.", folds);
 
-		InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File(subjectOfTraining.getInputFile()));
-		ObjectStream<TokenSample> sample = new TokenSampleStream(new PlainTextByLineStream(inputStreamFactory, Constants.ENCODING_UTF8));
+    InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File(subjectOfTraining.getInputFile()));
+    ObjectStream<TokenSample> sample = new TokenSampleStream(new PlainTextByLineStream(inputStreamFactory, Constants.ENCODING_UTF8));
 
-		TrainingParameters trainParams = new TrainingParameters();
-		trainParams.put(TrainingParameters.CUTOFF_PARAM, Integer.toString(cutOff));
-		trainParams.put(TrainingParameters.ITERATIONS_PARAM, Integer.toString(iterations));
-		trainParams.put(TrainingParameters.ALGORITHM_PARAM, TrainingAlgorithm.MAXENT_QN.getAlgorithm());
+    TrainingParameters trainParams = new TrainingParameters();
+    trainParams.put(TrainingParameters.CUTOFF_PARAM, Integer.toString(cutOff));
+    trainParams.put(TrainingParameters.ITERATIONS_PARAM, Integer.toString(iterations));
+    trainParams.put(TrainingParameters.ALGORITHM_PARAM, TrainingAlgorithm.MAXENT_QN.getAlgorithm());
 
-		trainParams.put(QNTrainer.L1COST_PARAM, String.valueOf(l1));
-		trainParams.put(QNTrainer.L2COST_PARAM, String.valueOf(l2));
-		trainParams.put(QNTrainer.M_PARAM, String.valueOf(m));
-		trainParams.put(QNTrainer.MAX_FCT_EVAL_PARAM, String.valueOf(max));
+    trainParams.put(QNTrainer.L1COST_PARAM, String.valueOf(l1));
+    trainParams.put(QNTrainer.L2COST_PARAM, String.valueOf(l2));
+    trainParams.put(QNTrainer.M_PARAM, String.valueOf(m));
+    trainParams.put(QNTrainer.MAX_FCT_EVAL_PARAM, String.valueOf(max));
 
-		TokenizerFactory factory = new TokenizerFactory(language.getAlpha3().toString(), null, false, null);
-		TokenizerEvaluationMonitor monitor = new TokenEvaluationErrorListener();
+    TokenizerFactory factory = new TokenizerFactory(language.getAlpha3().toString(), null, false, null);
+    TokenizerEvaluationMonitor monitor = new TokenEvaluationErrorListener();
 
-		TokenizerCrossValidator evaluator = new TokenizerCrossValidator(trainParams, factory, monitor);
-		evaluator.evaluate(sample, folds);
+    TokenizerCrossValidator evaluator = new TokenizerCrossValidator(trainParams, factory, monitor);
+    evaluator.evaluate(sample, folds);
 
-		final FMeasure fmeasure = new FMeasure(evaluator.getFMeasure().getPrecisionScore(),
-				evaluator.getFMeasure().getRecallScore(), evaluator.getFMeasure().getFMeasure());
+    final FMeasure fmeasure = new FMeasure(evaluator.getFMeasure().getPrecisionScore(),
+        evaluator.getFMeasure().getRecallScore(), evaluator.getFMeasure().getFMeasure());
 
-		return new FMeasureModelValidationResult(fmeasure);
+    return new FMeasureModelValidationResult(fmeasure);
 
-	}
+  }
 
-	@Override
-	public FMeasureModelValidationResult crossValidationEvaluatePerceptron(SubjectOfTrainingOrEvaluation subjectOfTraining, LanguageCode language, int iterations, int cutOff, int folds) throws IOException {
+  @Override
+  public FMeasureModelValidationResult crossValidationEvaluatePerceptron(SubjectOfTrainingOrEvaluation subjectOfTraining, LanguageCode language, int iterations, int cutOff, int folds) throws IOException {
 
-		LOGGER.info("Doing model evaluation using cross-validation with {} folds.", folds);
+    LOGGER.info("Doing model evaluation using cross-validation with {} folds.", folds);
 
-		InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File(subjectOfTraining.getInputFile()));
-		ObjectStream<TokenSample> sample = new TokenSampleStream(new PlainTextByLineStream(inputStreamFactory, Constants.ENCODING_UTF8));
+    InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File(subjectOfTraining.getInputFile()));
+    ObjectStream<TokenSample> sample = new TokenSampleStream(new PlainTextByLineStream(inputStreamFactory, Constants.ENCODING_UTF8));
 
-		TrainingParameters trainParams = new TrainingParameters();
-		trainParams.put(TrainingParameters.CUTOFF_PARAM, Integer.toString(cutOff));
-		trainParams.put(TrainingParameters.ITERATIONS_PARAM, Integer.toString(iterations));
-		trainParams.put(TrainingParameters.ALGORITHM_PARAM, TrainingAlgorithm.PERCEPTRON.getAlgorithm());
+    TrainingParameters trainParams = new TrainingParameters();
+    trainParams.put(TrainingParameters.CUTOFF_PARAM, Integer.toString(cutOff));
+    trainParams.put(TrainingParameters.ITERATIONS_PARAM, Integer.toString(iterations));
+    trainParams.put(TrainingParameters.ALGORITHM_PARAM, TrainingAlgorithm.PERCEPTRON.getAlgorithm());
 
-		TokenizerFactory factory = new TokenizerFactory(language.getAlpha3().toString(), null, false, null);
-		TokenizerEvaluationMonitor monitor = new TokenEvaluationErrorListener();
+    TokenizerFactory factory = new TokenizerFactory(language.getAlpha3().toString(), null, false, null);
+    TokenizerEvaluationMonitor monitor = new TokenEvaluationErrorListener();
 
-		TokenizerCrossValidator evaluator = new TokenizerCrossValidator(trainParams, factory, monitor);
-		evaluator.evaluate(sample, folds);
+    TokenizerCrossValidator evaluator = new TokenizerCrossValidator(trainParams, factory, monitor);
+    evaluator.evaluate(sample, folds);
 
-		final FMeasure fmeasure = new FMeasure(evaluator.getFMeasure().getPrecisionScore(),
-				evaluator.getFMeasure().getRecallScore(), evaluator.getFMeasure().getFMeasure());
+    final FMeasure fmeasure = new FMeasure(evaluator.getFMeasure().getPrecisionScore(),
+        evaluator.getFMeasure().getRecallScore(), evaluator.getFMeasure().getFMeasure());
 
-		return new FMeasureModelValidationResult(fmeasure);
+    return new FMeasureModelValidationResult(fmeasure);
 
-	}
+  }
 
-	@Override
-	public FMeasureModelValidationResult separateDataEvaluate(SubjectOfTrainingOrEvaluation subjectOfTraining, String modelFileName, String encryptionKey) throws IOException {
+  @Override
+  public FMeasureModelValidationResult separateDataEvaluate(SubjectOfTrainingOrEvaluation subjectOfTraining, String modelFileName, String encryptionKey) throws IOException {
 
-		LOGGER.info("Doing model evaluation using separate training data.");
+    LOGGER.info("Doing model evaluation using separate training data.");
 
-		// Set the encryption key.
-		OpenNLPEncryptionFactory.getDefault().setKey(encryptionKey);
+    // Set the encryption key.
+    OpenNLPEncryptionFactory.getDefault().setKey(encryptionKey);
 
-		InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File(subjectOfTraining.getInputFile()));
-		ObjectStream<TokenSample> sample = new TokenSampleStream(new PlainTextByLineStream(inputStreamFactory, Constants.ENCODING_UTF8));
+    InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File(subjectOfTraining.getInputFile()));
+    ObjectStream<TokenSample> sample = new TokenSampleStream(new PlainTextByLineStream(inputStreamFactory, Constants.ENCODING_UTF8));
 
-		TokenizerModel model = new TokenizerModel(new File(modelFileName));
-		TokenizerME nameFinderME = new TokenizerME(model);
+    TokenizerModel model = new TokenizerModel(new File(modelFileName));
+    TokenizerME nameFinderME = new TokenizerME(model);
 
-		TokenizerEvaluator evaluator = new TokenizerEvaluator(nameFinderME);
+    TokenizerEvaluator evaluator = new TokenizerEvaluator(nameFinderME);
 
-		evaluator.evaluate(sample);
+    evaluator.evaluate(sample);
 
-		// Clear the encryption key.
-		OpenNLPEncryptionFactory.getDefault().clearKey();
+    // Clear the encryption key.
+    OpenNLPEncryptionFactory.getDefault().clearKey();
 
-		final FMeasure fmeasure = new FMeasure(evaluator.getFMeasure().getPrecisionScore(),
-				evaluator.getFMeasure().getRecallScore(), evaluator.getFMeasure().getFMeasure());
+    final FMeasure fmeasure = new FMeasure(evaluator.getFMeasure().getPrecisionScore(),
+        evaluator.getFMeasure().getRecallScore(), evaluator.getFMeasure().getFMeasure());
 
-		return new FMeasureModelValidationResult(fmeasure);
+    return new FMeasureModelValidationResult(fmeasure);
 
-	}
+  }
 
-	@Override
-	public String trainMaxEntQN(SubjectOfTrainingOrEvaluation subjectOfTraining, String modelFile, LanguageCode language, String encryptionKey, int cutOff, int iterations, int threads, double l1, double l2, int m, int max) throws IOException {
+  @Override
+  public String trainMaxEntQN(SubjectOfTrainingOrEvaluation subjectOfTraining, String modelFile, LanguageCode language, String encryptionKey, int cutOff, int iterations, int threads, double l1, double l2, int m, int max) throws IOException {
 
-		LOGGER.info("Beginning tokenizer model training. Output model will be: " + modelFile);
+    LOGGER.info("Beginning tokenizer model training. Output model will be: " + modelFile);
 
-		InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File(subjectOfTraining.getInputFile()));
-		ObjectStream<String> lineStream =  new PlainTextByLineStream(inputStreamFactory, Constants.ENCODING_UTF8);
-		ObjectStream<TokenSample> sampleStream = new TokenSampleStream(lineStream);
+    InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File(subjectOfTraining.getInputFile()));
+    ObjectStream<String> lineStream =  new PlainTextByLineStream(inputStreamFactory, Constants.ENCODING_UTF8);
+    ObjectStream<TokenSample> sampleStream = new TokenSampleStream(lineStream);
 
-		TrainingParameters trainParams = new TrainingParameters();
-		trainParams.put(TrainingParameters.CUTOFF_PARAM, Integer.toString(cutOff));
-		trainParams.put(TrainingParameters.ITERATIONS_PARAM, Integer.toString(iterations));
-		trainParams.put(TrainingParameters.ALGORITHM_PARAM, TrainingAlgorithm.MAXENT_QN.getAlgorithm());
-		trainParams.put(TrainingParameters.THREADS_PARAM, Integer.toString(threads));
+    TrainingParameters trainParams = new TrainingParameters();
+    trainParams.put(TrainingParameters.CUTOFF_PARAM, Integer.toString(cutOff));
+    trainParams.put(TrainingParameters.ITERATIONS_PARAM, Integer.toString(iterations));
+    trainParams.put(TrainingParameters.ALGORITHM_PARAM, TrainingAlgorithm.MAXENT_QN.getAlgorithm());
+    trainParams.put(TrainingParameters.THREADS_PARAM, Integer.toString(threads));
 
-		trainParams.put(QNTrainer.L1COST_PARAM, String.valueOf(l1));
-		trainParams.put(QNTrainer.L2COST_PARAM, String.valueOf(l2));
-		trainParams.put(QNTrainer.M_PARAM, String.valueOf(m));
-		trainParams.put(QNTrainer.MAX_FCT_EVAL_PARAM, String.valueOf(max));
+    trainParams.put(QNTrainer.L1COST_PARAM, String.valueOf(l1));
+    trainParams.put(QNTrainer.L2COST_PARAM, String.valueOf(l2));
+    trainParams.put(QNTrainer.M_PARAM, String.valueOf(m));
+    trainParams.put(QNTrainer.MAX_FCT_EVAL_PARAM, String.valueOf(max));
 
-		TokenizerFactory tokenizerFactory = new TokenizerFactory(language.getAlpha3().toString(), new Dictionary(), false, null);
+    TokenizerFactory tokenizerFactory = new TokenizerFactory(language.getAlpha3().toString(), new Dictionary(), false, null);
 
-		// Set the encryption key.
-		OpenNLPEncryptionFactory.getDefault().setKey(encryptionKey);
+    // Set the encryption key.
+    OpenNLPEncryptionFactory.getDefault().setKey(encryptionKey);
 
-		TokenizerModel model = TokenizerME.train(sampleStream, tokenizerFactory, trainParams);
+    TokenizerModel model = TokenizerME.train(sampleStream, tokenizerFactory, trainParams);
 
-		BufferedOutputStream modelOut = null;
+    BufferedOutputStream modelOut = null;
 
-		String modelId = "";
+    String modelId = "";
 
-		try {
+    try {
 
-			modelOut = new BufferedOutputStream(new FileOutputStream(modelFile));
-			modelId = model.serialize(modelOut);
+      modelOut = new BufferedOutputStream(new FileOutputStream(modelFile));
+      modelId = model.serialize(modelOut);
 
-		} finally {
+    } finally {
 
-			if (modelOut != null) {
-				modelOut.close();
-			}
+      if (modelOut != null) {
+        modelOut.close();
+      }
 
-			lineStream.close();
+      lineStream.close();
 
-			// Clear the encryption key.
-			OpenNLPEncryptionFactory.getDefault().clearKey();
+      // Clear the encryption key.
+      OpenNLPEncryptionFactory.getDefault().clearKey();
 
-		}
+    }
 
-		return modelId;
+    return modelId;
 
-	}
+  }
 
-	@Override
-	public String trainPerceptron(SubjectOfTrainingOrEvaluation subjectOfTraining, String modelFile, LanguageCode language, String encryptionKey, int cutOff, int iterations) throws IOException {
+  @Override
+  public String trainPerceptron(SubjectOfTrainingOrEvaluation subjectOfTraining, String modelFile, LanguageCode language, String encryptionKey, int cutOff, int iterations) throws IOException {
 
-		LOGGER.info("Beginning tokenizer model training. Output model will be: " + modelFile);
+    LOGGER.info("Beginning tokenizer model training. Output model will be: " + modelFile);
 
-		InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File(subjectOfTraining.getInputFile()));
-		ObjectStream<String> lineStream = new PlainTextByLineStream(inputStreamFactory, Constants.ENCODING_UTF8);
-		ObjectStream<TokenSample> sampleStream = new TokenSampleStream(lineStream);
+    InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File(subjectOfTraining.getInputFile()));
+    ObjectStream<String> lineStream = new PlainTextByLineStream(inputStreamFactory, Constants.ENCODING_UTF8);
+    ObjectStream<TokenSample> sampleStream = new TokenSampleStream(lineStream);
 
-		TrainingParameters trainParams = new TrainingParameters();
-		trainParams.put(TrainingParameters.CUTOFF_PARAM, Integer.toString(cutOff));
-		trainParams.put(TrainingParameters.ITERATIONS_PARAM, Integer.toString(iterations));
-		trainParams.put(TrainingParameters.ALGORITHM_PARAM, TrainingAlgorithm.PERCEPTRON.getAlgorithm());
+    TrainingParameters trainParams = new TrainingParameters();
+    trainParams.put(TrainingParameters.CUTOFF_PARAM, Integer.toString(cutOff));
+    trainParams.put(TrainingParameters.ITERATIONS_PARAM, Integer.toString(iterations));
+    trainParams.put(TrainingParameters.ALGORITHM_PARAM, TrainingAlgorithm.PERCEPTRON.getAlgorithm());
 
-		TokenizerFactory tokenizerFactory = new TokenizerFactory(language.getAlpha3().toString(), new Dictionary(), false, null);
+    TokenizerFactory tokenizerFactory = new TokenizerFactory(language.getAlpha3().toString(), new Dictionary(), false, null);
 
-		// Set the encryption key.
-		OpenNLPEncryptionFactory.getDefault().setKey(encryptionKey);
+    // Set the encryption key.
+    OpenNLPEncryptionFactory.getDefault().setKey(encryptionKey);
 
-		TokenizerModel model = TokenizerME.train(sampleStream, tokenizerFactory, trainParams);
+    TokenizerModel model = TokenizerME.train(sampleStream, tokenizerFactory, trainParams);
 
-		BufferedOutputStream modelOut = null;
+    BufferedOutputStream modelOut = null;
 
-		String modelId = "";
+    String modelId = "";
 
-		try {
+    try {
 
-			modelOut = new BufferedOutputStream(new FileOutputStream(modelFile));
-			modelId = model.serialize(modelOut);
+      modelOut = new BufferedOutputStream(new FileOutputStream(modelFile));
+      modelId = model.serialize(modelOut);
 
-		} finally {
+    } finally {
 
-			if (modelOut != null) {
-				modelOut.close();
-			}
+      if (modelOut != null) {
+        modelOut.close();
+      }
 
-			lineStream.close();
+      lineStream.close();
 
-			// Clear the encryption key.
-			OpenNLPEncryptionFactory.getDefault().clearKey();
+      // Clear the encryption key.
+      OpenNLPEncryptionFactory.getDefault().clearKey();
 
-		}
+    }
 
-		return modelId;
+    return modelId;
 
-	}
+  }
 
 }

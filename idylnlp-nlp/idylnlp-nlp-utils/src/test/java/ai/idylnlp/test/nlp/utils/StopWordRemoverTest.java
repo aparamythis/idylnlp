@@ -27,38 +27,38 @@ import ai.idylnlp.nlp.utils.EnglishStopWordRemover;
 
 public class StopWordRemoverTest {
 
-	@Test
-	public void isStopWordTest() {
+  @Test
+  public void isStopWordTest() {
 
-		EnglishStopWordRemover remover = new EnglishStopWordRemover();
+    EnglishStopWordRemover remover = new EnglishStopWordRemover();
 
-		assertTrue(remover.isStopWord("the"));
-		assertTrue(remover.isStopWord("a"));
-		assertTrue(remover.isStopWord("is"));
-		assertTrue(remover.isStopWord("an"));
-		assertFalse(remover.isStopWord("couch"));
-		assertFalse(remover.isStopWord("chair"));
+    assertTrue(remover.isStopWord("the"));
+    assertTrue(remover.isStopWord("a"));
+    assertTrue(remover.isStopWord("is"));
+    assertTrue(remover.isStopWord("an"));
+    assertFalse(remover.isStopWord("couch"));
+    assertFalse(remover.isStopWord("chair"));
 
-	}
+  }
 
-	@Test
-	public void removeStopWordsTest() {
+  @Test
+  public void removeStopWordsTest() {
 
-		Collection<String> input = new LinkedList<String>();
-		input.add("This");
-		input.add("is");
-		input.add("the");
-		input.add("best");
-		input.add("day");
-		input.add("ever");
+    Collection<String> input = new LinkedList<String>();
+    input.add("This");
+    input.add("is");
+    input.add("the");
+    input.add("best");
+    input.add("day");
+    input.add("ever");
 
-		EnglishStopWordRemover remover = new EnglishStopWordRemover();
-		Collection<String> output = remover.removeStopWords(input);
+    EnglishStopWordRemover remover = new EnglishStopWordRemover();
+    Collection<String> output = remover.removeStopWords(input);
 
-		assertFalse(output.contains("this"));
-		assertFalse(output.contains("is"));
-		assertFalse(output.contains("the"));
+    assertFalse(output.contains("this"));
+    assertFalse(output.contains("is"));
+    assertFalse(output.contains("the"));
 
-	}
+  }
 
 }

@@ -18,6 +18,6 @@ package ai.idylnlp.model.nlp;
 @FunctionalInterface
 public interface SentenceSanitizer {
 
-	public String sanitize(String sentence);
+  public String sanitize(String sentence);
 
 }

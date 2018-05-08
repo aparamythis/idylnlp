@@ -27,41 +27,41 @@ import java.util.Map;
  */
 public class DocumentClassificationTrainingResponse {
 
-	private String modelId;
-	private Map<DocumentClassificationFile, File> files;
-	private List<String> categories;
+  private String modelId;
+  private Map<DocumentClassificationFile, File> files;
+  private List<String> categories;
 
-	public DocumentClassificationTrainingResponse(String modelId, Map<DocumentClassificationFile, File> files,
-			List<String> categories) {
+  public DocumentClassificationTrainingResponse(String modelId, Map<DocumentClassificationFile, File> files,
+      List<String> categories) {
 
-		this.modelId = modelId;
-		this.files = files;
-		this.categories = categories;
+    this.modelId = modelId;
+    this.files = files;
+    this.categories = categories;
 
-	}
+  }
 
-	public String getModelId() {
-		return modelId;
-	}
+  public String getModelId() {
+    return modelId;
+  }
 
-	public void setModelId(String modelId) {
-		this.modelId = modelId;
-	}
+  public void setModelId(String modelId) {
+    this.modelId = modelId;
+  }
 
-	public Map<DocumentClassificationFile, File> getFiles() {
-		return files;
-	}
+  public Map<DocumentClassificationFile, File> getFiles() {
+    return files;
+  }
 
-	public void setFiles(Map<DocumentClassificationFile, File> files) {
-		this.files = files;
-	}
+  public void setFiles(Map<DocumentClassificationFile, File> files) {
+    this.files = files;
+  }
 
-	public List<String> getCategories() {
-		return categories;
-	}
+  public List<String> getCategories() {
+    return categories;
+  }
 
-	public void setCategories(List<String> categories) {
-		this.categories = categories;
-	}
+  public void setCategories(List<String> categories) {
+    this.categories = categories;
+  }
 
 }

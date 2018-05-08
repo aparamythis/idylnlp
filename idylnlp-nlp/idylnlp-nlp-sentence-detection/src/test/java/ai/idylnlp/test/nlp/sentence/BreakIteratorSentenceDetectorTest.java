@@ -24,45 +24,45 @@ import ai.idylnlp.nlp.sentence.BreakIteratorSentenceDetector;
 
 public class BreakIteratorSentenceDetectorTest {
 
-	final String sentences = "Lorem ipsum dolor sit amet, consectetur adipiscing"
-			+ " elit, sed do eiusmod tempor incididunt ut labore et dolore magna"
-			+ " aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco"
-			+ " laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure"
-			+ " dolor in reprehenderit in voluptate velit esse cillum dolore eu"
-			+ " fugiat nulla pariatur. Excepteur sint occaecat cupidatat non"
-			+ " proident, sunt in culpa qui officia deserunt mollit anim id est"
-			+ " laborum.";
+  final String sentences = "Lorem ipsum dolor sit amet, consectetur adipiscing"
+      + " elit, sed do eiusmod tempor incididunt ut labore et dolore magna"
+      + " aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco"
+      + " laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure"
+      + " dolor in reprehenderit in voluptate velit esse cillum dolore eu"
+      + " fugiat nulla pariatur. Excepteur sint occaecat cupidatat non"
+      + " proident, sunt in culpa qui officia deserunt mollit anim id est"
+      + " laborum.";
 
-	@Test
-	public void sentenceDetectTest() {
+  @Test
+  public void sentenceDetectTest() {
 
-		BreakIteratorSentenceDetector sd = new BreakIteratorSentenceDetector(
-				LanguageCode.en);
+    BreakIteratorSentenceDetector sd = new BreakIteratorSentenceDetector(
+        LanguageCode.en);
 
-		String[] results = sd.sentDetect(sentences);
+    String[] results = sd.sentDetect(sentences);
 
-		Assert.assertEquals(4, results.length);
+    Assert.assertEquals(4, results.length);
 
-		String[] tokens = new String[] {
-				"Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
-						+ "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
-				"Ut enim ad minim veniam, quis nostrud exercitation ullamco "
-						+ "laboris nisi ut aliquip ex ea commodo consequat. ",
-				"Duis aute irure dolor in reprehenderit in voluptate velit esse "
-						+ "cillum dolore eu fugiat nulla pariatur. ",
-				"Excepteur sint occaecat cupidatat non proident, sunt in culpa qui "
-						+ "officia deserunt mollit anim id est laborum." };
+    String[] tokens = new String[] {
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
+            + "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+        "Ut enim ad minim veniam, quis nostrud exercitation ullamco "
+            + "laboris nisi ut aliquip ex ea commodo consequat. ",
+        "Duis aute irure dolor in reprehenderit in voluptate velit esse "
+            + "cillum dolore eu fugiat nulla pariatur. ",
+        "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui "
+            + "officia deserunt mollit anim id est laborum." };
 
-		Assert.assertArrayEquals(tokens, results);
+    Assert.assertArrayEquals(tokens, results);
 
-	}
+  }
 
-	@Test
-	public void invalidLanguage() {
+  @Test
+  public void invalidLanguage() {
 
-		BreakIteratorSentenceDetector sd = new BreakIteratorSentenceDetector(
-				"what");
+    BreakIteratorSentenceDetector sd = new BreakIteratorSentenceDetector(
+        "what");
 
-	}
+  }
 
 }

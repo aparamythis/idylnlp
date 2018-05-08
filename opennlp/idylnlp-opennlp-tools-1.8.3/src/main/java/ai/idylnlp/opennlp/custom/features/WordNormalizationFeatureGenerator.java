@@ -34,52 +34,52 @@ import opennlp.tools.util.featuregen.AdaptiveFeatureGenerator;
  */
 public class WordNormalizationFeatureGenerator implements AdaptiveFeatureGenerator {
 
-	private Lemmatizer modelLemmatizer;
-	private Lemmatizer dictionaryLemmatizer;
-	private PartsOfSpeechTagger partsOfSpeechTagger;
+  private Lemmatizer modelLemmatizer;
+  private Lemmatizer dictionaryLemmatizer;
+  private PartsOfSpeechTagger partsOfSpeechTagger;
 
-	public WordNormalizationFeatureGenerator(PartsOfSpeechTagger partsOfSpeechTagger, Lemmatizer modelLemmatizer, Lemmatizer dictionaryLemmatizer) {
+  public WordNormalizationFeatureGenerator(PartsOfSpeechTagger partsOfSpeechTagger, Lemmatizer modelLemmatizer, Lemmatizer dictionaryLemmatizer) {
 
-		this.modelLemmatizer = modelLemmatizer;
-		this.dictionaryLemmatizer = dictionaryLemmatizer;
-		this.partsOfSpeechTagger = partsOfSpeechTagger;
+    this.modelLemmatizer = modelLemmatizer;
+    this.dictionaryLemmatizer = dictionaryLemmatizer;
+    this.partsOfSpeechTagger = partsOfSpeechTagger;
 
-	}
+  }
 
-	@Override
-	public void createFeatures(List<String> features, String[] tokens, int index, String[] previousOutcomes) {
+  @Override
+  public void createFeatures(List<String> features, String[] tokens, int index, String[] previousOutcomes) {
 
-		// A partsOfSpeechTagger is required for both lemmatizers.
+    // A partsOfSpeechTagger is required for both lemmatizers.
 
-		if(partsOfSpeechTagger != null) {
+    if(partsOfSpeechTagger != null) {
 
-			List<PartsOfSpeechToken> partsOfSpeechTokens = partsOfSpeechTagger.tag(tokens);
+      List<PartsOfSpeechToken> partsOfSpeechTokens = partsOfSpeechTagger.tag(tokens);
 
-			String[] tags = PartsOfSpeechToken.getTokens(partsOfSpeechTokens);
+      String[] tags = PartsOfSpeechToken.getTokens(partsOfSpeechTokens);
 
-			if(modelLemmatizer != null) {
-				tokens = modelLemmatizer.lemmatize(tokens, tags);
-			}
+      if(modelLemmatizer != null) {
+        tokens = modelLemmatizer.lemmatize(tokens, tags);
+      }
 
-			if(dictionaryLemmatizer != null) {
-				tokens = dictionaryLemmatizer.lemmatize(tokens, tags);
-			}
+      if(dictionaryLemmatizer != null) {
+        tokens = dictionaryLemmatizer.lemmatize(tokens, tags);
+      }
 
-		}
+    }
 
-		features.add("wnormal=" + normalize(tokens[index]));
+    features.add("wnormal=" + normalize(tokens[index]));
 
-	}
+  }
 
-	private String normalize(String token) {
+  private String normalize(String token) {
 
-		String normalizedToken = token.replaceAll("([A-Z])", "A");
-		normalizedToken = normalizedToken.replaceAll("([a-z])", "a");
-		normalizedToken = normalizedToken.replaceAll("([0-9])", "0");
+    String normalizedToken = token.replaceAll("([A-Z])", "A");
+    normalizedToken = normalizedToken.replaceAll("([a-z])", "a");
+    normalizedToken = normalizedToken.replaceAll("([0-9])", "0");
 
-		return normalizedToken;
+    return normalizedToken;
 
-	}
+  }
 
 
 }

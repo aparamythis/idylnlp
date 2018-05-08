@@ -29,60 +29,60 @@ import org.apache.logging.log4j.Logger;
  */
 public enum EntityOrder {
 
-	CONFIDENCE("confidence"),
+  CONFIDENCE("confidence"),
 
-	TEXT("text"),
+  TEXT("text"),
 
-	OCCURRENCE("occurrence");
+  OCCURRENCE("occurrence");
 
-	private static final Logger LOGGER = LogManager.getLogger(EntityOrder.class);
+  private static final Logger LOGGER = LogManager.getLogger(EntityOrder.class);
 
-	private String order;
+  private String order;
 
-	private EntityOrder(String order) {
-		this.order = order;
-	}
+  private EntityOrder(String order) {
+    this.order = order;
+  }
 
-	/**
-	 * Gets an {@link EntityOrder} by value.
-	 * @param order The sort order.
-	 * @return An {@link EntityOrder}.
-	 */
-	public static EntityOrder fromValue(String order) {
+  /**
+   * Gets an {@link EntityOrder} by value.
+   * @param order The sort order.
+   * @return An {@link EntityOrder}.
+   */
+  public static EntityOrder fromValue(String order) {
 
-		if(order.equalsIgnoreCase("confidence")) {
-			return CONFIDENCE;
-		} else if(order.equalsIgnoreCase("text")) {
-			return TEXT;
-		} else if(order.equalsIgnoreCase("occurrence")) {
-			return OCCURRENCE;
-		}
+    if(order.equalsIgnoreCase("confidence")) {
+      return CONFIDENCE;
+    } else if(order.equalsIgnoreCase("text")) {
+      return TEXT;
+    } else if(order.equalsIgnoreCase("occurrence")) {
+      return OCCURRENCE;
+    }
 
-		// Default to confidence when it is an invalid order.
-		LOGGER.warn("No entity sort order for {}. Entities will be sorted by confidence.", order);
-		return CONFIDENCE;
+    // Default to confidence when it is an invalid order.
+    LOGGER.warn("No entity sort order for {}. Entities will be sorted by confidence.", order);
+    return CONFIDENCE;
 
-	}
+  }
 
-	/**
-	 * Gets the allowed sort orders.
-	 * @return A list of allowed sort orders.
-	 */
-	public static List<String> getOrders() {
+  /**
+   * Gets the allowed sort orders.
+   * @return A list of allowed sort orders.
+   */
+  public static List<String> getOrders() {
 
-		List<String> orders = new LinkedList<String>();
+    List<String> orders = new LinkedList<String>();
 
-		for(EntityOrder order : EntityOrder.values()) {
-			orders.add(order.toString());
-		}
+    for(EntityOrder order : EntityOrder.values()) {
+      orders.add(order.toString());
+    }
 
-		return orders;
+    return orders;
 
-	}
+  }
 
-	@Override
-	public String toString() {
-		return order;
-	}
+  @Override
+  public String toString() {
+    return order;
+  }
 
 }

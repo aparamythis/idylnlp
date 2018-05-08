@@ -23,12 +23,12 @@ package ai.idylnlp.model.nlp.strings;
  */
 public abstract interface StringMetrics {
 
-	/**
-	 * Calculate the distance or similarity between two strings.
-	 * @param s An input string.
-	 * @param t An input string.
-	 * @return The distance or similarity between the two input strings.
-	 */
-	double calculate(CharSequence s, CharSequence t);
+  /**
+   * Calculate the distance or similarity between two strings.
+   * @param s An input string.
+   * @param t An input string.
+   * @return The distance or similarity between the two input strings.
+   */
+  double calculate(CharSequence s, CharSequence t);
 
 }

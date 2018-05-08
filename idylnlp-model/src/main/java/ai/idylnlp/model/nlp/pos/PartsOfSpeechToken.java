@@ -20,36 +20,36 @@ import java.util.List;
 
 public class PartsOfSpeechToken {
 
-	private String token;
-	private String pos;
+  private String token;
+  private String pos;
 
-	public PartsOfSpeechToken(String token, String pos) {
+  public PartsOfSpeechToken(String token, String pos) {
 
-		this.token = token;
-		this.pos = pos;
+    this.token = token;
+    this.pos = pos;
 
-	}
+  }
 
-	public static String[] getTokens(List<PartsOfSpeechToken> partsOfSpeechTokens) {
+  public static String[] getTokens(List<PartsOfSpeechToken> partsOfSpeechTokens) {
 
-		List<String> tags = new LinkedList<String>();
+    List<String> tags = new LinkedList<String>();
 
-		for(PartsOfSpeechToken partsOfSpeechToken : partsOfSpeechTokens) {
+    for(PartsOfSpeechToken partsOfSpeechToken : partsOfSpeechTokens) {
 
-			tags.add(partsOfSpeechToken.getPos());
+      tags.add(partsOfSpeechToken.getPos());
 
-		}
+    }
 
-		return tags.toArray(new String[tags.size()]);
+    return tags.toArray(new String[tags.size()]);
 
-	}
+  }
 
-	public String getToken() {
-		return token;
-	}
+  public String getToken() {
+    return token;
+  }
 
-	public String getPos() {
-		return pos;
-	}
+  public String getPos() {
+    return pos;
+  }
 
 }

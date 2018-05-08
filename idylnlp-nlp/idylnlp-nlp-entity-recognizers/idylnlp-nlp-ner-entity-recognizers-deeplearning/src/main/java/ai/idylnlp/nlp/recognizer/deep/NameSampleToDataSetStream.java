@@ -43,43 +43,43 @@ public class NameSampleToDataSetStream extends FilterObjectStream<NameSample, Da
 
     public NameSampleToDataSetStream(ObjectStream<NameSample> samples, WordVectors wordVectors, int windowSize, int vectorSize, String[] labels) {
 
-    	super(samples);
+      super(samples);
 
-    	this.wordVectors = wordVectors;
-    	this.windowSize = windowSize;
-    	this.vectorSize = vectorSize;
-    	this.labels = labels;
+      this.wordVectors = wordVectors;
+      this.windowSize = windowSize;
+      this.vectorSize = vectorSize;
+      this.labels = labels;
 
     }
 
     @Override
     public final DataSet read() throws IOException {
 
-    	if(dataSets.hasNext()) {
+      if(dataSets.hasNext()) {
 
-    		return dataSets.next();
+        return dataSets.next();
 
-    	} else {
+      } else {
 
-    		NameSample sample;
+        NameSample sample;
 
-    		while (!dataSets.hasNext() && (sample = samples.read()) != null) {
-    			dataSets = createDataSets(sample);
-    		}
+        while (!dataSets.hasNext() && (sample = samples.read()) != null) {
+          dataSets = createDataSets(sample);
+        }
 
-    		if(dataSets.hasNext()) {
-    			return read();
-    		}
+        if(dataSets.hasNext()) {
+          return read();
+        }
 
-    	}
+      }
 
-    	return null;
+      return null;
 
     }
 
     private Iterator<DataSet> createDataSets(NameSample sample) {
 
-    	TokenizerFactory tokenizerFactory = new DefaultTokenizerFactory();
+      TokenizerFactory tokenizerFactory = new DefaultTokenizerFactory();
         tokenizerFactory.setTokenPreProcessor(new CommonPreprocessor());
 
         String s = String.join(" ", sample.getSentence());
@@ -101,11 +101,11 @@ public class NameSampleToDataSetStream extends FilterObjectStream<NameSample, Da
         List<DataSet> dataSetList = new ArrayList<>();
 
         for (int i = 0; i < features.size(); i++) {
-        	dataSetList.add(new DataSet(features.get(i), labels.get(i)));
+          dataSetList.add(new DataSet(features.get(i), labels.get(i)));
         }
 
         return dataSetList.iterator();
 
-	}
+  }
 
 }

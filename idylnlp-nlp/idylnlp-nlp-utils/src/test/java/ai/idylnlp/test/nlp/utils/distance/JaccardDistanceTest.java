@@ -23,15 +23,15 @@ import ai.idylnlp.nlp.utils.distance.JaccardDistance;
 
 public class JaccardDistanceTest {
 
-	@Test
-	public void distance() {
+  @Test
+  public void distance() {
 
-		JaccardDistance distance = new JaccardDistance();
+    JaccardDistance distance = new JaccardDistance();
 
-		double i = distance.calculate("test", "tst");
+    double i = distance.calculate("test", "tst");
 
-		assertEquals(0.33, i, 0);
+    assertEquals(0.33, i, 0);
 
-	}
+  }
 
 }

@@ -23,42 +23,42 @@ import com.google.gson.annotations.SerializedName;
 
 public class SparkTraining {
 
-	@SerializedName("AveragingFrequency")
-	@Expose
-	private int averagingFrequency = 5;
+  @SerializedName("AveragingFrequency")
+  @Expose
+  private int averagingFrequency = 5;
 
-	@SerializedName("BatchSizePerWorker")
-	@Expose
-	private int batchSizePerWorker = 32;
+  @SerializedName("BatchSizePerWorker")
+  @Expose
+  private int batchSizePerWorker = 32;
 
-	@SerializedName("WorkerPrefetchNumBatches")
-	@Expose
-	private int workerPrefetchNumBatches = 2;
+  @SerializedName("WorkerPrefetchNumBatches")
+  @Expose
+  private int workerPrefetchNumBatches = 2;
 
-	@SerializedName("EnableSparkTraining")
-	@Expose
-	private boolean enableSparkTraining = false;
+  @SerializedName("EnableSparkTraining")
+  @Expose
+  private boolean enableSparkTraining = false;
 
-	@SerializedName("Master")
-	@Expose
-	private String master = "local[*]";
+  @SerializedName("Master")
+  @Expose
+  private String master = "local[*]";
 
-	public SparkTraining() {
+  public SparkTraining() {
 
-	}
+  }
 
-	public SparkTraining(int averagingFrequency, int batchSizePerWorker, int workerPrefetchNumBatches,
-			String master) {
+  public SparkTraining(int averagingFrequency, int batchSizePerWorker, int workerPrefetchNumBatches,
+      String master) {
 
-		this.averagingFrequency = averagingFrequency;
-		this.batchSizePerWorker = batchSizePerWorker;
-		this.workerPrefetchNumBatches = workerPrefetchNumBatches;
-		this.enableSparkTraining = true;
-		this.master = master;
+    this.averagingFrequency = averagingFrequency;
+    this.batchSizePerWorker = batchSizePerWorker;
+    this.workerPrefetchNumBatches = workerPrefetchNumBatches;
+    this.enableSparkTraining = true;
+    this.master = master;
 
-	}
+  }
 
-	@Override
+  @Override
     public boolean equals(Object o) {
       return EqualsBuilder.reflectionEquals(this, o);
     }
@@ -68,44 +68,44 @@ public class SparkTraining {
         return HashCodeBuilder.reflectionHashCode(this);
     }
 
-	public int getAveragingFrequency() {
-		return averagingFrequency;
-	}
+  public int getAveragingFrequency() {
+    return averagingFrequency;
+  }
 
-	public void setAveragingFrequency(int averagingFrequency) {
-		this.averagingFrequency = averagingFrequency;
-	}
+  public void setAveragingFrequency(int averagingFrequency) {
+    this.averagingFrequency = averagingFrequency;
+  }
 
-	public int getBatchSizePerWorker() {
-		return batchSizePerWorker;
-	}
+  public int getBatchSizePerWorker() {
+    return batchSizePerWorker;
+  }
 
-	public void setBatchSizePerWorker(int batchSizePerWorker) {
-		this.batchSizePerWorker = batchSizePerWorker;
-	}
+  public void setBatchSizePerWorker(int batchSizePerWorker) {
+    this.batchSizePerWorker = batchSizePerWorker;
+  }
 
-	public int getWorkerPrefetchNumBatches() {
-		return workerPrefetchNumBatches;
-	}
+  public int getWorkerPrefetchNumBatches() {
+    return workerPrefetchNumBatches;
+  }
 
-	public void setWorkerPrefetchNumBatches(int workerPrefetchNumBatches) {
-		this.workerPrefetchNumBatches = workerPrefetchNumBatches;
-	}
+  public void setWorkerPrefetchNumBatches(int workerPrefetchNumBatches) {
+    this.workerPrefetchNumBatches = workerPrefetchNumBatches;
+  }
 
-	public boolean isEnableSparkTraining() {
-		return enableSparkTraining;
-	}
+  public boolean isEnableSparkTraining() {
+    return enableSparkTraining;
+  }
 
-	public void setEnableSparkTraining(boolean enableSparkTraining) {
-		this.enableSparkTraining = enableSparkTraining;
-	}
+  public void setEnableSparkTraining(boolean enableSparkTraining) {
+    this.enableSparkTraining = enableSparkTraining;
+  }
 
-	public String getMaster() {
-		return master;
-	}
+  public String getMaster() {
+    return master;
+  }
 
-	public void setMaster(String master) {
-		this.master = master;
-	}
+  public void setMaster(String master) {
+    this.master = master;
+  }
 
 }

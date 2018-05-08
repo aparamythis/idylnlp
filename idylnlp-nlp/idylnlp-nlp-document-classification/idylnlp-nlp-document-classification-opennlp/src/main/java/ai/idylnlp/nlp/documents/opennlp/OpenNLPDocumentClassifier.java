@@ -49,139 +49,139 @@ import opennlp.tools.tokenize.WhitespaceTokenizer;
  *
  */
 public class OpenNLPDocumentClassifier
-	implements DocumentClassifier<OpenNLPDocumentClassifierConfiguration, OpenNLPDocumentClassificationRequest> {
+  implements DocumentClassifier<OpenNLPDocumentClassifierConfiguration, OpenNLPDocumentClassificationRequest> {
 
-	private static final Logger LOGGER = LogManager.getLogger(OpenNLPDocumentClassifier.class);
+  private static final Logger LOGGER = LogManager.getLogger(OpenNLPDocumentClassifier.class);
 
-	private OpenNLPDocumentClassifierConfiguration configuration;
-	private Map<LanguageCode, DocumentCategorizerME> doccatModelCache;
+  private OpenNLPDocumentClassifierConfiguration configuration;
+  private Map<LanguageCode, DocumentCategorizerME> doccatModelCache;
 
-	/**
-	 * Creates a new OpenNLP document classifier.
-	 * @param configuration A {@link OpenNLPDocumentClassifierConfiguration}.
-	 * @throws DocumentClassifierException Thrown if the models cannot be preloaded.
-	 */
-	public OpenNLPDocumentClassifier(OpenNLPDocumentClassifierConfiguration configuration) throws DocumentClassifierException {
+  /**
+   * Creates a new OpenNLP document classifier.
+   * @param configuration A {@link OpenNLPDocumentClassifierConfiguration}.
+   * @throws DocumentClassifierException Thrown if the models cannot be preloaded.
+   */
+  public OpenNLPDocumentClassifier(OpenNLPDocumentClassifierConfiguration configuration) throws DocumentClassifierException {
 
-		this.configuration = configuration;
-		this.doccatModelCache = new HashMap<LanguageCode, DocumentCategorizerME>();
+    this.configuration = configuration;
+    this.doccatModelCache = new HashMap<LanguageCode, DocumentCategorizerME>();
 
-		if(configuration.isPreloadModels()) {
+    if(configuration.isPreloadModels()) {
 
-			LOGGER.info("Preloading the document classification models.");
+      LOGGER.info("Preloading the document classification models.");
 
-			// Preload the models.
-			for(LanguageCode languageCode : configuration.getDoccatModels().keySet()) {
+      // Preload the models.
+      for(LanguageCode languageCode : configuration.getDoccatModels().keySet()) {
 
-				try {
+        try {
 
-					getDocumentCategorizer(languageCode);
+          getDocumentCategorizer(languageCode);
 
-				} catch (FileNotFoundException ex) {
+        } catch (FileNotFoundException ex) {
 
-					final String fileName = configuration.getDoccatModels().get(languageCode).getAbsolutePath();
+          final String fileName = configuration.getDoccatModels().get(languageCode).getAbsolutePath();
 
-					LOGGER.error("The model file {} was not found.", ex, fileName);
+          LOGGER.error("The model file {} was not found.", ex, fileName);
 
-				}
+        }
 
-			}
+      }
 
-		}
+    }
 
-	}
+  }
 
-	@Override
-	public DocumentClassificationResponse classify(OpenNLPDocumentClassificationRequest request) throws DocumentClassifierException {
+  @Override
+  public DocumentClassificationResponse classify(OpenNLPDocumentClassificationRequest request) throws DocumentClassifierException {
 
-		try {
+    try {
 
-			DocumentCategorizerME categorizer = getDocumentCategorizer(request.getLanguageCode());
+      DocumentCategorizerME categorizer = getDocumentCategorizer(request.getLanguageCode());
 
-			// TODO: Tokenize the text.
-			final String tokens[] = WhitespaceTokenizer.INSTANCE.tokenize(request.getText());
+      // TODO: Tokenize the text.
+      final String tokens[] = WhitespaceTokenizer.INSTANCE.tokenize(request.getText());
 
-			final double[] outcomes = categorizer.categorize(tokens);
+      final double[] outcomes = categorizer.categorize(tokens);
 
-			Map<String, Double> scores = new HashMap<>();
+      Map<String, Double> scores = new HashMap<>();
 
-			for(int i = 0; i < outcomes.length; i++) {
+      for(int i = 0; i < outcomes.length; i++) {
 
-				scores.put(categorizer.getCategory(i), outcomes[i]);
+        scores.put(categorizer.getCategory(i), outcomes[i]);
 
-			}
+      }
 
-			return new DocumentClassificationResponse(new DocumentClassificationScores(scores));
+      return new DocumentClassificationResponse(new DocumentClassificationScores(scores));
 
-		} catch (Exception ex) {
+    } catch (Exception ex) {
 
-			throw new DocumentClassifierException("Unable to classify document.", ex);
+      throw new DocumentClassifierException("Unable to classify document.", ex);
 
-		}
+    }
 
-	}
+  }
 
-	private DocumentCategorizerME getDocumentCategorizer(LanguageCode languageCode) throws DocumentClassifierException, FileNotFoundException {
+  private DocumentCategorizerME getDocumentCategorizer(LanguageCode languageCode) throws DocumentClassifierException, FileNotFoundException {
 
-		LOGGER.info("Loading document classification model for language {}.", languageCode.getAlpha3().toString());
+    LOGGER.info("Loading document classification model for language {}.", languageCode.getAlpha3().toString());
 
-		// Has this model been loaded before?
-		DocumentCategorizerME documentCategorizer = doccatModelCache.get(languageCode);
+    // Has this model been loaded before?
+    DocumentCategorizerME documentCategorizer = doccatModelCache.get(languageCode);
 
-		if(documentCategorizer == null) {
+    if(documentCategorizer == null) {
 
-			final File file = configuration.getDoccatModels().get(languageCode);
+      final File file = configuration.getDoccatModels().get(languageCode);
 
-			if(file != null) {
+      if(file != null) {
 
-				if(file.exists()) {
+        if(file.exists()) {
 
-					// The model has not been loaded so we will load it now.
-					final InputStream is = new FileInputStream(file);
+          // The model has not been loaded so we will load it now.
+          final InputStream is = new FileInputStream(file);
 
-					try {
+          try {
 
-						final DoccatModel doccatModel = new DoccatModel(is);
+            final DoccatModel doccatModel = new DoccatModel(is);
 
-						documentCategorizer = new DocumentCategorizerME(doccatModel);
+            documentCategorizer = new DocumentCategorizerME(doccatModel);
 
-						doccatModelCache.put(languageCode, documentCategorizer);
+            doccatModelCache.put(languageCode, documentCategorizer);
 
-					} catch (IOException ex) {
+          } catch (IOException ex) {
 
-						LOGGER.error("Unable to perform document classification.", ex);
+            LOGGER.error("Unable to perform document classification.", ex);
 
-						throw new DocumentClassifierException("Unable to perform document classification.", ex);
+            throw new DocumentClassifierException("Unable to perform document classification.", ex);
 
-					} finally {
+          } finally {
 
-						IOUtils.closeQuietly(is);
+            IOUtils.closeQuietly(is);
 
-					}
+          }
 
-				} else {
+        } else {
 
-					throw new DocumentClassifierException("The model file for language " + languageCode.getAlpha3().toString() + " does not exist.");
+          throw new DocumentClassifierException("The model file for language " + languageCode.getAlpha3().toString() + " does not exist.");
 
-				}
+        }
 
-			} else {
+      } else {
 
-				throw new DocumentClassifierException("No model file for language " + languageCode.getAlpha3().toString() + ".");
+        throw new DocumentClassifierException("No model file for language " + languageCode.getAlpha3().toString() + ".");
 
-			}
+      }
 
-		}
+    }
 
-		return documentCategorizer;
+    return documentCategorizer;
 
-	}
+  }
 
-	@Override
-	public DocumentClassificationEvaluationResponse evaluate(DocumentClassificationEvaluationRequest request)
-			throws DocumentClassifierException {
-		// TODO: Implement this.
-		return null;
-	}
+  @Override
+  public DocumentClassificationEvaluationResponse evaluate(DocumentClassificationEvaluationRequest request)
+      throws DocumentClassifierException {
+    // TODO: Implement this.
+    return null;
+  }
 
 }

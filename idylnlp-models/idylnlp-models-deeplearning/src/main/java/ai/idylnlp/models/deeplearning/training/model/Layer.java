@@ -26,59 +26,59 @@ import com.google.gson.annotations.SerializedName;
 
 public class Layer {
 
-	@SerializedName("LearningRate")
-	@Expose
-	private double learningRate = 1e-1;
+  @SerializedName("LearningRate")
+  @Expose
+  private double learningRate = 1e-1;
 
-	@SerializedName("BiasLearningRate")
-	@Expose
-	private double biasLearningRate = Double.NaN;
+  @SerializedName("BiasLearningRate")
+  @Expose
+  private double biasLearningRate = Double.NaN;
 
-	@SerializedName("LearningRateDecayPolicy")
-	@Expose
-	private String learningRateDecayPolicy = "schedule";
+  @SerializedName("LearningRateDecayPolicy")
+  @Expose
+  private String learningRateDecayPolicy = "schedule";
 
-	@SerializedName("LearningRateSchedule")
-	@Expose
-	private Map<String, Double> learningRateSchedule;
+  @SerializedName("LearningRateSchedule")
+  @Expose
+  private Map<String, Double> learningRateSchedule;
 
-	public Layer() {
+  public Layer() {
 
-	}
+  }
 
-	public Layer(double learningRate) {
+  public Layer(double learningRate) {
 
-		this.learningRate = learningRate;
+    this.learningRate = learningRate;
 
-	}
+  }
 
-	public Layer(double learningRate, double biasLearningRate, Map<String, Double> learningRateSchedule) {
+  public Layer(double learningRate, double biasLearningRate, Map<String, Double> learningRateSchedule) {
 
-		this.learningRate = learningRate;
-		this.biasLearningRate = biasLearningRate;
-		this.learningRateSchedule = learningRateSchedule;
+    this.learningRate = learningRate;
+    this.biasLearningRate = biasLearningRate;
+    this.learningRateSchedule = learningRateSchedule;
 
-	}
+  }
 
-	public Map<Integer, Double> getLearningRateScheduleParam() {
+  public Map<Integer, Double> getLearningRateScheduleParam() {
 
-		Map<Integer, Double> param = new HashMap<Integer, Double>();
+    Map<Integer, Double> param = new HashMap<Integer, Double>();
 
-		if(learningRateSchedule != null) {
+    if(learningRateSchedule != null) {
 
-			for(String key : learningRateSchedule.keySet()) {
+      for(String key : learningRateSchedule.keySet()) {
 
-				param.put(Integer.valueOf(key), learningRateSchedule.get(key));
+        param.put(Integer.valueOf(key), learningRateSchedule.get(key));
 
-			}
+      }
 
-		}
+    }
 
-		return param;
+    return param;
 
-	}
+  }
 
-	@Override
+  @Override
     public boolean equals(Object o) {
       return EqualsBuilder.reflectionEquals(this, o);
     }
@@ -88,36 +88,36 @@ public class Layer {
         return HashCodeBuilder.reflectionHashCode(this);
     }
 
-	public double getLearningRate() {
-		return learningRate;
-	}
+  public double getLearningRate() {
+    return learningRate;
+  }
 
-	public void setLearningRate(double learningRate) {
-		this.learningRate = learningRate;
-	}
+  public void setLearningRate(double learningRate) {
+    this.learningRate = learningRate;
+  }
 
-	public double getBiasLearningRate() {
-		return biasLearningRate;
-	}
+  public double getBiasLearningRate() {
+    return biasLearningRate;
+  }
 
-	public void setBiasLearningRate(double biasLearningRate) {
-		this.biasLearningRate = biasLearningRate;
-	}
+  public void setBiasLearningRate(double biasLearningRate) {
+    this.biasLearningRate = biasLearningRate;
+  }
 
-	public Map<String, Double> getLearningRateSchedule() {
-		return learningRateSchedule;
-	}
+  public Map<String, Double> getLearningRateSchedule() {
+    return learningRateSchedule;
+  }
 
-	public void setLearningRateSchedule(Map<String, Double> learningRateSchedule) {
-		this.learningRateSchedule = learningRateSchedule;
-	}
+  public void setLearningRateSchedule(Map<String, Double> learningRateSchedule) {
+    this.learningRateSchedule = learningRateSchedule;
+  }
 
-	public String getLearningRateDecayPolicy() {
-		return learningRateDecayPolicy;
-	}
+  public String getLearningRateDecayPolicy() {
+    return learningRateDecayPolicy;
+  }
 
-	public void setLearningRateDecayPolicy(String learningRateDecayPolicy) {
-		this.learningRateDecayPolicy = learningRateDecayPolicy;
-	}
+  public void setLearningRateDecayPolicy(String learningRateDecayPolicy) {
+    this.learningRateDecayPolicy = learningRateDecayPolicy;
+  }
 
 }

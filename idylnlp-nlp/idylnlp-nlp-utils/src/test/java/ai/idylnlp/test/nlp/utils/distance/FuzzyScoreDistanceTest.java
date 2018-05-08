@@ -25,15 +25,15 @@ import ai.idylnlp.nlp.utils.distance.FuzzyScoreDistance;
 
 public class FuzzyScoreDistanceTest {
 
-	@Test
-	public void distance1() {
+  @Test
+  public void distance1() {
 
-		FuzzyScoreDistance distance = new FuzzyScoreDistance(Locale.US);
+    FuzzyScoreDistance distance = new FuzzyScoreDistance(Locale.US);
 
-		double i = distance.calculate("test", "tst");
+    double i = distance.calculate("test", "tst");
 
-		assertEquals(5, i, 0);
+    assertEquals(5, i, 0);
 
-	}
+  }
 
 }

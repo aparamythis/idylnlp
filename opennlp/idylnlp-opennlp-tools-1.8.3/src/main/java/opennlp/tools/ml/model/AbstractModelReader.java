@@ -81,20 +81,20 @@ public abstract class AbstractModelReader {
    */
   public String readUTF() throws java.io.IOException {
 
-	  String s = dataReader.readUTF();
+    String s = dataReader.readUTF();
 
-	  if(StringUtils.isNotEmpty(OpenNLPEncryptionFactory.getDefault().getKey())) {
+    if(StringUtils.isNotEmpty(OpenNLPEncryptionFactory.getDefault().getKey())) {
 
-		  try {
-			  // Decrypt the read string.
-			  s = OpenNLPEncryptionFactory.getDefault().decrypt(s);
-		  } catch (Exception ex) {
-			  throw new RuntimeException("Unable to load the model. Verify that your license key and encryption key are correct.", ex);
-		  }
+      try {
+        // Decrypt the read string.
+        s = OpenNLPEncryptionFactory.getDefault().decrypt(s);
+      } catch (Exception ex) {
+        throw new RuntimeException("Unable to load the model. Verify that your license key and encryption key are correct.", ex);
+      }
 
-	  }
+    }
 
-	  return s;
+    return s;
 
   }
 

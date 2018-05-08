@@ -195,7 +195,7 @@ public abstract class BaseModel implements ArtifactProvider, Serializable {
   }
 
   protected BaseModel() {
-	  // Used when the model is not an OpenNLP model.
+    // Used when the model is not an OpenNLP model.
   }
 
   private void loadModel(InputStream in) throws IOException {
@@ -525,7 +525,7 @@ public abstract class BaseModel implements ArtifactProvider, Serializable {
   }
 
   public String getModelId() {
-	  return getManifestProperty("model.id");
+    return getManifestProperty("model.id");
   }
 
   /**

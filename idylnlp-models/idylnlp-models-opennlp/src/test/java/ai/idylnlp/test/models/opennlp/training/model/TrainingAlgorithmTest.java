@@ -23,26 +23,26 @@ import ai.idylnlp.models.opennlp.training.model.TrainingAlgorithm;
 
 public class TrainingAlgorithmTest {
 
-	@Test
-	public void defaultAlgorithm() {
+  @Test
+  public void defaultAlgorithm() {
 
-		assertEquals(TrainingAlgorithm.PERCEPTRON, TrainingAlgorithm.getDefaultAlgorithm());
+    assertEquals(TrainingAlgorithm.PERCEPTRON, TrainingAlgorithm.getDefaultAlgorithm());
 
-	}
+  }
 
-	@Test
-	public void fromValue() {
+  @Test
+  public void fromValue() {
 
-		assertEquals(TrainingAlgorithm.MAXENT_QN, TrainingAlgorithm.fromValue(TrainingAlgorithm.MAXENT_QN.getName()));
-		assertEquals(TrainingAlgorithm.PERCEPTRON, TrainingAlgorithm.fromValue(TrainingAlgorithm.PERCEPTRON.getName()));
+    assertEquals(TrainingAlgorithm.MAXENT_QN, TrainingAlgorithm.fromValue(TrainingAlgorithm.MAXENT_QN.getName()));
+    assertEquals(TrainingAlgorithm.PERCEPTRON, TrainingAlgorithm.fromValue(TrainingAlgorithm.PERCEPTRON.getName()));
 
-	}
+  }
 
-	@Test(expected=IllegalArgumentException.class)
-	public void fromValueIllegal() {
+  @Test(expected=IllegalArgumentException.class)
+  public void fromValueIllegal() {
 
-		TrainingAlgorithm.fromValue("invalid");
+    TrainingAlgorithm.fromValue("invalid");
 
-	}
+  }
 
 }

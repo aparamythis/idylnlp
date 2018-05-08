@@ -26,10 +26,10 @@ import com.neovisionaries.i18n.LanguageCode;
  */
 public class DeepLearningDocumentClassificationRequest extends AbstractDocumentClassificationRequest {
 
-	public DeepLearningDocumentClassificationRequest(String text, LanguageCode languageCode) {
+  public DeepLearningDocumentClassificationRequest(String text, LanguageCode languageCode) {
 
-		super(text, languageCode);
+    super(text, languageCode);
 
-	}
+  }
 
 }

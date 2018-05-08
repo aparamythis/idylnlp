@@ -24,12 +24,12 @@ package ai.idylnlp.model.nlp.lemma;
 @FunctionalInterface
 public interface Lemmatizer {
 
-	/**
-	 * Lemmatizes the tokens.
-	 * @param tokens The tokens.
-	 * @param posTags The tokens' part-of-speech tags.
-	 * @return The lemmas of the tokens.
-	 */
-	public String[] lemmatize(String[] tokens, String posTags[]);
+  /**
+   * Lemmatizes the tokens.
+   * @param tokens The tokens.
+   * @param posTags The tokens' part-of-speech tags.
+   * @return The lemmas of the tokens.
+   */
+  public String[] lemmatize(String[] tokens, String posTags[]);
 
 }

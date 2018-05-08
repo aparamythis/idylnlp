@@ -17,18 +17,18 @@ package ai.idylnlp.model.nlp.translation;
 
 public class LanguageTranslationRequest {
 
-	private String input;
+  private String input;
 
-	public LanguageTranslationRequest(String input) {
-		this.input = input;
-	}
+  public LanguageTranslationRequest(String input) {
+    this.input = input;
+  }
 
-	public String getInput() {
-		return input;
-	}
+  public String getInput() {
+    return input;
+  }
 
-	public void setInput(String input) {
-		this.input = input;
-	}
+  public void setInput(String input) {
+    this.input = input;
+  }
 
 }

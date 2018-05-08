@@ -30,26 +30,26 @@ import opennlp.tools.util.featuregen.AdaptiveFeatureGenerator;
  */
 public class SpecialCharacterFeatureGenerator implements AdaptiveFeatureGenerator {
 
-	private Pattern p;
+  private Pattern p;
 
-	public SpecialCharacterFeatureGenerator() {
+  public SpecialCharacterFeatureGenerator() {
 
-		p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
+    p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
 
-	}
+  }
 
-	@Override
-	public void createFeatures(List<String> features, String[] tokens, int index, String[] previousOutcomes) {
+  @Override
+  public void createFeatures(List<String> features, String[] tokens, int index, String[] previousOutcomes) {
 
-		Matcher m = p.matcher(tokens[index]);
-		boolean containsSpecialCharacters = m.find();
+    Matcher m = p.matcher(tokens[index]);
+    boolean containsSpecialCharacters = m.find();
 
-		if(containsSpecialCharacters) {
+    if(containsSpecialCharacters) {
 
-			features.add("specchar=" + tokens[index]);
+      features.add("specchar=" + tokens[index]);
 
-		}
+    }
 
-	}
+  }
 
 }

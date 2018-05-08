@@ -32,169 +32,169 @@ import ai.idylnlp.nlp.recognizer.RegularExpressionEntityRecognizer;
 
 public class RegularExpressionEntityRecognizerTest {
 
-	private static final Logger LOGGER = LogManager.getLogger(RegularExpressionEntityRecognizerTest.class);
+  private static final Logger LOGGER = LogManager.getLogger(RegularExpressionEntityRecognizerTest.class);
 
-	public static String EMAIL_REGULAR_EXPRESSION = "([a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+)";
-	public static String HASHTAG_REGULAR_EXPRESSION = "((\\s|\\A)#(\\w+))";
-	public static String TWITTER_USERNAME_REGULAR_EXPRESSION = "(@\\w+)";
+  public static String EMAIL_REGULAR_EXPRESSION = "([a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+)";
+  public static String HASHTAG_REGULAR_EXPRESSION = "((\\s|\\A)#(\\w+))";
+  public static String TWITTER_USERNAME_REGULAR_EXPRESSION = "(@\\w+)";
 
-	@Test
-	public void emailAddress() throws EntityFinderException {
+  @Test
+  public void emailAddress() throws EntityFinderException {
 
-		Pattern pattern = Pattern.compile(EMAIL_REGULAR_EXPRESSION, Pattern.CASE_INSENSITIVE);
+    Pattern pattern = Pattern.compile(EMAIL_REGULAR_EXPRESSION, Pattern.CASE_INSENSITIVE);
 
-		RegularExpressionEntityRecognizer recognizer = new RegularExpressionEntityRecognizer(pattern, "email");
+    RegularExpressionEntityRecognizer recognizer = new RegularExpressionEntityRecognizer(pattern, "email");
 
-		String input = "George Washington george@washington.com was president of the United States.";
-		String[] text = input.split(" ");
+    String input = "George Washington george@washington.com was president of the United States.";
+    String[] text = input.split(" ");
 
-		EntityExtractionRequest request = new EntityExtractionRequest(text);
+    EntityExtractionRequest request = new EntityExtractionRequest(text);
 
-		EntityExtractionResponse response = recognizer.extractEntities(request);
+    EntityExtractionResponse response = recognizer.extractEntities(request);
 
-		assertEquals(1, response.getEntities().size());
+    assertEquals(1, response.getEntities().size());
 
-		Entity entity = response.getEntities().iterator().next();
+    Entity entity = response.getEntities().iterator().next();
 
-		assertEquals("george@washington.com", entity.getText());
-		assertEquals("[2..3)", entity.getSpan().toString());
+    assertEquals("george@washington.com", entity.getText());
+    assertEquals("[2..3)", entity.getSpan().toString());
 
-		// Show the response as JSON.
-		Gson gson = new Gson();
-		String json = gson.toJson(response);
+    // Show the response as JSON.
+    Gson gson = new Gson();
+    String json = gson.toJson(response);
 
-		LOGGER.info(json);
+    LOGGER.info(json);
 
-	}
+  }
 
-	@Test
-	public void emailAddress2() throws EntityFinderException {
+  @Test
+  public void emailAddress2() throws EntityFinderException {
 
-		Pattern pattern = Pattern.compile(EMAIL_REGULAR_EXPRESSION, Pattern.CASE_INSENSITIVE);
+    Pattern pattern = Pattern.compile(EMAIL_REGULAR_EXPRESSION, Pattern.CASE_INSENSITIVE);
 
-		RegularExpressionEntityRecognizer recognizer = new RegularExpressionEntityRecognizer(pattern, "email");
+    RegularExpressionEntityRecognizer recognizer = new RegularExpressionEntityRecognizer(pattern, "email");
 
-		String input = "George's email is george@washington.com!";
-		String[] text = input.split(" ");
+    String input = "George's email is george@washington.com!";
+    String[] text = input.split(" ");
 
-		EntityExtractionRequest request = new EntityExtractionRequest(text);
+    EntityExtractionRequest request = new EntityExtractionRequest(text);
 
-		EntityExtractionResponse response = recognizer.extractEntities(request);
+    EntityExtractionResponse response = recognizer.extractEntities(request);
 
-		assertEquals(1, response.getEntities().size());
+    assertEquals(1, response.getEntities().size());
 
-		Entity entity = response.getEntities().iterator().next();
+    Entity entity = response.getEntities().iterator().next();
 
-		assertEquals("george@washington.com", entity.getText());
+    assertEquals("george@washington.com", entity.getText());
 
-		// Show the response as JSON.
-		Gson gson = new Gson();
-		String json = gson.toJson(response);
+    // Show the response as JSON.
+    Gson gson = new Gson();
+    String json = gson.toJson(response);
 
-		LOGGER.info(json);
+    LOGGER.info(json);
 
-	}
+  }
 
-	@Test
-	public void emailAddress3() throws EntityFinderException {
+  @Test
+  public void emailAddress3() throws EntityFinderException {
 
-		Pattern pattern = Pattern.compile(EMAIL_REGULAR_EXPRESSION, Pattern.CASE_INSENSITIVE);
+    Pattern pattern = Pattern.compile(EMAIL_REGULAR_EXPRESSION, Pattern.CASE_INSENSITIVE);
 
-		RegularExpressionEntityRecognizer recognizer = new RegularExpressionEntityRecognizer(pattern, "email");
+    RegularExpressionEntityRecognizer recognizer = new RegularExpressionEntityRecognizer(pattern, "email");
 
-		String input = "George's email is none in this sentence.";
-		String[] text = input.split(" ");
+    String input = "George's email is none in this sentence.";
+    String[] text = input.split(" ");
 
-		EntityExtractionRequest request = new EntityExtractionRequest(text);
+    EntityExtractionRequest request = new EntityExtractionRequest(text);
 
-		EntityExtractionResponse response = recognizer.extractEntities(request);
+    EntityExtractionResponse response = recognizer.extractEntities(request);
 
-		assertEquals(0, response.getEntities().size());
+    assertEquals(0, response.getEntities().size());
 
-	}
+  }
 
-	@Test
-	public void hashtag() throws EntityFinderException {
+  @Test
+  public void hashtag() throws EntityFinderException {
 
-		Pattern pattern = Pattern.compile(HASHTAG_REGULAR_EXPRESSION);
+    Pattern pattern = Pattern.compile(HASHTAG_REGULAR_EXPRESSION);
 
-		RegularExpressionEntityRecognizer recognizer = new RegularExpressionEntityRecognizer(pattern, "hashtag");
+    RegularExpressionEntityRecognizer recognizer = new RegularExpressionEntityRecognizer(pattern, "hashtag");
 
-		String input = "George Washington was #president of the United States.";
-		String[] text = input.split(" ");
+    String input = "George Washington was #president of the United States.";
+    String[] text = input.split(" ");
 
-		EntityExtractionRequest request = new EntityExtractionRequest(text);
+    EntityExtractionRequest request = new EntityExtractionRequest(text);
 
-		EntityExtractionResponse response = recognizer.extractEntities(request);
+    EntityExtractionResponse response = recognizer.extractEntities(request);
 
-		assertEquals(1, response.getEntities().size());
+    assertEquals(1, response.getEntities().size());
 
-		Entity entity = response.getEntities().iterator().next();
+    Entity entity = response.getEntities().iterator().next();
 
-		assertEquals("#president", entity.getText());
+    assertEquals("#president", entity.getText());
 
-		// Show the response as JSON.
-		Gson gson = new Gson();
-		String json = gson.toJson(response);
+    // Show the response as JSON.
+    Gson gson = new Gson();
+    String json = gson.toJson(response);
 
-		LOGGER.info(json);
+    LOGGER.info(json);
 
-	}
+  }
 
-	@Test
-	public void hashtag2() throws EntityFinderException {
+  @Test
+  public void hashtag2() throws EntityFinderException {
 
-		Pattern pattern = Pattern.compile(HASHTAG_REGULAR_EXPRESSION);
+    Pattern pattern = Pattern.compile(HASHTAG_REGULAR_EXPRESSION);
 
-		RegularExpressionEntityRecognizer recognizer = new RegularExpressionEntityRecognizer(pattern, "hashtag");
+    RegularExpressionEntityRecognizer recognizer = new RegularExpressionEntityRecognizer(pattern, "hashtag");
 
-		String input = "George Washington was #president.";
-		String[] text = input.split(" ");
+    String input = "George Washington was #president.";
+    String[] text = input.split(" ");
 
-		EntityExtractionRequest request = new EntityExtractionRequest(text);
+    EntityExtractionRequest request = new EntityExtractionRequest(text);
 
-		EntityExtractionResponse response = recognizer.extractEntities(request);
+    EntityExtractionResponse response = recognizer.extractEntities(request);
 
-		assertEquals(1, response.getEntities().size());
+    assertEquals(1, response.getEntities().size());
 
-		Entity entity = response.getEntities().iterator().next();
+    Entity entity = response.getEntities().iterator().next();
 
-		assertEquals("#president", entity.getText());
+    assertEquals("#president", entity.getText());
 
-		// Show the response as JSON.
-		Gson gson = new Gson();
-		String json = gson.toJson(response);
+    // Show the response as JSON.
+    Gson gson = new Gson();
+    String json = gson.toJson(response);
 
-		LOGGER.info(json);
+    LOGGER.info(json);
 
-	}
+  }
 
-	@Test
-	public void username() throws EntityFinderException {
+  @Test
+  public void username() throws EntityFinderException {
 
-		Pattern pattern = Pattern.compile(TWITTER_USERNAME_REGULAR_EXPRESSION);
+    Pattern pattern = Pattern.compile(TWITTER_USERNAME_REGULAR_EXPRESSION);
 
-		RegularExpressionEntityRecognizer recognizer = new RegularExpressionEntityRecognizer(pattern, "twitterusername");
+    RegularExpressionEntityRecognizer recognizer = new RegularExpressionEntityRecognizer(pattern, "twitterusername");
 
-		String input = "George Washington @george was #president of the United States.";
-		String[] text = input.split(" ");
+    String input = "George Washington @george was #president of the United States.";
+    String[] text = input.split(" ");
 
-		EntityExtractionRequest request = new EntityExtractionRequest(text);
+    EntityExtractionRequest request = new EntityExtractionRequest(text);
 
-		EntityExtractionResponse response = recognizer.extractEntities(request);
+    EntityExtractionResponse response = recognizer.extractEntities(request);
 
-		assertEquals(1, response.getEntities().size());
+    assertEquals(1, response.getEntities().size());
 
-		Entity entity = response.getEntities().iterator().next();
+    Entity entity = response.getEntities().iterator().next();
 
-		assertEquals("@george", entity.getText());
+    assertEquals("@george", entity.getText());
 
-		// Show the response as JSON.
-		Gson gson = new Gson();
-		String json = gson.toJson(response);
+    // Show the response as JSON.
+    Gson gson = new Gson();
+    String json = gson.toJson(response);
 
-		LOGGER.info(json);
+    LOGGER.info(json);
 
-	}
+  }
 
 }

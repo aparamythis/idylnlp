@@ -24,10 +24,10 @@ package ai.idylnlp.model.nlp.language;
  */
 public class LanguageDetectionException extends Exception {
 
-	private static final long serialVersionUID = -8000602757640799852L;
+  private static final long serialVersionUID = -8000602757640799852L;
 
-	public LanguageDetectionException(String message) {
-		super(message);
-	}
+  public LanguageDetectionException(String message) {
+    super(message);
+  }
 
 }

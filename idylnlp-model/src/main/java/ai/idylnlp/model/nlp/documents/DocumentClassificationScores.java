@@ -23,29 +23,29 @@ import org.apache.commons.lang3.tuple.Pair;
 
 public class DocumentClassificationScores {
 
-	private Map<String, Double> scores;
+  private Map<String, Double> scores;
 
-	public DocumentClassificationScores(Map<String, Double> scores) {
+  public DocumentClassificationScores(Map<String, Double> scores) {
 
-		this.scores = scores;
+    this.scores = scores;
 
-	}
+  }
 
-	public Pair<String, Double> getPredictedCategory() {
+  public Pair<String, Double> getPredictedCategory() {
 
-		final String maxEntry = Collections.max(scores.entrySet(), Map.Entry.comparingByValue()).getKey();
+    final String maxEntry = Collections.max(scores.entrySet(), Map.Entry.comparingByValue()).getKey();
 
-		return new ImmutablePair<String, Double>(maxEntry, scores.get(maxEntry));
+    return new ImmutablePair<String, Double>(maxEntry, scores.get(maxEntry));
 
-	}
+  }
 
 
-	public Map<String, Double> getScores() {
-		return scores;
-	}
+  public Map<String, Double> getScores() {
+    return scores;
+  }
 
-	public void setScores(Map<String, Double> scores) {
-		this.scores = scores;
-	}
+  public void setScores(Map<String, Double> scores) {
+    this.scores = scores;
+  }
 
 }

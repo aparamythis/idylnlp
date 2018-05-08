@@ -29,42 +29,42 @@ import opennlp.tools.util.Span;
  */
 public class SpanUtils {
 
-	private SpanUtils() {
-		// This is a utility class.
-	}
+  private SpanUtils() {
+    // This is a utility class.
+  }
 
-	/**
-	 * Gets a {@link Span span} for an entity in a text.
-	 * @param tokenizer The {@link Tokenizer tokenizer}.
-	 * @param entity The text of the entity.
-	 * @param text The text containing the entity.
-	 * @return A {@link Span span} of the entity in the text, or <code>null</code> if no span is found.
-	 */
-	public static Span getSpan(Tokenizer tokenizer, String entity, String text) {
+  /**
+   * Gets a {@link Span span} for an entity in a text.
+   * @param tokenizer The {@link Tokenizer tokenizer}.
+   * @param entity The text of the entity.
+   * @param text The text containing the entity.
+   * @return A {@link Span span} of the entity in the text, or <code>null</code> if no span is found.
+   */
+  public static Span getSpan(Tokenizer tokenizer, String entity, String text) {
 
-		// TODO: If the entity appears more than once in the text only the first one will be found.
+    // TODO: If the entity appears more than once in the text only the first one will be found.
 
-		// Tokenize the entity.
-		final String entityTokenizerLine[] = tokenizer.tokenize(entity);
+    // Tokenize the entity.
+    final String entityTokenizerLine[] = tokenizer.tokenize(entity);
 
-		// Tokenize the text.
-		final String whitespaceTokenizerLine[] = tokenizer.tokenize(text);
+    // Tokenize the text.
+    final String whitespaceTokenizerLine[] = tokenizer.tokenize(text);
 
-		// Find the entity tokens in the text tokens.
-		final int start = Collections.indexOfSubList(Arrays.asList(whitespaceTokenizerLine), Arrays.asList(entityTokenizerLine));
+    // Find the entity tokens in the text tokens.
+    final int start = Collections.indexOfSubList(Arrays.asList(whitespaceTokenizerLine), Arrays.asList(entityTokenizerLine));
 
-		if(start > -1) {
+    if(start > -1) {
 
-			int end = start + entityTokenizerLine.length;
+      int end = start + entityTokenizerLine.length;
 
-			return new Span(start, end);
+      return new Span(start, end);
 
-		} else {
+    } else {
 
-			return null;
+      return null;
 
-		}
+    }
 
-	}
+  }
 
 }

@@ -23,11 +23,11 @@ package ai.idylnlp.model.nlp.translation;
  */
 public interface Translator {
 
-	/**
-	 * Translates the input text to a different language.
-	 * @param input The input natural language text to translate.
-	 * @return The translated text.
-	 */
-	public LanguageTranslationResponse translate(LanguageTranslationRequest request);
+  /**
+   * Translates the input text to a different language.
+   * @param input The input natural language text to translate.
+   * @return The translated text.
+   */
+  public LanguageTranslationResponse translate(LanguageTranslationRequest request);
 
 }

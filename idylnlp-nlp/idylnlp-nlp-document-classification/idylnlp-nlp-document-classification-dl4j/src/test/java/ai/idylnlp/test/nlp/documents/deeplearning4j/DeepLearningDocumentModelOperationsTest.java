@@ -45,48 +45,48 @@ import ai.idylnlp.testing.markers.ExternalData;
 
 public class DeepLearningDocumentModelOperationsTest {
 
-	private static final Logger LOGGER = LogManager.getLogger(DeepLearningDocumentModelOperationsTest.class);
+  private static final Logger LOGGER = LogManager.getLogger(DeepLearningDocumentModelOperationsTest.class);
 
-	private static final String TRAINING_DATA_PATH = System.getProperty("testDataPath");
+  private static final String TRAINING_DATA_PATH = System.getProperty("testDataPath");
 
-	@Ignore
-	@Category(ExternalData.class)
-	@Test
-	public void train() throws DocumentModelTrainingException, DocumentClassifierException, IOException {
+  @Ignore
+  @Category(ExternalData.class)
+  @Test
+  public void train() throws DocumentModelTrainingException, DocumentClassifierException, IOException {
 
-		List<String> directories = Arrays.asList(TRAINING_DATA_PATH, "aclImdb/train");
+    List<String> directories = Arrays.asList(TRAINING_DATA_PATH, "aclImdb/train");
 
-		DeepLearningDocumentClassifierTrainingRequest request = new DeepLearningDocumentClassifierTrainingRequest();
-		request.setLanguageCode(LanguageCode.en);
-		request.setDirectories(directories);
+    DeepLearningDocumentClassifierTrainingRequest request = new DeepLearningDocumentClassifierTrainingRequest();
+    request.setLanguageCode(LanguageCode.en);
+    request.setDirectories(directories);
 
-		DeepLearningDocumentModelOperations ops = new DeepLearningDocumentModelOperations();
-		DocumentClassificationTrainingResponse response = ops.train(request);
+    DeepLearningDocumentModelOperations ops = new DeepLearningDocumentModelOperations();
+    DocumentClassificationTrainingResponse response = ops.train(request);
 
-		final File modelFile = response.getFiles().get(DocumentClassificationFile.MODEL_FILE);
+    final File modelFile = response.getFiles().get(DocumentClassificationFile.MODEL_FILE);
 
-		DocumentModelManifest manifest = new DocumentModelManifest(response.getModelId(), modelFile.getAbsolutePath(),
-				LanguageCode.en, "document", "name",
-				"1.0.0", "https://source/", Arrays.asList("pos", "neg"));
+    DocumentModelManifest manifest = new DocumentModelManifest(response.getModelId(), modelFile.getAbsolutePath(),
+        LanguageCode.en, "document", "name",
+        "1.0.0", "https://source/", Arrays.asList("pos", "neg"));
 
-		List<DocumentModelManifest> models = new LinkedList<>();
-		models.add(manifest);
+    List<DocumentModelManifest> models = new LinkedList<>();
+    models.add(manifest);
 
-		DeepLearningDocumentClassifierConfiguration config = new DeepLearningDocumentClassifierConfiguration
-				.Builder()
-					.withModels(models)
-					.build();
+    DeepLearningDocumentClassifierConfiguration config = new DeepLearningDocumentClassifierConfiguration
+        .Builder()
+          .withModels(models)
+          .build();
 
-		// TODO: Fix file name.
-		final String text = FileUtils.readFileToString(new File("negative.txt"));
+    // TODO: Fix file name.
+    final String text = FileUtils.readFileToString(new File("negative.txt"));
 
-		DeepLearningDocumentClassificationRequest deepLearningDocumentClassificationRequest = new DeepLearningDocumentClassificationRequest(text, LanguageCode.en);
+    DeepLearningDocumentClassificationRequest deepLearningDocumentClassificationRequest = new DeepLearningDocumentClassificationRequest(text, LanguageCode.en);
 
-		DeepLearningDocumentClassifier classifier = new DeepLearningDocumentClassifier(config);
-		DocumentClassificationResponse documentClassificationResponse = classifier.classify(deepLearningDocumentClassificationRequest);
+    DeepLearningDocumentClassifier classifier = new DeepLearningDocumentClassifier(config);
+    DocumentClassificationResponse documentClassificationResponse = classifier.classify(deepLearningDocumentClassificationRequest);
 
-		LOGGER.info("Predicted category: " + documentClassificationResponse.getScores().getPredictedCategory().getLeft());
+    LOGGER.info("Predicted category: " + documentClassificationResponse.getScores().getPredictedCategory().getLeft());
 
-	}
+  }
 
 }

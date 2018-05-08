@@ -17,35 +17,35 @@ package ai.idylnlp.model.training;
 
 public class FMeasure {
 
-	private double precision;
-	private double recall;
-	private double fmeasure;
+  private double precision;
+  private double recall;
+  private double fmeasure;
 
-	public FMeasure(double precision, double recall, double fmeasure) {
+  public FMeasure(double precision, double recall, double fmeasure) {
 
-		this.precision = precision;
-		this.recall = recall;
-		this.fmeasure = fmeasure;
+    this.precision = precision;
+    this.recall = recall;
+    this.fmeasure = fmeasure;
 
-	}
+  }
 
-	public double getPrecision() {
-		return precision;
-	}
+  public double getPrecision() {
+    return precision;
+  }
 
-	public double getRecall() {
-		return recall;
-	}
+  public double getRecall() {
+    return recall;
+  }
 
-	public double getFmeasure() {
-		return fmeasure;
-	}
+  public double getFmeasure() {
+    return fmeasure;
+  }
 
-	@Override
-	public String toString() {
+  @Override
+  public String toString() {
 
-		return String.format("Precision: %f, Recall: %f, F-Measure: %f", precision, recall, fmeasure);
+    return String.format("Precision: %f, Recall: %f, F-Measure: %f", precision, recall, fmeasure);
 
-	}
+  }
 
 }

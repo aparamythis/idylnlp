@@ -23,26 +23,26 @@ import com.google.gson.annotations.SerializedName;
 
 public class Layers {
 
-	@SerializedName("Layer1")
-	@Expose
-	private Layer layer1;
+  @SerializedName("Layer1")
+  @Expose
+  private Layer layer1;
 
-	@SerializedName("Layer2")
-	@Expose
-	private Layer layer2;
+  @SerializedName("Layer2")
+  @Expose
+  private Layer layer2;
 
-	public Layers() {
+  public Layers() {
 
-	}
+  }
 
-	public Layers(Layer layer1, Layer layer2) {
+  public Layers(Layer layer1, Layer layer2) {
 
-		this.layer1 = layer1;
-		this.layer2 = layer2;
+    this.layer1 = layer1;
+    this.layer2 = layer2;
 
-	}
+  }
 
-	@Override
+  @Override
     public boolean equals(Object o) {
       return EqualsBuilder.reflectionEquals(this, o);
     }
@@ -52,20 +52,20 @@ public class Layers {
         return HashCodeBuilder.reflectionHashCode(this);
     }
 
-	public Layer getLayer1() {
-		return layer1;
-	}
+  public Layer getLayer1() {
+    return layer1;
+  }
 
-	public void setLayer1(Layer layer1) {
-		this.layer1 = layer1;
-	}
+  public void setLayer1(Layer layer1) {
+    this.layer1 = layer1;
+  }
 
-	public Layer getLayer2() {
-		return layer2;
-	}
+  public Layer getLayer2() {
+    return layer2;
+  }
 
-	public void setLayer2(Layer layer2) {
-		this.layer2 = layer2;
-	}
+  public void setLayer2(Layer layer2) {
+    this.layer2 = layer2;
+  }
 
 }

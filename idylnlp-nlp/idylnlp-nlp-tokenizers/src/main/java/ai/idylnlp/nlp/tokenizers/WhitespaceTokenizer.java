@@ -32,67 +32,67 @@ import opennlp.tools.util.StringUtil;
  */
 public class WhitespaceTokenizer implements Tokenizer {
 
-	public static final WhitespaceTokenizer INSTANCE = new WhitespaceTokenizer();
+  public static final WhitespaceTokenizer INSTANCE = new WhitespaceTokenizer();
 
-	private WhitespaceTokenizer() {
+  private WhitespaceTokenizer() {
 
-	}
+  }
 
-	@Override
-	public List<String> getLanguageCodes() {
+  @Override
+  public List<String> getLanguageCodes() {
 
-		// This tokenizer is not language-dependent so return an empty list.
-		return Collections.EMPTY_LIST;
+    // This tokenizer is not language-dependent so return an empty list.
+    return Collections.EMPTY_LIST;
 
-	}
+  }
 
-	@Override
-	public String[] tokenize(String s) {
-		return Span.spansToStrings(tokenizePos(s), s);
-	}
+  @Override
+  public String[] tokenize(String s) {
+    return Span.spansToStrings(tokenizePos(s), s);
+  }
 
-	@Override
-	public String[] tokenize(String s, Stemmer stemmer) {
+  @Override
+  public String[] tokenize(String s, Stemmer stemmer) {
 
-		String[] tokens = tokenize(s);
+    String[] tokens = tokenize(s);
 
-		for (int i = 0; i < tokens.length; i++) {
+    for (int i = 0; i < tokens.length; i++) {
 
-			tokens[i] = stemmer.stem(tokens[i]);
+      tokens[i] = stemmer.stem(tokens[i]);
 
-		}
+    }
 
-		return tokens;
+    return tokens;
 
-	}
+  }
 
-	@Override
-	public Span[] tokenizePos(String d) {
-		int tokStart = -1;
-		List<Span> tokens = new ArrayList<>();
-		boolean inTok = false;
+  @Override
+  public Span[] tokenizePos(String d) {
+    int tokStart = -1;
+    List<Span> tokens = new ArrayList<>();
+    boolean inTok = false;
 
-		// gather up potential tokens
-		int end = d.length();
-		for (int i = 0; i < end; i++) {
-			if (StringUtil.isWhitespace(d.charAt(i))) {
-				if (inTok) {
-					tokens.add(new Span(tokStart, i));
-					inTok = false;
-					tokStart = -1;
-				}
-			} else {
-				if (!inTok) {
-					tokStart = i;
-					inTok = true;
-				}
-			}
-		}
+    // gather up potential tokens
+    int end = d.length();
+    for (int i = 0; i < end; i++) {
+      if (StringUtil.isWhitespace(d.charAt(i))) {
+        if (inTok) {
+          tokens.add(new Span(tokStart, i));
+          inTok = false;
+          tokStart = -1;
+        }
+      } else {
+        if (!inTok) {
+          tokStart = i;
+          inTok = true;
+        }
+      }
+    }
 
-		if (inTok) {
-			tokens.add(new Span(tokStart, end));
-		}
+    if (inTok) {
+      tokens.add(new Span(tokStart, end));
+    }
 
-		return tokens.toArray(new Span[tokens.size()]);
-	}
+    return tokens.toArray(new Span[tokens.size()]);
+  }
 }

@@ -27,85 +27,85 @@ import ai.idylnlp.model.nlp.SentenceSanitizer;
  */
 public class DefaultSentenceSanitizer implements SentenceSanitizer {
 
-	private boolean removePunctuation = false;
-	private boolean lowerCase = false;
-	private boolean consolidateSpaces = false;
+  private boolean removePunctuation = false;
+  private boolean lowerCase = false;
+  private boolean consolidateSpaces = false;
 
-	/**
-	 * Use the builder.
-	 */
-	private DefaultSentenceSanitizer() {
+  /**
+   * Use the builder.
+   */
+  private DefaultSentenceSanitizer() {
 
-	}
+  }
 
-	public static class Builder {
+  public static class Builder {
 
-		private boolean removePunctuation = false;
-		private boolean lowerCase = false;
-		private boolean consolidateSpaces = false;
+    private boolean removePunctuation = false;
+    private boolean lowerCase = false;
+    private boolean consolidateSpaces = false;
 
-		/**
-		 * Removes all punctuation from the text.
-		 * @return The text with all punctuation removed.
-		 */
-		public Builder removePunctuation() {
-			this.removePunctuation = true;
-			return this;
-		}
+    /**
+     * Removes all punctuation from the text.
+     * @return The text with all punctuation removed.
+     */
+    public Builder removePunctuation() {
+      this.removePunctuation = true;
+      return this;
+    }
 
-		/**
-		 * Lowercases the text.
-		 * @return The text lowercased.
-		 */
-		public Builder lowerCase() {
-			this.lowerCase = true;
-			return this;
-		}
+    /**
+     * Lowercases the text.
+     * @return The text lowercased.
+     */
+    public Builder lowerCase() {
+      this.lowerCase = true;
+      return this;
+    }
 
-		/**
-		 * Replaces all consecutive spaces with a single space.
-		 * @return The text with all consecutive spaces replaced
-		 * with a single space.
-		 */
-		public Builder consolidateSpaces() {
-			this.consolidateSpaces = true;
-			return this;
-		}
+    /**
+     * Replaces all consecutive spaces with a single space.
+     * @return The text with all consecutive spaces replaced
+     * with a single space.
+     */
+    public Builder consolidateSpaces() {
+      this.consolidateSpaces = true;
+      return this;
+    }
 
-		/**
-		 * Builds the sentence sanitizer.
-		 * @return A configured {@link SentenceSanitizer}.
-		 */
-		public SentenceSanitizer build() {
+    /**
+     * Builds the sentence sanitizer.
+     * @return A configured {@link SentenceSanitizer}.
+     */
+    public SentenceSanitizer build() {
 
-			DefaultSentenceSanitizer sanitizer = new DefaultSentenceSanitizer();
-			sanitizer.removePunctuation = removePunctuation;
-			sanitizer.lowerCase = lowerCase;
-			sanitizer.consolidateSpaces = consolidateSpaces;
+      DefaultSentenceSanitizer sanitizer = new DefaultSentenceSanitizer();
+      sanitizer.removePunctuation = removePunctuation;
+      sanitizer.lowerCase = lowerCase;
+      sanitizer.consolidateSpaces = consolidateSpaces;
 
-			return sanitizer;
+      return sanitizer;
 
-		}
+    }
 
-	}
+  }
 
-	@Override
-	public String sanitize(String sentence) {
+  @Override
+  public String sanitize(String sentence) {
 
-		if(lowerCase) {
-			sentence = sentence.toLowerCase();
-		}
+    if(lowerCase) {
+      sentence = sentence.toLowerCase();
+    }
 
-		if(removePunctuation) {
-			sentence = sentence.replaceAll("\\p{Punct}+", "");
-		}
+    if(removePunctuation) {
+      sentence = sentence.replaceAll("\\p{Punct}+", "");
+    }
 
-		if(consolidateSpaces) {
-			sentence = StringUtils.normalizeSpace(sentence);
-		}
+    if(consolidateSpaces) {
+      sentence = StringUtils.normalizeSpace(sentence);
+    }
 
-		return sentence;
+    return sentence;
 
-	}
+  }
 
 }

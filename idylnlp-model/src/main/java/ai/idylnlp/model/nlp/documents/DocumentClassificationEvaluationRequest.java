@@ -19,23 +19,23 @@ import com.neovisionaries.i18n.LanguageCode;
 
 public class DocumentClassificationEvaluationRequest {
 
-	private LanguageCode languageCode;
-	private String directory;
+  private LanguageCode languageCode;
+  private String directory;
 
-	public LanguageCode getLanguageCode() {
-		return languageCode;
-	}
+  public LanguageCode getLanguageCode() {
+    return languageCode;
+  }
 
-	public void setLanguageCode(LanguageCode languageCode) {
-		this.languageCode = languageCode;
-	}
+  public void setLanguageCode(LanguageCode languageCode) {
+    this.languageCode = languageCode;
+  }
 
-	public String getDirectory() {
-		return directory;
-	}
+  public String getDirectory() {
+    return directory;
+  }
 
-	public void setDirectory(String directory) {
-		this.directory = directory;
-	}
+  public void setDirectory(String directory) {
+    this.directory = directory;
+  }
 
 }

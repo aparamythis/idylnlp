@@ -17,11 +17,11 @@ package ai.idylnlp.model.nlp.strings.distancestrategy;
 
 public class WordLengthBasedMaxDistanceStrategy implements MaxDistanceStrategy {
 
-	@Override
-	public int calculateMaxDistance(String word) {
+  @Override
+  public int calculateMaxDistance(String word) {
 
-		return Math.round(word.length() / 5);
+    return Math.round(word.length() / 5);
 
-	}
+  }
 
 }

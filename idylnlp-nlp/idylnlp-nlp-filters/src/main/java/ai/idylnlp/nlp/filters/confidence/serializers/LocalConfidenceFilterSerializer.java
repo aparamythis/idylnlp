@@ -37,72 +37,72 @@ import ai.idylnlp.model.nlp.ConfidenceFilterSerializer;
  */
 public class LocalConfidenceFilterSerializer implements ConfidenceFilterSerializer {
 
-	private static final Logger LOGGER = LogManager.getLogger(LocalConfidenceFilterSerializer.class);
+  private static final Logger LOGGER = LogManager.getLogger(LocalConfidenceFilterSerializer.class);
 
-	private File serializedFile;
+  private File serializedFile;
 
-	/**
-	 * Creates a new {@link LocalConfidenceFilterSerializer} and sets
-	 * the serialized filename to <code>confidences.dat</code>.
-	 */
-	public LocalConfidenceFilterSerializer() {
+  /**
+   * Creates a new {@link LocalConfidenceFilterSerializer} and sets
+   * the serialized filename to <code>confidences.dat</code>.
+   */
+  public LocalConfidenceFilterSerializer() {
 
-		this.serializedFile = new File("confidences.dat");
+    this.serializedFile = new File("confidences.dat");
 
-	}
+  }
 
-	/**
-	 * Creates a new {@link LocalConfidenceFilterSerializer}.
-	 * @param serializedFile The {@link File} to hold the serialized
-	 * confidence values.
-	 */
-	public LocalConfidenceFilterSerializer(File serializedFile) {
+  /**
+   * Creates a new {@link LocalConfidenceFilterSerializer}.
+   * @param serializedFile The {@link File} to hold the serialized
+   * confidence values.
+   */
+  public LocalConfidenceFilterSerializer(File serializedFile) {
 
-		this.serializedFile = serializedFile;
+    this.serializedFile = serializedFile;
 
-	}
+  }
 
-	@Override
-	public int serialize(Map<String, SynchronizedSummaryStatistics> statistics) throws Exception {
+  @Override
+  public int serialize(Map<String, SynchronizedSummaryStatistics> statistics) throws Exception {
 
-		serializedFile.createNewFile();
+    serializedFile.createNewFile();
 
-		FileOutputStream fos = new FileOutputStream(serializedFile.getAbsolutePath());
+    FileOutputStream fos = new FileOutputStream(serializedFile.getAbsolutePath());
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(statistics);
         oos.close();
         fos.close();
 
         LOGGER.info("Serialized confidence values for {} entity models to {}.", statistics.size(),
-        		serializedFile.getAbsolutePath());
+            serializedFile.getAbsolutePath());
 
         return statistics.size();
 
-	}
+  }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public int deserialize(Map<String, SynchronizedSummaryStatistics> statistics) throws Exception {
+  @SuppressWarnings("unchecked")
+  @Override
+  public int deserialize(Map<String, SynchronizedSummaryStatistics> statistics) throws Exception {
 
-		if(serializedFile.exists()) {
+    if(serializedFile.exists()) {
 
-			FileInputStream fis = new FileInputStream(serializedFile.getAbsolutePath());
-	        ObjectInputStream ois = new ObjectInputStream(fis);
-	        statistics = (Map<String, SynchronizedSummaryStatistics>) ois.readObject();
-	        ois.close();
-	        fis.close();
+      FileInputStream fis = new FileInputStream(serializedFile.getAbsolutePath());
+          ObjectInputStream ois = new ObjectInputStream(fis);
+          statistics = (Map<String, SynchronizedSummaryStatistics>) ois.readObject();
+          ois.close();
+          fis.close();
 
-	        LOGGER.info("Deserialized confidence values for {} entity models from {}.", statistics.size(),
-	        		serializedFile.getAbsolutePath());
+          LOGGER.info("Deserialized confidence values for {} entity models from {}.", statistics.size(),
+              serializedFile.getAbsolutePath());
 
-	        return statistics.size();
+          return statistics.size();
 
-		} else {
+    } else {
 
-			return 0;
+      return 0;
 
-		}
+    }
 
-	}
+  }
 
 }

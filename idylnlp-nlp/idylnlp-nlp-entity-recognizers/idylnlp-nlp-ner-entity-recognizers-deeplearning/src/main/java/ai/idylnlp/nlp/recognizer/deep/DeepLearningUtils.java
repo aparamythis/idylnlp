@@ -40,64 +40,64 @@ import opennlp.tools.namefind.NameSample;
  */
 public class DeepLearningUtils {
 
-	public synchronized static List<INDArray> mapToLabelVectors(NameSample sample, int windowSize, String[] labelStrings) {
+  public synchronized static List<INDArray> mapToLabelVectors(NameSample sample, int windowSize, String[] labelStrings) {
 
-		Map<String, Integer> labelToIndex = IntStream.range(0, labelStrings.length).boxed()
-				.collect(Collectors.toMap(i -> labelStrings[i], i -> i));
+    Map<String, Integer> labelToIndex = IntStream.range(0, labelStrings.length).boxed()
+        .collect(Collectors.toMap(i -> labelStrings[i], i -> i));
 
-		List<INDArray> vectors = new ArrayList<INDArray>();
+    List<INDArray> vectors = new ArrayList<INDArray>();
 
-		// encode the outcome as one-hot-representation
-		String outcomes[] = new BioCodec().encode(sample.getNames(), sample.getSentence().length);
+    // encode the outcome as one-hot-representation
+    String outcomes[] = new BioCodec().encode(sample.getNames(), sample.getSentence().length);
 
-		for (int i = 0; i < sample.getSentence().length; i++) {
+    for (int i = 0; i < sample.getSentence().length; i++) {
 
-			INDArray labels = Nd4j.create(1, labelStrings.length, windowSize);
-			labels.putScalar(new int[] { 0, labelToIndex.get(outcomes[i]), windowSize - 1 }, 1.0d);
-			vectors.add(labels);
+      INDArray labels = Nd4j.create(1, labelStrings.length, windowSize);
+      labels.putScalar(new int[] { 0, labelToIndex.get(outcomes[i]), windowSize - 1 }, 1.0d);
+      vectors.add(labels);
 
-		}
+    }
 
-		return vectors;
+    return vectors;
 
-	}
+  }
 
-	public synchronized static List<INDArray> mapToFeatureMatrices(WordVectors wordVectors, String[] tokens, int windowSize) {
+  public synchronized static List<INDArray> mapToFeatureMatrices(WordVectors wordVectors, String[] tokens, int windowSize) {
 
-		List<INDArray> matrices = new ArrayList<>();
+    List<INDArray> matrices = new ArrayList<>();
 
-		final int vectorSize = wordVectors.getWordVector(wordVectors.vocab().wordAtIndex(0)).length;
+    final int vectorSize = wordVectors.getWordVector(wordVectors.vocab().wordAtIndex(0)).length;
 
-		for (int i = 0; i < tokens.length; i++) {
+    for (int i = 0; i < tokens.length; i++) {
 
-			INDArray features = Nd4j.create(1, vectorSize, windowSize);
+      INDArray features = Nd4j.create(1, vectorSize, windowSize);
 
-			for(int vectorIndex = 0; vectorIndex < windowSize; vectorIndex++) {
+      for(int vectorIndex = 0; vectorIndex < windowSize; vectorIndex++) {
 
-				int tokenIndex = i + vectorIndex - ((windowSize - 1) / 2);
+        int tokenIndex = i + vectorIndex - ((windowSize - 1) / 2);
 
-				if (tokenIndex >= 0 && tokenIndex < tokens.length) {
+        if (tokenIndex >= 0 && tokenIndex < tokens.length) {
 
-					String token = tokens[tokenIndex];
+          String token = tokens[tokenIndex];
 
-					if (wordVectors.hasWord(token)) {
+          if (wordVectors.hasWord(token)) {
 
-						INDArray vector = wordVectors.getWordVectorMatrix(token);
-						features.put(new INDArrayIndex[] { NDArrayIndex.point(0), NDArrayIndex.all(),
-								NDArrayIndex.point(vectorIndex) }, vector);
+            INDArray vector = wordVectors.getWordVectorMatrix(token);
+            features.put(new INDArrayIndex[] { NDArrayIndex.point(0), NDArrayIndex.all(),
+                NDArrayIndex.point(vectorIndex) }, vector);
 
-					}
+          }
 
-				}
+        }
 
-			}
+      }
 
-			matrices.add(features);
+      matrices.add(features);
 
-		}
+    }
 
-		return matrices;
+    return matrices;
 
-	}
+  }
 
 }

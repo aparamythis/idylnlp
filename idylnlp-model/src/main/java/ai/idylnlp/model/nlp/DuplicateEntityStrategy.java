@@ -22,15 +22,15 @@ package ai.idylnlp.model.nlp;
  */
 public enum DuplicateEntityStrategy {
 
-	/**
-	 * Return all entities - do not remove any.
-	 */
-	RETAIN_DUPICATES,
+  /**
+   * Return all entities - do not remove any.
+   */
+  RETAIN_DUPICATES,
 
-	/**
-	 * If multiple entities having the same text are extracted
-	 * use only the entity with the highest confidence.
-	 */
-	USE_HIGHEST_CONFIDENCE;
+  /**
+   * If multiple entities having the same text are extracted
+   * use only the entity with the highest confidence.
+   */
+  USE_HIGHEST_CONFIDENCE;
 
 }

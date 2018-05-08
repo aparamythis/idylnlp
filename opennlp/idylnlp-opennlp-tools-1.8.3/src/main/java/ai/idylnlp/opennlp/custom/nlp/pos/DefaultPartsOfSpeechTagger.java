@@ -42,108 +42,108 @@ import opennlp.tools.postag.POSTaggerME;
  */
 public class DefaultPartsOfSpeechTagger implements PartsOfSpeechTagger {
 
-	private static final Logger LOGGER = LogManager.getLogger(DefaultPartsOfSpeechTagger.class);
+  private static final Logger LOGGER = LogManager.getLogger(DefaultPartsOfSpeechTagger.class);
 
-	private POSTaggerME tagger;
+  private POSTaggerME tagger;
 
-	/**
-	 * Creates a tagger.
-	 * @param modelFile The part of speech model file.
-	 * @param sentenceDetector A {@link SentenceDetector}.
-	 * @param tokenizer A {@link Tokenizer}.
-	 * @throws ModelLoaderException
-	 */
-	public DefaultPartsOfSpeechTagger(String modelPath, StandardModelManifest modelManifest, ModelValidator validator) throws ModelLoaderException {
+  /**
+   * Creates a tagger.
+   * @param modelFile The part of speech model file.
+   * @param sentenceDetector A {@link SentenceDetector}.
+   * @param tokenizer A {@link Tokenizer}.
+   * @throws ModelLoaderException
+   */
+  public DefaultPartsOfSpeechTagger(String modelPath, StandardModelManifest modelManifest, ModelValidator validator) throws ModelLoaderException {
 
-		LocalModelLoader<POSModel> posModelLoader = new LocalModelLoader<POSModel>(validator, modelPath);
+    LocalModelLoader<POSModel> posModelLoader = new LocalModelLoader<POSModel>(validator, modelPath);
 
-		POSModel model = posModelLoader.getModel(modelManifest, POSModel.class);
+    POSModel model = posModelLoader.getModel(modelManifest, POSModel.class);
 
-		tagger = new POSTaggerME(model);
+    tagger = new POSTaggerME(model);
 
-	}
+  }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<PartsOfSpeechToken> tag(String input, SentenceDetector sentenceDetector, Tokenizer tokenizer) {
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public List<PartsOfSpeechToken> tag(String input, SentenceDetector sentenceDetector, Tokenizer tokenizer) {
 
-		String[] sentences = sentenceDetector.sentDetect(input);
+    String[] sentences = sentenceDetector.sentDetect(input);
 
-		List<PartsOfSpeechToken> partsOfSpeechTokens = new LinkedList<PartsOfSpeechToken>();
+    List<PartsOfSpeechToken> partsOfSpeechTokens = new LinkedList<PartsOfSpeechToken>();
 
-		for (String sentence : sentences) {
+    for (String sentence : sentences) {
 
-			String tokenizedSentence[] = tokenizer.tokenize(sentence);
+      String tokenizedSentence[] = tokenizer.tokenize(sentence);
 
-			String[] tags = tagger.tag(tokenizedSentence);
+      String[] tags = tagger.tag(tokenizedSentence);
 
-			for (int i = 0; i < tokenizedSentence.length; i++) {
+      for (int i = 0; i < tokenizedSentence.length; i++) {
 
-				final String token = tokenizedSentence[i].trim();
-				final String tag = tags[i].trim();
+        final String token = tokenizedSentence[i].trim();
+        final String tag = tags[i].trim();
 
-				partsOfSpeechTokens.add(new PartsOfSpeechToken(token, tag));
+        partsOfSpeechTokens.add(new PartsOfSpeechToken(token, tag));
 
-			}
+      }
 
-		}
+    }
 
-		return partsOfSpeechTokens;
+    return partsOfSpeechTokens;
 
-	}
+  }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<PartsOfSpeechToken> tag(String[] sentences, Tokenizer tokenizer) {
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public List<PartsOfSpeechToken> tag(String[] sentences, Tokenizer tokenizer) {
 
-		List<PartsOfSpeechToken> partsOfSpeechTokens = new LinkedList<PartsOfSpeechToken>();
+    List<PartsOfSpeechToken> partsOfSpeechTokens = new LinkedList<PartsOfSpeechToken>();
 
-		for (String sentence : sentences) {
+    for (String sentence : sentences) {
 
-			String tokenizedSentence[] = tokenizer.tokenize(sentence);
+      String tokenizedSentence[] = tokenizer.tokenize(sentence);
 
-			String[] tags = tagger.tag(tokenizedSentence);
+      String[] tags = tagger.tag(tokenizedSentence);
 
-			for (int i = 0; i < tokenizedSentence.length; i++) {
+      for (int i = 0; i < tokenizedSentence.length; i++) {
 
-				final String token = tokenizedSentence[i].trim();
-				final String tag = tags[i].trim();
+        final String token = tokenizedSentence[i].trim();
+        final String tag = tags[i].trim();
 
-				partsOfSpeechTokens.add(new PartsOfSpeechToken(token, tag));
+        partsOfSpeechTokens.add(new PartsOfSpeechToken(token, tag));
 
-			}
+      }
 
-		}
+    }
 
-		return partsOfSpeechTokens;
+    return partsOfSpeechTokens;
 
-	}
+  }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<PartsOfSpeechToken> tag(String[] tokenizedSentence) {
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public List<PartsOfSpeechToken> tag(String[] tokenizedSentence) {
 
-		List<PartsOfSpeechToken> partsOfSpeechTokens = new LinkedList<PartsOfSpeechToken>();
+    List<PartsOfSpeechToken> partsOfSpeechTokens = new LinkedList<PartsOfSpeechToken>();
 
-		String[] tags = tagger.tag(tokenizedSentence);
+    String[] tags = tagger.tag(tokenizedSentence);
 
-		for (int i = 0; i < tokenizedSentence.length; i++) {
+    for (int i = 0; i < tokenizedSentence.length; i++) {
 
-			final String token = tokenizedSentence[i].trim();
-			final String tag = tags[i].trim();
+      final String token = tokenizedSentence[i].trim();
+      final String tag = tags[i].trim();
 
-			partsOfSpeechTokens.add(new PartsOfSpeechToken(token, tag));
+      partsOfSpeechTokens.add(new PartsOfSpeechToken(token, tag));
 
-		}
+    }
 
-		return partsOfSpeechTokens;
+    return partsOfSpeechTokens;
 
-	}
+  }
 
 }

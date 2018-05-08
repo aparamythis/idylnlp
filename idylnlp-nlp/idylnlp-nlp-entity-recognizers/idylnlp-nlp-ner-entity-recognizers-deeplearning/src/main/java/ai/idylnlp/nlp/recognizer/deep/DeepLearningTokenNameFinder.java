@@ -37,77 +37,77 @@ import opennlp.tools.util.Span;
  */
 public class DeepLearningTokenNameFinder implements TokenNameFinder {
 
-	private final MultiLayerNetwork network;
-	private final WordVectors wordVectors;
-	private int windowSize;
-	private String[] labels;
+  private final MultiLayerNetwork network;
+  private final WordVectors wordVectors;
+  private int windowSize;
+  private String[] labels;
 
-	/**
-	 * Creates a new token name finder.
-	 * @param network The neural {@link MultiLayerNetwork network}.
-	 * @param wordVectors The word {@link WordVectors vectors}.
-	 * @param windowSize The size of the window.
-	 * @param labels An array of outcome labels.
-	 */
-	public DeepLearningTokenNameFinder(MultiLayerNetwork network, WordVectors wordVectors,
-			int windowSize, String[] labels) {
+  /**
+   * Creates a new token name finder.
+   * @param network The neural {@link MultiLayerNetwork network}.
+   * @param wordVectors The word {@link WordVectors vectors}.
+   * @param windowSize The size of the window.
+   * @param labels An array of outcome labels.
+   */
+  public DeepLearningTokenNameFinder(MultiLayerNetwork network, WordVectors wordVectors,
+      int windowSize, String[] labels) {
 
-		this.network = network;
-		this.wordVectors = wordVectors;
-		this.windowSize = windowSize;
-		this.labels = labels;
+    this.network = network;
+    this.wordVectors = wordVectors;
+    this.windowSize = windowSize;
+    this.labels = labels;
 
-	}
+  }
 
-	@Override
-	public Span[] find(String[] tokens) {
+  @Override
+  public Span[] find(String[] tokens) {
 
-	    List<INDArray> featureMatrices = DeepLearningUtils.mapToFeatureMatrices(wordVectors, tokens, windowSize);
+      List<INDArray> featureMatrices = DeepLearningUtils.mapToFeatureMatrices(wordVectors, tokens, windowSize);
 
-	    String[] outcomes = new String[tokens.length];
-	    for (int i = 0; i < tokens.length; i++) {
-	      INDArray predictionMatrix = network.output(featureMatrices.get(i), false);
-	      INDArray outcomeVector = predictionMatrix.get(NDArrayIndex.point(0), NDArrayIndex.all(),
-	          NDArrayIndex.point(windowSize - 1));
+      String[] outcomes = new String[tokens.length];
+      for (int i = 0; i < tokens.length; i++) {
+        INDArray predictionMatrix = network.output(featureMatrices.get(i), false);
+        INDArray outcomeVector = predictionMatrix.get(NDArrayIndex.point(0), NDArrayIndex.all(),
+            NDArrayIndex.point(windowSize - 1));
 
-	      outcomes[i] = labels[max(outcomeVector)];
-	    }
+        outcomes[i] = labels[max(outcomeVector)];
+      }
 
-	    // Delete invalid spans ...
-	    for (int i = 0; i < outcomes.length; i++) {
-	      if (outcomes[i].endsWith("cont") && (i == 0 || "other".equals(outcomes[i - 1]))) {
-	        outcomes[i] = "other";
-	      }
-	    }
+      // Delete invalid spans ...
+      for (int i = 0; i < outcomes.length; i++) {
+        if (outcomes[i].endsWith("cont") && (i == 0 || "other".equals(outcomes[i - 1]))) {
+          outcomes[i] = "other";
+        }
+      }
 
-	    return new BioCodec().decode(Arrays.asList(outcomes));
+      return new BioCodec().decode(Arrays.asList(outcomes));
 
-	}
+  }
 
-	@Override
-	public void clearAdaptiveData() {
-		// There is nothing to clear.
-	}
+  @Override
+  public void clearAdaptiveData() {
+    // There is nothing to clear.
+  }
 
-	/**
-	 * Finds the index of the largest element in the {@link INDArray}.
-	 * @param array The {@link INDArray}.
-	 * @return The index of the item having the largest
-	 * element in the array.
-	 */
-	// TODO: This function needs tested.
-	private int max(INDArray array) {
+  /**
+   * Finds the index of the largest element in the {@link INDArray}.
+   * @param array The {@link INDArray}.
+   * @return The index of the item having the largest
+   * element in the array.
+   */
+  // TODO: This function needs tested.
+  private int max(INDArray array) {
 
-		int best = 0;
-		for (int i = 0; i < array.size(0); i++) {
+    int best = 0;
+    for (int i = 0; i < array.size(0); i++) {
 
-			if (array.getDouble(i) > array.getDouble(best)) {
-				best = i;
-			}
-		}
+      if (array.getDouble(i) > array.getDouble(best)) {
+        best = i;
+      }
+    }
 
-		return best;
+    return best;
 
-	}
+  }
 
 }

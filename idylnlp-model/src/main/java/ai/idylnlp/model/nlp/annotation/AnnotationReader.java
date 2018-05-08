@@ -26,11 +26,11 @@ import java.util.Collection;
 @FunctionalInterface
 public interface AnnotationReader {
 
-	/**
-	 * Retrieves the annotations for a given line number.
-	 * @param lineNumber The line number in the text.
-	 * @return A collection of {@link IdylNLPAnnotation annotations}.
-	 */
-	public Collection<IdylNLPAnnotation> getAnnotations(int lineNumber);
+  /**
+   * Retrieves the annotations for a given line number.
+   * @param lineNumber The line number in the text.
+   * @return A collection of {@link IdylNLPAnnotation annotations}.
+   */
+  public Collection<IdylNLPAnnotation> getAnnotations(int lineNumber);
 
 }

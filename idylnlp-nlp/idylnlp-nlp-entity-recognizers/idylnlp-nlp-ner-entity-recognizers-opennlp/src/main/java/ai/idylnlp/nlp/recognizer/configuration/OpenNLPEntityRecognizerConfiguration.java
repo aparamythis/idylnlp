@@ -40,84 +40,84 @@ import opennlp.tools.namefind.TokenNameFinderModel;
  */
 public class OpenNLPEntityRecognizerConfiguration extends AbstractEntityRecognizerConfiguration<StandardModelManifest> {
 
-	private ModelLoader<TokenNameFinderModel> entityModelLoader;
+  private ModelLoader<TokenNameFinderModel> entityModelLoader;
 
-	private OpenNLPEntityRecognizerConfiguration(
-			ModelLoader<TokenNameFinderModel> entityModelLoader,
-			ModelLoader<DictionaryModel> dictionaryModelLoader,
-			ConfidenceFilter confidenceFilter,
-			Map<String, Map<LanguageCode, Set<StandardModelManifest>>> entityModels,
-			Set<String> blacklistedModelIDs) {
+  private OpenNLPEntityRecognizerConfiguration(
+      ModelLoader<TokenNameFinderModel> entityModelLoader,
+      ModelLoader<DictionaryModel> dictionaryModelLoader,
+      ConfidenceFilter confidenceFilter,
+      Map<String, Map<LanguageCode, Set<StandardModelManifest>>> entityModels,
+      Set<String> blacklistedModelIDs) {
 
-		super(blacklistedModelIDs);
+    super(blacklistedModelIDs);
 
-		this.entityModelLoader = entityModelLoader;
-		this.confidenceFilter = confidenceFilter;
-		this.entityModels = entityModels;
+    this.entityModelLoader = entityModelLoader;
+    this.confidenceFilter = confidenceFilter;
+    this.entityModels = entityModels;
 
-	}
+  }
 
-	public static class Builder {
+  public static class Builder {
 
-		private ModelLoader<TokenNameFinderModel> entityModelLoader;
-		private ModelLoader<DictionaryModel> dictionaryModelLoader;
-		private ConfidenceFilter confidenceFilter;
-		private Map<String, Map<LanguageCode, Set<StandardModelManifest>>> entityModels;
-		private Set<String> blacklistedModelIDs;
+    private ModelLoader<TokenNameFinderModel> entityModelLoader;
+    private ModelLoader<DictionaryModel> dictionaryModelLoader;
+    private ConfidenceFilter confidenceFilter;
+    private Map<String, Map<LanguageCode, Set<StandardModelManifest>>> entityModels;
+    private Set<String> blacklistedModelIDs;
 
-		public Builder withEntityModels(Map<String, Map<LanguageCode, Set<StandardModelManifest>>> entityModels) {
-			this.entityModels = entityModels;
-			return this;
-		}
+    public Builder withEntityModels(Map<String, Map<LanguageCode, Set<StandardModelManifest>>> entityModels) {
+      this.entityModels = entityModels;
+      return this;
+    }
 
-		public Builder withEntityModelLoader(ModelLoader<TokenNameFinderModel> entityModelLoader) {
-			this.entityModelLoader = entityModelLoader;
-			return this;
-		}
+    public Builder withEntityModelLoader(ModelLoader<TokenNameFinderModel> entityModelLoader) {
+      this.entityModelLoader = entityModelLoader;
+      return this;
+    }
 
-		public Builder withDictionaryFinderModelLoader(ModelLoader<DictionaryModel> dictionaryModelLoader) {
-			this.dictionaryModelLoader = dictionaryModelLoader;
-			return this;
-		}
+    public Builder withDictionaryFinderModelLoader(ModelLoader<DictionaryModel> dictionaryModelLoader) {
+      this.dictionaryModelLoader = dictionaryModelLoader;
+      return this;
+    }
 
-		public Builder withConfidenceFilter(ConfidenceFilter confidenceFilter) {
-			this.confidenceFilter = confidenceFilter;
-			return this;
-		}
+    public Builder withConfidenceFilter(ConfidenceFilter confidenceFilter) {
+      this.confidenceFilter = confidenceFilter;
+      return this;
+    }
 
-		public Builder withBlacklistedModelIDs(Set<String> blacklistedModelIDs) {
-			this.blacklistedModelIDs = blacklistedModelIDs;
-			return this;
-		}
+    public Builder withBlacklistedModelIDs(Set<String> blacklistedModelIDs) {
+      this.blacklistedModelIDs = blacklistedModelIDs;
+      return this;
+    }
 
-		public OpenNLPEntityRecognizerConfiguration build() {
+    public OpenNLPEntityRecognizerConfiguration build() {
 
-			if(confidenceFilter == null) {
-				confidenceFilter = new SimpleConfidenceFilter();
-			}
+      if(confidenceFilter == null) {
+        confidenceFilter = new SimpleConfidenceFilter();
+      }
 
-			if(entityModels == null) {
-				entityModels = new HashMap<String, Map<LanguageCode, Set<StandardModelManifest>>>();
-			}
+      if(entityModels == null) {
+        entityModels = new HashMap<String, Map<LanguageCode, Set<StandardModelManifest>>>();
+      }
 
-			if(blacklistedModelIDs == null) {
-				blacklistedModelIDs = new LinkedHashSet<String>();
-			}
+      if(blacklistedModelIDs == null) {
+        blacklistedModelIDs = new LinkedHashSet<String>();
+      }
 
-			return new OpenNLPEntityRecognizerConfiguration(
-				entityModelLoader, dictionaryModelLoader, confidenceFilter, entityModels, blacklistedModelIDs
-			);
+      return new OpenNLPEntityRecognizerConfiguration(
+        entityModelLoader, dictionaryModelLoader, confidenceFilter, entityModels, blacklistedModelIDs
+      );
 
-		}
+    }
 
-	}
+  }
 
-	/**
-	 * Gets the entity model loader.
-	 * @return A {@link ModelLoader} for a {@link TokenNameFinderModel}.
-	 */
-	public ModelLoader<TokenNameFinderModel> getEntityModelLoader() {
-		return entityModelLoader;
-	}
+  /**
+   * Gets the entity model loader.
+   * @return A {@link ModelLoader} for a {@link TokenNameFinderModel}.
+   */
+  public ModelLoader<TokenNameFinderModel> getEntityModelLoader() {
+    return entityModelLoader;
+  }
 
 }

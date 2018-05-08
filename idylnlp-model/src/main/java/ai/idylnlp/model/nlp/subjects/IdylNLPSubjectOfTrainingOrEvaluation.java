@@ -17,18 +17,18 @@ package ai.idylnlp.model.nlp.subjects;
 
 public class IdylNLPSubjectOfTrainingOrEvaluation extends SubjectOfTrainingOrEvaluation {
 
-	private String annotationsFile;
+  private String annotationsFile;
 
-	public IdylNLPSubjectOfTrainingOrEvaluation(String inputFile, String annotationsFile) {
+  public IdylNLPSubjectOfTrainingOrEvaluation(String inputFile, String annotationsFile) {
 
-		super(inputFile);
+    super(inputFile);
 
-		this.annotationsFile = annotationsFile;
+    this.annotationsFile = annotationsFile;
 
-	}
+  }
 
-	public String getAnnotationsFile() {
-		return annotationsFile;
-	}
+  public String getAnnotationsFile() {
+    return annotationsFile;
+  }
 
 }

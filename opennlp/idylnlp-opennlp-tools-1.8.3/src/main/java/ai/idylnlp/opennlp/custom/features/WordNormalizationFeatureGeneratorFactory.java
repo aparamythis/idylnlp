@@ -44,72 +44,72 @@ import opennlp.tools.util.featuregen.GeneratorFactory.XmlFeatureGeneratorFactory
  */
 public class WordNormalizationFeatureGeneratorFactory implements XmlFeatureGeneratorFactory {
 
-	private static final String ELEMENT_NAME = "wordnormalization";
+  private static final String ELEMENT_NAME = "wordnormalization";
 
-	private Lemmatizer modelLemmatizer;
-	private Lemmatizer dictonaryLemmatizer;
-	private PartsOfSpeechTagger partsOfSpeechTagger;
-	private ModelValidator validator;
+  private Lemmatizer modelLemmatizer;
+  private Lemmatizer dictonaryLemmatizer;
+  private PartsOfSpeechTagger partsOfSpeechTagger;
+  private ModelValidator validator;
 
-	@Override
-	public AdaptiveFeatureGenerator create(Element generatorElement, FeatureGeneratorResourceProvider resourceManager)
-			throws InvalidFormatException {
+  @Override
+  public AdaptiveFeatureGenerator create(Element generatorElement, FeatureGeneratorResourceProvider resourceManager)
+      throws InvalidFormatException {
 
-		validator = new TrueValidator();
+    validator = new TrueValidator();
 
-		try {
+    try {
 
-			loadLemmatizers(generatorElement);
-			loadPartsOfSpeechTagger(generatorElement);
+      loadLemmatizers(generatorElement);
+      loadPartsOfSpeechTagger(generatorElement);
 
-			return new WordNormalizationFeatureGenerator(partsOfSpeechTagger, modelLemmatizer, dictonaryLemmatizer);
+      return new WordNormalizationFeatureGenerator(partsOfSpeechTagger, modelLemmatizer, dictonaryLemmatizer);
 
-		} catch (Exception ex) {
+    } catch (Exception ex) {
 
-			throw new InvalidFormatException("Unable to load lemmatizer or parts-of-speech model.", ex);
+      throw new InvalidFormatException("Unable to load lemmatizer or parts-of-speech model.", ex);
 
-		}
+    }
 
-	}
+  }
 
-	public static void register(Map<String, XmlFeatureGeneratorFactory> factoryMap) {
-		factoryMap.put(ELEMENT_NAME, new WordNormalizationFeatureGeneratorFactory());
-	}
+  public static void register(Map<String, XmlFeatureGeneratorFactory> factoryMap) {
+    factoryMap.put(ELEMENT_NAME, new WordNormalizationFeatureGeneratorFactory());
+  }
 
-	private void loadLemmatizers(Element generatorElement) throws Exception {
+  private void loadLemmatizers(Element generatorElement) throws Exception {
 
-		final String lemmaModelPath = generatorElement.getAttribute("modelPath");
-		final String lemmaModelManifest = generatorElement.getAttribute("modelManifest");
-		final String lemmaDictionary = generatorElement.getAttribute("dictionary");
+    final String lemmaModelPath = generatorElement.getAttribute("modelPath");
+    final String lemmaModelManifest = generatorElement.getAttribute("modelManifest");
+    final String lemmaDictionary = generatorElement.getAttribute("dictionary");
 
-		ModelManifest modelManifest = ModelManifestUtils.readManifest(lemmaModelPath + lemmaModelManifest);
+    ModelManifest modelManifest = ModelManifestUtils.readManifest(lemmaModelPath + lemmaModelManifest);
 
-		StandardModelManifest standardModelManifest = (StandardModelManifest) modelManifest;
+    StandardModelManifest standardModelManifest = (StandardModelManifest) modelManifest;
 
-		if(StringUtils.isNotEmpty(lemmaModelPath) && StringUtils.isNotEmpty(lemmaModelManifest)) {
+    if(StringUtils.isNotEmpty(lemmaModelPath) && StringUtils.isNotEmpty(lemmaModelManifest)) {
 
-			modelLemmatizer = new DefaultLemmatizer(lemmaModelPath, standardModelManifest, validator);
+      modelLemmatizer = new DefaultLemmatizer(lemmaModelPath, standardModelManifest, validator);
 
-		}
+    }
 
-		if(StringUtils.isNotEmpty(lemmaDictionary)) {
-			dictonaryLemmatizer = new DefaultLemmatizer(lemmaDictionary);
-		}
+    if(StringUtils.isNotEmpty(lemmaDictionary)) {
+      dictonaryLemmatizer = new DefaultLemmatizer(lemmaDictionary);
+    }
 
-	}
+  }
 
-	private void loadPartsOfSpeechTagger(Element generatorElement) throws Exception {
+  private void loadPartsOfSpeechTagger(Element generatorElement) throws Exception {
 
-		final String posModelpath = generatorElement.getAttribute("modelPath");
-		final String posModelManfiest = generatorElement.getAttribute("modelManifest");
+    final String posModelpath = generatorElement.getAttribute("modelPath");
+    final String posModelManfiest = generatorElement.getAttribute("modelManifest");
 
-		ModelManifest modelManifest = ModelManifestUtils.readManifest(posModelpath + posModelManfiest);
+    ModelManifest modelManifest = ModelManifestUtils.readManifest(posModelpath + posModelManfiest);
 
-		StandardModelManifest standardModelManifest = (StandardModelManifest) modelManifest;
+    StandardModelManifest standardModelManifest = (StandardModelManifest) modelManifest;
 
-		// TODO: Get a Validator in here.
-		partsOfSpeechTagger = new DefaultPartsOfSpeechTagger(posModelpath, standardModelManifest, validator);
+    // TODO: Get a Validator in here.
+    partsOfSpeechTagger = new DefaultPartsOfSpeechTagger(posModelpath, standardModelManifest, validator);
 
-	}
+  }
 
 }

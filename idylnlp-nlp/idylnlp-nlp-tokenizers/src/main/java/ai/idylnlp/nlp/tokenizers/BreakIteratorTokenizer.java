@@ -37,78 +37,78 @@ import ai.idylnlp.model.nlp.Tokenizer;
  */
 public class BreakIteratorTokenizer implements Tokenizer {
 
-	private BreakIterator breakIterator;
+  private BreakIterator breakIterator;
 
-	public BreakIteratorTokenizer(String languageCode) {
+  public BreakIteratorTokenizer(String languageCode) {
 
-		Locale locale = new Locale.Builder().setLanguage(languageCode).build();
+    Locale locale = new Locale.Builder().setLanguage(languageCode).build();
 
-		breakIterator = BreakIterator.getWordInstance(locale);
+    breakIterator = BreakIterator.getWordInstance(locale);
 
-	}
+  }
 
-	public BreakIteratorTokenizer(LanguageCode languageCode) {
+  public BreakIteratorTokenizer(LanguageCode languageCode) {
 
-		breakIterator = BreakIterator.getWordInstance(languageCode.toLocale());
+    breakIterator = BreakIterator.getWordInstance(languageCode.toLocale());
 
-	}
+  }
 
-	/**
-	 * Creates a tokenizer.
-	 *
-	 * @param locale The {@link Locale} for the tokenizer.
-	 */
-	public BreakIteratorTokenizer(Locale locale) {
-		breakIterator = BreakIterator.getWordInstance(locale);
-	}
+  /**
+   * Creates a tokenizer.
+   *
+   * @param locale The {@link Locale} for the tokenizer.
+   */
+  public BreakIteratorTokenizer(Locale locale) {
+    breakIterator = BreakIterator.getWordInstance(locale);
+  }
 
-	@Override
-	public List<String> getLanguageCodes() {
+  @Override
+  public List<String> getLanguageCodes() {
 
-		List<String> languageCodes = new LinkedList<>();
+    List<String> languageCodes = new LinkedList<>();
 
-		for(Locale locale : BreakIterator.getAvailableLocales()) {
-			languageCodes.add(LanguageCode.getByLocale(locale).getAlpha3().toString());
-		}
+    for(Locale locale : BreakIterator.getAvailableLocales()) {
+      languageCodes.add(LanguageCode.getByLocale(locale).getAlpha3().toString());
+    }
 
-		return languageCodes;
+    return languageCodes;
 
-	}
+  }
 
-	@Override
-	public String[] tokenize(String s) {
-		return Span.spansToStrings(tokenizePos(s), s);
-	}
+  @Override
+  public String[] tokenize(String s) {
+    return Span.spansToStrings(tokenizePos(s), s);
+  }
 
-	@Override
-	public Span[] tokenizePos(String d) {
+  @Override
+  public Span[] tokenizePos(String d) {
 
-		List<Span> tokens = new ArrayList<>();
+    List<Span> tokens = new ArrayList<>();
 
-		breakIterator.setText(d);
+    breakIterator.setText(d);
 
-		int lastIndex = breakIterator.first();
+    int lastIndex = breakIterator.first();
 
-		while (lastIndex != BreakIterator.DONE) {
+    while (lastIndex != BreakIterator.DONE) {
 
-			int firstIndex = lastIndex;
-			lastIndex = breakIterator.next();
+      int firstIndex = lastIndex;
+      lastIndex = breakIterator.next();
 
-			if (lastIndex != BreakIterator.DONE
-					&& Character.isLetterOrDigit(d.charAt(firstIndex))) {
-				tokens.add(new Span(firstIndex, lastIndex));
-			}
+      if (lastIndex != BreakIterator.DONE
+          && Character.isLetterOrDigit(d.charAt(firstIndex))) {
+        tokens.add(new Span(firstIndex, lastIndex));
+      }
 
-		}
+    }
 
-		return tokens.toArray(new Span[tokens.size()]);
+    return tokens.toArray(new Span[tokens.size()]);
 
-	}
+  }
 
-	@Override
-	public String[] tokenize(String s, Stemmer stemmer) {
-		// TODO: Implement this.
-		throw new NotImplementedException("Not yet implemented.");
-	}
+  @Override
+  public String[] tokenize(String s, Stemmer stemmer) {
+    // TODO: Implement this.
+    throw new NotImplementedException("Not yet implemented.");
+  }
 
 }

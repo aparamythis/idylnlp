@@ -33,61 +33,61 @@ import ai.idylnlp.model.nlp.documents.AbstractDocumentClassifierConfiguration;
  */
 public class OpenNLPDocumentClassifierConfiguration extends AbstractDocumentClassifierConfiguration {
 
-	private static final Logger LOGGER = LogManager.getLogger(OpenNLPDocumentClassifierConfiguration.class);
+  private static final Logger LOGGER = LogManager.getLogger(OpenNLPDocumentClassifierConfiguration.class);
 
-	private Map<LanguageCode, File> doccatModels;
-	private boolean preloadModels;
+  private Map<LanguageCode, File> doccatModels;
+  private boolean preloadModels;
 
-	private OpenNLPDocumentClassifierConfiguration(Map<LanguageCode, File> doccatModels, boolean preloadModels) {
+  private OpenNLPDocumentClassifierConfiguration(Map<LanguageCode, File> doccatModels, boolean preloadModels) {
 
-		this.doccatModels = doccatModels;
-		this.preloadModels = preloadModels;
+    this.doccatModels = doccatModels;
+    this.preloadModels = preloadModels;
 
-	}
+  }
 
-	/**
-	 * Builder class to construct {@link OpenNLPDocumentClassifierConfiguration}.
-	 *
-	 * @author Mountain Fog, Inc.
-	 *
-	 */
-	public static class Builder {
+  /**
+   * Builder class to construct {@link OpenNLPDocumentClassifierConfiguration}.
+   *
+   * @author Mountain Fog, Inc.
+   *
+   */
+  public static class Builder {
 
-		private Map<LanguageCode, File> doccatModels;
-		private boolean preloadModels;
+    private Map<LanguageCode, File> doccatModels;
+    private boolean preloadModels;
 
-		public Builder withDoccatModels(Map<LanguageCode, File> doccatModels) {
-			this.doccatModels = doccatModels;
-			return this;
-		}
+    public Builder withDoccatModels(Map<LanguageCode, File> doccatModels) {
+      this.doccatModels = doccatModels;
+      return this;
+    }
 
-		public Builder withPreloadModels(boolean preloadModels) {
-			this.preloadModels = preloadModels;
-			return this;
-		}
+    public Builder withPreloadModels(boolean preloadModels) {
+      this.preloadModels = preloadModels;
+      return this;
+    }
 
-		/**
-		 * Creates a configured {@link OpenNLPDocumentClassifierConfiguration}.
-		 * @return A configured {@link OpenNLPDocumentClassifierConfiguration}.
-		 */
-		public OpenNLPDocumentClassifierConfiguration build() {
+    /**
+     * Creates a configured {@link OpenNLPDocumentClassifierConfiguration}.
+     * @return A configured {@link OpenNLPDocumentClassifierConfiguration}.
+     */
+    public OpenNLPDocumentClassifierConfiguration build() {
 
-			return new OpenNLPDocumentClassifierConfiguration(doccatModels, preloadModels);
+      return new OpenNLPDocumentClassifierConfiguration(doccatModels, preloadModels);
 
-		}
+    }
 
-	}
+  }
 
-	public Map<LanguageCode, File> getDoccatModels() {
-		return doccatModels;
-	}
+  public Map<LanguageCode, File> getDoccatModels() {
+    return doccatModels;
+  }
 
-	/**
-	 * Gets whether or not to preload the document classification models.
-	 * @return Whether or not to preload the document classification models.
-	 */
-	public boolean isPreloadModels() {
-		return preloadModels;
-	}
+  /**
+   * Gets whether or not to preload the document classification models.
+   * @return Whether or not to preload the document classification models.
+   */
+  public boolean isPreloadModels() {
+    return preloadModels;
+  }
 
 }

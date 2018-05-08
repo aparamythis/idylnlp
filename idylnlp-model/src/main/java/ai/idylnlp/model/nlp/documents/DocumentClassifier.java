@@ -24,22 +24,22 @@ package ai.idylnlp.model.nlp.documents;
  */
 public interface DocumentClassifier<T extends AbstractDocumentClassifierConfiguration, U extends AbstractDocumentClassificationRequest> {
 
-	/**
-	 * Classifies a document.
-	 * @param request A {@link AbstractDocumentClassificationRequest request} containing the details of the
-	 * document classification request.
-	 * @return A {@link DocumentClassificationResponse response} containing the results of the
-	 * document classification.
-	 * @throws DocumentClassifierException Thrown if the document classification fails.
-	 */
-	public DocumentClassificationResponse classify(U request) throws DocumentClassifierException;
+  /**
+   * Classifies a document.
+   * @param request A {@link AbstractDocumentClassificationRequest request} containing the details of the
+   * document classification request.
+   * @return A {@link DocumentClassificationResponse response} containing the results of the
+   * document classification.
+   * @throws DocumentClassifierException Thrown if the document classification fails.
+   */
+  public DocumentClassificationResponse classify(U request) throws DocumentClassifierException;
 
-	/**
-	 * Evaluates a document classification model.
-	 * @param request The {@link DocumentClassificationEvaluationRequest request} to evaluate.
-	 * @return The {@link DocumentClassificationEvaluationResponse results} of the evaluation.
-	 * @throws DocumentClassifierException Thrown if the evaluation fails.
-	 */
-	public DocumentClassificationEvaluationResponse evaluate(DocumentClassificationEvaluationRequest request) throws DocumentClassifierException;
+  /**
+   * Evaluates a document classification model.
+   * @param request The {@link DocumentClassificationEvaluationRequest request} to evaluate.
+   * @return The {@link DocumentClassificationEvaluationResponse results} of the evaluation.
+   * @throws DocumentClassifierException Thrown if the evaluation fails.
+   */
+  public DocumentClassificationEvaluationResponse evaluate(DocumentClassificationEvaluationRequest request) throws DocumentClassifierException;
 
 }

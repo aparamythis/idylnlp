@@ -45,44 +45,44 @@ import opennlp.tools.util.Span;
  */
 public class RegularExpressionEntityRecognizer implements EntityRecognizer {
 
-	private static final Logger LOGGER = LogManager.getLogger(RegularExpressionEntityRecognizer.class);
+  private static final Logger LOGGER = LogManager.getLogger(RegularExpressionEntityRecognizer.class);
 
-	private Pattern pattern;
-	private String type;
+  private Pattern pattern;
+  private String type;
 
-	/**
-	 * Creates a regular expression entity recognizer.
-	 * @param pattern The regular expression {@link Pattern pattern}.
-	 * @param type The {@link String class} of the entities to identify.
-	 */
-	public RegularExpressionEntityRecognizer(Pattern pattern, String type) {
+  /**
+   * Creates a regular expression entity recognizer.
+   * @param pattern The regular expression {@link Pattern pattern}.
+   * @param type The {@link String class} of the entities to identify.
+   */
+  public RegularExpressionEntityRecognizer(Pattern pattern, String type) {
 
-		this.pattern = pattern;
-		this.type = type;
+    this.pattern = pattern;
+    this.type = type;
 
-	}
+  }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public EntityExtractionResponse extractEntities(EntityExtractionRequest request) throws EntityFinderException {
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public EntityExtractionResponse extractEntities(EntityExtractionRequest request) throws EntityFinderException {
 
-		long startTime = System.currentTimeMillis();
+    long startTime = System.currentTimeMillis();
 
-		Set<Entity> entities = new LinkedHashSet<>();
+    Set<Entity> entities = new LinkedHashSet<>();
 
-		try {
+    try {
 
-			// TODO: Surround all patterns with spaces.
-			final String text = StringUtils.join(request.getText(), " ").replaceAll(pattern.pattern(), " $1 ");
+      // TODO: Surround all patterns with spaces.
+      final String text = StringUtils.join(request.getText(), " ").replaceAll(pattern.pattern(), " $1 ");
 
-			Pattern[] patterns = {pattern};
+      Pattern[] patterns = {pattern};
 
-			// TODO: This recognizer must use the WhitespaceTokenizer.
-			Tokenizer tokenizer = WhitespaceTokenizer.INSTANCE;
+      // TODO: This recognizer must use the WhitespaceTokenizer.
+      Tokenizer tokenizer = WhitespaceTokenizer.INSTANCE;
 
-			// tokenize the text into the required OpenNLP format
+      // tokenize the text into the required OpenNLP format
             String[] tokens = tokenizer.tokenize(text);
 
             //the values used in these Spans are string character offsets of each token from the sentence beginning
@@ -110,34 +110,34 @@ public class RegularExpressionEntityRecognizer implements EntityRecognizer {
                 String nameInDocument = text.substring(beginningOfFirstWord, endOfLastWord);
 
                 // Create a new entity object.
-				Entity entity = new Entity(nameInDocument, 100.0, type, LanguageCode.undefined.getAlpha3().toString());
-				entity.setSpan(new ai.idylnlp.model.entity.Span(name.getStart(), name.getEnd()));
-				entity.setContext(request.getContext());
-				entity.setExtractionDate(System.currentTimeMillis());
+        Entity entity = new Entity(nameInDocument, 100.0, type, LanguageCode.undefined.getAlpha3().toString());
+        entity.setSpan(new ai.idylnlp.model.entity.Span(name.getStart(), name.getEnd()));
+        entity.setContext(request.getContext());
+        entity.setExtractionDate(System.currentTimeMillis());
 
-				LOGGER.debug("Found entity with text: {}", nameInDocument);
+        LOGGER.debug("Found entity with text: {}", nameInDocument);
 
-				// Add the entity to the list.
-				entities.add(entity);
+        // Add the entity to the list.
+        entities.add(entity);
 
-				LOGGER.trace("Found entity [{}] as a {} with span {}.", nameInDocument, type, name.toString());
+        LOGGER.trace("Found entity [{}] as a {} with span {}.", nameInDocument, type, name.toString());
 
             }
 
-			long extractionTime = (System.currentTimeMillis() - startTime);
+      long extractionTime = (System.currentTimeMillis() - startTime);
 
-			EntityExtractionResponse response = new EntityExtractionResponse(entities, extractionTime, true);
+      EntityExtractionResponse response = new EntityExtractionResponse(entities, extractionTime, true);
 
-			return response;
+      return response;
 
-		} catch (Exception ex) {
+    } catch (Exception ex) {
 
-			LOGGER.error("Unable to find entities with the RegularExpressionEntityRecognizer.", ex);
+      LOGGER.error("Unable to find entities with the RegularExpressionEntityRecognizer.", ex);
 
-			throw new EntityFinderException("Unable to find entities with the RegularExpressionEntityRecognizer.", ex);
+      throw new EntityFinderException("Unable to find entities with the RegularExpressionEntityRecognizer.", ex);
 
-		}
+    }
 
-	}
+  }
 
 }

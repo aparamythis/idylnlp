@@ -23,20 +23,20 @@ package ai.idylnlp.model.nlp.documents;
  */
 public class DocumentClassificationResponse {
 
-	private DocumentClassificationScores scores;
+  private DocumentClassificationScores scores;
 
-	public DocumentClassificationResponse(DocumentClassificationScores scores) {
+  public DocumentClassificationResponse(DocumentClassificationScores scores) {
 
-		this.scores = scores;
+    this.scores = scores;
 
-	}
+  }
 
-	public DocumentClassificationScores getScores() {
-		return scores;
-	}
+  public DocumentClassificationScores getScores() {
+    return scores;
+  }
 
-	public void setScores(DocumentClassificationScores scores) {
-		this.scores = scores;
-	}
+  public void setScores(DocumentClassificationScores scores) {
+    this.scores = scores;
+  }
 
 }

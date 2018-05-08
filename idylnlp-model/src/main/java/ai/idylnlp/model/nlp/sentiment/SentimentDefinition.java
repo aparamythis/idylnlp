@@ -25,98 +25,98 @@ import ai.idylnlp.model.nlp.Stemmer;
  */
 public class SentimentDefinition {
 
-	private String sentimentLabel;
-	private String fileName;
-	private String fullFilePath;
-	private boolean enableFuzzyMatching;
-	private boolean enableStemming;
-	private Stemmer stemmer;
+  private String sentimentLabel;
+  private String fileName;
+  private String fullFilePath;
+  private boolean enableFuzzyMatching;
+  private boolean enableStemming;
+  private Stemmer stemmer;
 
-	public SentimentDefinition(String sentimentLabel, String fileName, String fullFilePath) {
+  public SentimentDefinition(String sentimentLabel, String fileName, String fullFilePath) {
 
-		this.sentimentLabel = sentimentLabel;
-		this.fileName = fileName;
-		this.fullFilePath = fullFilePath;
-		this.enableFuzzyMatching = false;
-		this.enableStemming = false;
+    this.sentimentLabel = sentimentLabel;
+    this.fileName = fileName;
+    this.fullFilePath = fullFilePath;
+    this.enableFuzzyMatching = false;
+    this.enableStemming = false;
 
-	}
+  }
 
-	public SentimentDefinition(String sentimentLabel, String fileName, String fullFilePath, boolean enableFuzzyMatching, boolean enableStemming, Stemmer stemmer) {
+  public SentimentDefinition(String sentimentLabel, String fileName, String fullFilePath, boolean enableFuzzyMatching, boolean enableStemming, Stemmer stemmer) {
 
-		this.sentimentLabel = sentimentLabel;
-		this.fileName = fileName;
-		this.fullFilePath = fullFilePath;
-		this.enableFuzzyMatching = enableFuzzyMatching;
-		this.enableStemming = enableStemming;
-		this.stemmer = stemmer;
+    this.sentimentLabel = sentimentLabel;
+    this.fileName = fileName;
+    this.fullFilePath = fullFilePath;
+    this.enableFuzzyMatching = enableFuzzyMatching;
+    this.enableStemming = enableStemming;
+    this.stemmer = stemmer;
 
-	}
+  }
 
-	public SentimentDefinition(String sentimentLabel, String fileName, String fullFilePath, boolean enableFuzzyMatching, int maxFuzziness, boolean enableStemming, Stemmer stemmer) {
+  public SentimentDefinition(String sentimentLabel, String fileName, String fullFilePath, boolean enableFuzzyMatching, int maxFuzziness, boolean enableStemming, Stemmer stemmer) {
 
-		this.sentimentLabel = sentimentLabel;
-		this.fileName = fileName;
-		this.fullFilePath = fullFilePath;
-		this.enableFuzzyMatching = enableFuzzyMatching;
-		this.enableStemming = enableStemming;
-		this.stemmer = stemmer;
+    this.sentimentLabel = sentimentLabel;
+    this.fileName = fileName;
+    this.fullFilePath = fullFilePath;
+    this.enableFuzzyMatching = enableFuzzyMatching;
+    this.enableStemming = enableStemming;
+    this.stemmer = stemmer;
 
-	}
+  }
 
-	@Override
-	public String toString() {
+  @Override
+  public String toString() {
 
-		return String.format("Sentiment Label: %s; Definition File: %s", sentimentLabel, fileName);
+    return String.format("Sentiment Label: %s; Definition File: %s", sentimentLabel, fileName);
 
-	}
+  }
 
-	public String getFileName() {
-		return fileName;
-	}
+  public String getFileName() {
+    return fileName;
+  }
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
+  public void setFileName(String fileName) {
+    this.fileName = fileName;
+  }
 
-	public boolean isEnableFuzzyMatching() {
-		return enableFuzzyMatching;
-	}
+  public boolean isEnableFuzzyMatching() {
+    return enableFuzzyMatching;
+  }
 
-	public void setEnableFuzzyMatching(boolean enableFuzzyMatching) {
-		this.enableFuzzyMatching = enableFuzzyMatching;
-	}
+  public void setEnableFuzzyMatching(boolean enableFuzzyMatching) {
+    this.enableFuzzyMatching = enableFuzzyMatching;
+  }
 
-	public String getSentimentLabel() {
-		return sentimentLabel;
-	}
+  public String getSentimentLabel() {
+    return sentimentLabel;
+  }
 
-	public void setSentimentLabel(String sentimentLabel) {
-		this.sentimentLabel = sentimentLabel;
-	}
+  public void setSentimentLabel(String sentimentLabel) {
+    this.sentimentLabel = sentimentLabel;
+  }
 
-	public String getFullFilePath() {
-		return fullFilePath;
-	}
+  public String getFullFilePath() {
+    return fullFilePath;
+  }
 
-	public void setFullFilePath(String fullFilePath) {
-		this.fullFilePath = fullFilePath;
-	}
+  public void setFullFilePath(String fullFilePath) {
+    this.fullFilePath = fullFilePath;
+  }
 
-	public boolean isEnableStemming() {
-		return enableStemming;
-	}
+  public boolean isEnableStemming() {
+    return enableStemming;
+  }
 
-	public void setEnableStemming(boolean enableStemming) {
-		this.enableStemming = enableStemming;
-	}
+  public void setEnableStemming(boolean enableStemming) {
+    this.enableStemming = enableStemming;
+  }
 
-	public Stemmer getStemmer() {
-		return stemmer;
-	}
+  public Stemmer getStemmer() {
+    return stemmer;
+  }
 
-	public void setStemmer(Stemmer stemmer) {
-		this.stemmer = stemmer;
-	}
+  public void setStemmer(Stemmer stemmer) {
+    this.stemmer = stemmer;
+  }
 
 }

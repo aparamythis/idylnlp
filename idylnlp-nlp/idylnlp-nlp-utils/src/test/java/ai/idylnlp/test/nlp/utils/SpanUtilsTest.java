@@ -26,46 +26,46 @@ import opennlp.tools.util.Span;
 
 public class SpanUtilsTest {
 
-	private final Tokenizer tokenizer = SimpleTokenizer.INSTANCE;
+  private final Tokenizer tokenizer = SimpleTokenizer.INSTANCE;
 
-	@Test
-	public void span1() {
+  @Test
+  public void span1() {
 
-		Span span = SpanUtils.getSpan(tokenizer, "Keanu Reeves", "The Matrix starred Keanu Reeves.");
-		Span expectdSpan = new Span(3, 5);
+    Span span = SpanUtils.getSpan(tokenizer, "Keanu Reeves", "The Matrix starred Keanu Reeves.");
+    Span expectdSpan = new Span(3, 5);
 
-		assertEquals(expectdSpan, span);
+    assertEquals(expectdSpan, span);
 
-	}
+  }
 
-	@Test
-	public void span2() {
+  @Test
+  public void span2() {
 
-		Span span = SpanUtils.getSpan(tokenizer, "pontiac", "He was driving a blue pontiac.");
-		Span expectdSpan = new Span(5, 6);
+    Span span = SpanUtils.getSpan(tokenizer, "pontiac", "He was driving a blue pontiac.");
+    Span expectdSpan = new Span(5, 6);
 
-		assertEquals(expectdSpan, span);
+    assertEquals(expectdSpan, span);
 
-	}
+  }
 
-	@Test
-	public void span3() {
+  @Test
+  public void span3() {
 
-		Span span = SpanUtils.getSpan(tokenizer, "was", "He was driving a blue pontiac.");
-		Span expectdSpan = new Span(1, 2);
+    Span span = SpanUtils.getSpan(tokenizer, "was", "He was driving a blue pontiac.");
+    Span expectdSpan = new Span(1, 2);
 
-		assertEquals(expectdSpan, span);
+    assertEquals(expectdSpan, span);
 
-	}
+  }
 
-	@Test
-	public void span4() {
+  @Test
+  public void span4() {
 
-		Span span = SpanUtils.getSpan(tokenizer, "He", "He was driving a blue pontiac.");
-		Span expectdSpan = new Span(0, 1);
+    Span span = SpanUtils.getSpan(tokenizer, "He", "He was driving a blue pontiac.");
+    Span expectdSpan = new Span(0, 1);
 
-		assertEquals(expectdSpan, span);
+    assertEquals(expectdSpan, span);
 
-	}
+  }
 
 }

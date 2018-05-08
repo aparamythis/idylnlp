@@ -25,17 +25,17 @@ import ai.idylnlp.model.nlp.strings.Similarity;
  */
 public class CosineDistance implements Similarity {
 
-	public static Similarity INSTANCE() {
-		return new CosineDistance();
-	}
+  public static Similarity INSTANCE() {
+    return new CosineDistance();
+  }
 
-	@Override
-	public double calculate(CharSequence s, CharSequence t) {
+  @Override
+  public double calculate(CharSequence s, CharSequence t) {
 
-		org.apache.commons.text.similarity.CosineDistance distance = new org.apache.commons.text.similarity.CosineDistance();
+    org.apache.commons.text.similarity.CosineDistance distance = new org.apache.commons.text.similarity.CosineDistance();
 
-		return distance.apply(s, t);
+    return distance.apply(s, t);
 
-	}
+  }
 
 }

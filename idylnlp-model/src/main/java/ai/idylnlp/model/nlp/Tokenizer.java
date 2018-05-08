@@ -44,12 +44,12 @@ import java.util.List;
  */
 public interface Tokenizer {
 
-	/**
-	 * Gets the ISO 639-2 language codes supported by this tokenizer.
-	 * @return A list of ISO 639-2 language codes supported by the tokenizer,
-	 * or an empty list if the tokenizer is not language-dependent.
-	 */
-	List<String> getLanguageCodes();
+  /**
+   * Gets the ISO 639-2 language codes supported by this tokenizer.
+   * @return A list of ISO 639-2 language codes supported by the tokenizer,
+   * or an empty list if the tokenizer is not language-dependent.
+   */
+  List<String> getLanguageCodes();
 
     /**
      * Splits a string into its atomic parts

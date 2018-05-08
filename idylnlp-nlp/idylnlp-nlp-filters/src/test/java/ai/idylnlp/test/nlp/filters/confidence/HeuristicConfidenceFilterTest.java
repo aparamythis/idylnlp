@@ -29,64 +29,64 @@ import ai.idylnlp.nlp.filters.confidence.serializers.LocalConfidenceFilterSerial
 
 public class HeuristicConfidenceFilterTest {
 
-	private static final Logger LOGGER = LogManager.getLogger(HeuristicConfidenceFilterTest.class);
+  private static final Logger LOGGER = LogManager.getLogger(HeuristicConfidenceFilterTest.class);
 
-	@Test
-	public void test1() throws IOException {
+  @Test
+  public void test1() throws IOException {
 
-		File file = File.createTempFile("confidences", "dat");
-		LocalConfidenceFilterSerializer serializer = new LocalConfidenceFilterSerializer(file);
+    File file = File.createTempFile("confidences", "dat");
+    LocalConfidenceFilterSerializer serializer = new LocalConfidenceFilterSerializer(file);
 
-		HeuristicConfidenceFilter f = new HeuristicConfidenceFilter(serializer);
+    HeuristicConfidenceFilter f = new HeuristicConfidenceFilter(serializer);
 
-		assertTrue(f.test("id1", 88, 99));
+    assertTrue(f.test("id1", 88, 99));
 
-		assertTrue(f.test("id1", 92, 99));
+    assertTrue(f.test("id1", 92, 99));
 
-		assertTrue(f.test("id1", 5, 99));
+    assertTrue(f.test("id1", 5, 99));
 
-		assertTrue(f.test("id1", 5, 99));
+    assertTrue(f.test("id1", 5, 99));
 
-		assertTrue(f.test("id1", 5, 99));
+    assertTrue(f.test("id1", 5, 99));
 
-		assertTrue(f.test("id2", 18, 99));
+    assertTrue(f.test("id2", 18, 99));
 
-		assertTrue(f.test("id3", 18, 99));
+    assertTrue(f.test("id3", 18, 99));
 
-		assertTrue(f.test("id3", 18, 99));
+    assertTrue(f.test("id3", 18, 99));
 
-	}
+  }
 
-	@Test
-	public void test2() throws IOException {
+  @Test
+  public void test2() throws IOException {
 
-		File file = File.createTempFile("confidences", "dat");
-		LocalConfidenceFilterSerializer serializer = new LocalConfidenceFilterSerializer(file);
+    File file = File.createTempFile("confidences", "dat");
+    LocalConfidenceFilterSerializer serializer = new LocalConfidenceFilterSerializer(file);
 
-		HeuristicConfidenceFilter f = new HeuristicConfidenceFilter(serializer);
+    HeuristicConfidenceFilter f = new HeuristicConfidenceFilter(serializer);
 
-		assertTrue(f.test("id1", 88, 99));
+    assertTrue(f.test("id1", 88, 99));
 
-		assertTrue(f.test("id1", 92, 99));
+    assertTrue(f.test("id1", 92, 99));
 
-		assertTrue(f.test("id1", 85, 99));
+    assertTrue(f.test("id1", 85, 99));
 
-	}
+  }
 
-	@Test
-	public void test3() throws IOException {
+  @Test
+  public void test3() throws IOException {
 
-		File file = File.createTempFile("confidences", "dat");
-		LocalConfidenceFilterSerializer serializer = new LocalConfidenceFilterSerializer(file);
+    File file = File.createTempFile("confidences", "dat");
+    LocalConfidenceFilterSerializer serializer = new LocalConfidenceFilterSerializer(file);
 
-		HeuristicConfidenceFilter f = new HeuristicConfidenceFilter(serializer);
+    HeuristicConfidenceFilter f = new HeuristicConfidenceFilter(serializer);
 
-		assertTrue(f.test("id1", 88, 75));
+    assertTrue(f.test("id1", 88, 75));
 
-		assertTrue(f.test("id1", 15, 75));
+    assertTrue(f.test("id1", 15, 75));
 
-		assertTrue(f.test("id1", 85, 75));
+    assertTrue(f.test("id1", 85, 75));
 
-	}
+  }
 
 }

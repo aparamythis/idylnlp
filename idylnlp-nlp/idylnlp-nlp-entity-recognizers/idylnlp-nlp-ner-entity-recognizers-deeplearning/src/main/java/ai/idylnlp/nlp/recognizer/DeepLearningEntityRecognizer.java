@@ -60,207 +60,207 @@ import opennlp.tools.namefind.TokenNameFinder;
  */
 public class DeepLearningEntityRecognizer extends AbstractEntityRecognizer<DeepLearningEntityRecognizerConfiguration> implements EntityRecognizer {
 
-	private static final Logger LOGGER = LogManager.getLogger(DeepLearningEntityRecognizer.class);
+  private static final Logger LOGGER = LogManager.getLogger(DeepLearningEntityRecognizer.class);
 
-	// Language -> (Type, [Network, Vectors])
-	private Map<LanguageCode, Map<String, ImmutablePair<MultiLayerNetwork, WordVectors>>> loadedModels;
+  // Language -> (Type, [Network, Vectors])
+  private Map<LanguageCode, Map<String, ImmutablePair<MultiLayerNetwork, WordVectors>>> loadedModels;
 
-	public DeepLearningEntityRecognizer(DeepLearningEntityRecognizerConfiguration configuration) {
+  public DeepLearningEntityRecognizer(DeepLearningEntityRecognizerConfiguration configuration) {
 
-		super(configuration);
+    super(configuration);
 
-		loadedModels = new HashMap<LanguageCode, Map<String, ImmutablePair<MultiLayerNetwork, WordVectors>>>();
+    loadedModels = new HashMap<LanguageCode, Map<String, ImmutablePair<MultiLayerNetwork, WordVectors>>>();
 
-		for(String type : configuration.getEntityModels().keySet()) {
+    for(String type : configuration.getEntityModels().keySet()) {
 
-			Map<LanguageCode, Set<SecondGenModelManifest>> types = configuration.getEntityModels().get(type);
+      Map<LanguageCode, Set<SecondGenModelManifest>> types = configuration.getEntityModels().get(type);
 
-			for(LanguageCode language : types.keySet()) {
+      for(LanguageCode language : types.keySet()) {
 
-				for(SecondGenModelManifest modelManifest : types.get(language)) {
+        for(SecondGenModelManifest modelManifest : types.get(language)) {
 
-					if(!configuration.getBlacklistedModelIDs().contains(modelManifest.getModelId())) {
+          if(!configuration.getBlacklistedModelIDs().contains(modelManifest.getModelId())) {
 
-						try {
+            try {
 
-							final String modelFileName = new File(configuration.getEntityModelDirectory(), modelManifest.getModelFileName()).getAbsolutePath();
+              final String modelFileName = new File(configuration.getEntityModelDirectory(), modelManifest.getModelFileName()).getAbsolutePath();
 
-							// Load the network from the model file.
-							LOGGER.info("Loading {} {} model from file: {}", language.getAlpha3().toString(), type, modelFileName);
+              // Load the network from the model file.
+              LOGGER.info("Loading {} {} model from file: {}", language.getAlpha3().toString(), type, modelFileName);
 
-							final File modelFile = new File(modelFileName);
+              final File modelFile = new File(modelFileName);
 
-							final MultiLayerNetwork multiLayerNetwork = ModelSerializer.restoreMultiLayerNetwork(modelFile.getAbsolutePath());
+              final MultiLayerNetwork multiLayerNetwork = ModelSerializer.restoreMultiLayerNetwork(modelFile.getAbsolutePath());
 
-							final String vectorsFileName = new File(configuration.getEntityModelDirectory(), modelManifest.getVectorsFileName()).getAbsolutePath();
+              final String vectorsFileName = new File(configuration.getEntityModelDirectory(), modelManifest.getVectorsFileName()).getAbsolutePath();
 
-							// Verify the vectors file exists.
-							final File vectorsFile = new File(vectorsFileName);
+              // Verify the vectors file exists.
+              final File vectorsFile = new File(vectorsFileName);
 
-							// Load the word vectors from the file.
-							LOGGER.info("Loading vectors from file: {}", vectorsFileName);
-							final WordVectors wordVectors = WordVectorSerializer.loadStaticModel(vectorsFile);
+              // Load the word vectors from the file.
+              LOGGER.info("Loading vectors from file: {}", vectorsFileName);
+              final WordVectors wordVectors = WordVectorSerializer.loadStaticModel(vectorsFile);
 
-							final Map<String, ImmutablePair<MultiLayerNetwork, WordVectors>> t = new HashMap<>();
-							t.put(type, new ImmutablePair<MultiLayerNetwork, WordVectors>(multiLayerNetwork, wordVectors));
+              final Map<String, ImmutablePair<MultiLayerNetwork, WordVectors>> t = new HashMap<>();
+              t.put(type, new ImmutablePair<MultiLayerNetwork, WordVectors>(multiLayerNetwork, wordVectors));
 
-							loadedModels.put(language, t);
+              loadedModels.put(language, t);
 
-						} catch (Exception ex) {
+            } catch (Exception ex) {
 
-							LOGGER.error("Unable to load model: " + modelManifest.getModelFileName(), ex);
+              LOGGER.error("Unable to load model: " + modelManifest.getModelFileName(), ex);
 
-							getConfiguration().getBlacklistedModelIDs().add(modelManifest.getModelId());
-							LOGGER.warn("Model {} is blacklisted. Loading will not be attempted until restart.", modelManifest.getModelFileName());
+              getConfiguration().getBlacklistedModelIDs().add(modelManifest.getModelId());
+              LOGGER.warn("Model {} is blacklisted. Loading will not be attempted until restart.", modelManifest.getModelFileName());
 
-							// TODO: This should probably be made visible to the user somehow - maybe through the API?
+              // TODO: This should probably be made visible to the user somehow - maybe through the API?
 
-						}
+            }
 
-					} else {
+          } else {
 
-						LOGGER.info("Model {} is blacklisted. Loading will not be attempted until restart.", modelManifest.getModelFileName());
+            LOGGER.info("Model {} is blacklisted. Loading will not be attempted until restart.", modelManifest.getModelFileName());
 
-					}
+          }
 
-				}
+        }
 
-			}
+      }
 
-		}
+    }
 
-	}
+  }
 
-	@Override
-	public EntityExtractionResponse extractEntities(EntityExtractionRequest request)
-			throws EntityFinderException, ModelLoaderException {
+  @Override
+  public EntityExtractionResponse extractEntities(EntityExtractionRequest request)
+      throws EntityFinderException, ModelLoaderException {
 
-		if(request.getText().length == 0) {
+    if(request.getText().length == 0) {
 
-			throw new IllegalArgumentException("Input text cannot be empty.");
+      throw new IllegalArgumentException("Input text cannot be empty.");
 
-		}
+    }
 
-		if(request.getConfidenceThreshold() < 0 || request.getConfidenceThreshold() > 100) {
+    if(request.getConfidenceThreshold() < 0 || request.getConfidenceThreshold() > 100) {
 
-			throw new IllegalArgumentException("Confidence threshold must be an integer between 0 and 100.");
+      throw new IllegalArgumentException("Confidence threshold must be an integer between 0 and 100.");
 
-		}
+    }
 
-		SentenceSanitizer sentenceSanitizer = new DefaultSentenceSanitizer.Builder().lowerCase().removePunctuation().consolidateSpaces().build();
+    SentenceSanitizer sentenceSanitizer = new DefaultSentenceSanitizer.Builder().lowerCase().removePunctuation().consolidateSpaces().build();
 
-		// All of the extracted entities.
-		Set<Entity> entities = new LinkedHashSet<Entity>();
+    // All of the extracted entities.
+    Set<Entity> entities = new LinkedHashSet<Entity>();
 
-		// Keep track of the extraction time.
-		long startTime = System.currentTimeMillis();
+    // Keep track of the extraction time.
+    long startTime = System.currentTimeMillis();
 
-		String types[] = {};
+    String types[] = {};
 
-		if(!StringUtils.isEmpty(request.getType())) {
-			types = request.getType().split(",");
-		}
+    if(!StringUtils.isEmpty(request.getType())) {
+      types = request.getType().split(",");
+    }
 
-		for(String type : getConfiguration().getEntityModels().keySet()) {
+    for(String type : getConfiguration().getEntityModels().keySet()) {
 
-			if(types.length == 0 || ArrayUtils.contains(types, type)) {
+      if(types.length == 0 || ArrayUtils.contains(types, type)) {
 
-				LOGGER.trace("Processing entity class {}.", type);
+        LOGGER.trace("Processing entity class {}.", type);
 
-				LanguageCode language = request.getLanguage();
+        LanguageCode language = request.getLanguage();
 
-				// The manifests of the models that will be used for this extraction.
-				Set<SecondGenModelManifest> modelManifests = new HashSet<SecondGenModelManifest>();
+        // The manifests of the models that will be used for this extraction.
+        Set<SecondGenModelManifest> modelManifests = new HashSet<SecondGenModelManifest>();
 
-				if(request.getLanguage() == null) {
+        if(request.getLanguage() == null) {
 
-					// TODO: Run all languages to support multilingual documents.
-					Set<LanguageCode> languages = getConfiguration().getEntityModels().get(type).keySet();
+          // TODO: Run all languages to support multilingual documents.
+          Set<LanguageCode> languages = getConfiguration().getEntityModels().get(type).keySet();
 
-					for(LanguageCode l : languages) {
-						modelManifests.addAll(getConfiguration().getEntityModels().get(type).get(l));
-					}
+          for(LanguageCode l : languages) {
+            modelManifests.addAll(getConfiguration().getEntityModels().get(type).get(l));
+          }
 
-				} else {
+        } else {
 
-					// We are doing a single language.
+          // We are doing a single language.
 
-					Map<LanguageCode, Set<SecondGenModelManifest>> models = getConfiguration().getEntityModels().get(type);
+          Map<LanguageCode, Set<SecondGenModelManifest>> models = getConfiguration().getEntityModels().get(type);
 
-					// If there are not any models for this entity type <code>models</code> will be null.
-					if(models != null) {
+          // If there are not any models for this entity type <code>models</code> will be null.
+          if(models != null) {
 
-						Set<SecondGenModelManifest> manifests = models.get(language);
+            Set<SecondGenModelManifest> manifests = models.get(language);
 
-						// If <code>manifests</code> is not null add those manifests to the set.
-						if(manifests != null) {
+            // If <code>manifests</code> is not null add those manifests to the set.
+            if(manifests != null) {
 
-							modelManifests.addAll(manifests);
+              modelManifests.addAll(manifests);
 
-						}
+            }
 
-					}
+          }
 
-				}
+        }
 
-				if(CollectionUtils.isNotEmpty(modelManifests)) {
+        if(CollectionUtils.isNotEmpty(modelManifests)) {
 
-					for(SecondGenModelManifest modelManifest : modelManifests) {
+          for(SecondGenModelManifest modelManifest : modelManifests) {
 
-						LOGGER.debug("{} has {} entity models.", type, modelManifests.size());
+            LOGGER.debug("{} has {} entity models.", type, modelManifests.size());
 
-						String t = modelManifest.getType();
+            String t = modelManifest.getType();
 
-						// Get the network and word vectors for this language.
-						LOGGER.info("Getting model for type {}, language {}", modelManifest.getLanguageCode().getAlpha3().toString(), t);
+            // Get the network and word vectors for this language.
+            LOGGER.info("Getting model for type {}, language {}", modelManifest.getLanguageCode().getAlpha3().toString(), t);
 
-						ImmutablePair<MultiLayerNetwork, WordVectors> pair = loadedModels.get(modelManifest.getLanguageCode()).get(t);
+            ImmutablePair<MultiLayerNetwork, WordVectors> pair = loadedModels.get(modelManifest.getLanguageCode()).get(t);
 
-						MultiLayerNetwork multiLayerNetwork = pair.getLeft();
-						WordVectors wordVectors = pair.getRight();
+            MultiLayerNetwork multiLayerNetwork = pair.getLeft();
+            WordVectors wordVectors = pair.getRight();
 
-						// Get the nameFinder for this model if it exists.
-						TokenNameFinder nameFinder = nameFinders.get(modelManifest);
+            // Get the nameFinder for this model if it exists.
+            TokenNameFinder nameFinder = nameFinders.get(modelManifest);
 
-						if(nameFinder == null) {
+            if(nameFinder == null) {
 
-							// Create a new namefinder and put it in the map.
-							nameFinder = new DeepLearningTokenNameFinder(multiLayerNetwork, wordVectors,
-									modelManifest.getWindowSize(), getLabels(request.getType()));
+              // Create a new namefinder and put it in the map.
+              nameFinder = new DeepLearningTokenNameFinder(multiLayerNetwork, wordVectors,
+                  modelManifest.getWindowSize(), getLabels(request.getType()));
 
-							nameFinders.put(modelManifest, nameFinder);
+              nameFinders.put(modelManifest, nameFinder);
 
-						}
+            }
 
-						Collection<Entity> extractedEntities = findEntities(nameFinder, request, modelManifest, sentenceSanitizer);
+            Collection<Entity> extractedEntities = findEntities(nameFinder, request, modelManifest, sentenceSanitizer);
 
-						entities.addAll(extractedEntities);
+            entities.addAll(extractedEntities);
 
-					}
+          }
 
-				} else {
+        } else {
 
-					LOGGER.warn("No entity models available for language {}.", language.getAlpha3().toString());
+          LOGGER.warn("No entity models available for language {}.", language.getAlpha3().toString());
 
-				}
+        }
 
-			}
+      }
 
-		}
+    }
 
-		long extractionTime = (System.currentTimeMillis() - startTime);
+    long extractionTime = (System.currentTimeMillis() - startTime);
 
-		// Create the response with the extracted entities and the time it took to extract them.
-		EntityExtractionResponse response = new EntityExtractionResponse(entities, extractionTime, true);
+    // Create the response with the extracted entities and the time it took to extract them.
+    EntityExtractionResponse response = new EntityExtractionResponse(entities, extractionTime, true);
 
-		return response;
+    return response;
 
-	}
+  }
 
-	private String[] getLabels(String entityType) {
+  private String[] getLabels(String entityType) {
 
-		return new String[] { entityType + "-start", entityType + "-cont", "other" };
+    return new String[] { entityType + "-start", entityType + "-cont", "other" };
 
-	}
+  }
 
 }

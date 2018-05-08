@@ -25,35 +25,35 @@ import com.neovisionaries.i18n.LanguageCode;
  */
 public class AbstractDocumentClassificationRequest {
 
-	private String text;
-	private LanguageCode languageCode;
+  private String text;
+  private LanguageCode languageCode;
 
-	/**
-	 * Creates a new document classification request.
-	 * @param text The tokenized text to classify.
-	 * @param languageCode The {@link LanguageCode} of the language.
-	 */
-	public AbstractDocumentClassificationRequest(String text, LanguageCode languageCode) {
+  /**
+   * Creates a new document classification request.
+   * @param text The tokenized text to classify.
+   * @param languageCode The {@link LanguageCode} of the language.
+   */
+  public AbstractDocumentClassificationRequest(String text, LanguageCode languageCode) {
 
-		this.text = text;
-		this.languageCode = languageCode;
+    this.text = text;
+    this.languageCode = languageCode;
 
-	}
+  }
 
-	public String getText() {
-		return text;
-	}
+  public String getText() {
+    return text;
+  }
 
-	public void setText(String text) {
-		this.text = text;
-	}
+  public void setText(String text) {
+    this.text = text;
+  }
 
-	public LanguageCode getLanguageCode() {
-		return languageCode;
-	}
+  public LanguageCode getLanguageCode() {
+    return languageCode;
+  }
 
-	public void setLanguageCode(LanguageCode languageCode) {
-		this.languageCode = languageCode;
-	}
+  public void setLanguageCode(LanguageCode languageCode) {
+    this.languageCode = languageCode;
+  }
 
 }

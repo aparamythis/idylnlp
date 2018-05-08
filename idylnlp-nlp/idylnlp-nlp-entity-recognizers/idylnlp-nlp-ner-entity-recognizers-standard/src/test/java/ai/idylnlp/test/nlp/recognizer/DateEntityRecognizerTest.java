@@ -37,66 +37,66 @@ import ai.idylnlp.nlp.recognizer.DateEntityRecognizer;
 
 public class DateEntityRecognizerTest {
 
-	private static final Logger LOGGER = LogManager.getLogger(DateEntityRecognizerTest.class);
+  private static final Logger LOGGER = LogManager.getLogger(DateEntityRecognizerTest.class);
 
-	@Test
-	public void test1() throws EntityFinderException, IOException, LanguageDetectionException {
+  @Test
+  public void test1() throws EntityFinderException, IOException, LanguageDetectionException {
 
-		DateEntityRecognizer recognizer = new DateEntityRecognizer();
+    DateEntityRecognizer recognizer = new DateEntityRecognizer();
 
-		String input = "The appointment is a week from Tuesday at 2pm. The next meeting is Friday.";
-		String[] text = input.split(" ");
+    String input = "The appointment is a week from Tuesday at 2pm. The next meeting is Friday.";
+    String[] text = input.split(" ");
 
-		EntityExtractionRequest request = new EntityExtractionRequest(text).withLanguage(LanguageCode.en);
+    EntityExtractionRequest request = new EntityExtractionRequest(text).withLanguage(LanguageCode.en);
 
-		EntityExtractionResponse response = recognizer.extractEntities(request);
+    EntityExtractionResponse response = recognizer.extractEntities(request);
 
-		for(Entity entity : response.getEntities()) {
+    for(Entity entity : response.getEntities()) {
 
-			LOGGER.info("Entity: {}, Span: {}", entity.getText(), entity.getSpan().toString());
+      LOGGER.info("Entity: {}, Span: {}", entity.getText(), entity.getSpan().toString());
 
-			assertTrue(entity.getMetadata().containsKey("time"));
+      assertTrue(entity.getMetadata().containsKey("time"));
 
-		}
+    }
 
-		assertEquals(2, response.getEntities().size());
+    assertEquals(2, response.getEntities().size());
 
-		// Show the response as JSON.
-		Gson gson = new Gson();
-		String json = gson.toJson(response);
+    // Show the response as JSON.
+    Gson gson = new Gson();
+    String json = gson.toJson(response);
 
-		LOGGER.info(json);
+    LOGGER.info(json);
 
-	}
+  }
 
-	@Test
-	public void test2() throws EntityFinderException, IOException, LanguageDetectionException {
+  @Test
+  public void test2() throws EntityFinderException, IOException, LanguageDetectionException {
 
-		DateEntityRecognizer recognizer = new DateEntityRecognizer();
+    DateEntityRecognizer recognizer = new DateEntityRecognizer();
 
-		String input = "The appointment is a week from Tuesday at 2pm. The next meeting is Friday.";
-		String[] text = input.split(" ");
+    String input = "The appointment is a week from Tuesday at 2pm. The next meeting is Friday.";
+    String[] text = input.split(" ");
 
-		EntityExtractionRequest request = new EntityExtractionRequest(text).withLanguage(LanguageCode.en);
+    EntityExtractionRequest request = new EntityExtractionRequest(text).withLanguage(LanguageCode.en);
 
-		EntityExtractionResponse response = recognizer.extractEntities(request);
+    EntityExtractionResponse response = recognizer.extractEntities(request);
 
-		for(Entity entity : response.getEntities()) {
+    for(Entity entity : response.getEntities()) {
 
-			LOGGER.info("Entity: {}, Span: {}", entity.getText(), entity.getSpan().toString());
+      LOGGER.info("Entity: {}, Span: {}", entity.getText(), entity.getSpan().toString());
 
-			assertTrue(entity.getMetadata().containsKey("time"));
+      assertTrue(entity.getMetadata().containsKey("time"));
 
-		}
+    }
 
-		assertEquals(2, response.getEntities().size());
+    assertEquals(2, response.getEntities().size());
 
-		// Show the response as JSON.
-		Gson gson = new Gson();
-		String json = gson.toJson(response);
+    // Show the response as JSON.
+    Gson gson = new Gson();
+    String json = gson.toJson(response);
 
-		LOGGER.info(json);
+    LOGGER.info(json);
 
-	}
+  }
 
 }

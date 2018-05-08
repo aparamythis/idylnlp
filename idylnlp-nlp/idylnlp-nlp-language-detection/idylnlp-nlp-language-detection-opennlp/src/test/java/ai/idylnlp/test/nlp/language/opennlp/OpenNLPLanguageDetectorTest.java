@@ -31,41 +31,41 @@ import ai.idylnlp.nlp.language.opennlp.OpenNLPLanguageDetector;
 
 public class OpenNLPLanguageDetectorTest {
 
-	private static final Logger LOGGER = LogManager.getLogger(OpenNLPLanguageDetectorTest.class);
+  private static final Logger LOGGER = LogManager.getLogger(OpenNLPLanguageDetectorTest.class);
 
-	@Test
-	public void testSpecifyModel() throws IOException, LanguageDetectionException {
+  @Test
+  public void testSpecifyModel() throws IOException, LanguageDetectionException {
 
-		InputStream in = this.getClass().getClassLoader().getResourceAsStream("langdetect-183.bin");
-		OpenNLPLanguageDetector d = new OpenNLPLanguageDetector(in);
+    InputStream in = this.getClass().getClassLoader().getResourceAsStream("langdetect-183.bin");
+    OpenNLPLanguageDetector d = new OpenNLPLanguageDetector(in);
 
-		LanguageDetectionResponse response = d.detectLanguage("Washington was born into the provincial gentry of Colonial Virginia to a family of wealthy planters who owned tobacco plantations and slaves, which he inherited. In his youth, he became a senior officer in the colonial militia during the first stages of the French and Indian War.", 5);
+    LanguageDetectionResponse response = d.detectLanguage("Washington was born into the provincial gentry of Colonial Virginia to a family of wealthy planters who owned tobacco plantations and slaves, which he inherited. In his youth, he became a senior officer in the colonial militia during the first stages of the French and Indian War.", 5);
 
-		assertTrue(response.getLanguages().size() <= 5);
+    assertTrue(response.getLanguages().size() <= 5);
 
-		for(Pair<String, Double> pair : response.getLanguages()) {
+    for(Pair<String, Double> pair : response.getLanguages()) {
 
-			LOGGER.info("Detected language: {} - {}", pair.getLeft(), pair.getRight());
+      LOGGER.info("Detected language: {} - {}", pair.getLeft(), pair.getRight());
 
-		}
+    }
 
-	}
+  }
 
-	@Test
-	public void testModel() throws IOException, LanguageDetectionException {
+  @Test
+  public void testModel() throws IOException, LanguageDetectionException {
 
-		OpenNLPLanguageDetector d = new OpenNLPLanguageDetector();
+    OpenNLPLanguageDetector d = new OpenNLPLanguageDetector();
 
-		LanguageDetectionResponse response = d.detectLanguage("Washington was born into the provincial gentry of Colonial Virginia to a family of wealthy planters who owned tobacco plantations and slaves, which he inherited. In his youth, he became a senior officer in the colonial militia during the first stages of the French and Indian War.", 5);
+    LanguageDetectionResponse response = d.detectLanguage("Washington was born into the provincial gentry of Colonial Virginia to a family of wealthy planters who owned tobacco plantations and slaves, which he inherited. In his youth, he became a senior officer in the colonial militia during the first stages of the French and Indian War.", 5);
 
-		assertTrue(response.getLanguages().size() <= 5);
+    assertTrue(response.getLanguages().size() <= 5);
 
-		for(Pair<String, Double> pair : response.getLanguages()) {
+    for(Pair<String, Double> pair : response.getLanguages()) {
 
-			LOGGER.info("Detected language: {} - {}", pair.getLeft(), pair.getRight());
+      LOGGER.info("Detected language: {} - {}", pair.getLeft(), pair.getRight());
 
-		}
+    }
 
-	}
+  }
 
 }

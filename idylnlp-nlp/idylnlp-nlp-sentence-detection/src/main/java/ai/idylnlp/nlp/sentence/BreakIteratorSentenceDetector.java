@@ -28,72 +28,72 @@ import ai.idylnlp.model.nlp.Span;
 
 public class BreakIteratorSentenceDetector implements SentenceDetector {
 
-	private BreakIterator breakIterator;
+  private BreakIterator breakIterator;
 
-	public BreakIteratorSentenceDetector(String languageCode) {
+  public BreakIteratorSentenceDetector(String languageCode) {
 
-		Locale locale = new Locale.Builder().setLanguage(languageCode).build();
+    Locale locale = new Locale.Builder().setLanguage(languageCode).build();
 
-		breakIterator = BreakIterator.getSentenceInstance(locale);
+    breakIterator = BreakIterator.getSentenceInstance(locale);
 
-	}
+  }
 
-	public BreakIteratorSentenceDetector(LanguageCode languageCode) {
+  public BreakIteratorSentenceDetector(LanguageCode languageCode) {
 
-		breakIterator = BreakIterator.getSentenceInstance(languageCode.toLocale());
+    breakIterator = BreakIterator.getSentenceInstance(languageCode.toLocale());
 
-	}
+  }
 
-	/**
-	 * Creates a sentence detector.
-	 *
-	 * @param locale
-	 *            The {@link Locale} for the sentence detector.
-	 */
-	public BreakIteratorSentenceDetector(Locale locale) {
-		breakIterator = BreakIterator.getSentenceInstance(locale);
-	}
+  /**
+   * Creates a sentence detector.
+   *
+   * @param locale
+   *            The {@link Locale} for the sentence detector.
+   */
+  public BreakIteratorSentenceDetector(Locale locale) {
+    breakIterator = BreakIterator.getSentenceInstance(locale);
+  }
 
-	@Override
-	public List<String> getLanguageCodes() {
+  @Override
+  public List<String> getLanguageCodes() {
 
-		List<String> languageCodes = new LinkedList<>();
+    List<String> languageCodes = new LinkedList<>();
 
-		for(Locale locale : BreakIterator.getAvailableLocales()) {
-			languageCodes.add(LanguageCode.getByLocale(locale).getAlpha3().toString());
-		}
+    for(Locale locale : BreakIterator.getAvailableLocales()) {
+      languageCodes.add(LanguageCode.getByLocale(locale).getAlpha3().toString());
+    }
 
-		return languageCodes;
+    return languageCodes;
 
-	}
+  }
 
-	@Override
-	public String[] sentDetect(String s) {
-		return Span.spansToStrings(sentPosDetect(s), s);
-	}
+  @Override
+  public String[] sentDetect(String s) {
+    return Span.spansToStrings(sentPosDetect(s), s);
+  }
 
-	@Override
-	public Span[] sentPosDetect(String s) {
+  @Override
+  public Span[] sentPosDetect(String s) {
 
-		List<Span> sentences = new ArrayList<>();
+    List<Span> sentences = new ArrayList<>();
 
-		breakIterator.setText(s);
+    breakIterator.setText(s);
 
-		int lastIndex = breakIterator.first();
+    int lastIndex = breakIterator.first();
 
-		while (lastIndex != BreakIterator.DONE) {
+    while (lastIndex != BreakIterator.DONE) {
 
-			int firstIndex = lastIndex;
-			lastIndex = breakIterator.next();
+      int firstIndex = lastIndex;
+      lastIndex = breakIterator.next();
 
-			if (lastIndex != BreakIterator.DONE) {
-				sentences.add(new Span(firstIndex, lastIndex));
-			}
+      if (lastIndex != BreakIterator.DONE) {
+        sentences.add(new Span(firstIndex, lastIndex));
+      }
 
-		}
+    }
 
-		return sentences.toArray(new Span[sentences.size()]);
+    return sentences.toArray(new Span[sentences.size()]);
 
-	}
+  }
 
 }

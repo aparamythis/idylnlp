@@ -21,19 +21,19 @@ import opennlp.tools.stemmer.snowball.SnowballStemmer.ALGORITHM;
 
 public class DefaultStemmer implements Stemmer {
 
-	private opennlp.tools.stemmer.Stemmer stemmer;
+  private opennlp.tools.stemmer.Stemmer stemmer;
 
-	public DefaultStemmer() {
+  public DefaultStemmer() {
 
-		stemmer = new SnowballStemmer(ALGORITHM.ENGLISH);
+    stemmer = new SnowballStemmer(ALGORITHM.ENGLISH);
 
-	}
+  }
 
-	@Override
-	public String stem(String text) {
+  @Override
+  public String stem(String text) {
 
-		return stemmer.stem(text).toString();
+    return stemmer.stem(text).toString();
 
-	}
+  }
 
 }

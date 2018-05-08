@@ -18,6 +18,6 @@ package ai.idylnlp.model.nlp.strings.distancestrategy;
 @FunctionalInterface
 public interface MaxDistanceStrategy {
 
-	public int calculateMaxDistance(String word);
+  public int calculateMaxDistance(String word);
 
 }

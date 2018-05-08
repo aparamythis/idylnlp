@@ -23,53 +23,53 @@ import ai.idylnlp.nlp.filters.confidence.SimpleConfidenceFilter;
 
 public class SimpleConfidenceFilterTest {
 
-	@Test
-	public void test1() {
+  @Test
+  public void test1() {
 
-		SimpleConfidenceFilter f = new SimpleConfidenceFilter();
+    SimpleConfidenceFilter f = new SimpleConfidenceFilter();
 
-		assertFalse(f.test("id1", 88, 99));
+    assertFalse(f.test("id1", 88, 99));
 
-		assertFalse(f.test("id1", 92, 99));
+    assertFalse(f.test("id1", 92, 99));
 
-		assertFalse(f.test("id1", 5, 99));
+    assertFalse(f.test("id1", 5, 99));
 
-		assertFalse(f.test("id1", 5, 99));
+    assertFalse(f.test("id1", 5, 99));
 
-		assertFalse(f.test("id1", 5, 99));
+    assertFalse(f.test("id1", 5, 99));
 
-		assertFalse(f.test("id2", 18, 99));
+    assertFalse(f.test("id2", 18, 99));
 
-		assertFalse(f.test("id3", 18, 99));
+    assertFalse(f.test("id3", 18, 99));
 
-		assertFalse(f.test("id3", 18, 99));
+    assertFalse(f.test("id3", 18, 99));
 
-	}
+  }
 
-	@Test
-	public void test2() {
+  @Test
+  public void test2() {
 
-		SimpleConfidenceFilter f = new SimpleConfidenceFilter();
+    SimpleConfidenceFilter f = new SimpleConfidenceFilter();
 
-		assertFalse(f.test("id1", 88, 99));
+    assertFalse(f.test("id1", 88, 99));
 
-		assertFalse(f.test("id1", 92, 99));
+    assertFalse(f.test("id1", 92, 99));
 
-		assertFalse(f.test("id1", 85, 99));
+    assertFalse(f.test("id1", 85, 99));
 
-	}
+  }
 
-	@Test
-	public void test3() {
+  @Test
+  public void test3() {
 
-		SimpleConfidenceFilter f = new SimpleConfidenceFilter();
+    SimpleConfidenceFilter f = new SimpleConfidenceFilter();
 
-		assertTrue(f.test("id1", 88, 75));
+    assertTrue(f.test("id1", 88, 75));
 
-		assertFalse(f.test("id1", 15, 75));
+    assertFalse(f.test("id1", 15, 75));
 
-		assertTrue(f.test("id1", 85, 75));
+    assertTrue(f.test("id1", 85, 75));
 
-	}
+  }
 
 }

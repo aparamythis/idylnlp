@@ -21,18 +21,18 @@ package ai.idylnlp.model;
  */
 public class Constants {
 
-	/**
-	 * A constant for UTF-8.
-	 */
-	public static final String ENCODING_UTF8 = "UTF-8";
+  /**
+   * A constant for UTF-8.
+   */
+  public static final String ENCODING_UTF8 = "UTF-8";
 
-	/**
-	 * The default number of folds for cross validation.
-	 */
-	public static final int DEFAULT_NFOLDS = 10;
+  /**
+   * The default number of folds for cross validation.
+   */
+  public static final int DEFAULT_NFOLDS = 10;
 
-	private Constants() {
-		// This is a utility class.
-	}
+  private Constants() {
+    // This is a utility class.
+  }
 
 }

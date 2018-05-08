@@ -28,44 +28,44 @@ import ai.idylnlp.training.definition.model.TrainingDefinitionReader;
 
 public class ModelOperationsUtils {
 
-	private static final Logger LOGGER = LogManager.getLogger(ModelOperationsUtils.class);
+  private static final Logger LOGGER = LogManager.getLogger(ModelOperationsUtils.class);
 
-	/**
-	 * Gets a {@link SubjectOfTraining} based on the training definition.
-	 * @param reader A {@link TrainingDefinitionReader}.
-	 * @return A {@link SubjectOfTraining}.
-	 */
-	public static SubjectOfTrainingOrEvaluation getSubjectOfTrainingOrEvaluation(TrainingDefinitionReader reader) {
+  /**
+   * Gets a {@link SubjectOfTraining} based on the training definition.
+   * @param reader A {@link TrainingDefinitionReader}.
+   * @return A {@link SubjectOfTraining}.
+   */
+  public static SubjectOfTrainingOrEvaluation getSubjectOfTrainingOrEvaluation(TrainingDefinitionReader reader) {
 
-		final String inputFile = reader.getTrainingDefinition().getTrainingdata().getFile();
+    final String inputFile = reader.getTrainingDefinition().getTrainingdata().getFile();
 
-		SubjectOfTrainingOrEvaluation subjectOfTraining = null;
+    SubjectOfTrainingOrEvaluation subjectOfTraining = null;
 
-		// Set this based on what's in the training definition file.
-		if(reader.getTrainingDefinition().getTrainingdata().getFormat().equalsIgnoreCase(AnnotationTypes.IDYLNLP.getName())) {
+    // Set this based on what's in the training definition file.
+    if(reader.getTrainingDefinition().getTrainingdata().getFormat().equalsIgnoreCase(AnnotationTypes.IDYLNLP.getName())) {
 
-			LOGGER.debug("Using Idyl NLP data format.");
-			subjectOfTraining = new IdylNLPSubjectOfTrainingOrEvaluation(inputFile, reader.getTrainingDefinition().getTrainingdata().getAnnotations());
+      LOGGER.debug("Using Idyl NLP data format.");
+      subjectOfTraining = new IdylNLPSubjectOfTrainingOrEvaluation(inputFile, reader.getTrainingDefinition().getTrainingdata().getAnnotations());
 
-		} else if(reader.getTrainingDefinition().getTrainingdata().getFormat().equalsIgnoreCase(AnnotationTypes.CONLL2003.getName())) {
+    } else if(reader.getTrainingDefinition().getTrainingdata().getFormat().equalsIgnoreCase(AnnotationTypes.CONLL2003.getName())) {
 
-			LOGGER.debug("Using CoNLL2003 data format.");
-			subjectOfTraining = new CoNLL2003SubjectOfTrainingOrEvaluation(inputFile);
+      LOGGER.debug("Using CoNLL2003 data format.");
+      subjectOfTraining = new CoNLL2003SubjectOfTrainingOrEvaluation(inputFile);
 
-		} else if(reader.getTrainingDefinition().getTrainingdata().getFormat().equalsIgnoreCase(AnnotationTypes.BRAT.getName())) {
+    } else if(reader.getTrainingDefinition().getTrainingdata().getFormat().equalsIgnoreCase(AnnotationTypes.BRAT.getName())) {
 
-			LOGGER.debug("Using Brat data format.");
-			subjectOfTraining = new BratSubjectOfTrainingOrEvaluation(inputFile);
+      LOGGER.debug("Using Brat data format.");
+      subjectOfTraining = new BratSubjectOfTrainingOrEvaluation(inputFile);
 
-		} else {
+    } else {
 
-			LOGGER.debug("Using OpenNLP data format.");
-			subjectOfTraining = new OpenNLPSubjectOfTrainingOrEvaluation(inputFile);
+      LOGGER.debug("Using OpenNLP data format.");
+      subjectOfTraining = new OpenNLPSubjectOfTrainingOrEvaluation(inputFile);
 
-		}
+    }
 
-		return subjectOfTraining;
+    return subjectOfTraining;
 
-	}
+  }
 
 }

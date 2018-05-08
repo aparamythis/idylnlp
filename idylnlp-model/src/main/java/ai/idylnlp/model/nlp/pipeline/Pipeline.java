@@ -18,11 +18,11 @@ package ai.idylnlp.model.nlp.pipeline;
 @FunctionalInterface
 public interface Pipeline<T extends PipelineResponse> {
 
-	/**
-	 * Execute the pipeline.
-	 * @param request The input to the pipeline.
-	 * @return The response from the pipeline.
-	 */
-	T run(String text);
+  /**
+   * Execute the pipeline.
+   * @param request The input to the pipeline.
+   * @return The response from the pipeline.
+   */
+  T run(String text);
 
 }

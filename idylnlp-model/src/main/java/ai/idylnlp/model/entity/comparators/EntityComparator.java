@@ -33,61 +33,61 @@ import ai.idylnlp.model.entity.Entity;
  */
 public class EntityComparator implements Comparator<Entity> {
 
-	private Order sortingBy;
+  private Order sortingBy;
 
-	/**
-	 * Creates a new {@link EntityComparator} with the given
-	 * sorting method.
-	 * @param sortingBy The {@link Order} to sort the entities.
-	 */
-	public EntityComparator(Order sortingBy) {
-		this.sortingBy = sortingBy;
-	}
+  /**
+   * Creates a new {@link EntityComparator} with the given
+   * sorting method.
+   * @param sortingBy The {@link Order} to sort the entities.
+   */
+  public EntityComparator(Order sortingBy) {
+    this.sortingBy = sortingBy;
+  }
 
-	public enum Order {
-		CONFIDENCE, TEXT
-	}
+  public enum Order {
+    CONFIDENCE, TEXT
+  }
 
-	@Override
-	public int compare(Entity entity1, Entity entity2) {
+  @Override
+  public int compare(Entity entity1, Entity entity2) {
 
-		switch (sortingBy) {
+    switch (sortingBy) {
 
-		case CONFIDENCE:
-			return Double.compare(entity1.getConfidence(), entity2.getConfidence());
+    case CONFIDENCE:
+      return Double.compare(entity1.getConfidence(), entity2.getConfidence());
 
-		case TEXT:
-			return entity1.getText().compareTo(entity2.getText());
+    case TEXT:
+      return entity1.getText().compareTo(entity2.getText());
 
-		}
+    }
 
-		throw new IllegalArgumentException("Invalid sort type.");
+    throw new IllegalArgumentException("Invalid sort type.");
 
-	}
+  }
 
-	/**
-	 * Gets the sorting order.
-	 * @return The {@link Order}.
-	 */
-	public Order getSortingBy() {
-		return sortingBy;
-	}
+  /**
+   * Gets the sorting order.
+   * @return The {@link Order}.
+   */
+  public Order getSortingBy() {
+    return sortingBy;
+  }
 
-	/**
-	 * Sort the entities.
-	 * @param entities The set of {@link Entity entities}.
-	 * @param sortingBy The sorting method.
-	 * @return A set of sorted {@link Entity entities}.
-	 */
-	public static Set<Entity> sort(Set<Entity> entities, Order sortingBy) {
+  /**
+   * Sort the entities.
+   * @param entities The set of {@link Entity entities}.
+   * @param sortingBy The sorting method.
+   * @return A set of sorted {@link Entity entities}.
+   */
+  public static Set<Entity> sort(Set<Entity> entities, Order sortingBy) {
 
-		EntityComparator comparator = new EntityComparator(sortingBy);
-		List<Entity> list = new ArrayList<Entity>(entities);
-		Collections.sort(list, comparator);
-		Set<Entity> sortedEntities = new LinkedHashSet<>(list);
+    EntityComparator comparator = new EntityComparator(sortingBy);
+    List<Entity> list = new ArrayList<Entity>(entities);
+    Collections.sort(list, comparator);
+    Set<Entity> sortedEntities = new LinkedHashSet<>(list);
 
-		return sortedEntities;
+    return sortedEntities;
 
-	}
+  }
 
 }

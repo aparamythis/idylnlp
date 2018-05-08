@@ -17,10 +17,10 @@ package ai.idylnlp.model.nlp.subjects;
 
 public class CoNLL2003SubjectOfTrainingOrEvaluation extends SubjectOfTrainingOrEvaluation {
 
-	public CoNLL2003SubjectOfTrainingOrEvaluation(String inputFile) {
+  public CoNLL2003SubjectOfTrainingOrEvaluation(String inputFile) {
 
-		super(inputFile);
+    super(inputFile);
 
-	}
+  }
 
 }

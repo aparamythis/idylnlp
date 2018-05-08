@@ -38,109 +38,109 @@ import opennlp.tools.tokenize.TokenizerModel;
 
 public class TokenModelOperationsTest {
 
-	private static final Logger LOGGER = LogManager.getLogger(TokenModelOperationsTest.class);
+  private static final Logger LOGGER = LogManager.getLogger(TokenModelOperationsTest.class);
 
-	private static final String TRAINING_DATA_PATH = new File("src/test/resources/").getAbsolutePath();
-	private static final String INPUT_FILE = TRAINING_DATA_PATH + File.separator + "token-train.txt";
+  private static final String TRAINING_DATA_PATH = new File("src/test/resources/").getAbsolutePath();
+  private static final String INPUT_FILE = TRAINING_DATA_PATH + File.separator + "token-train.txt";
 
-	@Test
-	public void crossValidateMaxEntQN() throws IOException {
+  @Test
+  public void crossValidateMaxEntQN() throws IOException {
 
-		File temp = File.createTempFile("model", ".bin");
-		String modelOutputFile = temp.getAbsolutePath();
+    File temp = File.createTempFile("model", ".bin");
+    String modelOutputFile = temp.getAbsolutePath();
 
-		LOGGER.info("Generating output model file to: {}", modelOutputFile);
+    LOGGER.info("Generating output model file to: {}", modelOutputFile);
 
-		SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluation = new DefaultSubjectOfTrainingOrEvaluation(INPUT_FILE);
+    SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluation = new DefaultSubjectOfTrainingOrEvaluation(INPUT_FILE);
 
-		TokenModelOperations ops = new TokenModelOperations();
-		FMeasureModelValidationResult result = ops.crossValidationEvaluateMaxEntQN(SubjectOfTrainingOrEvaluation, LanguageCode.en, 5, 1, 1, 1, 1, 1, 3);
+    TokenModelOperations ops = new TokenModelOperations();
+    FMeasureModelValidationResult result = ops.crossValidationEvaluateMaxEntQN(SubjectOfTrainingOrEvaluation, LanguageCode.en, 5, 1, 1, 1, 1, 1, 3);
 
-		assertNotNull(result);
+    assertNotNull(result);
 
-	}
+  }
 
-	@Test
-	public void crossValidatePerceptron() throws IOException {
+  @Test
+  public void crossValidatePerceptron() throws IOException {
 
-		File temp = File.createTempFile("model", ".bin");
-		String modelOutputFile = temp.getAbsolutePath();
+    File temp = File.createTempFile("model", ".bin");
+    String modelOutputFile = temp.getAbsolutePath();
 
-		LOGGER.info("Generating output model file to: {}", modelOutputFile);
+    LOGGER.info("Generating output model file to: {}", modelOutputFile);
 
-		SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluation = new DefaultSubjectOfTrainingOrEvaluation(INPUT_FILE);
+    SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluation = new DefaultSubjectOfTrainingOrEvaluation(INPUT_FILE);
 
-		TokenModelOperations ops = new TokenModelOperations();
-		FMeasureModelValidationResult result = ops.crossValidationEvaluatePerceptron(SubjectOfTrainingOrEvaluation, LanguageCode.en, 5, 1, 3);
+    TokenModelOperations ops = new TokenModelOperations();
+    FMeasureModelValidationResult result = ops.crossValidationEvaluatePerceptron(SubjectOfTrainingOrEvaluation, LanguageCode.en, 5, 1, 3);
 
-		assertNotNull(result);
+    assertNotNull(result);
 
-	}
+  }
 
-	@Test
-	public void trainMaxEntQN() throws IOException {
+  @Test
+  public void trainMaxEntQN() throws IOException {
 
-		String encryptionKey = "";
+    String encryptionKey = "";
 
-		File temp = File.createTempFile("model", ".bin");
-		String modelOutputFile = temp.getAbsolutePath();
+    File temp = File.createTempFile("model", ".bin");
+    String modelOutputFile = temp.getAbsolutePath();
 
-		LOGGER.info("Generating output model file to: {}", modelOutputFile);
+    LOGGER.info("Generating output model file to: {}", modelOutputFile);
 
-		SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluation = new DefaultSubjectOfTrainingOrEvaluation(INPUT_FILE);
+    SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluation = new DefaultSubjectOfTrainingOrEvaluation(INPUT_FILE);
 
-		TokenModelOperations ops = new TokenModelOperations();
-		String modelId = ops.trainMaxEntQN(SubjectOfTrainingOrEvaluation, modelOutputFile, LanguageCode.en, encryptionKey, 5, 1, 1, 1, 1, 1, 1);
+    TokenModelOperations ops = new TokenModelOperations();
+    String modelId = ops.trainMaxEntQN(SubjectOfTrainingOrEvaluation, modelOutputFile, LanguageCode.en, encryptionKey, 5, 1, 1, 1, 1, 1, 1);
 
-		LOGGER.info("The generated model's ID is {}.", modelId);
+    LOGGER.info("The generated model's ID is {}.", modelId);
 
-		try {
+    try {
 
-			UUID uuid = UUID.fromString(modelId);
+      UUID uuid = UUID.fromString(modelId);
 
-		} catch (IllegalArgumentException ex) {
+    } catch (IllegalArgumentException ex) {
 
-			fail("The generated model ID is not a valid UUID.");
+      fail("The generated model ID is not a valid UUID.");
 
-		}
+    }
 
-		// Verify that the UUID returned matches what's in the model's properties.
-		TokenizerModel model = new TokenizerModelLoader().load(new File(modelOutputFile));
-		assertEquals(modelId, model.getManifestProperty("model.id"));
+    // Verify that the UUID returned matches what's in the model's properties.
+    TokenizerModel model = new TokenizerModelLoader().load(new File(modelOutputFile));
+    assertEquals(modelId, model.getManifestProperty("model.id"));
 
-	}
+  }
 
-	@Test
-	public void trainPerceptron() throws IOException {
+  @Test
+  public void trainPerceptron() throws IOException {
 
-		String encryptionKey = "";
+    String encryptionKey = "";
 
-		File temp = File.createTempFile("model", ".bin");
-		String modelOutputFile = temp.getAbsolutePath();
+    File temp = File.createTempFile("model", ".bin");
+    String modelOutputFile = temp.getAbsolutePath();
 
-		LOGGER.info("Generating output model file to: {}", modelOutputFile);
+    LOGGER.info("Generating output model file to: {}", modelOutputFile);
 
-		SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluation = new DefaultSubjectOfTrainingOrEvaluation(INPUT_FILE);
+    SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluation = new DefaultSubjectOfTrainingOrEvaluation(INPUT_FILE);
 
-		TokenModelOperations ops = new TokenModelOperations();
-		String modelId = ops.trainPerceptron(SubjectOfTrainingOrEvaluation, modelOutputFile, LanguageCode.en, encryptionKey, 0, 1);
+    TokenModelOperations ops = new TokenModelOperations();
+    String modelId = ops.trainPerceptron(SubjectOfTrainingOrEvaluation, modelOutputFile, LanguageCode.en, encryptionKey, 0, 1);
 
-		LOGGER.info("The generated model's ID is {}.", modelId);
+    LOGGER.info("The generated model's ID is {}.", modelId);
 
-		try {
+    try {
 
-			UUID uuid = UUID.fromString(modelId);
+      UUID uuid = UUID.fromString(modelId);
 
-		} catch (IllegalArgumentException ex) {
+    } catch (IllegalArgumentException ex) {
 
-			fail("The generated model ID is not a valid UUID.");
+      fail("The generated model ID is not a valid UUID.");
 
-		}
+    }
 
-		// Verify that the UUID returned matches what's in the model's properties.
-		TokenizerModel model = new TokenizerModelLoader().load(new File(modelOutputFile));
-		assertEquals(modelId, model.getManifestProperty("model.id"));
+    // Verify that the UUID returned matches what's in the model's properties.
+    TokenizerModel model = new TokenizerModelLoader().load(new File(modelOutputFile));
+    assertEquals(modelId, model.getManifestProperty("model.id"));
 
-	}
+  }
 
 }

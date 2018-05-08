@@ -43,68 +43,68 @@ import opennlp.tools.lemmatizer.LemmatizerModel;
  */
 public class DefaultLemmatizer implements Lemmatizer {
 
-	private static final Logger LOGGER = LogManager.getLogger(DefaultLemmatizer.class);
+  private static final Logger LOGGER = LogManager.getLogger(DefaultLemmatizer.class);
 
-	private opennlp.tools.lemmatizer.Lemmatizer lemmatizer;
-	private boolean isModelBased;
+  private opennlp.tools.lemmatizer.Lemmatizer lemmatizer;
+  private boolean isModelBased;
 
-	/**
-	 * Creates a new lemmatizer that uses a dictionary.
-	 * @param dictionary The full path to the dictionary file.
-	 * @throws IOException Thrown if the dictionary cannot be opened.
-	 */
-	public DefaultLemmatizer(String dictionary) throws IOException {
+  /**
+   * Creates a new lemmatizer that uses a dictionary.
+   * @param dictionary The full path to the dictionary file.
+   * @throws IOException Thrown if the dictionary cannot be opened.
+   */
+  public DefaultLemmatizer(String dictionary) throws IOException {
 
-		isModelBased = false;
+    isModelBased = false;
 
-		InputStream dictLemmatizer = new FileInputStream(dictionary);
+    InputStream dictLemmatizer = new FileInputStream(dictionary);
 
-		lemmatizer = new DictionaryLemmatizer(dictLemmatizer);
+    lemmatizer = new DictionaryLemmatizer(dictLemmatizer);
 
-		dictLemmatizer.close();
+    dictLemmatizer.close();
 
-	}
+  }
 
-	/**
-	 * Creates a new model-based lemmatizer.
-	 * @param modelPath The full path to the directory containing the model.
-	 * @param modelManifest The {@link StandardModelManifest manifest} of the lemmatizer model.
-	 * @param validator The {@link ModelValidator} used to validate the model.
-	 * @throws ModelLoaderException Thrown if the model cannot be loaded.
-	 */
-	public DefaultLemmatizer(String modelPath, StandardModelManifest modelManifest, ModelValidator validator) throws ModelLoaderException {
+  /**
+   * Creates a new model-based lemmatizer.
+   * @param modelPath The full path to the directory containing the model.
+   * @param modelManifest The {@link StandardModelManifest manifest} of the lemmatizer model.
+   * @param validator The {@link ModelValidator} used to validate the model.
+   * @throws ModelLoaderException Thrown if the model cannot be loaded.
+   */
+  public DefaultLemmatizer(String modelPath, StandardModelManifest modelManifest, ModelValidator validator) throws ModelLoaderException {
 
-		isModelBased = true;
+    isModelBased = true;
 
-		LocalModelLoader<LemmatizerModel> lemmaModelLoader = new LocalModelLoader<LemmatizerModel>(validator, modelPath);
+    LocalModelLoader<LemmatizerModel> lemmaModelLoader = new LocalModelLoader<LemmatizerModel>(validator, modelPath);
 
-		LemmatizerModel model = lemmaModelLoader.getModel(modelManifest, LemmatizerModel.class);
+    LemmatizerModel model = lemmaModelLoader.getModel(modelManifest, LemmatizerModel.class);
 
-		lemmatizer = new LemmatizerME(model);
+    lemmatizer = new LemmatizerME(model);
 
-	}
+  }
 
-	/**
-	 * {@inheritDoc}
-	 * <p>
-	 * How the lemmatization is performed depends on which constructor
-	 * was used to create the class. The lemmatization could be
-	 * dictionary-based or model-based.
-	 */
-	@Override
-	public String[] lemmatize(String[] tokens, String[] posTags) {
+  /**
+   * {@inheritDoc}
+   * <p>
+   * How the lemmatization is performed depends on which constructor
+   * was used to create the class. The lemmatization could be
+   * dictionary-based or model-based.
+   */
+  @Override
+  public String[] lemmatize(String[] tokens, String[] posTags) {
 
-		String[] lemmas = lemmatizer.lemmatize(tokens, posTags);
+    String[] lemmas = lemmatizer.lemmatize(tokens, posTags);
 
-		if(isModelBased) {
+    if(isModelBased) {
 
-			// Must call decodeLemmas for model-based lemmatization.
-			lemmas = ((LemmatizerME) lemmatizer).decodeLemmas(tokens, lemmas);
+      // Must call decodeLemmas for model-based lemmatization.
+      lemmas = ((LemmatizerME) lemmatizer).decodeLemmas(tokens, lemmas);
 
-		}
+    }
 
-		return lemmas;
+    return lemmas;
 
-	}
+  }
 
 }

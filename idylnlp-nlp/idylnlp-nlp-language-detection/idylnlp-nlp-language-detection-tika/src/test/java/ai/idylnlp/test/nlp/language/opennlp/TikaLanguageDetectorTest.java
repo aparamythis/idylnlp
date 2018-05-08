@@ -28,27 +28,27 @@ import ai.idylnlp.nlp.language.tika.TikaLanguageDetector;
 
 public class TikaLanguageDetectorTest {
 
-	private static final Logger LOGGER = LogManager.getLogger(TikaLanguageDetectorTest.class);
+  private static final Logger LOGGER = LogManager.getLogger(TikaLanguageDetectorTest.class);
 
-	private TikaLanguageDetector languageDetection = new TikaLanguageDetector();
+  private TikaLanguageDetector languageDetection = new TikaLanguageDetector();
 
-	@Test
-	public void detectEnglish() throws LanguageDetectionException {
+  @Test
+  public void detectEnglish() throws LanguageDetectionException {
 
-		String input = "This is my text.";
+    String input = "This is my text.";
 
-		LanguageDetectionResponse result = languageDetection.detectLanguage(input, 5);
+    LanguageDetectionResponse result = languageDetection.detectLanguage(input, 5);
 
-		assertEquals(1, result.getLanguages().size());
+    assertEquals(1, result.getLanguages().size());
 
-		for(Pair<String, Double> pair : result.getLanguages()) {
+    for(Pair<String, Double> pair : result.getLanguages()) {
 
-			LOGGER.debug("Language code: " + pair.getLeft());
+      LOGGER.debug("Language code: " + pair.getLeft());
 
-			assertEquals("en", pair.getLeft());
+      assertEquals("en", pair.getLeft());
 
-		}
+    }
 
-	}
+  }
 
 }

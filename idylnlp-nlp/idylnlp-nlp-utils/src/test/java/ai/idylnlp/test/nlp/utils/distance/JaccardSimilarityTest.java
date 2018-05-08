@@ -23,15 +23,15 @@ import ai.idylnlp.nlp.utils.distance.JaccardSimilarity;
 
 public class JaccardSimilarityTest {
 
-	@Test
-	public void similarity() {
+  @Test
+  public void similarity() {
 
-		JaccardSimilarity similarity = new JaccardSimilarity();
+    JaccardSimilarity similarity = new JaccardSimilarity();
 
-		double i = similarity.calculate("test", "tst");
+    double i = similarity.calculate("test", "tst");
 
-		assertEquals(0.67, i, 0);
+    assertEquals(0.67, i, 0);
 
-	}
+  }
 
 }

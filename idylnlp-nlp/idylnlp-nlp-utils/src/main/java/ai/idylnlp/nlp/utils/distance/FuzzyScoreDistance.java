@@ -29,29 +29,29 @@ import ai.idylnlp.model.nlp.strings.Distance;
  */
 public class FuzzyScoreDistance implements Distance {
 
-	private Locale locale;
+  private Locale locale;
 
-	public static Distance INSTANCE(Locale locale) {
-		return new FuzzyScoreDistance(locale);
-	}
+  public static Distance INSTANCE(Locale locale) {
+    return new FuzzyScoreDistance(locale);
+  }
 
-	/**
-	 * Creates a new instance.
-	 * @param locale The {@link locale} (used to normalize strings to lower case).
-	 */
-	public FuzzyScoreDistance(Locale locale) {
+  /**
+   * Creates a new instance.
+   * @param locale The {@link locale} (used to normalize strings to lower case).
+   */
+  public FuzzyScoreDistance(Locale locale) {
 
-		this.locale = locale;
+    this.locale = locale;
 
-	}
+  }
 
-	@Override
-	public double calculate(CharSequence s, CharSequence t) {
+  @Override
+  public double calculate(CharSequence s, CharSequence t) {
 
-		FuzzyScore distance = new FuzzyScore(locale);
+    FuzzyScore distance = new FuzzyScore(locale);
 
-		return distance.fuzzyScore(s, t);
+    return distance.fuzzyScore(s, t);
 
-	}
+  }
 
 }

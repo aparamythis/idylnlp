@@ -35,48 +35,48 @@ import ai.idylnlp.model.nlp.Span;
  */
 public class SimpleSentenceDetector implements SentenceDetector {
 
-	@Override
-	public List<String> getLanguageCodes() {
-		return Collections.emptyList();
-	}
+  @Override
+  public List<String> getLanguageCodes() {
+    return Collections.emptyList();
+  }
 
-	@Override
-	public Span[] sentPosDetect(String text) {
+  @Override
+  public Span[] sentPosDetect(String text) {
 
-		List<Span> spans = new LinkedList<Span>();
+    List<Span> spans = new LinkedList<Span>();
 
-		List<String> sentences = Arrays.asList(text.split("."));
+    List<String> sentences = Arrays.asList(text.split("."));
 
-		if(CollectionUtils.isEmpty(sentences)) {
+    if(CollectionUtils.isEmpty(sentences)) {
 
-			spans.add(new Span(0, text.length() - 1));
+      spans.add(new Span(0, text.length() - 1));
 
-		} else {
+    } else {
 
-			int lastPeriod = 0;
+      int lastPeriod = 0;
 
-			for(String sentence : sentences) {
+      for(String sentence : sentences) {
 
-				int period = sentence.indexOf(".");
+        int period = sentence.indexOf(".");
 
-				spans.add(new Span(lastPeriod, period));
+        spans.add(new Span(lastPeriod, period));
 
-				lastPeriod = period + 1;
+        lastPeriod = period + 1;
 
-			}
+      }
 
-		}
+    }
 
-		return spans.toArray(new Span[spans.size()]);
+    return spans.toArray(new Span[spans.size()]);
 
-	}
+  }
 
-	@Override
-	public String[] sentDetect(String text) {
+  @Override
+  public String[] sentDetect(String text) {
 
-		// TOOD: Implement this.
-		return null;
+    // TOOD: Implement this.
+    return null;
 
-	}
+  }
 
 }

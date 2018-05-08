@@ -46,73 +46,73 @@ import net.loomchild.segment.srx.io.Srx2SaxParser;
  */
 public class SegmentedSentenceDetector implements SentenceDetector {
 
-	private LanguageCode languageCode;
-	private SrxDocument srxDocument;
+  private LanguageCode languageCode;
+  private SrxDocument srxDocument;
 
-	public SegmentedSentenceDetector(String srx, LanguageCode languageCode) throws UnsupportedEncodingException {
+  public SegmentedSentenceDetector(String srx, LanguageCode languageCode) throws UnsupportedEncodingException {
 
-		this.languageCode = languageCode;
+    this.languageCode = languageCode;
 
-		final InputStream inputStream = new ByteArrayInputStream(srx.getBytes(StandardCharsets.UTF_8));
+    final InputStream inputStream = new ByteArrayInputStream(srx.getBytes(StandardCharsets.UTF_8));
 
-		BufferedReader srxReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+    BufferedReader srxReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
 
-		Map<String, Object> parserParameters = new HashMap<>();
-		parserParameters.put(Srx2SaxParser.VALIDATE_PARAMETER, true);
-		SrxParser srxParser = new Srx2SaxParser(parserParameters);
+    Map<String, Object> parserParameters = new HashMap<>();
+    parserParameters.put(Srx2SaxParser.VALIDATE_PARAMETER, true);
+    SrxParser srxParser = new Srx2SaxParser(parserParameters);
 
-		srxDocument = srxParser.parse(srxReader);
+    srxDocument = srxParser.parse(srxReader);
 
-	}
+  }
 
-	@Override
-	public List<String> getLanguageCodes() {
-		return Arrays.asList(languageCode.getAlpha3().toString());
-	}
+  @Override
+  public List<String> getLanguageCodes() {
+    return Arrays.asList(languageCode.getAlpha3().toString());
+  }
 
-	@Override
-	public String[] sentDetect(String s) {
+  @Override
+  public String[] sentDetect(String s) {
 
-		return Span.spansToStrings(sentPosDetect(s), s);
+    return Span.spansToStrings(sentPosDetect(s), s);
 
-	}
+  }
 
-	@Override
-	public Span[] sentPosDetect(String s) {
+  @Override
+  public Span[] sentPosDetect(String s) {
 
-		List<Span> spans = new ArrayList<>();
+    List<Span> spans = new ArrayList<>();
 
-		List<String> sentences = tokenize(s);
+    List<String> sentences = tokenize(s);
 
-		for(String sentence : sentences) {
+    for(String sentence : sentences) {
 
-			String trimmedSentence = sentence.trim();
+      String trimmedSentence = sentence.trim();
 
-			final int start = s.indexOf(trimmedSentence);
+      final int start = s.indexOf(trimmedSentence);
 
-			Span span = new Span(start, start + trimmedSentence.length());
-			spans.add(span);
+      Span span = new Span(start, start + trimmedSentence.length());
+      spans.add(span);
 
-		}
+    }
 
-		return spans.toArray(new Span[spans.size()]);
+    return spans.toArray(new Span[spans.size()]);
 
-	}
+  }
 
-	private List<String> tokenize(String text) {
+  private List<String> tokenize(String text) {
 
-		List<String> segments = new ArrayList<>();
+    List<String> segments = new ArrayList<>();
 
-		TextIterator textIterator = new SrxTextIterator(srxDocument, languageCode.getAlpha3().toString(), text);
+    TextIterator textIterator = new SrxTextIterator(srxDocument, languageCode.getAlpha3().toString(), text);
 
-		while(textIterator.hasNext()) {
+    while(textIterator.hasNext()) {
 
-			segments.add(textIterator.next().trim());
+      segments.add(textIterator.next().trim());
 
-		}
+    }
 
-		return segments;
+    return segments;
 
-	}
+  }
 
 }

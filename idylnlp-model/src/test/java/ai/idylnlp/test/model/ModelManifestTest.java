@@ -27,55 +27,55 @@ import ai.idylnlp.testing.ObjectTest;
 
 public class ModelManifestTest extends ObjectTest<StandardModelManifest> {
 
-	@Test
-	public void builderTest() {
+  @Test
+  public void builderTest() {
 
-		ModelManifestBuilder builder = new ModelManifestBuilder();
-		builder.setBeamSize(5);
-		builder.setCreatorVersion("version-1.2.0");
-		builder.setEncryptionKey("encryption");
-		builder.setLanguageCode(LanguageCode.de);
-		builder.setModelFileName("model.bin");
-		builder.setModelId("model-id");
-		builder.setName("model-name");
-		builder.setType("model-type");
+    ModelManifestBuilder builder = new ModelManifestBuilder();
+    builder.setBeamSize(5);
+    builder.setCreatorVersion("version-1.2.0");
+    builder.setEncryptionKey("encryption");
+    builder.setLanguageCode(LanguageCode.de);
+    builder.setModelFileName("model.bin");
+    builder.setModelId("model-id");
+    builder.setName("model-name");
+    builder.setType("model-type");
 
-		StandardModelManifest modelManifest = builder.build();
+    StandardModelManifest modelManifest = builder.build();
 
-		assertEquals(5, modelManifest.getBeamSize());
-		assertEquals("version-1.2.0", modelManifest.getCreatorVersion());
-		assertEquals("encryption", modelManifest.getEncryptionKey());
-		assertEquals("deu", modelManifest.getLanguageCode().getAlpha3().toString());
-		assertEquals("model.bin", modelManifest.getModelFileName());
-		assertEquals("model-id", modelManifest.getModelId());
-		assertEquals("model-name", modelManifest.getName());
-		assertEquals("model-type", modelManifest.getType());
+    assertEquals(5, modelManifest.getBeamSize());
+    assertEquals("version-1.2.0", modelManifest.getCreatorVersion());
+    assertEquals("encryption", modelManifest.getEncryptionKey());
+    assertEquals("deu", modelManifest.getLanguageCode().getAlpha3().toString());
+    assertEquals("model.bin", modelManifest.getModelFileName());
+    assertEquals("model-id", modelManifest.getModelId());
+    assertEquals("model-name", modelManifest.getName());
+    assertEquals("model-type", modelManifest.getType());
 
-	}
+  }
 
-	@Test
-	public void builderWithoutBeamSizeTest() {
+  @Test
+  public void builderWithoutBeamSizeTest() {
 
-		ModelManifestBuilder builder = new ModelManifestBuilder();
-		builder.setCreatorVersion("version-1.2.0");
-		builder.setEncryptionKey("encryption");
-		builder.setLanguageCode(LanguageCode.de);
-		builder.setModelFileName("model.bin");
-		builder.setModelId("model-id");
-		builder.setName("model-name");
-		builder.setType("model-type");
+    ModelManifestBuilder builder = new ModelManifestBuilder();
+    builder.setCreatorVersion("version-1.2.0");
+    builder.setEncryptionKey("encryption");
+    builder.setLanguageCode(LanguageCode.de);
+    builder.setModelFileName("model.bin");
+    builder.setModelId("model-id");
+    builder.setName("model-name");
+    builder.setType("model-type");
 
-		StandardModelManifest modelManifest = builder.build();
+    StandardModelManifest modelManifest = builder.build();
 
-		assertEquals(StandardModelManifest.DEFAULT_BEAM_SIZE, modelManifest.getBeamSize());
-		assertEquals("version-1.2.0", modelManifest.getCreatorVersion());
-		assertEquals("encryption", modelManifest.getEncryptionKey());
-		assertEquals("deu", modelManifest.getLanguageCode().getAlpha3().toString());
-		assertEquals("model.bin", modelManifest.getModelFileName());
-		assertEquals("model-id", modelManifest.getModelId());
-		assertEquals("model-name", modelManifest.getName());
-		assertEquals("model-type", modelManifest.getType());
+    assertEquals(StandardModelManifest.DEFAULT_BEAM_SIZE, modelManifest.getBeamSize());
+    assertEquals("version-1.2.0", modelManifest.getCreatorVersion());
+    assertEquals("encryption", modelManifest.getEncryptionKey());
+    assertEquals("deu", modelManifest.getLanguageCode().getAlpha3().toString());
+    assertEquals("model.bin", modelManifest.getModelFileName());
+    assertEquals("model-id", modelManifest.getModelId());
+    assertEquals("model-name", modelManifest.getName());
+    assertEquals("model-type", modelManifest.getType());
 
-	}
+  }
 
 }

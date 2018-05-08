@@ -17,10 +17,10 @@ package ai.idylnlp.model.nlp.subjects;
 
 public class OpenNLPSubjectOfTrainingOrEvaluation extends SubjectOfTrainingOrEvaluation {
 
-	public OpenNLPSubjectOfTrainingOrEvaluation(String inputFile) {
+  public OpenNLPSubjectOfTrainingOrEvaluation(String inputFile) {
 
-		super(inputFile);
+    super(inputFile);
 
-	}
+  }
 
 }

@@ -35,121 +35,121 @@ import ai.idylnlp.model.nlp.ConfidenceFilterSerializer;
  */
 public class HeuristicConfidenceFilter implements ConfidenceFilter {
 
-	private static final Logger LOGGER = LogManager.getLogger(HeuristicConfidenceFilter.class);
+  private static final Logger LOGGER = LogManager.getLogger(HeuristicConfidenceFilter.class);
 
-	protected Map<String, SynchronizedSummaryStatistics> statistics  = new HashMap<String, SynchronizedSummaryStatistics>();
-	private TTest ttest = new TTest();
+  protected Map<String, SynchronizedSummaryStatistics> statistics  = new HashMap<String, SynchronizedSummaryStatistics>();
+  private TTest ttest = new TTest();
 
-	private ConfidenceFilterSerializer serializer;
-	private int minSampleSize = 50;
-	private double alpha = 0.05;
+  private ConfidenceFilterSerializer serializer;
+  private int minSampleSize = 50;
+  private double alpha = 0.05;
 
-	private boolean dirty = false;
+  private boolean dirty = false;
 
-	/**
-	 * Creates a new filter.
-	 */
-	public HeuristicConfidenceFilter(ConfidenceFilterSerializer serializer) {
+  /**
+   * Creates a new filter.
+   */
+  public HeuristicConfidenceFilter(ConfidenceFilterSerializer serializer) {
 
-		this.serializer = serializer;
+    this.serializer = serializer;
 
-	}
+  }
 
-	/**
-	 * Creates a new filter.
-	 * @param minSampleSize The minimum sample size before tests are used
-	 * to filter the entities.
-	 * @param alpha The alpha value for the test. 0.5 for 95% is recommended.
-	 */
-	public HeuristicConfidenceFilter(ConfidenceFilterSerializer serializer, int minSampleSize, double alpha) {
+  /**
+   * Creates a new filter.
+   * @param minSampleSize The minimum sample size before tests are used
+   * to filter the entities.
+   * @param alpha The alpha value for the test. 0.5 for 95% is recommended.
+   */
+  public HeuristicConfidenceFilter(ConfidenceFilterSerializer serializer, int minSampleSize, double alpha) {
 
-		this.serializer = serializer;
-		this.minSampleSize = minSampleSize;
-		this.alpha = alpha;
+    this.serializer = serializer;
+    this.minSampleSize = minSampleSize;
+    this.alpha = alpha;
 
-		ttest = new TTest();
+    ttest = new TTest();
 
-	}
+  }
 
-	@Override
-	public boolean test(String modelId, double entityConfidence, double confidenceThreshold) {
+  @Override
+  public boolean test(String modelId, double entityConfidence, double confidenceThreshold) {
 
-		SynchronizedSummaryStatistics confidences = statistics.get(modelId);
+    SynchronizedSummaryStatistics confidences = statistics.get(modelId);
 
-		if(confidences == null) {
+    if(confidences == null) {
 
-			confidences = new SynchronizedSummaryStatistics();
-			statistics.put(modelId, confidences);
+      confidences = new SynchronizedSummaryStatistics();
+      statistics.put(modelId, confidences);
 
-		}
+    }
 
-		boolean filter = false;
+    boolean filter = false;
 
-		if(entityConfidence >= confidenceThreshold) {
+    if(entityConfidence >= confidenceThreshold) {
 
-			// If the entity's confidence is greater than the threshold
-			// always return the entity.
+      // If the entity's confidence is greater than the threshold
+      // always return the entity.
 
-			filter = true;
+      filter = true;
 
-		} else {
+    } else {
 
-			if(confidences.getN() >= minSampleSize) {
+      if(confidences.getN() >= minSampleSize) {
 
-				// Null hypothesis: The confidence of the entity is not in the ballpark.
+        // Null hypothesis: The confidence of the entity is not in the ballpark.
 
-				// Performs a two-sided t-test evaluating the null hypothesis that the mean of
-				// the population from which the dataset described by stats is drawn equals mu.
-				// Returns true iff the null hypothesis can be rejected with confidence 1 - ALPHA.
-				// To perform a 1-sided test, use ALPHA * 2.
-				filter = !ttest.tTest(entityConfidence, confidences, alpha * 2);
+        // Performs a two-sided t-test evaluating the null hypothesis that the mean of
+        // the population from which the dataset described by stats is drawn equals mu.
+        // Returns true iff the null hypothesis can be rejected with confidence 1 - ALPHA.
+        // To perform a 1-sided test, use ALPHA * 2.
+        filter = !ttest.tTest(entityConfidence, confidences, alpha * 2);
 
-				// true means do NOT return the entity.
-				// false means return the entity.
+        // true means do NOT return the entity.
+        // false means return the entity.
 
-			} else {
+      } else {
 
-				filter = true;
+        filter = true;
 
-			}
+      }
 
-		}
+    }
 
-		// Add this value to the statistics after doing the T-test.
-		confidences.addValue(entityConfidence);
+    // Add this value to the statistics after doing the T-test.
+    confidences.addValue(entityConfidence);
 
-		// Mark it as dirty.
-		dirty = true;
+    // Mark it as dirty.
+    dirty = true;
 
-		return filter;
+    return filter;
 
-	}
+  }
 
-	@Override
-	public int serialize() throws Exception {
-		dirty = false;
-		return serializer.serialize(statistics);
-	}
+  @Override
+  public int serialize() throws Exception {
+    dirty = false;
+    return serializer.serialize(statistics);
+  }
 
-	@Override
-	public int deserialize() throws Exception {
-		dirty = false;
-		return serializer.deserialize(statistics);
-	}
+  @Override
+  public int deserialize() throws Exception {
+    dirty = false;
+    return serializer.deserialize(statistics);
+  }
 
-	@Override
-	public void resetAll() {
-		statistics.clear();
-	}
+  @Override
+  public void resetAll() {
+    statistics.clear();
+  }
 
-	@Override
-	public void reset(String modelId) {
-		statistics.get(modelId).clear();
-	}
+  @Override
+  public void reset(String modelId) {
+    statistics.get(modelId).clear();
+  }
 
-	@Override
-	public boolean isDirty() {
-		return dirty;
-	}
+  @Override
+  public boolean isDirty() {
+    return dirty;
+  }
 
 }

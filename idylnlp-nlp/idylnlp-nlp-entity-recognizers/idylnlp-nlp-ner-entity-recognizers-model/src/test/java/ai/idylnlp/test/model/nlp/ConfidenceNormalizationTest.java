@@ -25,33 +25,33 @@ import ai.idylnlp.model.nlp.ConfidenceNormalization;
 
 public class ConfidenceNormalizationTest {
 
-	private static final Logger LOGGER = LogManager.getLogger(ConfidenceNormalizationTest.class);
+  private static final Logger LOGGER = LogManager.getLogger(ConfidenceNormalizationTest.class);
 
-	@Test
-	public void normalize1Test() {
+  @Test
+  public void normalize1Test() {
 
-		double normalized = ConfidenceNormalization.normalizeConfidence(99);
+    double normalized = ConfidenceNormalization.normalizeConfidence(99);
 
-		assertEquals(0.99, normalized, 0);
+    assertEquals(0.99, normalized, 0);
 
-	}
+  }
 
-	@Test
-	public void normalize2Test() {
+  @Test
+  public void normalize2Test() {
 
-		double normalized = ConfidenceNormalization.normalizeConfidence(0);
+    double normalized = ConfidenceNormalization.normalizeConfidence(0);
 
-		assertEquals(0, normalized, 0);
+    assertEquals(0, normalized, 0);
 
-	}
+  }
 
-	@Test
-	public void normalize3Test() {
+  @Test
+  public void normalize3Test() {
 
-		double normalized = ConfidenceNormalization.normalizeConfidence(100);
+    double normalized = ConfidenceNormalization.normalizeConfidence(100);
 
-		assertEquals(1.0, normalized, 0);
+    assertEquals(1.0, normalized, 0);
 
-	}
+  }
 
 }

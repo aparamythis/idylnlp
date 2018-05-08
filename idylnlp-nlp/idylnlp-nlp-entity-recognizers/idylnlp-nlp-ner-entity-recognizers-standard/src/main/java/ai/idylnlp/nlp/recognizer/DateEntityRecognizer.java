@@ -46,56 +46,56 @@ import opennlp.tools.util.Span;
  */
 public class DateEntityRecognizer implements EntityRecognizer {
 
-	private static final Logger LOGGER = LogManager.getLogger(DateEntityRecognizer.class);
+  private static final Logger LOGGER = LogManager.getLogger(DateEntityRecognizer.class);
 
-	private static final String ENTITY_TYPE = "date";
+  private static final String ENTITY_TYPE = "date";
 
-	/**
-	 * {@inheritDoc} 
-	 */
-	@Override
-	public EntityExtractionResponse extractEntities(EntityExtractionRequest entityExtractionRequest) throws EntityFinderException {
+  /**
+   * {@inheritDoc} 
+   */
+  @Override
+  public EntityExtractionResponse extractEntities(EntityExtractionRequest entityExtractionRequest) throws EntityFinderException {
 
-		Set<Entity> entities = new LinkedHashSet<>();
-		
-		long startTime = System.currentTimeMillis();
+    Set<Entity> entities = new LinkedHashSet<>();
+    
+    long startTime = System.currentTimeMillis();
 
-		Parser parser = new Parser();
-		
-		final String text = StringUtils.join(entityExtractionRequest.getText(), " ");
+    Parser parser = new Parser();
+    
+    final String text = StringUtils.join(entityExtractionRequest.getText(), " ");
 
-		List<DateGroup> groups = parser.parse(text);
+    List<DateGroup> groups = parser.parse(text);
 
-		for (DateGroup group : groups) {
-			
-			List<Date> dates = group.getDates();
-			
-			for(Date date : dates) {
-				
-				final String entityText = date.toString() + " (" + group.getText() + ")"; 
-				
-				Entity entity = new Entity(entityText);
-				entity.setConfidence(100);
-				entity.setType(ENTITY_TYPE);
-				entity.getMetadata().put("time", String.valueOf(date.getTime()));
-				entity.setContext(entityExtractionRequest.getContext());
-				entity.setExtractionDate(System.currentTimeMillis());
-				entity.setLanguageCode(LanguageCode.en.getAlpha3().toString());
-				
-				// TODO: Set the token-based span correctly.
-				Span span = SpanUtils.getSpan(SimpleTokenizer.INSTANCE, group.getText(), text);
-				entity.setSpan(new ai.idylnlp.model.entity.Span(span.getStart(), span.getEnd()));
-				
-				entities.add(entity);
-				
-			}
-			
-		}
-		
-		long elapsedTime = System.currentTimeMillis() - startTime;
-		
-		return new EntityExtractionResponse(entities, elapsedTime, true);
+    for (DateGroup group : groups) {
+      
+      List<Date> dates = group.getDates();
+      
+      for(Date date : dates) {
+        
+        final String entityText = date.toString() + " (" + group.getText() + ")"; 
+        
+        Entity entity = new Entity(entityText);
+        entity.setConfidence(100);
+        entity.setType(ENTITY_TYPE);
+        entity.getMetadata().put("time", String.valueOf(date.getTime()));
+        entity.setContext(entityExtractionRequest.getContext());
+        entity.setExtractionDate(System.currentTimeMillis());
+        entity.setLanguageCode(LanguageCode.en.getAlpha3().toString());
+        
+        // TODO: Set the token-based span correctly.
+        Span span = SpanUtils.getSpan(SimpleTokenizer.INSTANCE, group.getText(), text);
+        entity.setSpan(new ai.idylnlp.model.entity.Span(span.getStart(), span.getEnd()));
+        
+        entities.add(entity);
+        
+      }
+      
+    }
+    
+    long elapsedTime = System.currentTimeMillis() - startTime;
+    
+    return new EntityExtractionResponse(entities, elapsedTime, true);
 
-	}
+  }
 
 }

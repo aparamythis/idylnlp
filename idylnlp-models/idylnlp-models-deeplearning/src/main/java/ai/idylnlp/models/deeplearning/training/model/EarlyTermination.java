@@ -23,26 +23,26 @@ import com.google.gson.annotations.SerializedName;
 
 public class EarlyTermination {
 
-	@SerializedName("MaxEpochs")
-	@Expose
-	private Integer maxEpochs;
+  @SerializedName("MaxEpochs")
+  @Expose
+  private Integer maxEpochs;
 
-	@SerializedName("MaxMinutes")
-	@Expose
-	private Integer maxMinutes;
+  @SerializedName("MaxMinutes")
+  @Expose
+  private Integer maxMinutes;
 
-	public EarlyTermination() {
+  public EarlyTermination() {
 
-	}
+  }
 
-	public EarlyTermination(Integer maxEpochs, Integer maxMinutes) {
+  public EarlyTermination(Integer maxEpochs, Integer maxMinutes) {
 
-		this.maxEpochs = maxEpochs;
-		this.maxMinutes = maxMinutes;
+    this.maxEpochs = maxEpochs;
+    this.maxMinutes = maxMinutes;
 
-	}
+  }
 
-	@Override
+  @Override
     public boolean equals(Object o) {
       return EqualsBuilder.reflectionEquals(this, o);
     }
@@ -52,20 +52,20 @@ public class EarlyTermination {
         return HashCodeBuilder.reflectionHashCode(this);
     }
 
-	public Integer getMaxEpochs() {
-		return maxEpochs;
-	}
+  public Integer getMaxEpochs() {
+    return maxEpochs;
+  }
 
-	public void setMaxEpochs(Integer maxEpochs) {
-		this.maxEpochs = maxEpochs;
-	}
+  public void setMaxEpochs(Integer maxEpochs) {
+    this.maxEpochs = maxEpochs;
+  }
 
-	public Integer getMaxMinutes() {
-		return maxMinutes;
-	}
+  public Integer getMaxMinutes() {
+    return maxMinutes;
+  }
 
-	public void setMaxMinutes(Integer maxMinutes) {
-		this.maxMinutes = maxMinutes;
-	}
+  public void setMaxMinutes(Integer maxMinutes) {
+    this.maxMinutes = maxMinutes;
+  }
 
 }

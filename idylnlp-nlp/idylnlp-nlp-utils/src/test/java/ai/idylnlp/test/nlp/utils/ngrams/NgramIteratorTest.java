@@ -29,33 +29,33 @@ import ai.idylnlp.nlp.utils.ngrams.NgramIterator;
 
 public class NgramIteratorTest {
 
-	private static final Logger LOGGER = LogManager.getLogger(NgramIteratorTest.class);
+  private static final Logger LOGGER = LogManager.getLogger(NgramIteratorTest.class);
 
-	@Test
-	public void test1() {
+  @Test
+  public void test1() {
 
-		String[] tokens = {"George", "Washington", "was", "president"};
+    String[] tokens = {"George", "Washington", "was", "president"};
 
-		NgramIterator i = new NgramIterator(tokens, 2);
+    NgramIterator i = new NgramIterator(tokens, 2);
 
-		Collection<String> ngrams = new LinkedList<String>();
+    Collection<String> ngrams = new LinkedList<String>();
 
-		while(i.hasNext()) {
+    while(i.hasNext()) {
 
-			String ngram = i.next();
+      String ngram = i.next();
 
-			ngrams.add(ngram);
+      ngrams.add(ngram);
 
-			LOGGER.info(ngram);
+      LOGGER.info(ngram);
 
-		}
+    }
 
-		assertEquals(3, ngrams.size());
+    assertEquals(3, ngrams.size());
 
-		assertTrue(ngrams.contains("George Washington"));
-		assertTrue(ngrams.contains("Washington was"));
-		assertTrue(ngrams.contains("was president"));
+    assertTrue(ngrams.contains("George Washington"));
+    assertTrue(ngrams.contains("Washington was"));
+    assertTrue(ngrams.contains("was president"));
 
-	}
+  }
 
 }

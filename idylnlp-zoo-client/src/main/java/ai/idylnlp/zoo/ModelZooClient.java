@@ -29,11 +29,11 @@ import retrofit2.http.Streaming;
 
 public interface ModelZooClient {
 
-	@GET("/model/{id}")
-	@Streaming
+  @GET("/model/{id}")
+  @Streaming
     Call<ResponseBody> getModelUrl(@Header("X-Token") String token, @Path("id") String modelId);
 
-	@GET("/models/{language}")
+  @GET("/models/{language}")
     Call<List<Model>> getModelsForLanguage(@Header("X-Token") String token, @Path("language") String language);
 
 }

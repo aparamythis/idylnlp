@@ -41,48 +41,48 @@ import ai.idylnlp.testing.markers.ExternalData;
 
 public class DeepLearningEntityRecognizerTest {
 
-	private static final Logger LOGGER = LogManager.getLogger(DeepLearningEntityRecognizerTest.class);
+  private static final Logger LOGGER = LogManager.getLogger(DeepLearningEntityRecognizerTest.class);
 
-	private static final String TRAINING_DATA_PATH = System.getProperty("testDataPath");
-	//private static final String MODEL_PATH = new File("src/test/resources/models/").getAbsolutePath();
+  private static final String TRAINING_DATA_PATH = System.getProperty("testDataPath");
+  //private static final String MODEL_PATH = new File("src/test/resources/models/").getAbsolutePath();
 
-	private static final String NETWORK = "network.zip";
-	private static final String VECTORS = "glove.6B.300d.glv";
+  private static final String NETWORK = "network.zip";
+  private static final String VECTORS = "glove.6B.300d.glv";
 
-	@Ignore
-	@Category(ExternalData.class)
-	@Test
-	public void extract() throws Exception {
+  @Ignore
+  @Category(ExternalData.class)
+  @Test
+  public void extract() throws Exception {
 
-		LOGGER.info("Training data path: {}", TRAINING_DATA_PATH);
+    LOGGER.info("Training data path: {}", TRAINING_DATA_PATH);
 
-		ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
+    ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
 
-		when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
+    when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
 
-		SecondGenModelManifest manifest = new SecondGenModelManifest(UUID.randomUUID().toString(), NETWORK, LanguageCode.en, "person", "model", "2", VECTORS, 5, "", "");
-		LOGGER.info("Model file: " + manifest.getModelFileName());
+    SecondGenModelManifest manifest = new SecondGenModelManifest(UUID.randomUUID().toString(), NETWORK, LanguageCode.en, "person", "model", "2", VECTORS, 5, "", "");
+    LOGGER.info("Model file: " + manifest.getModelFileName());
 
-		DeepLearningEntityRecognizerConfiguration configuration = new DeepLearningEntityRecognizerConfiguration.Builder()
-				.build(TRAINING_DATA_PATH);
+    DeepLearningEntityRecognizerConfiguration configuration = new DeepLearningEntityRecognizerConfiguration.Builder()
+        .build(TRAINING_DATA_PATH);
 
-		configuration.addEntityModel("person", LanguageCode.en, manifest);
+    configuration.addEntityModel("person", LanguageCode.en, manifest);
 
-		DeepLearningEntityRecognizer recognizer = new DeepLearningEntityRecognizer(configuration);
+    DeepLearningEntityRecognizer recognizer = new DeepLearningEntityRecognizer(configuration);
 
-		String input = "george washington was president";
-		String[] text = input.split(" ");
+    String input = "george washington was president";
+    String[] text = input.split(" ");
 
-		EntityExtractionRequest request = new EntityExtractionRequest(text)
-			.withLanguage(LanguageCode.en)
-			.withType("person");
+    EntityExtractionRequest request = new EntityExtractionRequest(text)
+      .withLanguage(LanguageCode.en)
+      .withType("person");
 
-		EntityExtractionResponse response = recognizer.extractEntities(request);
+    EntityExtractionResponse response = recognizer.extractEntities(request);
 
-		for(Entity entity : response.getEntities()) {
-			LOGGER.info(entity.toString());
-		}
+    for(Entity entity : response.getEntities()) {
+      LOGGER.info(entity.toString());
+    }
 
-	}
+  }
 
 }

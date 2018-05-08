@@ -41,82 +41,82 @@ import opennlp.tools.tokenize.TokenizerModel;
  */
 public class ModelTokenizer implements Tokenizer {
 
-	private TokenizerME tokenizer;
-	private LanguageCode languageCode;
+  private TokenizerME tokenizer;
+  private LanguageCode languageCode;
 
-	/**
-	 * Creates a new model tokenizer.
-	 * @param modelInputStream The {@link InputStream stream} containing the model.
-	 * @param languageCode The {@link LanguageCode} for this tokenizer.
-	 * @throws IOException Thrown if the token model cannot be loaded.
-	 * @throws ModelLoaderException
-	 */
-	public ModelTokenizer(InputStream modelInputStream, LanguageCode languageCode) throws ModelLoaderException {
+  /**
+   * Creates a new model tokenizer.
+   * @param modelInputStream The {@link InputStream stream} containing the model.
+   * @param languageCode The {@link LanguageCode} for this tokenizer.
+   * @throws IOException Thrown if the token model cannot be loaded.
+   * @throws ModelLoaderException
+   */
+  public ModelTokenizer(InputStream modelInputStream, LanguageCode languageCode) throws ModelLoaderException {
 
-		this.languageCode = languageCode;
+    this.languageCode = languageCode;
 
-		try {
+    try {
 
-			final TokenizerModel tokenModel = new TokenizerModel(modelInputStream);
-			tokenizer = new TokenizerME(tokenModel);
-			modelInputStream.close();
+      final TokenizerModel tokenModel = new TokenizerModel(modelInputStream);
+      tokenizer = new TokenizerME(tokenModel);
+      modelInputStream.close();
 
-		} catch (IOException ex) {
+    } catch (IOException ex) {
 
-			throw new ModelLoaderException("Unable to load token model.", ex);
+      throw new ModelLoaderException("Unable to load token model.", ex);
 
-		}
+    }
 
-	}
+  }
 
-	/**
-	 * Creates a new model tokenizer.
-	 * @param tokenModel A {@link TokenizerModel} for this tokenizer.
-	 * @param languageCode The {@link LanguageCode} for this tokenizer.
-	 */
-	public ModelTokenizer(TokenizerModel tokenModel, LanguageCode languageCode) {
+  /**
+   * Creates a new model tokenizer.
+   * @param tokenModel A {@link TokenizerModel} for this tokenizer.
+   * @param languageCode The {@link LanguageCode} for this tokenizer.
+   */
+  public ModelTokenizer(TokenizerModel tokenModel, LanguageCode languageCode) {
 
-		this.languageCode = languageCode;
-		this.tokenizer = new TokenizerME(tokenModel);
+    this.languageCode = languageCode;
+    this.tokenizer = new TokenizerME(tokenModel);
 
-	}
+  }
 
-	@Override
-	public List<String> getLanguageCodes() {
+  @Override
+  public List<String> getLanguageCodes() {
 
-		return Arrays.asList(languageCode.getAlpha3().toString());
+    return Arrays.asList(languageCode.getAlpha3().toString());
 
-	}
+  }
 
-	@Override
-	public String[] tokenize(String s) {
+  @Override
+  public String[] tokenize(String s) {
 
-		return tokenizer.tokenize(s);
+    return tokenizer.tokenize(s);
 
-	}
+  }
 
-	@Override
-	public Span[] tokenizePos(String s) {
+  @Override
+  public Span[] tokenizePos(String s) {
 
-		opennlp.tools.util.Span[] tokenSpans = tokenizer.tokenizePos(s);
+    opennlp.tools.util.Span[] tokenSpans = tokenizer.tokenizePos(s);
 
-		return SpansToSpans.toSpans(tokenSpans);
+    return SpansToSpans.toSpans(tokenSpans);
 
-	}
+  }
 
-	@Override
-	public String[] tokenize(String s, Stemmer stemmer) {
+  @Override
+  public String[] tokenize(String s, Stemmer stemmer) {
 
-		String[] tokens = tokenizer.tokenize(s);
+    String[] tokens = tokenizer.tokenize(s);
 
-		for (int i = 0; i < tokens.length; i++) {
+    for (int i = 0; i < tokens.length; i++) {
 
-			tokens[i] = stemmer.stem(tokens[i]);
+      tokens[i] = stemmer.stem(tokens[i]);
 
-		}
+    }
 
-		return tokens;
+    return tokens;
 
-	}
+  }
 
 }

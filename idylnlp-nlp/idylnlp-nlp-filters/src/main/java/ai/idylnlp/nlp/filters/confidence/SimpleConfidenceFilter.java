@@ -26,48 +26,48 @@ import ai.idylnlp.model.nlp.ConfidenceFilter;
  */
 public class SimpleConfidenceFilter implements ConfidenceFilter {
 
-	@Override
-	public boolean test(String modelId, double entityConfidence, double confidenceThreshold) {
+  @Override
+  public boolean test(String modelId, double entityConfidence, double confidenceThreshold) {
 
-		boolean filter = false;
+    boolean filter = false;
 
-		if(entityConfidence >= confidenceThreshold) {
+    if(entityConfidence >= confidenceThreshold) {
 
-			filter = true;
+      filter = true;
 
-		} else {
+    } else {
 
-			filter = false;
+      filter = false;
 
-		}
+    }
 
-		return filter;
+    return filter;
 
-	}
+  }
 
-	@Override
-	public int serialize() throws Exception {
-		return 0;
-	}
+  @Override
+  public int serialize() throws Exception {
+    return 0;
+  }
 
-	@Override
-	public int deserialize() throws Exception {
-		return 0;
-	}
+  @Override
+  public int deserialize() throws Exception {
+    return 0;
+  }
 
-	@Override
-	public void resetAll() {
+  @Override
+  public void resetAll() {
 
-	}
+  }
 
-	@Override
-	public void reset(String modelId) {
+  @Override
+  public void reset(String modelId) {
 
-	}
+  }
 
-	@Override
-	public boolean isDirty() {
-		return false;
-	}
+  @Override
+  public boolean isDirty() {
+    return false;
+  }
 
 }

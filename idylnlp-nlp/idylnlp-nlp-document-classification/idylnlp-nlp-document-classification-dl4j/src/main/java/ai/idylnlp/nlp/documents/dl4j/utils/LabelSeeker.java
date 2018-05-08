@@ -40,7 +40,7 @@ public class LabelSeeker {
     public LabelSeeker(List<String> labelsUsed, InMemoryLookupTable<VocabWord> lookupTable) {
 
         if(labelsUsed.isEmpty()) {
-        	throw new IllegalStateException("You can't have 0 labels used for ParagraphVectors");
+          throw new IllegalStateException("You can't have 0 labels used for ParagraphVectors");
         }
 
         this.lookupTable = lookupTable;
@@ -62,7 +62,7 @@ public class LabelSeeker {
             INDArray vecLabel = lookupTable.vector(label);
 
             if(vecLabel == null) {
-            	throw new IllegalStateException("Label '" + label + "' has no known vector!");
+              throw new IllegalStateException("Label '" + label + "' has no known vector!");
             }
 
             double sim = Transforms.cosineSim(vector, vecLabel);

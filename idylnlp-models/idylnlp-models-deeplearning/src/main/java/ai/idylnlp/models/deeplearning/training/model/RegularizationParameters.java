@@ -23,41 +23,41 @@ import com.google.gson.annotations.SerializedName;
 
 public class RegularizationParameters {
 
-	@SerializedName("Regularization")
-	@Expose
-	private boolean regularization = false;
+  @SerializedName("Regularization")
+  @Expose
+  private boolean regularization = false;
 
-	@SerializedName("L1")
-	@Expose
-	private Double l1 = Double.NaN;
+  @SerializedName("L1")
+  @Expose
+  private Double l1 = Double.NaN;
 
-	@SerializedName("L1Bias")
-	@Expose
-	private Double l1Bias = Double.NaN;
+  @SerializedName("L1Bias")
+  @Expose
+  private Double l1Bias = Double.NaN;
 
-	@SerializedName("L2")
-	@Expose
-	private Double l2 = Double.NaN;
+  @SerializedName("L2")
+  @Expose
+  private Double l2 = Double.NaN;
 
-	@SerializedName("L2Bias")
-	@Expose
-	private Double l2Bias = Double.NaN;
+  @SerializedName("L2Bias")
+  @Expose
+  private Double l2Bias = Double.NaN;
 
-	public RegularizationParameters() {
+  public RegularizationParameters() {
 
-	}
+  }
 
-	public RegularizationParameters(boolean regularization, Double l1, Double l1Bias, Double l2, Double l2Bias) {
+  public RegularizationParameters(boolean regularization, Double l1, Double l1Bias, Double l2, Double l2Bias) {
 
-		this.regularization = regularization;
-		this.l1 = l1;
-		this.l1Bias = l1Bias;
-		this.l2 = l2;
-		this.l2Bias = l2Bias;
+    this.regularization = regularization;
+    this.l1 = l1;
+    this.l1Bias = l1Bias;
+    this.l2 = l2;
+    this.l2Bias = l2Bias;
 
-	}
+  }
 
-	@Override
+  @Override
     public boolean equals(Object o) {
       return EqualsBuilder.reflectionEquals(this, o);
     }
@@ -67,44 +67,44 @@ public class RegularizationParameters {
         return HashCodeBuilder.reflectionHashCode(this);
     }
 
-	public boolean getRegularization() {
-		return regularization;
-	}
+  public boolean getRegularization() {
+    return regularization;
+  }
 
-	public void setRegularization(boolean regularization) {
-		this.regularization = regularization;
-	}
+  public void setRegularization(boolean regularization) {
+    this.regularization = regularization;
+  }
 
-	public Double getL1() {
-		return l1;
-	}
+  public Double getL1() {
+    return l1;
+  }
 
-	public void setL1(Double l1) {
-		this.l1 = l1;
-	}
+  public void setL1(Double l1) {
+    this.l1 = l1;
+  }
 
-	public Double getL1Bias() {
-		return l1Bias;
-	}
+  public Double getL1Bias() {
+    return l1Bias;
+  }
 
-	public void setL1Bias(Double l1Bias) {
-		this.l1Bias = l1Bias;
-	}
+  public void setL1Bias(Double l1Bias) {
+    this.l1Bias = l1Bias;
+  }
 
-	public Double getL2() {
-		return l2;
-	}
+  public Double getL2() {
+    return l2;
+  }
 
-	public void setL2(Double l2) {
-		this.l2 = l2;
-	}
+  public void setL2(Double l2) {
+    this.l2 = l2;
+  }
 
-	public Double getL2Bias() {
-		return l2Bias;
-	}
+  public Double getL2Bias() {
+    return l2Bias;
+  }
 
-	public void setL2Bias(Double l2Bias) {
-		this.l2Bias = l2Bias;
-	}
+  public void setL2Bias(Double l2Bias) {
+    this.l2Bias = l2Bias;
+  }
 
 }

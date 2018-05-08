@@ -37,70 +37,70 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class IdylNLPModelZoo {
 
-	private static final String IDYLNLP_MODEL_ZOO_ENDPOINT = "https://zoo.idylnlp.ai";
+  private static final String IDYLNLP_MODEL_ZOO_ENDPOINT = "https://zoo.idylnlp.ai";
 
-	private ModelZooClient client;
-	private String token;
+  private ModelZooClient client;
+  private String token;
 
-	/**
-	 * Creates a new client using the default Idyl NLP endpoint.
-	 * @param token The client token.
-	 */
-	public IdylNLPModelZoo(String token) {
+  /**
+   * Creates a new client using the default Idyl NLP endpoint.
+   * @param token The client token.
+   */
+  public IdylNLPModelZoo(String token) {
 
-		this.token = token;
+    this.token = token;
 
-		Retrofit retrofit = new Retrofit.Builder()
-			.baseUrl(IDYLNLP_MODEL_ZOO_ENDPOINT)
-			.addConverterFactory(GsonConverterFactory.create())
-			.build();
+    Retrofit retrofit = new Retrofit.Builder()
+      .baseUrl(IDYLNLP_MODEL_ZOO_ENDPOINT)
+      .addConverterFactory(GsonConverterFactory.create())
+      .build();
 
-		client = retrofit.create(ModelZooClient.class);
+    client = retrofit.create(ModelZooClient.class);
 
-	}
+  }
 
-	/**
-	 * Creates a new client.
-	 * @param endpoint The Idyl NLP model zoo endpoint.
-	 * @param token The client token.
-	 */
-	public IdylNLPModelZoo(String endpoint, String token) {
+  /**
+   * Creates a new client.
+   * @param endpoint The Idyl NLP model zoo endpoint.
+   * @param token The client token.
+   */
+  public IdylNLPModelZoo(String endpoint, String token) {
 
-		this.token = token;
+    this.token = token;
 
-		final Retrofit retrofit = new Retrofit.Builder()
-			.baseUrl(endpoint)
-			.addConverterFactory(GsonConverterFactory.create())
-			.build();
+    final Retrofit retrofit = new Retrofit.Builder()
+      .baseUrl(endpoint)
+      .addConverterFactory(GsonConverterFactory.create())
+      .build();
 
-		client = retrofit.create(ModelZooClient.class);
+    client = retrofit.create(ModelZooClient.class);
 
-	}
+  }
 
-	/**
-	 * Downloads a model from the zoo.
-	 * @param modelId The model's ID.
-	 * @param destination A {@link File} to hold the downloaded model.
-	 * @throws IOException Thrown if the model file cannot be downloaded.
-	 */
-	public void downloadModel(String modelId, File destination) throws IOException {
+  /**
+   * Downloads a model from the zoo.
+   * @param modelId The model's ID.
+   * @param destination A {@link File} to hold the downloaded model.
+   * @throws IOException Thrown if the model file cannot be downloaded.
+   */
+  public void downloadModel(String modelId, File destination) throws IOException {
 
-		final ResponseBody responseBody = client.getModelUrl(token, modelId).execute().body();
+    final ResponseBody responseBody = client.getModelUrl(token, modelId).execute().body();
 
-		FileUtils.copyInputStreamToFile(responseBody.byteStream(), destination);
+    FileUtils.copyInputStreamToFile(responseBody.byteStream(), destination);
 
-	}
+  }
 
-	/**
-	 * Finds all available models for a given language.
-	 * @param language The language.
-	 * @return
-	 * @throws IOException
-	 */
-	public List<Model> getModelsByLanguage(LanguageCode languageCode) throws IOException {
+  /**
+   * Finds all available models for a given language.
+   * @param language The language.
+   * @return
+   * @throws IOException
+   */
+  public List<Model> getModelsByLanguage(LanguageCode languageCode) throws IOException {
 
-		return client.getModelsForLanguage(token, languageCode.getAlpha3().toString().toLowerCase()).execute().body();
+    return client.getModelsForLanguage(token, languageCode.getAlpha3().toString().toLowerCase()).execute().body();
 
-	}
+  }
 
 }

@@ -41,107 +41,107 @@ import ai.idylnlp.model.nlp.pos.PartsOfSpeechToken;
 
 public class DefaultPartsOfSpeechTaggerTest {
 
-	private static final Logger LOGGER = LogManager.getLogger(DefaultPartsOfSpeechTaggerTest.class);
+  private static final Logger LOGGER = LogManager.getLogger(DefaultPartsOfSpeechTaggerTest.class);
 
-	private static final String MODEL_PATH = new File("src/test/resources/models/").getAbsolutePath();
-	private static final String POS_MODEL = "en-pos-maxent.bin";
+  private static final String MODEL_PATH = new File("src/test/resources/models/").getAbsolutePath();
+  private static final String POS_MODEL = "en-pos-maxent.bin";
 
-	@Test
-	public void tag1() throws ValidationException, ModelLoaderException {
+  @Test
+  public void tag1() throws ValidationException, ModelLoaderException {
 
-		ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
+    ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
 
-		when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
+    when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
 
-		ModelManifestBuilder builder = new StandardModelManifest.ModelManifestBuilder();
-		builder.setModelId(UUID.randomUUID().toString());
-		builder.setLanguageCode(LanguageCode.en);
-		builder.setModelFileName(POS_MODEL);
-		builder.setEncryptionKey("");
-		builder.setType(StandardModelManifest.POS);
+    ModelManifestBuilder builder = new StandardModelManifest.ModelManifestBuilder();
+    builder.setModelId(UUID.randomUUID().toString());
+    builder.setLanguageCode(LanguageCode.en);
+    builder.setModelFileName(POS_MODEL);
+    builder.setEncryptionKey("");
+    builder.setType(StandardModelManifest.POS);
 
-		StandardModelManifest modelManifest = builder.build();
+    StandardModelManifest modelManifest = builder.build();
 
-		final String text = "George Washington was president.";
+    final String text = "George Washington was president.";
 
-		SentenceDetector sentenceDetector = Mockito.mock(SentenceDetector.class);
-		when(sentenceDetector.sentDetect(text)).thenReturn(new String[]{text});
+    SentenceDetector sentenceDetector = Mockito.mock(SentenceDetector.class);
+    when(sentenceDetector.sentDetect(text)).thenReturn(new String[]{text});
 
-		Tokenizer tokenizer = Mockito.mock(Tokenizer.class);
-		when(tokenizer.tokenize(text)).thenReturn(new String[]{"George", "Washington", "was", "president"});
+    Tokenizer tokenizer = Mockito.mock(Tokenizer.class);
+    when(tokenizer.tokenize(text)).thenReturn(new String[]{"George", "Washington", "was", "president"});
 
-		DefaultPartsOfSpeechTagger tagger = new DefaultPartsOfSpeechTagger(MODEL_PATH, modelManifest, modelValidator);
-		List<PartsOfSpeechToken> partsOfSpeechTokens = tagger.tag("George Washington was president.", sentenceDetector, tokenizer);
+    DefaultPartsOfSpeechTagger tagger = new DefaultPartsOfSpeechTagger(MODEL_PATH, modelManifest, modelValidator);
+    List<PartsOfSpeechToken> partsOfSpeechTokens = tagger.tag("George Washington was president.", sentenceDetector, tokenizer);
 
-		for(PartsOfSpeechToken token : partsOfSpeechTokens) {
+    for(PartsOfSpeechToken token : partsOfSpeechTokens) {
 
-			LOGGER.info(token.getToken() + " : " + token.getPos());
+      LOGGER.info(token.getToken() + " : " + token.getPos());
 
-		}
+    }
 
-	}
+  }
 
-	@Test
-	public void tag2() throws ValidationException, ModelLoaderException {
+  @Test
+  public void tag2() throws ValidationException, ModelLoaderException {
 
-		ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
+    ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
 
-		when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
+    when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
 
-		ModelManifestBuilder builder = new StandardModelManifest.ModelManifestBuilder();
-		builder.setModelId(UUID.randomUUID().toString());
-		builder.setLanguageCode(LanguageCode.en);
-		builder.setModelFileName(POS_MODEL);
-		builder.setEncryptionKey("");
-		builder.setType(StandardModelManifest.POS);
+    ModelManifestBuilder builder = new StandardModelManifest.ModelManifestBuilder();
+    builder.setModelId(UUID.randomUUID().toString());
+    builder.setLanguageCode(LanguageCode.en);
+    builder.setModelFileName(POS_MODEL);
+    builder.setEncryptionKey("");
+    builder.setType(StandardModelManifest.POS);
 
-		StandardModelManifest modelManifest = builder.build();
+    StandardModelManifest modelManifest = builder.build();
 
-		final String text = "George Washington was president.";
+    final String text = "George Washington was president.";
 
-		Tokenizer tokenizer = Mockito.mock(Tokenizer.class);
-		when(tokenizer.tokenize(text)).thenReturn(new String[]{"George", "Washington", "was", "president"});
+    Tokenizer tokenizer = Mockito.mock(Tokenizer.class);
+    when(tokenizer.tokenize(text)).thenReturn(new String[]{"George", "Washington", "was", "president"});
 
-		String[] sentence = new String[]{"George Washington was president."};
+    String[] sentence = new String[]{"George Washington was president."};
 
-		DefaultPartsOfSpeechTagger tagger = new DefaultPartsOfSpeechTagger(MODEL_PATH, modelManifest, modelValidator);
-		List<PartsOfSpeechToken> partsOfSpeechTokens = tagger.tag(sentence, tokenizer);
+    DefaultPartsOfSpeechTagger tagger = new DefaultPartsOfSpeechTagger(MODEL_PATH, modelManifest, modelValidator);
+    List<PartsOfSpeechToken> partsOfSpeechTokens = tagger.tag(sentence, tokenizer);
 
-		for(PartsOfSpeechToken token : partsOfSpeechTokens) {
+    for(PartsOfSpeechToken token : partsOfSpeechTokens) {
 
-			LOGGER.info(token.getToken() + " : " + token.getPos());
+      LOGGER.info(token.getToken() + " : " + token.getPos());
 
-		}
+    }
 
-	}
+  }
 
-	@Test
-	public void tag3() throws ValidationException, ModelLoaderException {
+  @Test
+  public void tag3() throws ValidationException, ModelLoaderException {
 
-		ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
+    ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
 
-		when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
+    when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
 
-		ModelManifestBuilder builder = new StandardModelManifest.ModelManifestBuilder();
-		builder.setModelId(UUID.randomUUID().toString());
-		builder.setLanguageCode(LanguageCode.en);
-		builder.setModelFileName(POS_MODEL);
-		builder.setEncryptionKey("");
-		builder.setType(StandardModelManifest.POS);
+    ModelManifestBuilder builder = new StandardModelManifest.ModelManifestBuilder();
+    builder.setModelId(UUID.randomUUID().toString());
+    builder.setLanguageCode(LanguageCode.en);
+    builder.setModelFileName(POS_MODEL);
+    builder.setEncryptionKey("");
+    builder.setType(StandardModelManifest.POS);
 
-		StandardModelManifest modelManifest = builder.build();
+    StandardModelManifest modelManifest = builder.build();
 
-		String[] tokens = new String[]{"George", "Washington", "was", "president"};
+    String[] tokens = new String[]{"George", "Washington", "was", "president"};
 
-		DefaultPartsOfSpeechTagger tagger = new DefaultPartsOfSpeechTagger(MODEL_PATH, modelManifest, modelValidator);
-		List<PartsOfSpeechToken> partsOfSpeechTokens = tagger.tag(tokens);
+    DefaultPartsOfSpeechTagger tagger = new DefaultPartsOfSpeechTagger(MODEL_PATH, modelManifest, modelValidator);
+    List<PartsOfSpeechToken> partsOfSpeechTokens = tagger.tag(tokens);
 
-		for(PartsOfSpeechToken token : partsOfSpeechTokens) {
+    for(PartsOfSpeechToken token : partsOfSpeechTokens) {
 
-			LOGGER.info(token.getToken() + " : " + token.getPos());
+      LOGGER.info(token.getToken() + " : " + token.getPos());
 
-		}
+    }
 
-	}
+  }
 
 }

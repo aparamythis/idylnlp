@@ -38,57 +38,57 @@ import opennlp.tools.sentdetect.SentenceModel;
  */
 public class ModelSentenceDetector implements SentenceDetector {
 
-	private static final Logger LOGGER = LogManager.getLogger(ModelSentenceDetector.class);
+  private static final Logger LOGGER = LogManager.getLogger(ModelSentenceDetector.class);
 
-	private SentenceDetectorME sentenceDetector;
-	private LanguageCode languageCode;
+  private SentenceDetectorME sentenceDetector;
+  private LanguageCode languageCode;
 
-	/**
-	 * Creates a new sentence detector.
-	 * @param modelLoader A {@link SentenceDetectorModelLoader}.
-	 * @throws SentenceDetectionException Thrown if the model cannot be loaded or read.
-	 */
-	public ModelSentenceDetector(SentenceDetectorModelLoader modelLoader) throws ModelLoaderException {
+  /**
+   * Creates a new sentence detector.
+   * @param modelLoader A {@link SentenceDetectorModelLoader}.
+   * @throws SentenceDetectionException Thrown if the model cannot be loaded or read.
+   */
+  public ModelSentenceDetector(SentenceDetectorModelLoader modelLoader) throws ModelLoaderException {
 
-		LOGGER.debug("Using sentence model directory: " + modelLoader.getModelDirectory());
-		LOGGER.debug("Using sentence model file: " + modelLoader.getModelManifest().getModelFileName());
+    LOGGER.debug("Using sentence model directory: " + modelLoader.getModelDirectory());
+    LOGGER.debug("Using sentence model file: " + modelLoader.getModelManifest().getModelFileName());
 
-		// Load the model.
-		SentenceModel model = modelLoader.getModel(modelLoader.getModelManifest(), SentenceModel.class);
+    // Load the model.
+    SentenceModel model = modelLoader.getModel(modelLoader.getModelManifest(), SentenceModel.class);
 
-		this.sentenceDetector = new SentenceDetectorME(model);
-		this.languageCode = modelLoader.getModelManifest().getLanguageCode();
+    this.sentenceDetector = new SentenceDetectorME(model);
+    this.languageCode = modelLoader.getModelManifest().getLanguageCode();
 
-	}
+  }
 
-	public ModelSentenceDetector(SentenceModel sentenceModel, LanguageCode languageCode) throws ModelLoaderException {
+  public ModelSentenceDetector(SentenceModel sentenceModel, LanguageCode languageCode) throws ModelLoaderException {
 
-		this.sentenceDetector = new SentenceDetectorME(sentenceModel);
-		this.languageCode = languageCode;
+    this.sentenceDetector = new SentenceDetectorME(sentenceModel);
+    this.languageCode = languageCode;
 
-	}
+  }
 
-	@Override
-	public List<String> getLanguageCodes() {
-		return Arrays.asList(languageCode.getAlpha3().toString());
-	}
+  @Override
+  public List<String> getLanguageCodes() {
+    return Arrays.asList(languageCode.getAlpha3().toString());
+  }
 
-	@Override
-	public Span[] sentPosDetect(String text) {
+  @Override
+  public Span[] sentPosDetect(String text) {
 
-		opennlp.tools.util.Span[] sentenceSpans = sentenceDetector.sentPosDetect(text);
+    opennlp.tools.util.Span[] sentenceSpans = sentenceDetector.sentPosDetect(text);
 
-		return SpansToSpans.toSpans(sentenceSpans);
+    return SpansToSpans.toSpans(sentenceSpans);
 
-	}
+  }
 
-	@Override
-	public String[] sentDetect(String text) {
+  @Override
+  public String[] sentDetect(String text) {
 
-		String[] sentences = sentenceDetector.sentDetect(text);
+    String[] sentences = sentenceDetector.sentDetect(text);
 
-		return sentences;
+    return sentences;
 
-	}
+  }
 
 }

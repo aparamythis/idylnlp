@@ -41,118 +41,118 @@ import ai.idylnlp.training.definition.xml.Trainingdefinition;
  */
 public class TrainingDefinitionFileReader implements TrainingDefinitionReader {
 
-	private static final Logger LOGGER = LogManager.getLogger(TrainingDefinitionFileReader.class);
+  private static final Logger LOGGER = LogManager.getLogger(TrainingDefinitionFileReader.class);
 
-	private Trainingdefinition trainingDefinition;
-	private File file;
+  private Trainingdefinition trainingDefinition;
+  private File file;
 
-	/**
-	 * Creates a new training definition file reader.
-	 * @param file The {@link File file} containing the training definition.
-	 * @throws TrainingDefinitionException Thrown if the training definition file cannot be parsed.
-	 */
-	public TrainingDefinitionFileReader(File file) throws TrainingDefinitionException {
+  /**
+   * Creates a new training definition file reader.
+   * @param file The {@link File file} containing the training definition.
+   * @throws TrainingDefinitionException Thrown if the training definition file cannot be parsed.
+   */
+  public TrainingDefinitionFileReader(File file) throws TrainingDefinitionException {
 
-		this.file = file;
+    this.file = file;
 
-		try {
+    try {
 
-			JAXBContext jaxbContext = JAXBContext.newInstance(Trainingdefinition.class);
+      JAXBContext jaxbContext = JAXBContext.newInstance(Trainingdefinition.class);
 
-			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-			trainingDefinition = (Trainingdefinition) jaxbUnmarshaller.unmarshal(file);
+      Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+      trainingDefinition = (Trainingdefinition) jaxbUnmarshaller.unmarshal(file);
 
-		} catch (Exception ex) {
+    } catch (Exception ex) {
 
-			throw new TrainingDefinitionException("Invalid training definition file.", ex);
+      throw new TrainingDefinitionException("Invalid training definition file.", ex);
 
-		}
+    }
 
-	}
+  }
 
-	@Override
-	public TrainingDefinitionValidationResult validate() {
+  @Override
+  public TrainingDefinitionValidationResult validate() {
 
-		List<String> messages = new LinkedList<String>();
-		boolean valid = true;
+    List<String> messages = new LinkedList<String>();
+    boolean valid = true;
 
-		if(StringUtils.isEmpty(trainingDefinition.getModel().getFile())) {
-			valid = false;
-			messages.add("The training definition is missing the output model's file name.");
-		}
+    if(StringUtils.isEmpty(trainingDefinition.getModel().getFile())) {
+      valid = false;
+      messages.add("The training definition is missing the output model's file name.");
+    }
 
-		if(StringUtils.isEmpty(trainingDefinition.getModel().getLanguage())) {
-			valid = false;
-			messages.add("The training definition is missing the model's language.");
-		}
+    if(StringUtils.isEmpty(trainingDefinition.getModel().getLanguage())) {
+      valid = false;
+      messages.add("The training definition is missing the model's language.");
+    }
 
-		if(StringUtils.isEmpty(trainingDefinition.getModel().getType())) {
-			valid = false;
-			messages.add("The training definition is missing the model's entity type.");
-		}
+    if(StringUtils.isEmpty(trainingDefinition.getModel().getType())) {
+      valid = false;
+      messages.add("The training definition is missing the model's entity type.");
+    }
 
-		if(trainingDefinition.getTrainingdata().getFormat().equalsIgnoreCase("idyl")) {
+    if(trainingDefinition.getTrainingdata().getFormat().equalsIgnoreCase("idyl")) {
 
-			if(StringUtils.isEmpty(trainingDefinition.getTrainingdata().getAnnotations())) {
+      if(StringUtils.isEmpty(trainingDefinition.getTrainingdata().getAnnotations())) {
 
-				valid = false;
-				messages.add("The training definition is missing an annotations file name.");
+        valid = false;
+        messages.add("The training definition is missing an annotations file name.");
 
-			} else {
+      } else {
 
-				// TODO: Verify that the file exists.
-				File file = new File(trainingDefinition.getTrainingdata().getAnnotations());
+        // TODO: Verify that the file exists.
+        File file = new File(trainingDefinition.getTrainingdata().getAnnotations());
 
-				if(!file.exists()) {
+        if(!file.exists()) {
 
-					valid = false;
-					messages.add("The training definition file does not exist.");
+          valid = false;
+          messages.add("The training definition file does not exist.");
 
-				}
+        }
 
-			}
+      }
 
-		} else {
+    } else {
 
-			// Any value other than "idyl" will default to "opennlp".
+      // Any value other than "idyl" will default to "opennlp".
 
-		}
+    }
 
-		return new TrainingDefinitionValidationResult(valid, messages);
+    return new TrainingDefinitionValidationResult(valid, messages);
 
-	}
+  }
 
-	@Override
-	public String getFeatures() {
+  @Override
+  public String getFeatures() {
 
-		String features = null;
+    String features = null;
 
-		try {
+    try {
 
-			final String xml = FileUtils.readFileToString(file);
+      final String xml = FileUtils.readFileToString(file);
 
-			if(xml.contains("<features>")) {
+      if(xml.contains("<features>")) {
 
-				int start = xml.indexOf("<features>") + 10;
-				int end = xml.indexOf("</features>");
+        int start = xml.indexOf("<features>") + 10;
+        int end = xml.indexOf("</features>");
 
-				return xml.substring(start, end);
+        return xml.substring(start, end);
 
-			}
+      }
 
-		} catch (Exception ex) {
+    } catch (Exception ex) {
 
-			LOGGER.error("Unable to extract feature generators from training definition file. This will cause a default set of feature generators to be used which may not be ideal.", ex);
+      LOGGER.error("Unable to extract feature generators from training definition file. This will cause a default set of feature generators to be used which may not be ideal.", ex);
 
-		}
+    }
 
-		return features;
+    return features;
 
-	}
+  }
 
-	@Override
-	public Trainingdefinition getTrainingDefinition() {
-		return trainingDefinition;
-	}
+  @Override
+  public Trainingdefinition getTrainingDefinition() {
+    return trainingDefinition;
+  }
 
 }

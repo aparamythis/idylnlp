@@ -35,26 +35,26 @@ import ai.idylnlp.nlp.documents.opennlp.OpenNLPDocumentModelOperations;
 
 public class OpenNLPDocumentModelOperationsTest {
 
-	private static final Logger LOGGER = LogManager.getLogger(OpenNLPDocumentModelOperationsTest.class);
+  private static final Logger LOGGER = LogManager.getLogger(OpenNLPDocumentModelOperationsTest.class);
 
-	private static final String RESOURCES = new File("src/test/resources/").getAbsolutePath();
+  private static final String RESOURCES = new File("src/test/resources/").getAbsolutePath();
 
-	@Test
-	public void train() throws DocumentModelTrainingException {
+  @Test
+  public void train() throws DocumentModelTrainingException {
 
-		OpenNLPDocumentModelOperations ops = new OpenNLPDocumentModelOperations();
+    OpenNLPDocumentModelOperations ops = new OpenNLPDocumentModelOperations();
 
-		File trainingFile = new File(RESOURCES + "/training.txt");
+    File trainingFile = new File(RESOURCES + "/training.txt");
 
-		OpenNLPDocumentClassifierTrainingRequest request = new OpenNLPDocumentClassifierTrainingRequest(trainingFile, LanguageCode.en);
+    OpenNLPDocumentClassifierTrainingRequest request = new OpenNLPDocumentClassifierTrainingRequest(trainingFile, LanguageCode.en);
 
-		DocumentClassificationTrainingResponse response = ops.train(request);
+    DocumentClassificationTrainingResponse response = ops.train(request);
 
-		assertNotNull(response.getModelId());
-		assertNotNull(response.getFiles());
-		assertFalse(response.getFiles().isEmpty());
-		assertTrue(response.getFiles().containsKey(DocumentClassificationFile.MODEL_FILE));
+    assertNotNull(response.getModelId());
+    assertNotNull(response.getFiles());
+    assertFalse(response.getFiles().isEmpty());
+    assertTrue(response.getFiles().containsKey(DocumentClassificationFile.MODEL_FILE));
 
-	}
+  }
 
 }

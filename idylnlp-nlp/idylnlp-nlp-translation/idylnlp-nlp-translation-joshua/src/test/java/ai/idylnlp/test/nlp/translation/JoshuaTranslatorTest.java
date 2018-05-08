@@ -33,20 +33,20 @@ import ai.idylnlp.testing.markers.HighMemoryUsage;
 
 public class JoshuaTranslatorTest {
 
-	private static final Logger LOGGER = LogManager.getLogger(JoshuaTranslatorTest.class);
+  private static final Logger LOGGER = LogManager.getLogger(JoshuaTranslatorTest.class);
 
-	private static final String TRAINING_DATA_PATH = System.getProperty("testDataPath");
+  private static final String TRAINING_DATA_PATH = System.getProperty("testDataPath");
 
-	@Ignore
-	@Category({ExternalData.class, HighMemoryUsage.class})
-	@Test
-	public void translate() throws IOException {
+  @Ignore
+  @Category({ExternalData.class, HighMemoryUsage.class})
+  @Test
+  public void translate() throws IOException {
 
-		JoshuaTranslator translator = new JoshuaTranslator(TRAINING_DATA_PATH + "/apache-joshua-en-de-2017-01-31/");
-		LanguageTranslationResponse response = translator.translate(new LanguageTranslationRequest("birthday"));
+    JoshuaTranslator translator = new JoshuaTranslator(TRAINING_DATA_PATH + "/apache-joshua-en-de-2017-01-31/");
+    LanguageTranslationResponse response = translator.translate(new LanguageTranslationRequest("birthday"));
 
-		assertEquals("geburtstag", response.getTranslated());
+    assertEquals("geburtstag", response.getTranslated());
 
-	}
+  }
 
 }

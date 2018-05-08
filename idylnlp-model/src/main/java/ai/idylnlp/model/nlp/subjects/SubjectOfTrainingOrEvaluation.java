@@ -23,16 +23,16 @@ package ai.idylnlp.model.nlp.subjects;
  */
 public abstract class SubjectOfTrainingOrEvaluation {
 
-	private String inputFile;
+  private String inputFile;
 
-	public SubjectOfTrainingOrEvaluation(String inputFile) {
+  public SubjectOfTrainingOrEvaluation(String inputFile) {
 
-		this.inputFile = inputFile;
+    this.inputFile = inputFile;
 
-	}
+  }
 
-	public String getInputFile() {
-		return inputFile;
-	}
+  public String getInputFile() {
+    return inputFile;
+  }
 
 }

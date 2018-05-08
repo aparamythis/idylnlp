@@ -18,24 +18,24 @@ package ai.idylnlp.model.nlp.annotation;
 
 public enum AnnotationTypes {
 
-	BRAT("brat"),
-	CONLL2003("conll2003"),
-	OPENNLP("opennlp"),
-	IDYLNLP("idylnlp");
+  BRAT("brat"),
+  CONLL2003("conll2003"),
+  OPENNLP("opennlp"),
+  IDYLNLP("idylnlp");
 
-	private String name;
+  private String name;
 
-	private AnnotationTypes(String name) {
-		this.name = name;
-	}
+  private AnnotationTypes(String name) {
+    this.name = name;
+  }
 
-	public String getName() {
-		return name;
-	}
+  public String getName() {
+    return name;
+  }
 
-	@Override
-	public String toString() {
-		return name;
-	}
+  @Override
+  public String toString() {
+    return name;
+  }
 
 }

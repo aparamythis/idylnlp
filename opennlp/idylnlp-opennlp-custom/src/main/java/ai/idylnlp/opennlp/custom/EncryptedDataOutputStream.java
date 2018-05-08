@@ -10,27 +10,27 @@ import ai.idylnlp.opennlp.custom.encryption.OpenNLPEncryptionFactory;
 
 public class EncryptedDataOutputStream extends DataOutputStream {
 
-	public EncryptedDataOutputStream(OutputStream out) {
+  public EncryptedDataOutputStream(OutputStream out) {
 
-		super(out);
+    super(out);
 
-	}
+  }
 
-	public void writeEncryptedUTF(String s) throws IOException {
+  public void writeEncryptedUTF(String s) throws IOException {
 
-		if(StringUtils.isNotEmpty(OpenNLPEncryptionFactory.getDefault().getKey())) {
+    if(StringUtils.isNotEmpty(OpenNLPEncryptionFactory.getDefault().getKey())) {
 
-			try {
-				// Encrypt the input.
-				s = OpenNLPEncryptionFactory.getDefault().encrypt(s);
-			} catch (Exception ex) {
-				throw new RuntimeException("Unable to write encrypted model.", ex);
-			}
+      try {
+        // Encrypt the input.
+        s = OpenNLPEncryptionFactory.getDefault().encrypt(s);
+      } catch (Exception ex) {
+        throw new RuntimeException("Unable to write encrypted model.", ex);
+      }
 
-		}
+    }
 
-		writeUTF(s);
+    writeUTF(s);
 
-	}
+  }
 
 }

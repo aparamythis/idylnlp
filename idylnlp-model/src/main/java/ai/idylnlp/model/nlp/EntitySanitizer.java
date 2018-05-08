@@ -22,6 +22,6 @@ import ai.idylnlp.model.entity.Entity;
 @FunctionalInterface
 public interface EntitySanitizer {
 
-	public Set<Entity> sanitizeEntities(Set<Entity> entities);
+  public Set<Entity> sanitizeEntities(Set<Entity> entities);
 
 }

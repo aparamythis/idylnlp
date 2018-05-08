@@ -19,28 +19,28 @@ import java.util.List;
 
 public class TrainingDefinitionValidationResult {
 
-	private boolean valid;
-	private List<String> messages;
+  private boolean valid;
+  private List<String> messages;
 
-	public TrainingDefinitionValidationResult() {
+  public TrainingDefinitionValidationResult() {
 
-		this.valid = true;
+    this.valid = true;
 
-	}
+  }
 
-	public TrainingDefinitionValidationResult(boolean valid, List<String> messages) {
+  public TrainingDefinitionValidationResult(boolean valid, List<String> messages) {
 
-		this.valid = valid;
-		this.messages = messages;
+    this.valid = valid;
+    this.messages = messages;
 
-	}
+  }
 
-	public boolean isValid() {
-		return valid;
-	}
+  public boolean isValid() {
+    return valid;
+  }
 
-	public List<String> getMessages() {
-		return messages;
-	}
+  public List<String> getMessages() {
+    return messages;
+  }
 
 }

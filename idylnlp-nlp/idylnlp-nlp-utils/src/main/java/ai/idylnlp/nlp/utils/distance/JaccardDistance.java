@@ -25,17 +25,17 @@ import ai.idylnlp.model.nlp.strings.Distance;
  */
 public class JaccardDistance implements Distance {
 
-	public static Distance INSTANCE() {
-		return new JaccardDistance();
-	}
+  public static Distance INSTANCE() {
+    return new JaccardDistance();
+  }
 
-	@Override
-	public double calculate(CharSequence s, CharSequence t) {
+  @Override
+  public double calculate(CharSequence s, CharSequence t) {
 
-		org.apache.commons.text.similarity.JaccardDistance distance = new org.apache.commons.text.similarity.JaccardDistance();
+    org.apache.commons.text.similarity.JaccardDistance distance = new org.apache.commons.text.similarity.JaccardDistance();
 
-		return distance.apply(s, t);
+    return distance.apply(s, t);
 
-	}
+  }
 
 }

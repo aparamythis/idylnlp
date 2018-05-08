@@ -33,54 +33,54 @@ import ai.idylnlp.model.nlp.ner.EntityRecognizer;
 
 public class PhoneNumberEntityRecognizer implements EntityRecognizer {
 
-	private static final Logger LOGGER = LogManager.getLogger(PhoneNumberEntityRecognizer.class);
+  private static final Logger LOGGER = LogManager.getLogger(PhoneNumberEntityRecognizer.class);
 
-	private static final String ENTITY_TYPE = "phone";
+  private static final String ENTITY_TYPE = "phone";
 
-	@Override
-	public EntityExtractionResponse extractEntities(EntityExtractionRequest request) {
+  @Override
+  public EntityExtractionResponse extractEntities(EntityExtractionRequest request) {
 
-		LOGGER.trace("Finding entities with the phone number entity recognizer.");
+    LOGGER.trace("Finding entities with the phone number entity recognizer.");
 
-		Set<Entity> entities = new LinkedHashSet<>();
+    Set<Entity> entities = new LinkedHashSet<>();
 
-		Set<String> regions = PhoneNumberUtil.getInstance().getSupportedRegions();
+    Set<String> regions = PhoneNumberUtil.getInstance().getSupportedRegions();
 
-		long startTime = System.currentTimeMillis();
+    long startTime = System.currentTimeMillis();
 
-		final String text = StringUtils.join(request.getText(), " ");
+    final String text = StringUtils.join(request.getText(), " ");
 
-		for(String region : regions) {
+    for(String region : regions) {
 
-			Iterable<PhoneNumberMatch> iterable = PhoneNumberUtil.getInstance().findNumbers(text, region);
-			List<PhoneNumberMatch> numbers = IteratorUtils.toList(iterable.iterator());
+      Iterable<PhoneNumberMatch> iterable = PhoneNumberUtil.getInstance().findNumbers(text, region);
+      List<PhoneNumberMatch> numbers = IteratorUtils.toList(iterable.iterator());
 
-			for(PhoneNumberMatch phoneNumberMatch : numbers) {
+      for(PhoneNumberMatch phoneNumberMatch : numbers) {
 
-				String phoneNumber = String.valueOf(phoneNumberMatch.number().getNationalNumber());
+        String phoneNumber = String.valueOf(phoneNumberMatch.number().getNationalNumber());
 
-				Entity entity = new Entity();
-				entity.setText(phoneNumber);
-				entity.setType(ENTITY_TYPE);
-				entity.setConfidence(100.0);
-				entity.setContext(request.getContext());
-				entity.setExtractionDate(System.currentTimeMillis());
+        Entity entity = new Entity();
+        entity.setText(phoneNumber);
+        entity.setType(ENTITY_TYPE);
+        entity.setConfidence(100.0);
+        entity.setContext(request.getContext());
+        entity.setExtractionDate(System.currentTimeMillis());
 
-				// TODO: Set the token-based span correctly.
-				entity.setSpan(new ai.idylnlp.model.entity.Span(0, 0));
+        // TODO: Set the token-based span correctly.
+        entity.setSpan(new ai.idylnlp.model.entity.Span(0, 0));
 
-				entities.add(entity);
+        entities.add(entity);
 
-			}
+      }
 
-		}
+    }
 
-		long extractionTime = (System.currentTimeMillis() - startTime);
+    long extractionTime = (System.currentTimeMillis() - startTime);
 
-		EntityExtractionResponse response = new EntityExtractionResponse(entities, extractionTime, true);
+    EntityExtractionResponse response = new EntityExtractionResponse(entities, extractionTime, true);
 
-		return response;
+    return response;
 
-	}
+  }
 
 }

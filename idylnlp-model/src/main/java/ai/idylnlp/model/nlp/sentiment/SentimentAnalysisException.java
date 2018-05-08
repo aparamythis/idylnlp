@@ -17,10 +17,10 @@ package ai.idylnlp.model.nlp.sentiment;
 
 public class SentimentAnalysisException extends Exception {
 
-	private static final long serialVersionUID = 2601902299898556318L;
+  private static final long serialVersionUID = 2601902299898556318L;
 
-	public SentimentAnalysisException(String message, Exception ex) {
-		super(message, ex);
-	}
+  public SentimentAnalysisException(String message, Exception ex) {
+    super(message, ex);
+  }
 
 }

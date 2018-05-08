@@ -57,176 +57,176 @@ import opennlp.tools.util.TrainingParameters;
  */
 public class LemmatizerModelOperations implements ModelTrainingOperations, ModelSeparateDataValidationOperations<AccuracyEvaluationResult> {
 
-	private static final Logger LOGGER = LogManager.getLogger(LemmatizerModelOperations.class);
+  private static final Logger LOGGER = LogManager.getLogger(LemmatizerModelOperations.class);
 
-	/**
-	 * Performs sentence model training using a training definition file.
-	 * @param reader A {@link TrainingDefinitionReader}.
-	 * @return The generated model's ID.
-	 * @throws IOException Thrown if the model creation fails.
-	 */
-	public static String train(TrainingDefinitionReader reader) throws IOException {
+  /**
+   * Performs sentence model training using a training definition file.
+   * @param reader A {@link TrainingDefinitionReader}.
+   * @return The generated model's ID.
+   * @throws IOException Thrown if the model creation fails.
+   */
+  public static String train(TrainingDefinitionReader reader) throws IOException {
 
-		final LemmatizerModelOperations ops = new LemmatizerModelOperations();
+    final LemmatizerModelOperations ops = new LemmatizerModelOperations();
 
-		final SubjectOfTrainingOrEvaluation subjectOfTraining = ModelOperationsUtils.getSubjectOfTrainingOrEvaluation(reader);
+    final SubjectOfTrainingOrEvaluation subjectOfTraining = ModelOperationsUtils.getSubjectOfTrainingOrEvaluation(reader);
 
-		final String modelFile = reader.getTrainingDefinition().getModel().getFile();
-		final String language = reader.getTrainingDefinition().getModel().getLanguage();
-		final String encryptionKey = reader.getTrainingDefinition().getModel().getEncryptionkey();
-		final int cutOff = reader.getTrainingDefinition().getAlgorithm().getCutoff().intValue();
-		final int iterations = reader.getTrainingDefinition().getAlgorithm().getIterations().intValue();
-		final int threads = reader.getTrainingDefinition().getAlgorithm().getThreads().intValue();
-		final String algorithm = reader.getTrainingDefinition().getAlgorithm().getName();
+    final String modelFile = reader.getTrainingDefinition().getModel().getFile();
+    final String language = reader.getTrainingDefinition().getModel().getLanguage();
+    final String encryptionKey = reader.getTrainingDefinition().getModel().getEncryptionkey();
+    final int cutOff = reader.getTrainingDefinition().getAlgorithm().getCutoff().intValue();
+    final int iterations = reader.getTrainingDefinition().getAlgorithm().getIterations().intValue();
+    final int threads = reader.getTrainingDefinition().getAlgorithm().getThreads().intValue();
+    final String algorithm = reader.getTrainingDefinition().getAlgorithm().getName();
 
-		final LanguageCode languageCode = LanguageCode.getByCodeIgnoreCase(language);
+    final LanguageCode languageCode = LanguageCode.getByCodeIgnoreCase(language);
 
-		if(algorithm.equalsIgnoreCase(TrainingAlgorithm.PERCEPTRON.getName())) {
+    if(algorithm.equalsIgnoreCase(TrainingAlgorithm.PERCEPTRON.getName())) {
 
-			return ops.trainPerceptron(subjectOfTraining, modelFile, languageCode, encryptionKey, cutOff, iterations);
+      return ops.trainPerceptron(subjectOfTraining, modelFile, languageCode, encryptionKey, cutOff, iterations);
 
-		} else if(algorithm.equalsIgnoreCase(TrainingAlgorithm.MAXENT_QN.getName())) {
+    } else if(algorithm.equalsIgnoreCase(TrainingAlgorithm.MAXENT_QN.getName())) {
 
-			final double l1 = reader.getTrainingDefinition().getAlgorithm().getL1().doubleValue();
-			final double l2 = reader.getTrainingDefinition().getAlgorithm().getL2().doubleValue();
-			int m = reader.getTrainingDefinition().getAlgorithm().getM().intValue();
-			int max = reader.getTrainingDefinition().getAlgorithm().getMax().intValue();
+      final double l1 = reader.getTrainingDefinition().getAlgorithm().getL1().doubleValue();
+      final double l2 = reader.getTrainingDefinition().getAlgorithm().getL2().doubleValue();
+      int m = reader.getTrainingDefinition().getAlgorithm().getM().intValue();
+      int max = reader.getTrainingDefinition().getAlgorithm().getMax().intValue();
 
-			return ops.trainMaxEntQN(subjectOfTraining, modelFile, languageCode, encryptionKey, cutOff, iterations, threads, l1, l2, m, max);
+      return ops.trainMaxEntQN(subjectOfTraining, modelFile, languageCode, encryptionKey, cutOff, iterations, threads, l1, l2, m, max);
 
-		} else {
+    } else {
 
-			throw new IOException("Invalid algorithm specified in the training definition file: " + algorithm);
+      throw new IOException("Invalid algorithm specified in the training definition file: " + algorithm);
 
-		}
+    }
 
-	}
+  }
 
-	@Override
-	public AccuracyEvaluationResult separateDataEvaluate(SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluation, String modelFileName, String encryptionKey) throws IOException {
+  @Override
+  public AccuracyEvaluationResult separateDataEvaluate(SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluation, String modelFileName, String encryptionKey) throws IOException {
 
-		LOGGER.info("Doing model evaluation using separate training data.");
+    LOGGER.info("Doing model evaluation using separate training data.");
 
-		// Set the encryption key.
-		OpenNLPEncryptionFactory.getDefault().setKey(encryptionKey);
+    // Set the encryption key.
+    OpenNLPEncryptionFactory.getDefault().setKey(encryptionKey);
 
-		InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File(SubjectOfTrainingOrEvaluation.getInputFile()));
-		ObjectStream<LemmaSample> sample = new LemmaSampleStream(new PlainTextByLineStream(inputStreamFactory, Constants.ENCODING_UTF8));
+    InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File(SubjectOfTrainingOrEvaluation.getInputFile()));
+    ObjectStream<LemmaSample> sample = new LemmaSampleStream(new PlainTextByLineStream(inputStreamFactory, Constants.ENCODING_UTF8));
 
-		LemmatizerModel model = new LemmatizerModel(new File(SubjectOfTrainingOrEvaluation.getInputFile()));
-		LemmatizerME posTaggerME = new LemmatizerME(model);
+    LemmatizerModel model = new LemmatizerModel(new File(SubjectOfTrainingOrEvaluation.getInputFile()));
+    LemmatizerME posTaggerME = new LemmatizerME(model);
 
-		LemmatizerEvaluationMonitor monitor = new LemmatizerFineGrainedReportListener();
+    LemmatizerEvaluationMonitor monitor = new LemmatizerFineGrainedReportListener();
 
-		LemmatizerEvaluator evaluator = new LemmatizerEvaluator(posTaggerME, monitor);
+    LemmatizerEvaluator evaluator = new LemmatizerEvaluator(posTaggerME, monitor);
 
-		evaluator.evaluate(sample);
+    evaluator.evaluate(sample);
 
-		// Clear the encryption key.
-		OpenNLPEncryptionFactory.getDefault().clearKey();
+    // Clear the encryption key.
+    OpenNLPEncryptionFactory.getDefault().clearKey();
 
-		return new AccuracyEvaluationResult(evaluator.getWordAccuracy(), evaluator.getWordCount());
+    return new AccuracyEvaluationResult(evaluator.getWordAccuracy(), evaluator.getWordCount());
 
-	}
+  }
 
-	@Override
-	public String trainMaxEntQN(SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluation, String modelFile, LanguageCode language, String encryptionKey, int cutOff, int iterations, int threads, double l1, double l2, int m, int max) throws IOException {
+  @Override
+  public String trainMaxEntQN(SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluation, String modelFile, LanguageCode language, String encryptionKey, int cutOff, int iterations, int threads, double l1, double l2, int m, int max) throws IOException {
 
-		LOGGER.info("Beginning tokenizer model training. Output model will be: " + modelFile);
+    LOGGER.info("Beginning tokenizer model training. Output model will be: " + modelFile);
 
-		InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File(SubjectOfTrainingOrEvaluation.getInputFile()));
-		ObjectStream<String> lineStream = new PlainTextByLineStream(inputStreamFactory, Constants.ENCODING_UTF8);
-		ObjectStream<LemmaSample> sampleStream = new LemmaSampleStream(lineStream);
+    InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File(SubjectOfTrainingOrEvaluation.getInputFile()));
+    ObjectStream<String> lineStream = new PlainTextByLineStream(inputStreamFactory, Constants.ENCODING_UTF8);
+    ObjectStream<LemmaSample> sampleStream = new LemmaSampleStream(lineStream);
 
-		TrainingParameters trainParams = new TrainingParameters();
-		trainParams.put(TrainingParameters.CUTOFF_PARAM, Integer.toString(cutOff));
-		trainParams.put(TrainingParameters.ITERATIONS_PARAM, Integer.toString(iterations));
-		trainParams.put(TrainingParameters.ALGORITHM_PARAM, TrainingAlgorithm.MAXENT_QN.getAlgorithm());
-		trainParams.put(TrainingParameters.THREADS_PARAM, Integer.toString(threads));
+    TrainingParameters trainParams = new TrainingParameters();
+    trainParams.put(TrainingParameters.CUTOFF_PARAM, Integer.toString(cutOff));
+    trainParams.put(TrainingParameters.ITERATIONS_PARAM, Integer.toString(iterations));
+    trainParams.put(TrainingParameters.ALGORITHM_PARAM, TrainingAlgorithm.MAXENT_QN.getAlgorithm());
+    trainParams.put(TrainingParameters.THREADS_PARAM, Integer.toString(threads));
 
-		trainParams.put(QNTrainer.L1COST_PARAM, String.valueOf(l1));
-		trainParams.put(QNTrainer.L2COST_PARAM, String.valueOf(l2));
-		trainParams.put(QNTrainer.M_PARAM, String.valueOf(m));
-		trainParams.put(QNTrainer.MAX_FCT_EVAL_PARAM, String.valueOf(max));
+    trainParams.put(QNTrainer.L1COST_PARAM, String.valueOf(l1));
+    trainParams.put(QNTrainer.L2COST_PARAM, String.valueOf(l2));
+    trainParams.put(QNTrainer.M_PARAM, String.valueOf(m));
+    trainParams.put(QNTrainer.MAX_FCT_EVAL_PARAM, String.valueOf(max));
 
-		LemmatizerFactory lemmatizerFactory = new LemmatizerFactory();
+    LemmatizerFactory lemmatizerFactory = new LemmatizerFactory();
 
-		// Set the encryption key.
-		OpenNLPEncryptionFactory.getDefault().setKey(encryptionKey);
+    // Set the encryption key.
+    OpenNLPEncryptionFactory.getDefault().setKey(encryptionKey);
 
-		LemmatizerModel model = LemmatizerME.train(language.getAlpha3().toString(), sampleStream, trainParams, lemmatizerFactory);
+    LemmatizerModel model = LemmatizerME.train(language.getAlpha3().toString(), sampleStream, trainParams, lemmatizerFactory);
 
-		BufferedOutputStream modelOut = null;
+    BufferedOutputStream modelOut = null;
 
-		String modelId = "";
+    String modelId = "";
 
-		try {
+    try {
 
-			modelOut = new BufferedOutputStream(new FileOutputStream(modelFile));
-			modelId = model.serialize(modelOut);
+      modelOut = new BufferedOutputStream(new FileOutputStream(modelFile));
+      modelId = model.serialize(modelOut);
 
-		} finally {
+    } finally {
 
-			if (modelOut != null) {
-				modelOut.close();
-			}
+      if (modelOut != null) {
+        modelOut.close();
+      }
 
-			lineStream.close();
+      lineStream.close();
 
-			// Clear the encryption key.
-			OpenNLPEncryptionFactory.getDefault().clearKey();
+      // Clear the encryption key.
+      OpenNLPEncryptionFactory.getDefault().clearKey();
 
-		}
+    }
 
-		return modelId;
+    return modelId;
 
-	}
+  }
 
-	@Override
-	public String trainPerceptron(SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluation, String modelFile, LanguageCode language, String encryptionKey, int cutOff, int iterations) throws IOException {
+  @Override
+  public String trainPerceptron(SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluation, String modelFile, LanguageCode language, String encryptionKey, int cutOff, int iterations) throws IOException {
 
-		LOGGER.info("Beginning tokenizer model training. Output model will be: " + modelFile);
+    LOGGER.info("Beginning tokenizer model training. Output model will be: " + modelFile);
 
-		InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File(SubjectOfTrainingOrEvaluation.getInputFile()));
-		ObjectStream<String> lineStream = new PlainTextByLineStream(inputStreamFactory, Constants.ENCODING_UTF8);
-		ObjectStream<LemmaSample> sampleStream = new LemmaSampleStream(lineStream);
+    InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File(SubjectOfTrainingOrEvaluation.getInputFile()));
+    ObjectStream<String> lineStream = new PlainTextByLineStream(inputStreamFactory, Constants.ENCODING_UTF8);
+    ObjectStream<LemmaSample> sampleStream = new LemmaSampleStream(lineStream);
 
-		TrainingParameters trainParams = new TrainingParameters();
-		trainParams.put(TrainingParameters.CUTOFF_PARAM, Integer.toString(cutOff));
-		trainParams.put(TrainingParameters.ITERATIONS_PARAM, Integer.toString(iterations));
-		trainParams.put(TrainingParameters.ALGORITHM_PARAM, TrainingAlgorithm.PERCEPTRON.getAlgorithm());
+    TrainingParameters trainParams = new TrainingParameters();
+    trainParams.put(TrainingParameters.CUTOFF_PARAM, Integer.toString(cutOff));
+    trainParams.put(TrainingParameters.ITERATIONS_PARAM, Integer.toString(iterations));
+    trainParams.put(TrainingParameters.ALGORITHM_PARAM, TrainingAlgorithm.PERCEPTRON.getAlgorithm());
 
-		LemmatizerFactory lemmatizerFactory = new LemmatizerFactory();
+    LemmatizerFactory lemmatizerFactory = new LemmatizerFactory();
 
-		// Set the encryption key.
-		OpenNLPEncryptionFactory.getDefault().setKey(encryptionKey);
+    // Set the encryption key.
+    OpenNLPEncryptionFactory.getDefault().setKey(encryptionKey);
 
-		LemmatizerModel model = LemmatizerME.train(language.getAlpha3().toString(), sampleStream, trainParams, lemmatizerFactory);
+    LemmatizerModel model = LemmatizerME.train(language.getAlpha3().toString(), sampleStream, trainParams, lemmatizerFactory);
 
-		BufferedOutputStream modelOut = null;
+    BufferedOutputStream modelOut = null;
 
-		String modelId = "";
+    String modelId = "";
 
-		try {
+    try {
 
-			modelOut = new BufferedOutputStream(new FileOutputStream(modelFile));
-			modelId = model.serialize(modelOut);
+      modelOut = new BufferedOutputStream(new FileOutputStream(modelFile));
+      modelId = model.serialize(modelOut);
 
-		} finally {
+    } finally {
 
-			if (modelOut != null) {
-				modelOut.close();
-			}
+      if (modelOut != null) {
+        modelOut.close();
+      }
 
-			lineStream.close();
+      lineStream.close();
 
-			// Clear the encryption key.
-			OpenNLPEncryptionFactory.getDefault().clearKey();
+      // Clear the encryption key.
+      OpenNLPEncryptionFactory.getDefault().clearKey();
 
-		}
+    }
 
-		return modelId;
+    return modelId;
 
-	}
+  }
 
 }

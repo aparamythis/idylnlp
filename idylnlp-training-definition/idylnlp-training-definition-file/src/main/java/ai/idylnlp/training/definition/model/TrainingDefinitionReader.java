@@ -25,22 +25,22 @@ import ai.idylnlp.training.definition.xml.Trainingdefinition;
  */
 public interface TrainingDefinitionReader {
 
-	/**
-	 * Validates the training definition.
-	 * @return A {@link TrainingDefinitionValidationResult}.
-	 */
-	public TrainingDefinitionValidationResult validate();
+  /**
+   * Validates the training definition.
+   * @return A {@link TrainingDefinitionValidationResult}.
+   */
+  public TrainingDefinitionValidationResult validate();
 
-	/**
-	 * Gets the feature generators from the training definition file.
-	 * @return The feature generators.
-	 */
-	public String getFeatures();
+  /**
+   * Gets the feature generators from the training definition file.
+   * @return The feature generators.
+   */
+  public String getFeatures();
 
-	/**
-	 * Gets the feature generators.
-	 * @return The XML describing the feature generators.
-	 */
-	public Trainingdefinition getTrainingDefinition();
+  /**
+   * Gets the feature generators.
+   * @return The XML describing the feature generators.
+   */
+  public Trainingdefinition getTrainingDefinition();
 
 }

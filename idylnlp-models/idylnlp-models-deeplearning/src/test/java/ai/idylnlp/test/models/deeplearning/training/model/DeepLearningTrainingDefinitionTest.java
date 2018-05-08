@@ -43,83 +43,83 @@ import ai.idylnlp.testing.markers.ExternalData;
 
 public class DeepLearningTrainingDefinitionTest {
 
-	private static final String TRAINING_DATA_PATH = System.getProperty("testDataPath");
+  private static final String TRAINING_DATA_PATH = System.getProperty("testDataPath");
 
-	@Category(ExternalData.class)
-	@Test
-	public void serialize() throws IOException {
+  @Category(ExternalData.class)
+  @Test
+  public void serialize() throws IOException {
 
-		DeepLearningEntityModelOperations ops = new DeepLearningEntityModelOperations();
+    DeepLearningEntityModelOperations ops = new DeepLearningEntityModelOperations();
 
-		DeepLearningTrainingDefinition definition = getDefinition();
-		final String json = ops.getGson().toJson(definition);
+    DeepLearningTrainingDefinition definition = getDefinition();
+    final String json = ops.getGson().toJson(definition);
 
-		DeepLearningTrainingDefinition deserialized = ops.getGson().fromJson(json, DeepLearningTrainingDefinition.class);
+    DeepLearningTrainingDefinition deserialized = ops.getGson().fromJson(json, DeepLearningTrainingDefinition.class);
 
-		assertEquals(definition, deserialized);
+    assertEquals(definition, deserialized);
 
-	}
+  }
 
-	private DeepLearningTrainingDefinition getDefinition() throws IOException {
+  private DeepLearningTrainingDefinition getDefinition() throws IOException {
 
-		UpdaterParameters updaterParameters = new UpdaterParameters();
-		updaterParameters.setUpdater("rmsprop");
+    UpdaterParameters updaterParameters = new UpdaterParameters();
+    updaterParameters.setUpdater("rmsprop");
 
-		RegularizationParameters regularizationParameters = new RegularizationParameters();
-		regularizationParameters.setRegularization(true);
-		regularizationParameters.setL2(1e-5);
+    RegularizationParameters regularizationParameters = new RegularizationParameters();
+    regularizationParameters.setRegularization(true);
+    regularizationParameters.setL2(1e-5);
 
-		Map<String, Double> learningRateSchedule = new HashMap<String, Double>();
-		learningRateSchedule.put("0", 0.01);
-		learningRateSchedule.put("1000", 0.005);
-		learningRateSchedule.put("2000", 0.001);
-		learningRateSchedule.put("3000", 0.0001);
-		learningRateSchedule.put("4000", 0.00001);
+    Map<String, Double> learningRateSchedule = new HashMap<String, Double>();
+    learningRateSchedule.put("0", 0.01);
+    learningRateSchedule.put("1000", 0.005);
+    learningRateSchedule.put("2000", 0.001);
+    learningRateSchedule.put("3000", 0.0001);
+    learningRateSchedule.put("4000", 0.00001);
 
-		Layer layer1 = new Layer();
-		layer1.setLearningRate(0.00001);
-		layer1.setLearningRateSchedule(learningRateSchedule);
+    Layer layer1 = new Layer();
+    layer1.setLearningRate(0.00001);
+    layer1.setLearningRateSchedule(learningRateSchedule);
 
-		Layer layer2 = new Layer();
-		layer2.setLearningRate(0.00001);
-		layer2.setLearningRateSchedule(learningRateSchedule);
+    Layer layer2 = new Layer();
+    layer2.setLearningRate(0.00001);
+    layer2.setLearningRateSchedule(learningRateSchedule);
 
-		Layers layers = new Layers(layer1, layer2);
+    Layers layers = new Layers(layer1, layer2);
 
-		NetworkConfigurationParameters networkConfigurationParameters = new NetworkConfigurationParameters();
-		networkConfigurationParameters.setOptimizationAlgorithm("stochastic_gradient_descent");
-		networkConfigurationParameters.setGradientNormalization("clipelementwiseabsolutevalue");
-		networkConfigurationParameters.setGradientNormalizationThreshold(1.0);
-		networkConfigurationParameters.setUpdaterParameters(updaterParameters);
-		networkConfigurationParameters.setRegularizationParameters(regularizationParameters);
-		networkConfigurationParameters.setLayers(layers);
-		networkConfigurationParameters.setPretrain(false);
-		networkConfigurationParameters.setBackprop(true);
-		networkConfigurationParameters.setWeightInit("xavier");
+    NetworkConfigurationParameters networkConfigurationParameters = new NetworkConfigurationParameters();
+    networkConfigurationParameters.setOptimizationAlgorithm("stochastic_gradient_descent");
+    networkConfigurationParameters.setGradientNormalization("clipelementwiseabsolutevalue");
+    networkConfigurationParameters.setGradientNormalizationThreshold(1.0);
+    networkConfigurationParameters.setUpdaterParameters(updaterParameters);
+    networkConfigurationParameters.setRegularizationParameters(regularizationParameters);
+    networkConfigurationParameters.setLayers(layers);
+    networkConfigurationParameters.setPretrain(false);
+    networkConfigurationParameters.setBackprop(true);
+    networkConfigurationParameters.setWeightInit("xavier");
 
-		HyperParameters hyperParameters = new HyperParameters();
-		hyperParameters.setEpochs(1);
-		hyperParameters.setWindowSize(5);
-		hyperParameters.setSeed(1497630814976308L);
-		hyperParameters.setBatchSize(32);
-		hyperParameters.setNetworkConfigurationParameters(networkConfigurationParameters);
+    HyperParameters hyperParameters = new HyperParameters();
+    hyperParameters.setEpochs(1);
+    hyperParameters.setWindowSize(5);
+    hyperParameters.setSeed(1497630814976308L);
+    hyperParameters.setBatchSize(32);
+    hyperParameters.setNetworkConfigurationParameters(networkConfigurationParameters);
 
-		Monitoring monitoring = new Monitoring();
-		monitoring.setScoreIteration(100);
+    Monitoring monitoring = new Monitoring();
+    monitoring.setScoreIteration(100);
 
-		String wordVectorsFile = TRAINING_DATA_PATH + "/reuters-vectors.txt";
+    String wordVectorsFile = TRAINING_DATA_PATH + "/reuters-vectors.txt";
 
-		DeepLearningTrainingDefinition definition = new DeepLearningTrainingDefinition();
-		definition.setTrainingData(new TrainingData(AnnotationTypes.CONLL2003.getName(), TRAINING_DATA_PATH + "/conll2003-eng.train", wordVectorsFile));
-		definition.setEvaluationData(new EvaluationData(AnnotationTypes.CONLL2003.getName(), TRAINING_DATA_PATH + "/conll2003-eng.testa"));
-		definition.setOutput(new Output(File.createTempFile("multilayernetwork", ".zip").getAbsolutePath(), "/tmp/stats.dl4j"));
-		definition.setEarlyTermination(new EarlyTermination(20, 180));
-		definition.setEntityType("person");
-		definition.setHyperParameters(hyperParameters);
-		definition.setMonitoring(monitoring);
+    DeepLearningTrainingDefinition definition = new DeepLearningTrainingDefinition();
+    definition.setTrainingData(new TrainingData(AnnotationTypes.CONLL2003.getName(), TRAINING_DATA_PATH + "/conll2003-eng.train", wordVectorsFile));
+    definition.setEvaluationData(new EvaluationData(AnnotationTypes.CONLL2003.getName(), TRAINING_DATA_PATH + "/conll2003-eng.testa"));
+    definition.setOutput(new Output(File.createTempFile("multilayernetwork", ".zip").getAbsolutePath(), "/tmp/stats.dl4j"));
+    definition.setEarlyTermination(new EarlyTermination(20, 180));
+    definition.setEntityType("person");
+    definition.setHyperParameters(hyperParameters);
+    definition.setMonitoring(monitoring);
 
-		return definition;
+    return definition;
 
-	}
+  }
 
 }

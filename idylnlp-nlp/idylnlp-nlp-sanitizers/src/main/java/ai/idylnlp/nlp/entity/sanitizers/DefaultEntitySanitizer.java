@@ -22,31 +22,31 @@ import ai.idylnlp.model.nlp.EntitySanitizer;
 
 public class DefaultEntitySanitizer implements EntitySanitizer {
 
-	/**
-	 * Sanitize the entities by removing punctuation and other attributes.
-	 *
-	 * @param entities A collection of {@link Entity} objects.
-	 * @return A collection of sanitized {@link Entity} objects. This collection
-	 * will be equal in size to the input collection.
-	 */
-	@Override
-	public Set<Entity> sanitizeEntities(Set<Entity> entities) {
+  /**
+   * Sanitize the entities by removing punctuation and other attributes.
+   *
+   * @param entities A collection of {@link Entity} objects.
+   * @return A collection of sanitized {@link Entity} objects. This collection
+   * will be equal in size to the input collection.
+   */
+  @Override
+  public Set<Entity> sanitizeEntities(Set<Entity> entities) {
 
-		for(Entity entity : entities) {
+    for(Entity entity : entities) {
 
-			if(entity.getText().endsWith(",") || entity.getText().endsWith(".")) {
+      if(entity.getText().endsWith(",") || entity.getText().endsWith(".")) {
 
-				entity.setText(entity.getText().substring(0, entity.getText().length() - 1));
+        entity.setText(entity.getText().substring(0, entity.getText().length() - 1));
 
-			}
+      }
 
-			// Replace all punctuation.
-			entity.setText(entity.getText().replaceAll("\\p{P}", ""));
+      // Replace all punctuation.
+      entity.setText(entity.getText().replaceAll("\\p{P}", ""));
 
-		}
+    }
 
-		return entities;
+    return entities;
 
-	}
+  }
 
 }

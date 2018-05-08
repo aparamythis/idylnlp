@@ -19,12 +19,12 @@ import ai.idylnlp.model.exceptions.ValidationException;
 
 public interface ModelValidator {
 
-	/**
-	 * Performs version verification to ensure that the an external object
-	 * is compatible with this version.
-	 * @param creatorVersion The creator version of the object.
-	 * @return <code>true</code> if validation is successful.
-	 */
-	public boolean validateVersion(String creatorVersion) throws ValidationException;
+  /**
+   * Performs version verification to ensure that the an external object
+   * is compatible with this version.
+   * @param creatorVersion The creator version of the object.
+   * @return <code>true</code> if validation is successful.
+   */
+  public boolean validateVersion(String creatorVersion) throws ValidationException;
 
 }

@@ -23,44 +23,44 @@ import com.google.gson.annotations.SerializedName;
 
 public class TrainingData {
 
-	@SerializedName("Format")
-	@Expose
-	private String format;
+  @SerializedName("Format")
+  @Expose
+  private String format;
 
-	@SerializedName("InputFile")
-	@Expose
-	private String inputFile;
+  @SerializedName("InputFile")
+  @Expose
+  private String inputFile;
 
-	@SerializedName("AnnotationsFile")
-	@Expose
-	private String annotationsFile;
+  @SerializedName("AnnotationsFile")
+  @Expose
+  private String annotationsFile;
 
-	@SerializedName("WordVectorsFile")
-	@Expose
-	private String wordVectorsFile;
+  @SerializedName("WordVectorsFile")
+  @Expose
+  private String wordVectorsFile;
 
-	public TrainingData() {
+  public TrainingData() {
 
-	}
+  }
 
-	public TrainingData(String format, String inputFile, String wordVectorsFile) {
+  public TrainingData(String format, String inputFile, String wordVectorsFile) {
 
-		this.format = format;
-		this.inputFile = inputFile;
-		this.wordVectorsFile = wordVectorsFile;
+    this.format = format;
+    this.inputFile = inputFile;
+    this.wordVectorsFile = wordVectorsFile;
 
-	}
+  }
 
-	public TrainingData(String format, String inputFile, String annotationsFile, String wordVectorsFile) {
+  public TrainingData(String format, String inputFile, String annotationsFile, String wordVectorsFile) {
 
-		this.format = format;
-		this.inputFile = inputFile;
-		this.annotationsFile = annotationsFile;
-		this.wordVectorsFile = wordVectorsFile;
+    this.format = format;
+    this.inputFile = inputFile;
+    this.annotationsFile = annotationsFile;
+    this.wordVectorsFile = wordVectorsFile;
 
-	}
+  }
 
-	@Override
+  @Override
     public boolean equals(Object o) {
       return EqualsBuilder.reflectionEquals(this, o);
     }
@@ -70,36 +70,36 @@ public class TrainingData {
         return HashCodeBuilder.reflectionHashCode(this);
     }
 
-	public String getFormat() {
-		return format;
-	}
+  public String getFormat() {
+    return format;
+  }
 
-	public void setFormat(String format) {
-		this.format = format;
-	}
+  public void setFormat(String format) {
+    this.format = format;
+  }
 
-	public String getInputFile() {
-		return inputFile;
-	}
+  public String getInputFile() {
+    return inputFile;
+  }
 
-	public void setInputFile(String inputFile) {
-		this.inputFile = inputFile;
-	}
+  public void setInputFile(String inputFile) {
+    this.inputFile = inputFile;
+  }
 
-	public String getAnnotationsFile() {
-		return annotationsFile;
-	}
+  public String getAnnotationsFile() {
+    return annotationsFile;
+  }
 
-	public void setAnnotationsFile(String annotationsFile) {
-		this.annotationsFile = annotationsFile;
-	}
+  public void setAnnotationsFile(String annotationsFile) {
+    this.annotationsFile = annotationsFile;
+  }
 
-	public String getWordVectorsFile() {
-		return wordVectorsFile;
-	}
+  public String getWordVectorsFile() {
+    return wordVectorsFile;
+  }
 
-	public void setWordVectorsFile(String wordVectorsFile) {
-		this.wordVectorsFile = wordVectorsFile;
-	}
+  public void setWordVectorsFile(String wordVectorsFile) {
+    this.wordVectorsFile = wordVectorsFile;
+  }
 
 }

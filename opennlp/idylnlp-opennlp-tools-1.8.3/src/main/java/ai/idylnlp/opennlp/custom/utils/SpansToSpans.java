@@ -29,27 +29,27 @@ import opennlp.tools.util.Span;
  */
 public class SpansToSpans {
 
-	private SpansToSpans() {
+  private SpansToSpans() {
 
-	}
+  }
 
-	/**
-	 * Converts an array of OpenNLP Spans to Idyl SDK Spans.
-	 * @param spans An array of OpenNLP Spans.
-	 * @return An array of Idyl SDK Spans.
-	 */
-	public static ai.idylnlp.model.nlp.Span[] toSpans(Span[] spans) {
+  /**
+   * Converts an array of OpenNLP Spans to Idyl SDK Spans.
+   * @param spans An array of OpenNLP Spans.
+   * @return An array of Idyl SDK Spans.
+   */
+  public static ai.idylnlp.model.nlp.Span[] toSpans(Span[] spans) {
 
-		List<ai.idylnlp.model.nlp.Span> s = new LinkedList<ai.idylnlp.model.nlp.Span>();
+    List<ai.idylnlp.model.nlp.Span> s = new LinkedList<ai.idylnlp.model.nlp.Span>();
 
-		for(opennlp.tools.util.Span span : spans) {
+    for(opennlp.tools.util.Span span : spans) {
 
-			s.add(new ai.idylnlp.model.nlp.Span(span.getStart(), span.getEnd(), span.getType(), span.getProb()));
+      s.add(new ai.idylnlp.model.nlp.Span(span.getStart(), span.getEnd(), span.getType(), span.getProb()));
 
-		}
+    }
 
-		return s.toArray(new ai.idylnlp.model.nlp.Span[s.size()]);
+    return s.toArray(new ai.idylnlp.model.nlp.Span[s.size()]);
 
-	}
+  }
 
 }

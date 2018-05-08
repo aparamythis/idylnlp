@@ -41,68 +41,68 @@ import ai.idylnlp.model.nlp.annotation.IdylNLPAnnotation;
  */
 public class IdylNLPFileAnnotationReader implements AnnotationReader {
 
-	private static final Logger LOGGER = LogManager.getLogger(IdylNLPFileAnnotationReader.class);
+  private static final Logger LOGGER = LogManager.getLogger(IdylNLPFileAnnotationReader.class);
 
-	private Map<Integer, Collection<IdylNLPAnnotation>> annotations;
+  private Map<Integer, Collection<IdylNLPAnnotation>> annotations;
 
-	public IdylNLPFileAnnotationReader(String fileName) throws IOException {
+  public IdylNLPFileAnnotationReader(String fileName) throws IOException {
 
-		annotations = new HashMap<Integer, Collection<IdylNLPAnnotation>>();
+    annotations = new HashMap<Integer, Collection<IdylNLPAnnotation>>();
 
-		File file = new File(fileName);
+    File file = new File(fileName);
 
-		List<String> lines = FileUtils.readLines(file);
+    List<String> lines = FileUtils.readLines(file);
 
-		for(String line : lines) {
+    for(String line : lines) {
 
-			if(!line.startsWith("#") && !StringUtils.isEmpty(line)) {
+      if(!line.startsWith("#") && !StringUtils.isEmpty(line)) {
 
-				String[] annotation = line.split(" ");
+        String[] annotation = line.split(" ");
 
-				int lineNumber = Integer.parseInt(annotation[0]);
+        int lineNumber = Integer.parseInt(annotation[0]);
 
-				IdylNLPAnnotation a = new IdylNLPAnnotation();
-				a.setLineNumber(lineNumber);
-				a.setTokenStart(Integer.parseInt(annotation[1]));
-				a.setTokenEnd(Integer.parseInt(annotation[2]));
-				a.setType(annotation[3]);
+        IdylNLPAnnotation a = new IdylNLPAnnotation();
+        a.setLineNumber(lineNumber);
+        a.setTokenStart(Integer.parseInt(annotation[1]));
+        a.setTokenEnd(Integer.parseInt(annotation[2]));
+        a.setType(annotation[3]);
 
-				Collection<IdylNLPAnnotation> m = annotations.get(lineNumber);
+        Collection<IdylNLPAnnotation> m = annotations.get(lineNumber);
 
-				if(m == null) {
-					m = new LinkedList<IdylNLPAnnotation>();
-					annotations.put(lineNumber, m);
-				}
+        if(m == null) {
+          m = new LinkedList<IdylNLPAnnotation>();
+          annotations.put(lineNumber, m);
+        }
 
-				m.add(a);
+        m.add(a);
 
-			}
+      }
 
-		}
+    }
 
-		for(Integer i : annotations.keySet()) {
+    for(Integer i : annotations.keySet()) {
 
-			for(IdylNLPAnnotation annotation : annotations.get(i)) {
+      for(IdylNLPAnnotation annotation : annotations.get(i)) {
 
-				LOGGER.debug("{}\t{}", i, annotation.toString());
+        LOGGER.debug("{}\t{}", i, annotation.toString());
 
-			}
+      }
 
-		}
+    }
 
-	}
+  }
 
-	@Override
-	public Collection<IdylNLPAnnotation> getAnnotations(int lineNumber) {
+  @Override
+  public Collection<IdylNLPAnnotation> getAnnotations(int lineNumber) {
 
-		Collection<IdylNLPAnnotation> a = annotations.get(lineNumber);
+    Collection<IdylNLPAnnotation> a = annotations.get(lineNumber);
 
-		if(a != null) {
-			return a;
-		} else {
-			return Collections.emptyList();
-		}
+    if(a != null) {
+      return a;
+    } else {
+      return Collections.emptyList();
+    }
 
-	}
+  }
 
 }

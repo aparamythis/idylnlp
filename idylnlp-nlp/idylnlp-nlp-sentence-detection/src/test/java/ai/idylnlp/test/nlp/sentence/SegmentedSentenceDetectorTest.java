@@ -30,20 +30,20 @@ import ai.idylnlp.nlp.sentence.SegmentedSentenceDetector;
 
 public class SegmentedSentenceDetectorTest {
 
-	private static final String MODEL_PATH = new File("src/test/resources/").getAbsolutePath();
-	private static final String SRX_FILE = MODEL_PATH + File.separator + "example.srx";
+  private static final String MODEL_PATH = new File("src/test/resources/").getAbsolutePath();
+  private static final String SRX_FILE = MODEL_PATH + File.separator + "example.srx";
 
-	@Test
-	public void segment1() throws IOException {
+  @Test
+  public void segment1() throws IOException {
 
-		final String srx = FileUtils.readFileToString(new File(SRX_FILE));
+    final String srx = FileUtils.readFileToString(new File(SRX_FILE));
 
-		SegmentedSentenceDetector detector = new SegmentedSentenceDetector(srx, LanguageCode.en);
-		String[] sentences = detector.sentDetect("This is the first sentence. This is the second sentence.");
+    SegmentedSentenceDetector detector = new SegmentedSentenceDetector(srx, LanguageCode.en);
+    String[] sentences = detector.sentDetect("This is the first sentence. This is the second sentence.");
 
-		assertTrue(Arrays.asList(sentences).contains("This is the first sentence."));
-		assertTrue(Arrays.asList(sentences).contains("This is the second sentence."));
+    assertTrue(Arrays.asList(sentences).contains("This is the first sentence."));
+    assertTrue(Arrays.asList(sentences).contains("This is the second sentence."));
 
-	}
+  }
 
 }

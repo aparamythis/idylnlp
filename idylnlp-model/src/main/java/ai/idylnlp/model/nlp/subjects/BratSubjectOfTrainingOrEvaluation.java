@@ -17,10 +17,10 @@ package ai.idylnlp.model.nlp.subjects;
 
 public class BratSubjectOfTrainingOrEvaluation extends SubjectOfTrainingOrEvaluation {
 
-	public BratSubjectOfTrainingOrEvaluation(String inputFile) {
+  public BratSubjectOfTrainingOrEvaluation(String inputFile) {
 
-		super(inputFile);
+    super(inputFile);
 
-	}
+  }
 
 }

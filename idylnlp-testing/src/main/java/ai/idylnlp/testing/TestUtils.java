@@ -19,45 +19,45 @@ import java.io.File;
 
 public class TestUtils {
 
-	/**
-	 * Gets the absolute path to the test resources.
-	 * @return The absolute path to the <code>src/test/resources</code> directory.
-	 */
-	public static String getTestResourcesAbsolutePath() {
+  /**
+   * Gets the absolute path to the test resources.
+   * @return The absolute path to the <code>src/test/resources</code> directory.
+   */
+  public static String getTestResourcesAbsolutePath() {
 
-		return new File("src/test/resources/").getAbsolutePath();
+    return new File("src/test/resources/").getAbsolutePath();
 
-	}
+  }
 
-	/**
-	 * Returns <code>true</code> if running on Windows.
-	 * @return <code>True</code> if running on Windows.
-	 */
-	public static boolean isWindows() {
+  /**
+   * Returns <code>true</code> if running on Windows.
+   * @return <code>True</code> if running on Windows.
+   */
+  public static boolean isWindows() {
 
-		return System.getProperty("os.name").toLowerCase().startsWith("win");
+    return System.getProperty("os.name").toLowerCase().startsWith("win");
 
-	}
+  }
 
-	/**
-	 * Returns a value based on the operating system.
-	 * @param linuxValue The value to return when on Linux.
-	 * @param windowsValue The value to return when on Windows.
-	 * @return The <code>linuxValue</code> when on Linux and the <code>windowsValue</code>
-	 * when on Windows.
-	 */
-	public static String setOsDependentValue(String linuxValue, String windowsValue) {
+  /**
+   * Returns a value based on the operating system.
+   * @param linuxValue The value to return when on Linux.
+   * @param windowsValue The value to return when on Windows.
+   * @return The <code>linuxValue</code> when on Linux and the <code>windowsValue</code>
+   * when on Windows.
+   */
+  public static String setOsDependentValue(String linuxValue, String windowsValue) {
 
-		if(isWindows()) {
+    if(isWindows()) {
 
-			return windowsValue;
+      return windowsValue;
 
-		} else {
+    } else {
 
-			return linuxValue;
+      return linuxValue;
 
-		}
+    }
 
-	}
+  }
 
 }

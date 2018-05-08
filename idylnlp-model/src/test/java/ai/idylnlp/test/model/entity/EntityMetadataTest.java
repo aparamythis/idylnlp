@@ -25,14 +25,14 @@ import ai.idylnlp.model.entity.EntityMetadata;
 
 public class EntityMetadataTest {
 
-	@Test
-	public void toMap() {
+  @Test
+  public void toMap() {
 
-		Map<String, String> m = EntityMetadata.toMap(null);
+    Map<String, String> m = EntityMetadata.toMap(null);
 
-		assertNotNull(m);
-		assertTrue(m.isEmpty());
+    assertNotNull(m);
+    assertTrue(m.isEmpty());
 
-	}
+  }
 
 }
