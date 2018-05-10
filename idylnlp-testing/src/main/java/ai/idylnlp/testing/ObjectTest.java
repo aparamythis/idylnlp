@@ -35,6 +35,8 @@ public abstract class ObjectTest<T extends Object> {
         .forClass(getTestedClass())
         .suppress(Warning.NONFINAL_FIELDS)
         .suppress(Warning.INHERITED_DIRECTLY_FROM_OBJECT)
+        // TODO: Remove this line.
+        .suppress(Warning.ALL_FIELDS_SHOULD_BE_USED)
         .verify();
   }
 

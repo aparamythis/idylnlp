@@ -17,22 +17,19 @@ package ai.idylnlp.test.nlp.pos;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
-
 import java.io.File;
 import java.util.List;
 import java.util.UUID;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 import org.mockito.Mockito;
-
 import ai.idylnlp.opennlp.custom.nlp.pos.DefaultPartsOfSpeechTagger;
 import com.neovisionaries.i18n.LanguageCode;
-
 import ai.idylnlp.model.ModelValidator;
 import ai.idylnlp.model.exceptions.ModelLoaderException;
 import ai.idylnlp.model.exceptions.ValidationException;
+import ai.idylnlp.model.manifest.ModelManifest;
 import ai.idylnlp.model.manifest.StandardModelManifest;
 import ai.idylnlp.model.manifest.StandardModelManifest.ModelManifestBuilder;
 import ai.idylnlp.model.nlp.SentenceDetector;
@@ -51,7 +48,7 @@ public class DefaultPartsOfSpeechTaggerTest {
 
     ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
 
-    when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
+    when(modelValidator.validate(any(ModelManifest.class))).thenReturn(true);
 
     ModelManifestBuilder builder = new StandardModelManifest.ModelManifestBuilder();
     builder.setModelId(UUID.randomUUID().toString());
@@ -86,7 +83,7 @@ public class DefaultPartsOfSpeechTaggerTest {
 
     ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
 
-    when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
+    when(modelValidator.validate(any(ModelManifest.class))).thenReturn(true);
 
     ModelManifestBuilder builder = new StandardModelManifest.ModelManifestBuilder();
     builder.setModelId(UUID.randomUUID().toString());
@@ -120,7 +117,7 @@ public class DefaultPartsOfSpeechTaggerTest {
 
     ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
 
-    when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
+    when(modelValidator.validate(any(ModelManifest.class))).thenReturn(true);
 
     ModelManifestBuilder builder = new StandardModelManifest.ModelManifestBuilder();
     builder.setModelId(UUID.randomUUID().toString());

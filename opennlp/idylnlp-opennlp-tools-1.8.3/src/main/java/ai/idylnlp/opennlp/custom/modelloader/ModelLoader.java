@@ -13,11 +13,9 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-
 package ai.idylnlp.opennlp.custom.modelloader;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,7 +30,6 @@ import ai.idylnlp.model.manifest.StandardModelManifest;
 import ai.idylnlp.opennlp.custom.encryption.OpenNLPEncryptionFactory;
 import ai.idylnlp.opennlp.custom.model.DictionaryModel;
 import ai.idylnlp.zoo.IdylNLPModelZoo;
-import ai.idylnlp.zoo.ModelZooClient;
 import opennlp.tools.cmdline.namefind.TokenNameFinderModelLoader;
 import opennlp.tools.lemmatizer.LemmatizerModel;
 import opennlp.tools.namefind.TokenNameFinderModel;
@@ -218,14 +215,10 @@ public abstract class ModelLoader<T extends BaseModel> {
 
         if(modelValidator != null) {
 
-          // Validate the creator version of the model.
-          if(modelValidator.validateVersion(modelManifest.getCreatorVersion())) {
+          // Validate the model.
+          if(!modelValidator.validate(modelManifest)) {
 
-            LOGGER.info("Model validation successful.");
-
-          } else {
-
-            LOGGER.warn("Version verification failed. This model is not compatible with this version.");
+            LOGGER.warn("Version verification failed.");
 
             // Since version validation failed we will set the model to null.
             model = null;

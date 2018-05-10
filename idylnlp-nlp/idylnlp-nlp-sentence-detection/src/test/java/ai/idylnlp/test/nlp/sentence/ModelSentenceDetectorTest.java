@@ -18,20 +18,18 @@ package ai.idylnlp.test.nlp.sentence;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
-
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Properties;
 import java.util.UUID;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 import org.mockito.Mockito;
-
 import com.neovisionaries.i18n.LanguageCode;
-
 import ai.idylnlp.model.ModelValidator;
+import ai.idylnlp.model.manifest.ModelManifest;
 import ai.idylnlp.model.manifest.StandardModelManifest;
 import ai.idylnlp.model.nlp.SentenceDetector;
 import ai.idylnlp.nlp.sentence.ModelSentenceDetector;
@@ -45,11 +43,12 @@ public class ModelSentenceDetectorTest {
   public void testWithPeriod() throws Exception {
 
     ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
-    when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
+    when(modelValidator.validate(any(ModelManifest.class))).thenReturn(true);
 
     String sentenceModelPath = new File("src/test/resources/").getAbsolutePath();
 
-    StandardModelManifest modelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", "/en-sent.bin", LanguageCode.en, "", StandardModelManifest.SENTENCE, "", "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE).build();
+    StandardModelManifest modelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", "/en-sent.bin",
+        LanguageCode.en, "", StandardModelManifest.SENTENCE, "", "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
 
     SentenceDetectorModelLoader modelLoader = new SentenceDetectorModelLoader(modelValidator, sentenceModelPath, modelManifest);
 
@@ -67,7 +66,6 @@ public class ModelSentenceDetectorTest {
 
     assertTrue(sentences.contains("Bob Ross was a painter."));
     assertTrue(sentences.contains("Abraham Lincoln was President of the United States.blue"));
-    //assertTrue(sentences.contains("blue"));
 
   }
 
@@ -75,11 +73,12 @@ public class ModelSentenceDetectorTest {
   public void testSentence() throws Exception {
 
     ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
-    when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
+    when(modelValidator.validate(any(ModelManifest.class))).thenReturn(true);
 
     String sentenceModelPath = new File("src/test/resources/").getAbsolutePath();
 
-    StandardModelManifest modelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", "/en-sent.bin", LanguageCode.en, "", StandardModelManifest.SENTENCE, "", "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE).build();
+    StandardModelManifest modelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", "/en-sent.bin",
+        LanguageCode.en, "", StandardModelManifest.SENTENCE, "", "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
 
     SentenceDetectorModelLoader modelLoader = new SentenceDetectorModelLoader(modelValidator, sentenceModelPath, modelManifest);
 

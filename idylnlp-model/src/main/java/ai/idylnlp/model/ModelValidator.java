@@ -16,15 +16,19 @@
 package ai.idylnlp.model;
 
 import ai.idylnlp.model.exceptions.ValidationException;
+import ai.idylnlp.model.manifest.ModelManifest;
 
 public interface ModelValidator {
 
   /**
-   * Performs version verification to ensure that the an external object
-   * is compatible with this version.
-   * @param creatorVersion The creator version of the object.
+   * Validates the model against some logic. For example, you may want to validate the
+   * model's version against your current code for compatibility.
+   * @param manifest The {@link ModelManifest} for the model to validate.
    * @return <code>true</code> if validation is successful.
+   * @throws ValidationException Thrown if the validation cannot make a
+   * determination of valid or not. In this case the validation should
+   * likely be treated as failed.
    */
-  public boolean validateVersion(String creatorVersion) throws ValidationException;
-
+  boolean validate(ModelManifest manifest) throws ValidationException;
+  
 }

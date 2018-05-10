@@ -20,16 +20,14 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-
+import java.util.Properties;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-
 import com.neovisionaries.i18n.LanguageCode;
-
 import ai.idylnlp.model.manifest.DocumentModelManifest;
 import ai.idylnlp.model.nlp.documents.DeepLearningDocumentClassificationRequest;
 import ai.idylnlp.model.nlp.documents.DeepLearningDocumentClassifierTrainingRequest;
@@ -67,7 +65,7 @@ public class DeepLearningDocumentModelOperationsTest {
 
     DocumentModelManifest manifest = new DocumentModelManifest(response.getModelId(), modelFile.getAbsolutePath(),
         LanguageCode.en, "document", "name",
-        "1.0.0", "https://source/", Arrays.asList("pos", "neg"));
+        "1.0.0", "https://source/", Arrays.asList("pos", "neg"), new Properties());
 
     List<DocumentModelManifest> models = new LinkedList<>();
     models.add(manifest);

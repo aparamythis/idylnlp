@@ -17,24 +17,21 @@ package ai.idylnlp.test.models.deeplearning.training;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
+import java.util.Properties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
-
 import ai.idylnlp.model.entity.Entity;
-
 import com.neovisionaries.i18n.LanguageCode;
-
 import ai.idylnlp.model.ModelValidator;
+import ai.idylnlp.model.manifest.ModelManifest;
 import ai.idylnlp.model.manifest.ModelManifestUtils;
 import ai.idylnlp.model.manifest.SecondGenModelManifest;
 import ai.idylnlp.model.nlp.annotation.AnnotationTypes;
@@ -81,7 +78,7 @@ public class DeepLearningEntityModelOperationsTest {
     //  Generate a model manifest.
     SecondGenModelManifest manifest = new SecondGenModelManifest(modelId, definition.getOutput().getOutputFile(), LanguageCode.en,
         "person", "model", "2", definition.getTrainingData().getWordVectorsFile(),
-        definition.getHyperParameters().getWindowSize(), "", "");
+        definition.getHyperParameters().getWindowSize(), "", "", new Properties());
 
     File secondGenModelManifest = File.createTempFile("model", ".manifest");
     ModelManifestUtils.generateSecondGenModelManifest(secondGenModelManifest, manifest);
@@ -91,7 +88,7 @@ public class DeepLearningEntityModelOperationsTest {
 
     ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
 
-    when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
+    when(modelValidator.validate(any(ModelManifest.class))).thenReturn(true);
 
     DeepLearningEntityRecognizerConfiguration configuration = new  DeepLearningEntityRecognizerConfiguration.Builder().build(TRAINING_DATA_PATH);
 

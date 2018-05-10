@@ -17,24 +17,21 @@ package ai.idylnlp.test.nlp.recognizer;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
-
+import java.util.Properties;
 import java.util.UUID;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
-
 import ai.idylnlp.model.entity.Entity;
 import ai.idylnlp.model.ModelValidator;
+import ai.idylnlp.model.manifest.ModelManifest;
 import ai.idylnlp.model.manifest.SecondGenModelManifest;
 import ai.idylnlp.model.nlp.ner.EntityExtractionRequest;
 import ai.idylnlp.model.nlp.ner.EntityExtractionResponse;
-
 import com.neovisionaries.i18n.LanguageCode;
-
 import ai.idylnlp.nlp.recognizer.DeepLearningEntityRecognizer;
 import ai.idylnlp.nlp.recognizer.configuration.DeepLearningEntityRecognizerConfiguration;
 import ai.idylnlp.testing.markers.ExternalData;
@@ -58,9 +55,9 @@ public class DeepLearningEntityRecognizerTest {
 
     ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
 
-    when(modelValidator.validateVersion(any(String.class))).thenReturn(true);
+    when(modelValidator.validate(any(ModelManifest.class))).thenReturn(true);
 
-    SecondGenModelManifest manifest = new SecondGenModelManifest(UUID.randomUUID().toString(), NETWORK, LanguageCode.en, "person", "model", "2", VECTORS, 5, "", "");
+    SecondGenModelManifest manifest = new SecondGenModelManifest(UUID.randomUUID().toString(), NETWORK, LanguageCode.en, "person", "model", "2", VECTORS, 5, "", "", new Properties());
     LOGGER.info("Model file: " + manifest.getModelFileName());
 
     DeepLearningEntityRecognizerConfiguration configuration = new DeepLearningEntityRecognizerConfiguration.Builder()

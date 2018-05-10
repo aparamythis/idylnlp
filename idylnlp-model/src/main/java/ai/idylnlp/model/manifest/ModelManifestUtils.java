@@ -255,48 +255,48 @@ public class ModelManifestUtils {
 
     final InputStream inputStream = new FileInputStream(fullManifestPath);
     final Properties properties = new Properties();
-      properties.load(inputStream);
+    properties.load(inputStream);
 
-      // Get the model generation from the manifest.
-      int generation = Integer.valueOf(properties.getProperty(MANIFEST_GENERATION, String.valueOf(ModelManifest.FIRST_GENERATION)));
+    // Get the model generation from the manifest.
+    int generation = Integer.valueOf(properties.getProperty(MANIFEST_GENERATION, String.valueOf(ModelManifest.FIRST_GENERATION)));
 
-      // Get properties common to all generations.
-      String modelId = properties.getProperty(MANIFEST_MODEL_ID);
-      String name = properties.getProperty(MANIFEST_MODEL_NAME);
-      String modelFileName = properties.getProperty(MANIFEST_MODEL_FILENAME);
-      String languageCode = properties.getProperty(MANIFEST_LANGUAGE_CODE);
-      String modelType = properties.getProperty(MANIFEST_MODEL_TYPE);
-      String creatorVersion = properties.getProperty(MANIFEST_CREATOR_VERSION);
-      String source = properties.getProperty(MANIFEST_MODEL_SOURCE);
+    // Get properties common to all generations.
+    String modelId = properties.getProperty(MANIFEST_MODEL_ID);
+    String name = properties.getProperty(MANIFEST_MODEL_NAME);
+    String modelFileName = properties.getProperty(MANIFEST_MODEL_FILENAME);
+    String languageCode = properties.getProperty(MANIFEST_LANGUAGE_CODE);
+    String modelType = properties.getProperty(MANIFEST_MODEL_TYPE);
+    String creatorVersion = properties.getProperty(MANIFEST_CREATOR_VERSION);
+    String source = properties.getProperty(MANIFEST_MODEL_SOURCE);
 
-      // Validate the property values.
-      if(StringUtils.isEmpty(modelId)) {
-        LOGGER.warn("The model.id in {} is missing.", fullManifestPath);
-        return null;
-      }
-      if(StringUtils.isEmpty(modelType)) {
-        LOGGER.warn("The model.type in {} is missing.", fullManifestPath);
-        return null;
-      }
-      if(StringUtils.isEmpty(modelFileName)) {
-        LOGGER.warn("The model.filename in {} is missing.", fullManifestPath);
-        return null;
-      }
-      if(StringUtils.isEmpty(languageCode)) {
-        LOGGER.warn("The language.code in {} is missing.", fullManifestPath);
-        return null;
-      }
-      if(StringUtils.isEmpty(creatorVersion)) {
-        LOGGER.warn("The creator.version in {} is missing.", fullManifestPath);
-        // No reason to stop model loading here.
-      }
-      if(StringUtils.isEmpty(name)) {
-        // If there is no name just use the modelId as the name.
-        name = modelId;
-      }
+    // Validate the property values.
+    if(StringUtils.isEmpty(modelId)) {
+      LOGGER.warn("The model.id in {} is missing.", fullManifestPath);
+      return null;
+    }
+    if(StringUtils.isEmpty(modelType)) {
+      LOGGER.warn("The model.type in {} is missing.", fullManifestPath);
+      return null;
+    }
+    if(StringUtils.isEmpty(modelFileName)) {
+      LOGGER.warn("The model.filename in {} is missing.", fullManifestPath);
+      return null;
+    }
+    if(StringUtils.isEmpty(languageCode)) {
+      LOGGER.warn("The language.code in {} is missing.", fullManifestPath);
+      return null;
+    }
+    if(StringUtils.isEmpty(creatorVersion)) {
+      LOGGER.warn("The creator.version in {} is missing.", fullManifestPath);
+      // No reason to stop model loading here.
+    }
+    if(StringUtils.isEmpty(name)) {
+      // If there is no name just use the modelId as the name.
+      name = modelId;
+    }
 
-      // Get the LanguageCode for the language.
-     final LanguageCode code = LanguageCode.getByCodeIgnoreCase(languageCode);
+    // Get the LanguageCode for the language.
+    final LanguageCode code = LanguageCode.getByCodeIgnoreCase(languageCode);
 
       if(generation == ModelManifest.FIRST_GENERATION) {
 
@@ -320,7 +320,8 @@ public class ModelManifestUtils {
           return null;
         }
 
-        return new StandardModelManifest.ModelManifestBuilder(modelId, name, modelFileName, code, encryptionKey, modelType, modelSubtype, creatorVersion, source, beamSize).build();
+        return new StandardModelManifest.ModelManifestBuilder(modelId, name, modelFileName, code, encryptionKey, modelType,
+            modelSubtype, creatorVersion, source, beamSize, properties).build();
 
       } else if(generation == ModelManifest.SECOND_GENERATION) {
 
@@ -330,7 +331,7 @@ public class ModelManifestUtils {
           final String modelSubtype = properties.getProperty(MANIFEST_MODEL_SUBTYPE, StandardModelManifest.DEFAULT_SUBTYPE);
           final List<String> labels = Arrays.asList(modelSubtype.split(","));
 
-          return new DocumentModelManifest(modelId, modelFileName, code, modelType, name, creatorVersion, source, labels);
+          return new DocumentModelManifest(modelId, modelFileName, code, modelType, name, creatorVersion, source, labels, properties);
 
         } else {
 
@@ -347,7 +348,8 @@ public class ModelManifestUtils {
             return null;
           }
 
-          return new SecondGenModelManifest(modelId, modelFileName, code, modelType, name, creatorVersion, vectorsFile, windowSize, source, vectorsSource);
+          return new SecondGenModelManifest(modelId, modelFileName, code, modelType, name, creatorVersion, vectorsFile,
+              windowSize, source, vectorsSource, properties);
 
         }
 

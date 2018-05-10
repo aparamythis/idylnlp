@@ -16,7 +16,7 @@
 package ai.idylnlp.model.manifest;
 
 import java.util.List;
-
+import java.util.Properties;
 import com.neovisionaries.i18n.LanguageCode;
 
 public class DocumentModelManifest extends ModelManifest {
@@ -28,10 +28,11 @@ public class DocumentModelManifest extends ModelManifest {
   // TODO: Change to a builder pattern like StandardModelManifest.
 
   public DocumentModelManifest(String modelId, String modelFileName, LanguageCode languageCode,
-      String type, String name,
-      String creatorVersion, String source, List<String> labels) {
+      String type, String name, String creatorVersion, String source, List<String> labels,
+      Properties properties) {
 
-    super(modelId, modelFileName, languageCode, type, name, creatorVersion, source, ModelManifest.SECOND_GENERATION);
+    super(modelId, modelFileName, languageCode, type, name, creatorVersion, source,
+        ModelManifest.SECOND_GENERATION, properties);
 
     this.labels = labels;
 

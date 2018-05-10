@@ -54,7 +54,7 @@ import ai.idylnlp.nlp.sentence.BreakIteratorSentenceDetector;
 import ai.idylnlp.nlp.tokenizers.BreakIteratorTokenizer;
 import ai.idylnlp.opennlp.custom.modelloader.LocalModelLoader;
 import ai.idylnlp.opennlp.custom.modelloader.ModelLoader;
-import ai.idylnlp.opennlp.custom.validators.TrueValidator;
+import ai.idylnlp.opennlp.custom.validators.TrueModelValidator;
 import ai.idylnlp.zoo.IdylNLPModelZoo;
 import opennlp.tools.namefind.TokenNameFinderModel;
 
@@ -240,7 +240,7 @@ public class NerPipeline implements Pipeline<EntityExtractionResponse> {
         LOGGER.info("Using model directory {}", modelDirectory);
 
         // TODO: Let the validator be passed in.
-        final ModelValidator modelValidator = new TrueValidator();
+        final ModelValidator modelValidator = new TrueModelValidator();
 
         final ModelLoader<TokenNameFinderModel> modelLoader = new LocalModelLoader<TokenNameFinderModel>(modelValidator, modelDirectory);
         final List<ModelManifest> modelManifests = ModelManifestUtils.getModelManifests(modelDirectory);

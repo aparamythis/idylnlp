@@ -13,15 +13,23 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-
 package ai.idylnlp.opennlp.custom.validators;
 
 import ai.idylnlp.model.ModelValidator;
+import ai.idylnlp.model.exceptions.ValidationException;
+import ai.idylnlp.model.manifest.ModelManifest;
 
-public class TrueValidator implements ModelValidator {
+/**
+ * A model validator that always returns true. Useful for testing or
+ * when no validation is needed.
+ * 
+ * @author Mountain Fog, Inc.
+ *
+ */
+public class TrueModelValidator implements ModelValidator {
 
   @Override
-  public boolean validateVersion(String creatorVersion) {
+  public boolean validate(ModelManifest manifest) throws ValidationException {
     return true;
   }
 

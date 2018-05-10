@@ -15,9 +15,9 @@
  ******************************************************************************/
 package ai.idylnlp.model.manifest;
 
+import java.util.Properties;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-
 import com.neovisionaries.i18n.LanguageCode;
 
 /**
@@ -36,9 +36,11 @@ public class SecondGenModelManifest extends ModelManifest implements Comparable<
 
   public SecondGenModelManifest(String modelId, String modelFileName,
       LanguageCode languageCode, String type, String name,
-      String creatorVersion, String vectorsFileName, int windowSize, String source, String vectorsSource) {
+      String creatorVersion, String vectorsFileName, int windowSize, String source,
+      String vectorsSource, Properties properties) {
 
-    super(modelId, modelFileName, languageCode, type, name, creatorVersion, source, ModelManifest.SECOND_GENERATION);
+    super(modelId, modelFileName, languageCode, type, name, creatorVersion, source,
+        ModelManifest.SECOND_GENERATION, properties);
 
     this.vectorsFileName = vectorsFileName;
     this.windowSize = windowSize;
@@ -50,18 +52,18 @@ public class SecondGenModelManifest extends ModelManifest implements Comparable<
   public final int hashCode() {
 
     return new HashCodeBuilder(17, 31)
-        .append(modelId)
-            .append(modelFileName)
-            .append(vectorsFileName)
-            .append(windowSize)
-            .append(name)
-            .append(languageCode)
-            .append(type)
-            .append(creatorVersion)
-            .append(source)
-            .append(vectorsSource)
-            .append(generation)
-            .toHashCode();
+      .append(modelId)
+      .append(modelFileName)
+      .append(vectorsFileName)
+      .append(windowSize)
+      .append(name)
+      .append(languageCode)
+      .append(type)
+      .append(creatorVersion)
+      .append(source)
+      .append(vectorsSource)
+      .append(generation)
+      .toHashCode();
 
   }
 
@@ -74,17 +76,17 @@ public class SecondGenModelManifest extends ModelManifest implements Comparable<
 
           return new EqualsBuilder()
             .append(modelId, other.getModelId())
-              .append(modelFileName, other.getModelFileName())
-              .append(name, other.getName())
-              .append(vectorsFileName, other.getVectorsFileName())
-              .append(windowSize, windowSize)
-              .append(languageCode, other.getLanguageCode())
-              .append(type, other.getType())
-              .append(creatorVersion, other.getCreatorVersion())
-              .append(source, other.getSource())
-              .append(vectorsSource, other.getVectorsSource())
-              .append(generation, other.getGeneration())
-              .isEquals();
+            .append(modelFileName, other.getModelFileName())
+            .append(name, other.getName())
+            .append(vectorsFileName, other.getVectorsFileName())
+            .append(windowSize, windowSize)
+            .append(languageCode, other.getLanguageCode())
+            .append(type, other.getType())
+            .append(creatorVersion, other.getCreatorVersion())
+            .append(source, other.getSource())
+            .append(vectorsSource, other.getVectorsSource())
+            .append(generation, other.getGeneration())
+            .isEquals();
 
       } else {
           return false;

@@ -16,7 +16,6 @@
 package ai.idylnlp.test.nlp.documents.deeplearning4j;
 
 import static org.junit.Assert.*;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -24,16 +23,14 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.atomic.AtomicInteger;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-
 import com.neovisionaries.i18n.LanguageCode;
-
 import ai.idylnlp.model.manifest.DocumentModelManifest;
 import ai.idylnlp.model.nlp.documents.DeepLearningDocumentClassificationRequest;
 import ai.idylnlp.model.nlp.documents.DeepLearningDocumentClassifierTrainingRequest;
@@ -137,7 +134,7 @@ public class DeepLearningDocumentClassifierTest {
 
     DocumentModelManifest manifest = new DocumentModelManifest(response.getModelId(), modelFile.getAbsolutePath(),
         LanguageCode.en, "document", "name",
-        "1.0.0", "https://source/", Arrays.asList("neg", "pos"));
+        "1.0.0", "https://source/", Arrays.asList("neg", "pos"), new Properties());
 
     List<DocumentModelManifest> models = new LinkedList<>();
     models.add(manifest);

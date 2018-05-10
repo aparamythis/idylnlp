@@ -29,7 +29,7 @@ import ai.idylnlp.model.nlp.lemma.Lemmatizer;
 import ai.idylnlp.model.nlp.pos.PartsOfSpeechTagger;
 import ai.idylnlp.opennlp.custom.nlp.lemmatization.DefaultLemmatizer;
 import ai.idylnlp.opennlp.custom.nlp.pos.DefaultPartsOfSpeechTagger;
-import ai.idylnlp.opennlp.custom.validators.TrueValidator;
+import ai.idylnlp.opennlp.custom.validators.TrueModelValidator;
 
 import opennlp.tools.util.InvalidFormatException;
 import opennlp.tools.util.featuregen.AdaptiveFeatureGenerator;
@@ -55,7 +55,7 @@ public class WordNormalizationFeatureGeneratorFactory implements XmlFeatureGener
   public AdaptiveFeatureGenerator create(Element generatorElement, FeatureGeneratorResourceProvider resourceManager)
       throws InvalidFormatException {
 
-    validator = new TrueValidator();
+    validator = new TrueModelValidator();
 
     try {
 

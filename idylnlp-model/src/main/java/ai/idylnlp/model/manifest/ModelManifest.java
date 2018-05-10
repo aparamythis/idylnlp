@@ -15,6 +15,7 @@
  ******************************************************************************/
 package ai.idylnlp.model.manifest;
 
+import java.util.Properties;
 import com.neovisionaries.i18n.LanguageCode;
 
 /**
@@ -42,6 +43,7 @@ public abstract class ModelManifest {
   protected String type;
   protected String creatorVersion;
   protected String source;
+  protected Properties properties;
 
   // The "generation" property of the manifest allows
   // us to tell the generation of the model that the
@@ -49,7 +51,8 @@ public abstract class ModelManifest {
   protected int generation;
 
   protected ModelManifest(String modelId, String modelFileName, LanguageCode languageCode,
-      String type, String name, String creatorVersion, String source, int generation) {
+      String type, String name, String creatorVersion, String source, int generation,
+      Properties properties) {
 
     this.modelId = modelId;
     this.modelFileName = modelFileName;
@@ -59,6 +62,7 @@ public abstract class ModelManifest {
     this.creatorVersion = creatorVersion;
     this.source = source;
     this.generation = generation;
+    this.properties = properties;
 
   }
 
@@ -94,8 +98,8 @@ public abstract class ModelManifest {
     return source;
   }
 
-  public void setSource(String source) {
-    this.source = source;
+  public Properties getProperties() {
+    return properties;
   }
 
 }

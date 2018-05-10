@@ -25,7 +25,7 @@ import ai.idylnlp.model.manifest.ModelManifestUtils;
 import ai.idylnlp.model.manifest.StandardModelManifest;
 import ai.idylnlp.model.nlp.pos.PartsOfSpeechTagger;
 import ai.idylnlp.opennlp.custom.nlp.pos.DefaultPartsOfSpeechTagger;
-import ai.idylnlp.opennlp.custom.validators.TrueValidator;
+import ai.idylnlp.opennlp.custom.validators.TrueModelValidator;
 
 import opennlp.tools.util.InvalidFormatException;
 import opennlp.tools.util.featuregen.AdaptiveFeatureGenerator;
@@ -55,7 +55,7 @@ public class TokenPartOfSpeechFeatureGeneratorFactory implements XmlFeatureGener
 
       StandardModelManifest standardModelManifest = (StandardModelManifest) modelManifest;
 
-      PartsOfSpeechTagger tagger = new DefaultPartsOfSpeechTagger(modelPath, standardModelManifest, new TrueValidator());
+      PartsOfSpeechTagger tagger = new DefaultPartsOfSpeechTagger(modelPath, standardModelManifest, new TrueModelValidator());
 
       return new TokenPartOfSpeechFeatureGenerator(tagger);
 

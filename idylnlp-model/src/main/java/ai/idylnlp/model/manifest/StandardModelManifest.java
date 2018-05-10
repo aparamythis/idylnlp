@@ -15,10 +15,10 @@
  ******************************************************************************/
 package ai.idylnlp.model.manifest;
 
+import java.util.Properties;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-
 import com.neovisionaries.i18n.LanguageCode;
 
 /**
@@ -57,12 +57,15 @@ public class StandardModelManifest extends ModelManifest implements Comparable<S
     private String creatorVersion;
     private String source;
     private int beamSize = DEFAULT_BEAM_SIZE;
+    private Properties properties;
 
     public ModelManifestBuilder() {
 
     }
 
-    public ModelManifestBuilder(String modelId, String name, String modelFileName, LanguageCode languageCode, String encryptionKey, String type, String subtype, String creatorVersion, String source, int beamSize) {
+    public ModelManifestBuilder(String modelId, String name, String modelFileName, LanguageCode languageCode,
+        String encryptionKey, String type, String subtype, String creatorVersion, String source, int beamSize,
+        Properties properties) {
 
       // TODO: Make sure none of these values are null.
 
@@ -76,10 +79,13 @@ public class StandardModelManifest extends ModelManifest implements Comparable<S
       this.creatorVersion = creatorVersion;
       this.source = source;
       this.beamSize = beamSize;
+      this.properties = properties;
 
     }
 
-    public ModelManifestBuilder(String modelId, String name, String modelFileName, LanguageCode languageCode, String encryptionKey, String type, String subtype, String creatorVersion, String source) {
+    public ModelManifestBuilder(String modelId, String name, String modelFileName, LanguageCode languageCode,
+        String encryptionKey, String type, String subtype, String creatorVersion, String source,
+        Properties properties) {
 
       // TODO: Make sure none of these values are null.
 
@@ -92,10 +98,13 @@ public class StandardModelManifest extends ModelManifest implements Comparable<S
       this.subtype = subtype;
       this.creatorVersion = creatorVersion;
       this.source = source;
+      this.properties = properties;
 
     }
 
-    public ModelManifestBuilder(String modelId, String name, String modelFileName, LanguageCode languageCode, String encryptionKey, String type, String creatorVersion, String source) {
+    public ModelManifestBuilder(String modelId, String name, String modelFileName, LanguageCode languageCode,
+        String encryptionKey, String type, String creatorVersion, String source,
+        Properties properties) {
 
       // TODO: Make sure none of these values are null.
 
@@ -108,6 +117,7 @@ public class StandardModelManifest extends ModelManifest implements Comparable<S
       this.subtype = DEFAULT_SUBTYPE;
       this.creatorVersion = creatorVersion;
       this.source = source;
+      this.properties = properties;
 
     }
 
@@ -151,22 +161,32 @@ public class StandardModelManifest extends ModelManifest implements Comparable<S
       this.beamSize = beamSize;
     }
 
+    public Properties getProperties() {
+      return properties;
+    }
+
+    public void setProperties(Properties properties) {
+      this.properties = properties;
+    }    
+
     public StandardModelManifest build() {
 
-      return new StandardModelManifest(modelId, modelFileName, languageCode, encryptionKey, type, subtype, name, creatorVersion, source, beamSize);
+      return new StandardModelManifest(modelId, modelFileName, languageCode, encryptionKey, type, subtype, name, creatorVersion, source, beamSize, properties);
 
     }
 
   }
 
   private StandardModelManifest(String modelId, String modelFileName, LanguageCode languageCode,
-      String encryptionKey, String type, String subtype, String name, String creatorVersion, String source, int beamSize) {
+      String encryptionKey, String type, String subtype, String name, String creatorVersion, String source, int beamSize,
+      Properties properties) {
 
-    super(modelId, modelFileName, languageCode, type, name, creatorVersion, source, ModelManifest.FIRST_GENERATION);
+    super(modelId, modelFileName, languageCode, type, name, creatorVersion, source, ModelManifest.FIRST_GENERATION, properties);
 
     this.encryptionKey = encryptionKey;
     this.subtype = subtype;
     this.beamSize = beamSize;
+    this.properties = properties;
 
   }
 
@@ -174,18 +194,18 @@ public class StandardModelManifest extends ModelManifest implements Comparable<S
   public final int hashCode() {
 
     return new HashCodeBuilder(17, 31)
-        .append(modelId)
-            .append(modelFileName)
-            .append(name)
-            .append(encryptionKey)
-            .append(languageCode)
-            .append(type)
-            .append(subtype)
-            .append(creatorVersion)
-            .append(source)
-            .append(beamSize)
-            .append(generation)
-            .toHashCode();
+      .append(modelId)
+      .append(modelFileName)
+      .append(name)
+      .append(encryptionKey)
+      .append(languageCode)
+      .append(type)
+      .append(subtype)
+      .append(creatorVersion)
+      .append(source)
+      .append(beamSize)
+      .append(generation)
+      .toHashCode();
 
   }
 
@@ -198,17 +218,17 @@ public class StandardModelManifest extends ModelManifest implements Comparable<S
 
           return new EqualsBuilder()
             .append(modelId, other.getModelId())
-              .append(modelFileName, other.getModelFileName())
-              .append(name, other.getName())
-              .append(encryptionKey, other.getEncryptionKey())
-              .append(languageCode, other.getLanguageCode())
-              .append(type, other.getType())
-              .append(subtype, other.getSubtype())
-              .append(creatorVersion, other.getCreatorVersion())
-              .append(source,  other.getSource())
-              .append(beamSize, other.getBeamSize())
-              .append(generation, other.getGeneration())
-              .isEquals();
+            .append(modelFileName, other.getModelFileName())
+            .append(name, other.getName())
+            .append(encryptionKey, other.getEncryptionKey())
+            .append(languageCode, other.getLanguageCode())
+            .append(type, other.getType())
+            .append(subtype, other.getSubtype())
+            .append(creatorVersion, other.getCreatorVersion())
+            .append(source,  other.getSource())
+            .append(beamSize, other.getBeamSize())
+            .append(generation, other.getGeneration())
+            .isEquals();
 
       } else {
           return false;
