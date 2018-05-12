@@ -28,11 +28,15 @@ Refer to the [sample projects](https://github.com/idylnlp/idylnlp-samples) for e
 
 All of these core capabilities with the exception of language detection can utilize custom trained models. The ability to train and evaluate trained models is available. Named-entity extraction and document classification support neural network models as well as maximum entropy and perceptron-based models.
 
-### Related Projects
+### Idyl NLP Ecosystem Projects
 
 * [idylnlp-nifi](https://github.com/idylnlp/idylnlp-nifi) provides Apache NiFi processors using Idyl NLP for NLP tasks.
 * [idylnlp-deeplearning4j](https://github.com/idylnlp/idylnlp-deeplearning4j) allows for using Idyl NLP within DeepLearning4j projects.
 * [idylnlp-standford-core-nlp](https://github.com/idylnlp/idylnlp-stanford-core-nlp) provides wrapper implementations to use [Stanford Core NLP](https://github.com/stanfordnlp/CoreNLP) within Idyl NLP.
+
+### Projects Using Idyl NLP
+
+* [Renku Language Detection Engine](https://github.com/mtnfog/renku-language-detection-engine) is an open source microservice that identifes the language of natural language text.
 
 ## Usage
 
