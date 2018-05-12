@@ -37,6 +37,7 @@ All of these core capabilities with the exception of language detection can util
 ### Projects Using Idyl NLP
 
 * [Renku Language Detection Engine](https://github.com/mtnfog/renku-language-detection-engine) is an open source microservice that identifes the language of natural language text.
+* [Sonnet Tokenization Engine](https://github.com/mtnfog/sonnet-tokenization-engine) is an open source microservice for performing string tokenization.
 
 ## Usage
 
