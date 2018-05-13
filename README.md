@@ -38,6 +38,7 @@ All of these core capabilities with the exception of language detection can util
 
 * [Renku Language Detection Engine](https://github.com/mtnfog/renku-language-detection-engine) is an open source microservice that identifes the language of natural language text.
 * [Sonnet Tokenization Engine](https://github.com/mtnfog/sonnet-tokenization-engine) is an open source microservice for performing string tokenization.
+* [Prose Sentence Extraction Engine](https://github.com/mtnfog/prose-sentence-extraction-engine) is an open source microservice for performing sentence extraction on natural language text.
 
 ## Usage
 
