@@ -23,5 +23,6 @@
 		<module>idylnlp-nlp-lemmatization</module>
 		<module>idylnlp-nlp-document-classification</module>
 		<module>idylnlp-nlp-translation</module>
-	</modules>
+    <module>idylnlp-nlp-features</module>
+  </modules>
 </project>
