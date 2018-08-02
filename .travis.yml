@@ -3,11 +3,10 @@ before_install:
   - echo "$GPG_SECRET_KEYS" | base64 --decode | $GPG_EXECUTABLE --import
   - echo "$GPG_OWNERTRUST" | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
 install:
-    mvn --settings .travis/settings.xml install -DskipTests=true -Dgpg.skip -Dmaven.javadoc.skip=true -B -V -Pjacoco
+    mvn --settings .travis/settings.xml install -DskipTests=true -Dcheckstyle.skip -Dgpg.skip -Dmaven.javadoc.skip=true -B -V -Pjacoco
 script:
-    mvn clean deploy --settings .travis/settings.xml -B -U -Prelease
+    mvn clean deploy --settings .travis/settings.xml -B -U -Prelease 
 after_success:
   - mvn jacoco:report coveralls:report -Pjacoco
 jdk:
   - oraclejdk8
-
