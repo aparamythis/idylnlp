@@ -68,7 +68,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<!-- Artifact versions -->
-		<beanutils.version>1.9.2</beanutils.version>		
+		<beanutils.version>1.9.2</beanutils.version>
 		<commons.cli.version>1.3.1</commons.cli.version>
 		<commons.collections.version>4.1</commons.collections.version>
 		<commons.compress.version>1.9</commons.compress.version>
@@ -274,6 +274,23 @@
 					<source>1.8</source>
 					<target>1.8</target>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.owasp</groupId>
+				<artifactId>dependency-check-maven</artifactId>
+				<version>3.3.0</version>
+				<configuration>
+					<retireJsAnalyzerEnabled>false</retireJsAnalyzerEnabled>
+					<failOnError>true</failOnError>
+					<failBuildOnAnyVulnerability>true</failBuildOnAnyVulnerability>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
