@@ -226,6 +226,22 @@
 						</executions>
 					</plugin>
 					<plugin>
+						<groupId>org.owasp</groupId>
+						<artifactId>dependency-check-maven</artifactId>
+						<version>3.3.0</version>
+						<configuration>
+							<retireJsAnalyzerEnabled>false</retireJsAnalyzerEnabled>
+							<failOnError>true</failOnError>
+						</configuration>
+						<executions>
+							<execution>
+								<goals>
+									<goal>check</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-source-plugin</artifactId>
 						<executions>
@@ -274,23 +290,6 @@
 					<source>1.8</source>
 					<target>1.8</target>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.owasp</groupId>
-				<artifactId>dependency-check-maven</artifactId>
-				<version>3.3.0</version>
-				<configuration>
-					<retireJsAnalyzerEnabled>false</retireJsAnalyzerEnabled>
-					<failOnError>true</failOnError>
-					<failBuildOnAnyVulnerability>true</failBuildOnAnyVulnerability>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
