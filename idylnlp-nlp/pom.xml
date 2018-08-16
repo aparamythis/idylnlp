@@ -24,5 +24,6 @@
 		<module>idylnlp-nlp-document-classification</module>
 		<module>idylnlp-nlp-translation</module>
     <module>idylnlp-nlp-features</module>
+    <module>idylnlp-nlp-keywords</module>
   </modules>
 </project>
