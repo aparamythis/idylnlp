@@ -13,19 +13,39 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-package ai.idylnlp.nlp.keywords;
+package ai.idylnlp.nlp.keywords.rake;
 
+import ai.idylnlp.model.nlp.SentenceDetector;
+import ai.idylnlp.model.nlp.Stemmer;
+import ai.idylnlp.model.nlp.Tokenizer;
 import ai.idylnlp.model.nlp.keywords.KeywordExtractionException;
 import ai.idylnlp.model.nlp.keywords.KeywordExtractionResponse;
 import ai.idylnlp.model.nlp.keywords.KeywordExtractor;
+import ai.idylnlp.model.nlp.pos.PartsOfSpeechTagger;
+import ai.idylnlp.nlp.keywords.model.rake.RakeParams;
+import ai.idylnlp.nlp.keywords.model.rake.Result;
 
 public class RakeKeywordExtractor implements KeywordExtractor {
+  
+  private RakeAlgorithm rake;
+  
+  public RakeKeywordExtractor(RakeParams rakeParams, Stemmer stemmer, PartsOfSpeechTagger posTagger, SentenceDetector sentenceDetector, Tokenizer tokenizer) {
 
+    rake = new RakeAlgorithm(rakeParams, stemmer, posTagger, sentenceDetector, tokenizer);
+    
+  }
+  
   @Override
   public KeywordExtractionResponse extract(String text) throws KeywordExtractionException {
 
-    return null;
+    Result result = rake.rake(text);
     
+    // Print the result
+    System.out.println(result.distinct());
+
+    KeywordExtractionResponse response = new KeywordExtractionResponse();
+    return response;
+      
   }
 
 }
