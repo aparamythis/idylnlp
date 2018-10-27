@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
-<project
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>ai.idylnlp</groupId>
@@ -10,35 +8,60 @@
 	</parent>
 	<artifactId>idylnlp-training-definition-file-xml</artifactId>
 	<name>idylnlp-training-definition-file-xml</name>
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>jaxb2-maven-plugin</artifactId>
-				<version>2.3.1</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>xjc</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<packageName>ai.idylnlp.training.definition.xml</packageName>
-					<generateEpisode>false</generateEpisode>
-					<noGeneratedHeaderComments>true</noGeneratedHeaderComments>
-					<clearOutputDir>true</clearOutputDir>
-					<addGeneratedAnnotation>false</addGeneratedAnnotation>
-					<outputDirectory>${basedir}/src/main/java/</outputDirectory>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+	<profiles>
+		<profile>
+			<id>xml-gen</id>
+			<activation>
+				<property>
+					<name>xml-gen</name>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>jaxb2-maven-plugin</artifactId>
+						<version>2.3.1</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>xjc</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<packageName>ai.idylnlp.training.definition.xml</packageName>
+							<generateEpisode>false</generateEpisode>
+							<noGeneratedHeaderComments>true</noGeneratedHeaderComments>
+							<clearOutputDir>true</clearOutputDir>
+							<addGeneratedAnnotation>false</addGeneratedAnnotation>
+							<outputDirectory>${basedir}/src/main/java/</outputDirectory>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.3.0</version>
+		</dependency>
+<dependency>
+    <groupId>com.sun.xml.bind</groupId>
+    <artifactId>jaxb-impl</artifactId>
+    <version>2.3.0</version>
+</dependency>
+<dependency>
+    <groupId>com.sun.xml.bind</groupId>
+    <artifactId>jaxb-core</artifactId>
+    <version>2.3.0</version>
+</dependency>
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
