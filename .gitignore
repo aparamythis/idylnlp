@@ -1,5 +1,6 @@
 .metadata
 .cache
+.checkstyle
 bin/
 .settings/
 test-data/
@@ -15,5 +16,3 @@ dependency-reduced-pom.xml
 **/package-info.java
 en-pos-maxent.bin
 en-sent.bin
-langdetect-183.bin
-
