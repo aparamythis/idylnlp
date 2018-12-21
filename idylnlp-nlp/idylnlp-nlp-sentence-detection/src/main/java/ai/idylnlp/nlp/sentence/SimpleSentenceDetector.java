@@ -74,8 +74,7 @@ public class SimpleSentenceDetector implements SentenceDetector {
   @Override
   public String[] sentDetect(String text) {
 
-    // TOOD: Implement this.
-    return null;
+    return text.split("\\.");
 
   }
 

@@ -25,5 +25,6 @@
 		<module>idylnlp-nlp-translation</module>
     <module>idylnlp-nlp-features</module>
     <module>idylnlp-nlp-keywords</module>
+    <module>idylnlp-nlp-text-metrics</module>
   </modules>
 </project>
