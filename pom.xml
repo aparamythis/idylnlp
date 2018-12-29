@@ -61,12 +61,6 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-			<!-- Until Spring Boot includes Retrofit >= 2.5.0 -->
-			<dependency>
-				<groupId>com.squareup.retrofit2</groupId>
-				<artifactId>retrofit</artifactId>
-				<version>2.5.0</version>
-			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<properties>
@@ -99,6 +93,7 @@
 		<nv.version>1.22</nv.version>
 		<opennlp.tools.version>1.8.3</opennlp.tools.version>
 		<powermock.version>1.7.0</powermock.version>
+		<retrofit.version>2.5.0</retrofit.version>
 		<segment.version>2.0.0</segment.version>
 		<spring.boot.version>2.1.1.RELEASE</spring.boot.version>
 		<syllable.counter.version>3.0.0</syllable.counter.version>
