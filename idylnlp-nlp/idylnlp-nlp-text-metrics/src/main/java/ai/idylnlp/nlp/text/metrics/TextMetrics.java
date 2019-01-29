@@ -16,20 +16,38 @@
 
 package ai.idylnlp.nlp.text.metrics;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
-
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ai.idylnlp.model.nlp.SentenceDetector;
 import ai.idylnlp.model.nlp.Tokenizer;
+import ai.idylnlp.nlp.sentence.SimpleSentenceDetector;
 import ai.idylnlp.nlp.text.metrics.model.TextMetricsResult;
+import ai.idylnlp.nlp.tokenizers.WhitespaceTokenizer;
 import eu.crydee.syllablecounter.SyllableCounter;
 
 /**
  * Calculates various metrics of text.
+ * 
+ * This class builds as a runnable jar that can be executed on
+ * a given directory. All files in the directory will be
+ * processed.
+ * 
  * @author Mountain Fog, Inc.
  *
  */
@@ -39,6 +57,100 @@ public class TextMetrics {
 	
 	private SentenceDetector sentenceDetector;
 	private Tokenizer tokenizer;
+	
+	public static void main(String[] args) throws ParseException, IOException {
+	  
+	  LOGGER.info("Running non-interactively.");
+	  
+	  Options options = new Options();
+	  options.addOption("d", true, "Full path to directory to process.");
+	  options.addOption("s", true, "Full path to sentence model manifest.");
+	  options.addOption("t", true, "Full path to token model manifest.");
+	  options.addOption("o", true, "The output file.");
+	  
+	  CommandLineParser parser = new DefaultParser();
+	  CommandLine cmd = parser.parse(options, args);
+	  
+	  if(cmd.hasOption("d")) {
+	  
+	    final String directory = cmd.getOptionValue("d");
+	    
+	    File d = new File(directory);
+	    File[] files = d.listFiles();
+	    
+	    if(files != null) {
+	      
+	      // Holds the results from each file.
+	      Map<File, TextMetricsResult> results = new HashMap<>();
+	      
+	      SentenceDetector sentenceDetector = null;
+	      
+	      // Get the sentence detector.
+	      if(cmd.hasOption("s")) {
+	        // TODO: Load the sentence detector.
+	      } else {
+	        sentenceDetector = new SimpleSentenceDetector();
+	      }
+	      
+	      Tokenizer tokenizer = null;
+	      
+	       // Get the tokenizer.
+          if(cmd.hasOption("t")) {
+            // TODO: Load the tokenizer.
+          } else {
+            tokenizer = WhitespaceTokenizer.INSTANCE;
+          }
+	      
+	      TextMetrics textMetrics = new TextMetrics(sentenceDetector, tokenizer);
+	      
+	      for(File f : files) {
+	        
+	        if(!f.isDirectory() && f.isFile() && f.canRead()) {
+	          
+	          final String text = FileUtils.readFileToString(f);
+	        
+	          TextMetricsResult textMetricsResult = textMetrics.calculate(text);
+	        
+	          results.put(f, textMetricsResult);
+	          
+	        } else {
+	          
+	          LOGGER.warn("Cannot process: {}", f.getAbsolutePath());
+	          
+	        }
+	        
+	      }        
+
+	      // Format the results map into CSV.
+	      List<String> csv = new LinkedList<>();
+	      csv.add("filename,unique-words,total-words,characters,sentences,max-sentence,avg-sentence,syllables,grade-level");
+	      for(File f : results.keySet()) {
+	        TextMetricsResult r = results.get(f);
+	        csv.add(String.format("\"%s\",%s,%s,%s,%s,%s,%s,%s,%s", 
+	            f.getName(), r.getUniqueWords(), r.getTotalWords(), r.getCharacterCount(), r.getTotalSentences(), r.getMaxSentenceLength(), r.getAvgSentenceLength(), r.getTotalSyllables(), r.getFleschKincaidGradeLevel()));
+	      }
+	      
+	      File out = null;
+	      
+	      if(cmd.hasOption("o")) {
+	        out = new File(cmd.getOptionValue("o"));
+	      } else {
+	        out = File.createTempFile("idylnlp", ".csv");
+	      }
+	      
+	      FileUtils.writeLines(out, csv);
+	      
+	      LOGGER.info("Results written to: " + out.getAbsolutePath());
+	      
+	    }
+	    
+	  } else {
+	    
+	    LOGGER.error("Missing directory. Specify directory to process with -d argument.");
+	    
+	  }
+	  
+	}
 	
 	/**
 	 * Creates a new instance.
@@ -90,7 +202,7 @@ public class TextMetrics {
 			
 			if(sentence.length() > maxSentenceLength) {
 				maxSentenceLength = sentence.length();
-			}
+			}		
 			
 		}
 		
