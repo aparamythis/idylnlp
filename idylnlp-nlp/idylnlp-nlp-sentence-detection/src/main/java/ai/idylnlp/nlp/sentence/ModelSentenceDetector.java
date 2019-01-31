@@ -15,6 +15,7 @@
  ******************************************************************************/
 package ai.idylnlp.nlp.sentence;
 
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
@@ -67,7 +68,7 @@ public class ModelSentenceDetector implements SentenceDetector {
     this.languageCode = languageCode;
 
   }
-
+  
   @Override
   public List<String> getLanguageCodes() {
     return Arrays.asList(languageCode.getAlpha3().toString());

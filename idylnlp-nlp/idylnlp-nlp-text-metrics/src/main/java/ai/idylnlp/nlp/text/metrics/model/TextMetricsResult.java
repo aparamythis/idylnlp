@@ -16,6 +16,8 @@
 
 package ai.idylnlp.nlp.text.metrics.model;
 
+import java.util.Map;
+
 public class TextMetricsResult {
 
 	private double uniqueWords;
@@ -25,9 +27,10 @@ public class TextMetricsResult {
 	private double maxSentenceLength;
 	private double avgSentenceLength;
 	private double totalSyllables;
+	private Map<String, Integer> ngrams;
 	
 	public TextMetricsResult(double uniqueWords, double totalWords, double characterCount, double totalSentences,
-		double maxSentenceLength, double avgSentenceLength, double totalSyllables) {
+		double maxSentenceLength, double avgSentenceLength, double totalSyllables, Map<String, Integer> ngrams) {
 		
 		this.uniqueWords = uniqueWords;
 		this.totalWords = totalWords;
@@ -36,7 +39,8 @@ public class TextMetricsResult {
 		this.maxSentenceLength = maxSentenceLength;
 		this.avgSentenceLength = avgSentenceLength;
 		this.totalSyllables = totalSyllables;
-		
+		this.ngrams = ngrams;
+
 	}
 	
 	/**
@@ -111,6 +115,14 @@ public class TextMetricsResult {
 		this.totalSyllables = totalSyllables;
 	}
 	
+    public Map<String, Integer> getNgrams() {
+        return ngrams;
+    }
+
+    public void setNgrams(Map<String, Integer> ngrams) {
+        this.ngrams = ngrams;
+    }
+	
 	@Override
 	public String toString() {
 		
@@ -127,5 +139,4 @@ public class TextMetricsResult {
 		return sb.toString();
 		
 	}
-	
 }
