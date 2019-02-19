@@ -92,4 +92,4 @@ There are also some tests categorized as `HighMemoryUsage`. These tests require 
 
 Idyl NLP is available under the Apache License, version 2.0.
 
-Copyright 2018 Mountain Fog, Inc.
+Copyright 2019 Mountain Fog, Inc.

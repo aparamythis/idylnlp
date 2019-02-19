@@ -1,5 +1,5 @@
 # person model manifest
-# Copyright 2018 Mountain Fog, Inc.
+# Copyright 2019 Mountain Fog, Inc.
 # Contact support@mtnfog.com or visit www.mtnfog.com for assistance.
 model.type=person
 model.filename=mtnfog-eng-person-base.bin
