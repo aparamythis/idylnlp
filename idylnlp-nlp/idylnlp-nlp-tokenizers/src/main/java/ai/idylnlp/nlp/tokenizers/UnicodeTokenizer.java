@@ -15,28 +15,18 @@
  ******************************************************************************/
 package ai.idylnlp.nlp.tokenizers;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import ai.idylnlp.model.nlp.Span;
 import ai.idylnlp.model.nlp.Stemmer;
 import ai.idylnlp.model.nlp.Tokenizer;
-import opennlp.tools.util.StringUtil;
+
+import java.util.*;
+
+import org.apache.commons.lang3.NotImplementedException;
 
 /**
- * This tokenizer uses whitespace to tokenize the input text.
- *
- * To obtain an instance of this tokenizer use the static final
- * <code>INSTANCE</code> field.
+ * This tokenizer uses ICU4J's unicode tokenization rules.
  */
-public class WhitespaceTokenizer implements Tokenizer {
-
-  public static final WhitespaceTokenizer INSTANCE = new WhitespaceTokenizer();
-
-  private WhitespaceTokenizer() {
-
-  }
+public class UnicodeTokenizer implements Tokenizer {
 
   @Override
   public List<String> getLanguageCodes() {
@@ -48,7 +38,19 @@ public class WhitespaceTokenizer implements Tokenizer {
 
   @Override
   public String[] tokenize(String s) {
-    return Span.spansToStrings(tokenizePos(s), s);
+
+    List<String> tokens = new LinkedList<String>();
+
+    com.ibm.icu.util.StringTokenizer stringTokenizer = new com.ibm.icu.util.StringTokenizer(s);
+
+    while (stringTokenizer.hasMoreTokens()) {
+      tokens.add(stringTokenizer.nextToken());
+    }
+
+    String[] t = new String[tokens.size()];
+    
+    return tokens.toArray(t);
+
   }
 
   @Override
@@ -68,31 +70,9 @@ public class WhitespaceTokenizer implements Tokenizer {
 
   @Override
   public Span[] tokenizePos(String d) {
-    int tokStart = -1;
-    List<Span> tokens = new ArrayList<>();
-    boolean inTok = false;
-
-    // gather up potential tokens
-    int end = d.length();
-    for (int i = 0; i < end; i++) {
-      if (StringUtil.isWhitespace(d.charAt(i))) {
-        if (inTok) {
-          tokens.add(new Span(tokStart, i));
-          inTok = false;
-          tokStart = -1;
-        }
-      } else {
-        if (!inTok) {
-          tokStart = i;
-          inTok = true;
-        }
-      }
-    }
-
-    if (inTok) {
-      tokens.add(new Span(tokStart, end));
-    }
-
-    return tokens.toArray(new Span[tokens.size()]);
+    
+	  throw new NotImplementedException("This is not yet implemented.");
+	  
   }
+
 }
