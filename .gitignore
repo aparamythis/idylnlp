@@ -16,3 +16,5 @@ dependency-reduced-pom.xml
 **/package-info.java
 en-pos-maxent.bin
 en-sent.bin
+.idea/
+*.iml
