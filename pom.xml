@@ -81,6 +81,7 @@
 		<coveralls.maven.plugin>4.3.0</coveralls.maven.plugin>
 		<equalsverifier.version>2.3.2</equalsverifier.version>
 		<guava.version>23.0</guava.version>
+		<icu4j.version>63.1</icu4j.version>
 		<jacoco.maven.plugin>0.7.9</jacoco.maven.plugin>
 		<joshua.version>6.1</joshua.version>
 		<jsoup.version>1.8.1</jsoup.version>
@@ -328,6 +329,28 @@
 					<source>1.8</source>
 					<target>1.8</target>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>net.alchim31.maven</groupId>
+				<artifactId>scala-maven-plugin</artifactId>
+				<version>3.4.6</version>
+				<executions>
+					<execution>
+						<id>scala-compile-first</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>add-source</goal>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>scala-test-compile</id>
+						<phase>process-test-resources</phase>
+						<goals>
+							<goal>testCompile</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
