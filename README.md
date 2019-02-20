@@ -4,7 +4,6 @@
 | ------------- | ------------- |
 | Build Status  | [![Build Status](https://travis-ci.org/idylnlp/idylnlp.svg?branch=master)](https://travis-ci.org/idylnlp/idylnlp)  |
 | Current Release  | [![Release](https://img.shields.io/nexus/r/https/oss.sonatype.org/ai.idylnlp/idylnlp.svg)](https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22ai.idylnlp%22)  |
-| Current Snapshots  | [![Snapshot](https://img.shields.io/nexus/s/https/oss.sonatype.org/ai.idylnlp/idylnlp.svg)](https://oss.sonatype.org/content/repositories/snapshots/ai/idylnlp/) |
 | Unit Test Coverage | [![Coverage Status](https://coveralls.io/repos/github/idylnlp/idylnlp/badge.svg?branch=master)](https://coveralls.io/github/idylnlp/idylnlp?branch=master)
 | Follow  | [![Follow](	https://img.shields.io/twitter/follow/mtnfog.svg?style=social&label=Follow)](https://twitter.com/mtnfog)  |
 
@@ -43,7 +42,7 @@ All of these core capabilities with the exception of language detection can util
 
 ## Usage
 
-[Release](https://search.maven.org/#search%7Cga%7C1%7Cg%3A"ai.idylnlp") and [snapshot](https://oss.sonatype.org/content/repositories/snapshots/ai/idylnlp/) dependencies are available:
+[Release](https://search.maven.org/#search%7Cga%7C1%7Cg%3A"ai.idylnlp") dependencies are available:
 
 ```
 <dependency>
