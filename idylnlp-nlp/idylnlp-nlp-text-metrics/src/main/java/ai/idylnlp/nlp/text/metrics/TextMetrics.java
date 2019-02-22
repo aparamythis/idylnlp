@@ -112,13 +112,19 @@ public class TextMetrics {
 	      
 	      TextMetrics textMetrics = new TextMetrics(sentenceDetector, tokenizer);
 	      
+	      int ngramLength = 2;
+	      
+	      if(cmd.hasOption("n")) {
+	        ngramLength = Integer.valueOf(cmd.getOptionValue("n"));
+	      }
+	      
 	      for(File f : files) {
 	        
 	        if(!f.isDirectory() && f.isFile() && f.canRead()) {
 	          
 	          final String text = FileUtils.readFileToString(f);
 	        
-	          TextMetricsResult textMetricsResult = textMetrics.calculate(text);
+	          TextMetricsResult textMetricsResult = textMetrics.calculate(text, ngramLength);
 	        
 	          results.put(f, textMetricsResult);
 	          
