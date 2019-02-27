@@ -16,15 +16,18 @@
 
 package ai.idylnlp.nlp.text.metrics;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -52,8 +55,9 @@ import eu.crydee.syllablecounter.SyllableCounter;
  * Calculates various metrics of text.
  * 
  * This class builds as a runnable jar that can be executed on
- * a given directory. All files in the directory will be
- * processed.
+ * a given file. Each line in the file must be a separate
+ * document. Each line (document) will be processed
+ * individually.
  * 
  * @author Mountain Fog, Inc.
  *
@@ -70,7 +74,7 @@ public class TextMetrics {
 	  LOGGER.info("Running non-interactively.");
 	  
 	  Options options = new Options();
-	  options.addOption("d", true, "Full path to directory to process.");
+	  options.addOption("f", true, "Full path to file to process line by line.");
 	  options.addOption("s", true, "Full path to sentence model manifest.");
 	  options.addOption("t", true, "Full path to token model manifest.");
 	  options.addOption("o", true, "The output file.");
@@ -79,89 +83,73 @@ public class TextMetrics {
 	  CommandLineParser parser = new DefaultParser();
 	  CommandLine cmd = parser.parse(options, args);
 	  
-	  if(cmd.hasOption("d")) {
+	  if(cmd.hasOption("f")) {
 	  
-	    final String directory = cmd.getOptionValue("d");
+	    final String fileToProcess = cmd.getOptionValue("f");
+	    final File f = new File(fileToProcess);
+	    	      
+	    SentenceDetector sentenceDetector = null;
+	      
+	    // Get the sentence detector.
+	    if(cmd.hasOption("s")) {
+	      // TODO: Load the sentence model detector.
+	    } else {
+	      sentenceDetector = new SimpleSentenceDetector();
+	    }
+	      
+	    Tokenizer tokenizer = null;
+	      
+	    // Get the tokenizer.
+        if(cmd.hasOption("t")) {
+          final String tokenModel = cmd.getOptionValue("t");
+          tokenizer = new ModelTokenizer(new FileInputStream(tokenModel), LanguageCode.en);
+        } else {
+          tokenizer = WhitespaceTokenizer.INSTANCE;
+        }
+        
+	    int ngramLength = 2;
+	      
+	    if(cmd.hasOption("n")) {
+	      ngramLength = Integer.valueOf(cmd.getOptionValue("n"));
+	    }
 	    
-	    File d = new File(directory);
-	    File[] files = d.listFiles();
+	    File out = null;
+	      
+	    if(cmd.hasOption("o")) {
+	      out = new File(cmd.getOptionValue("o"));
+	    } else {
+	      out = File.createTempFile("idylnlp", ".csv");
+	    }
+		FileOutputStream fos = new FileOutputStream(out);
+	 
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+	    bw.write("filename,unique-words,total-words,characters,sentences,max-sentence,avg-sentence,syllables,grade-level\n");
 	    
-	    if(files != null) {
-	      
-	      // Holds the results from each file.
-	      Map<File, TextMetricsResult> results = new HashMap<>();
-	      
-	      SentenceDetector sentenceDetector = null;
-	      
-	      // Get the sentence detector.
-	      if(cmd.hasOption("s")) {
-	        // TODO: Load the sentence model detector.
-	      } else {
-	        sentenceDetector = new SimpleSentenceDetector();
-	      }
-	      
-	      Tokenizer tokenizer = null;
-	      
-	       // Get the tokenizer.
-          if(cmd.hasOption("t")) {
-            final String tokenModel = cmd.getOptionValue("t");
-            tokenizer = new ModelTokenizer(new FileInputStream(tokenModel), LanguageCode.en);
-          } else {
-            tokenizer = WhitespaceTokenizer.INSTANCE;
-          }
-	      
-	      TextMetrics textMetrics = new TextMetrics(sentenceDetector, tokenizer);
-	      
-	      int ngramLength = 2;
-	      
-	      if(cmd.hasOption("n")) {
-	        ngramLength = Integer.valueOf(cmd.getOptionValue("n"));
-	      }
-	      
-	      for(File f : files) {
-	        
-	        if(!f.isDirectory() && f.isFile() && f.canRead()) {
-	          
-	          final String text = FileUtils.readFileToString(f);
-	        
-	          TextMetricsResult textMetricsResult = textMetrics.calculate(text, ngramLength);
-	        
-	          results.put(f, textMetricsResult);
-	          
-	        } else {
-	          
-	          LOGGER.warn("Cannot process: {}", f.getAbsolutePath());
-	          
+	    Map<String, Integer> ngrams = new HashMap<>();
+	    
+	    try (BufferedReader br = new BufferedReader(new FileReader(f))) {
+	        String line;
+	        while ((line = br.readLine()) != null) {
+
+	        	TextMetrics textMetrics = new TextMetrics(sentenceDetector, tokenizer);
+
+	        	TextMetricsResult r = textMetrics.calculate(line, ngramLength);
+
+	        	bw.write(String.format("\"%s\",%s,%s,%s,%s,%s,%s,%s,%s\n", 
+	        			f.getName(), r.getUniqueWords(), r.getTotalWords(), r.getCharacterCount(), r.getTotalSentences(),
+	        			r.getMaxSentenceLength(), r.getAvgSentenceLength(), r.getTotalSyllables(), r.getFleschKincaidGradeLevel()));
+
+	        	ngrams.putAll(r.getNgrams());
+
 	        }
-	        
-	      }        
+	    }
 
-	      Map<String, Integer> ngrams = new HashMap<>();
+	    bw.close();
+	    fos.close();
 	      
-	      // Format the results map into CSV.
-	      List<String> csv = new LinkedList<>();
-	      csv.add("filename,unique-words,total-words,characters,sentences,max-sentence,avg-sentence,syllables,grade-level");
-	      for(File f : results.keySet()) {
-	        TextMetricsResult r = results.get(f);
-	        csv.add(String.format("\"%s\",%s,%s,%s,%s,%s,%s,%s,%s", 
-	            f.getName(), r.getUniqueWords(), r.getTotalWords(), r.getCharacterCount(), r.getTotalSentences(), r.getMaxSentenceLength(), r.getAvgSentenceLength(), r.getTotalSyllables(), r.getFleschKincaidGradeLevel()));
-	        
-	        ngrams.putAll(r.getNgrams());
-	      }
+	    LOGGER.info("Results written to: " + out.getAbsolutePath());
 	      
-	      File out = null;
-	      
-	      if(cmd.hasOption("o")) {
-	        out = new File(cmd.getOptionValue("o"));
-	      } else {
-	        out = File.createTempFile("idylnlp", ".csv");
-	      }
-
-	      FileUtils.writeLines(out, csv);
-	      
-	      LOGGER.info("Results written to: " + out.getAbsolutePath());
-	      
-	      Map<String, Integer> sorted = ngrams
+	    Map<String, Integer> sorted = ngrams
 	          .entrySet()
 	          .stream()
 	          .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
@@ -169,22 +157,20 @@ public class TextMetrics {
 	              Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2,
 	                  LinkedHashMap::new));
 	      
-	      for(String s : sorted.keySet()) {
-	        FileUtils.write(new File(out.getAbsolutePath() + ".ngrams"), ngrams.get(s) + "\t" + s + "\n", true);	        
-	      }
-	      
-	      LOGGER.info("Wrote ngrams to: " + out.getAbsolutePath() + ".ngrams");
-	      
+	    for(String s : sorted.keySet()) {
+	      FileUtils.write(new File(out.getAbsolutePath() + ".ngrams"), ngrams.get(s) + "\t" + s + "\n", true);	        
 	    }
-	    
+ 
+	    LOGGER.info("Wrote ngrams to: " + out.getAbsolutePath() + ".ngrams");
+
 	  } else {
-	    
+
 	    LOGGER.error("Missing directory. Specify directory to process with -d argument.");
-	    
+
 	  }
-	  
+
 	}
-	
+
 	/**
 	 * Creates a new instance.
 	 * @param sentenceDetector The {@link SentenceDetector} for extracting sentences

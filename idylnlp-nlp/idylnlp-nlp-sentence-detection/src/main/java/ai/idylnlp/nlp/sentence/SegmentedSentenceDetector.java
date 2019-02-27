@@ -39,7 +39,9 @@ import net.loomchild.segment.srx.io.Srx2SaxParser;
 
 /**
  * An implementation of {@link SentenceDetector} that performs
- * sentence detection using segmentation.
+ * sentence detection using segmentation. 
+ * 
+ * Uses https://github.com/loomchild/segment.
  *
  * @author Mountain Fog, Inc.
  *

@@ -26,7 +26,7 @@ public class TextMetricsTest {
 		TextMetrics metrics = new TextMetrics(sd, t);
 		TextMetricsResult result = metrics.calculate("This is some sample text.");
 		
-		System.out.println(result);
+		LOGGER.info(result);
 		
 		assertEquals(result.getUniqueWords(), 5, 0);
 		assertEquals(result.getTotalWords(), 5, 0);
@@ -43,7 +43,7 @@ public class TextMetricsTest {
 		TextMetrics metrics = new TextMetrics(sd, t);
 		TextMetricsResult result = metrics.calculate("This is some sample text. This is a second sentence.");
 		
-		System.out.println(result);
+		LOGGER.info(result);
 		
 		assertEquals(result.getUniqueWords(), 8, 0);
 		assertEquals(result.getTotalWords(), 10, 0);
@@ -60,7 +60,7 @@ public class TextMetricsTest {
 		TextMetrics metrics = new TextMetrics(sd, t);
 		TextMetricsResult result = metrics.calculate("This is some some sample text.");
 		
-		System.out.println(result);
+		LOGGER.info(result);
 		
 		assertEquals(result.getUniqueWords(), 5, 0);
 		assertEquals(result.getTotalWords(), 6, 0);
