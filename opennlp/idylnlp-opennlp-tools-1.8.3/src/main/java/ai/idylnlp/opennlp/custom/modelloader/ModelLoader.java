@@ -17,9 +17,11 @@ package ai.idylnlp.opennlp.custom.modelloader;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -150,7 +152,7 @@ public abstract class ModelLoader<T extends BaseModel> {
 
       } else if(fullModelFileName.startsWith("s3://")) {
     	  
-    	  // Download the model from S3.
+    	  LOGGER.info("Downloading model from S3 {}", fullModelFileName);
     	  
     	  AmazonS3URI s3Uri = new AmazonS3URI(fullModelFileName);
     	  
@@ -164,6 +166,11 @@ public abstract class ModelLoader<T extends BaseModel> {
     	  S3ObjectInputStream objectContent = object.getObjectContent();
     	  IOUtils.copy(objectContent, new FileOutputStream(modelFile.getAbsolutePath()));
     			  
+      } else if(fullModelFileName.startsWith("http://") || fullModelFileName.startsWith("https://")) {
+    	  
+    	  LOGGER.info("Downloading model from web {}", fullModelFileName);
+    	  FileUtils.copyURLToFile(new URL(fullModelFileName), modelFile, 60 * 1000, 60 * 1000);
+    	  
       }
 
     }
