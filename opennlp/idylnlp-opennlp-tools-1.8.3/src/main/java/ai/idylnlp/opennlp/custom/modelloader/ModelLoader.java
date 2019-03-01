@@ -16,12 +16,23 @@
 package ai.idylnlp.opennlp.custom.modelloader;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.AmazonS3URI;
+import com.amazonaws.services.s3.model.GetObjectRequest;
+import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
+import com.amazonaws.util.IOUtils;
 
 import ai.idylnlp.model.ModelValidator;
 import ai.idylnlp.model.exceptions.ModelLoaderException;
@@ -137,6 +148,22 @@ public abstract class ModelLoader<T extends BaseModel> {
         // Try to download the model from the zoo.
         idylNlpModelZoo.downloadModel(modelManifest.getModelId(), modelFile);
 
+      } else if(fullModelFileName.startsWith("s3://")) {
+    	  
+    	  // Download the model from S3.
+    	  
+    	  AmazonS3URI s3Uri = new AmazonS3URI(fullModelFileName);
+    	  
+    	  AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
+                  .withRegion(s3Uri.getRegion())
+                  .withCredentials(new ProfileCredentialsProvider())
+                  .build();
+    	  
+    	  GetObjectRequest request = new GetObjectRequest(s3Uri.getBucket(), s3Uri.getKey());
+    	  S3Object object = s3Client.getObject(request);
+    	  S3ObjectInputStream objectContent = object.getObjectContent();
+    	  IOUtils.copy(objectContent, new FileOutputStream(modelFile.getAbsolutePath()));
+    			  
       }
 
     }

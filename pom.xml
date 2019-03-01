@@ -68,6 +68,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<!-- Artifact versions -->
+		<aws.s3.version>1.11.508</aws.s3.version>
 		<beanutils.version>1.9.2</beanutils.version>
 		<commons.cli.version>1.4</commons.cli.version>
 		<commons.collections.version>4.2</commons.collections.version>
