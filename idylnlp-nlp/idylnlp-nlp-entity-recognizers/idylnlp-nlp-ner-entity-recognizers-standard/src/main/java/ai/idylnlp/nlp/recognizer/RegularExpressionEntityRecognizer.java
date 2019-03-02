@@ -83,46 +83,48 @@ public class RegularExpressionEntityRecognizer implements EntityRecognizer {
       Tokenizer tokenizer = WhitespaceTokenizer.INSTANCE;
 
       // tokenize the text into the required OpenNLP format
-            String[] tokens = tokenizer.tokenize(text);
+      String[] tokens = tokenizer.tokenize(text);
 
-            //the values used in these Spans are string character offsets of each token from the sentence beginning
-            Span[] tokenPositionsWithinSentence = tokenizer.tokenizePos(text);
+      //the values used in these Spans are string character offsets of each token from the sentence beginning
+      Span[] tokenPositionsWithinSentence = tokenizer.tokenizePos(text);
 
-            // find the location names in the tokenized text
-            // the values used in these Spans are NOT string character offsets, they are indices into the 'tokens' array
-            RegexNameFinder regexNameFinder = new RegexNameFinder(patterns);
-            Span names[] = regexNameFinder.find(tokens);
+      // find the location names in the tokenized text
+      // the values used in these Spans are NOT string character offsets, they are indices into the 'tokens' array
+      RegexNameFinder regexNameFinder = new RegexNameFinder(patterns);
+      Span names[] = regexNameFinder.find(tokens);
 
-            //for each name that got found, create our corresponding occurrence
-            for (Span name : names) {
+      //for each name that got found, create our corresponding occurrence
+      for (Span name : names) {
 
-                //find offsets relative to the start of the sentence
-                int beginningOfFirstWord = tokenPositionsWithinSentence[name.getStart()].getStart();
+          //find offsets relative to the start of the sentence
+          int beginningOfFirstWord = tokenPositionsWithinSentence[name.getStart()].getStart();
 
-                // -1 because the high end of a Span is noninclusive
-                int endOfLastWord = tokenPositionsWithinSentence[name.getEnd() - 1].getEnd();
+          // -1 because the high end of a Span is noninclusive
+          int endOfLastWord = tokenPositionsWithinSentence[name.getEnd() - 1].getEnd();
 
-                //to get offsets relative to the document as a whole, just add the offset for the sentence itself
-                //int startOffsetInDoc = sentenceSpan.getStart() + beginningOfFirstWord;
-                //int endOffsetInDoc = sentenceSpan.getStart() + endOfLastWord;
+          //to get offsets relative to the document as a whole, just add the offset for the sentence itself
+          //int startOffsetInDoc = sentenceSpan.getStart() + beginningOfFirstWord;
+          //int endOffsetInDoc = sentenceSpan.getStart() + endOfLastWord;
 
-                //look back into the original input string to figure out what the text is that I got a hit on
-                String nameInDocument = text.substring(beginningOfFirstWord, endOfLastWord);
+          //look back into the original input string to figure out what the text is that I got a hit on
+          String nameInDocument = text.substring(beginningOfFirstWord, endOfLastWord);
 
-                // Create a new entity object.
-        Entity entity = new Entity(nameInDocument, 100.0, type, LanguageCode.undefined.getAlpha3().toString());
-        entity.setSpan(new ai.idylnlp.model.entity.Span(name.getStart(), name.getEnd()));
-        entity.setContext(request.getContext());
-        entity.setExtractionDate(System.currentTimeMillis());
+          // Create a new entity object.
+          Entity entity = new Entity(nameInDocument, 100.0, type, LanguageCode.undefined.getAlpha3().toString(),
+     	    request.getContext(), request.getDocumentId());
+        
+          entity.setSpan(new ai.idylnlp.model.entity.Span(name.getStart(), name.getEnd()));
+          entity.setContext(request.getContext());
+          entity.setExtractionDate(System.currentTimeMillis());
 
-        LOGGER.debug("Found entity with text: {}", nameInDocument);
+          LOGGER.debug("Found entity with text: {}", nameInDocument);
 
-        // Add the entity to the list.
-        entities.add(entity);
+          // Add the entity to the list.
+          entities.add(entity);
 
-        LOGGER.trace("Found entity [{}] as a {} with span {}.", nameInDocument, type, name.toString());
+          LOGGER.trace("Found entity [{}] as a {} with span {}.", nameInDocument, type, name.toString());
 
-            }
+      }
 
       long extractionTime = (System.currentTimeMillis() - startTime);
 

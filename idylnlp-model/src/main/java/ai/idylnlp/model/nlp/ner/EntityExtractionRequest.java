@@ -36,6 +36,7 @@ public class EntityExtractionRequest extends PipelineRequest {
   private int confidenceThreshold = 0;
   private LanguageCode languageCode = null;
   private String context = "not-set";
+  private String documentId = "not-set";
   private EntityOrder order = EntityOrder.OCCURRENCE;
   private Location location;
   private DuplicateEntityStrategy duplicateEntityStrategy;
@@ -86,6 +87,17 @@ public class EntityExtractionRequest extends PipelineRequest {
     return this;
   }
 
+  /**
+   * Sets the documentId. This value does not have to be unique.
+   * @param documentId The document ID for the extraction.
+   * @return The {@link EntityExtractionRequest}.
+   */
+  public EntityExtractionRequest withDocumentId(String documentId) {
+    this.documentId = documentId;
+    return this;
+  }
+
+  
   /**
    * Sets the type of entity to extract.
    * @param type The type of entity to extract.
@@ -154,7 +166,8 @@ public class EntityExtractionRequest extends PipelineRequest {
 
     StringBuilder sb = new StringBuilder();
 
-    sb.append("Text: " + text + "; Confidence Threshold: " + confidenceThreshold + "; Context: " + context + "; Language: " + languageCode.getAlpha3().toString() + "; ");
+    sb.append("Text: " + text + "; Confidence Threshold: " + confidenceThreshold + "; Context: " + context + 
+    		"; DocumentID " + documentId + "; Language: " + languageCode.getAlpha3().toString() + "; ");
 
     return sb.toString();
 
@@ -206,6 +219,14 @@ public class EntityExtractionRequest extends PipelineRequest {
    */
   public String getContext() {
     return context;
+  }
+
+  /**
+   * Gets the document ID used for the extraction.
+   * @return The document ID.
+   */
+  public String getDocumentId() {
+    return documentId;
   }
 
   /**

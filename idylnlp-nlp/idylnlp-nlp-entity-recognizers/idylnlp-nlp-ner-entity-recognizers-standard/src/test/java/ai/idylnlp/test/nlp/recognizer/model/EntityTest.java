@@ -112,8 +112,6 @@ public class EntityTest {
   @Test
   public void equalsTest4() {
 
-    Set<Entity> entities = new HashSet<Entity>();
-
     Entity e1 = new Entity();
     e1.setText("jeffrey");
     e1.setConfidence(0.5);
@@ -133,8 +131,8 @@ public class EntityTest {
 
     Set<Entity> entities = new HashSet<Entity>();
 
-    Entity e1 = new Entity("jeffrey", 0.5, "person", "[0, 2)");
-    Entity e2 = new Entity("jeffrey", 0.5, "person", "[0, 2)");
+    Entity e1 = new Entity("jeffrey", 0.5, "person", "[0, 2)", "context", "documentid");
+    Entity e2 = new Entity("jeffrey", 0.5, "person", "[0, 2)", "context", "documentid");
 
     entities.add(e1);
     entities.add(e2);
@@ -149,8 +147,8 @@ public class EntityTest {
 
     Set<Entity> entities = new HashSet<Entity>();
 
-    Entity e1 = new Entity("jeffrey", 0.5, "person", "[0, 2)");
-    Entity e2 = new Entity("john", 0.5, "person", "[0, 2)");
+    Entity e1 = new Entity("jeffrey", 0.5, "person", "[0, 2)", "context", "documentid");
+    Entity e2 = new Entity("john", 0.5, "person", "[0, 2)", "context", "documentid");
 
     entities.add(e1);
     entities.add(e2);

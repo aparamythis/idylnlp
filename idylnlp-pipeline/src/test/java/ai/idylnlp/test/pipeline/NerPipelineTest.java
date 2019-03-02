@@ -57,8 +57,8 @@ public class NerPipelineTest {
   public void removeDuplicateEntities() {
 
     Set<Entity> entities = new HashSet<Entity>();
-    entities.add(new Entity("George Washington", 1.0, "person", "eng"));
-    entities.add(new Entity("George Washington", 0.9607598536046513, "person", "eng"));
+    entities.add(new Entity("George Washington", 1.0, "person", "eng", "context", "documentid"));
+    entities.add(new Entity("George Washington", 0.9607598536046513, "person", "eng", "context", "documentid"));
 
     Set<Entity> noDuplicates = NerPipeline.removeDuplicateEntities(entities);
 
@@ -76,9 +76,9 @@ public class NerPipelineTest {
   public void removeDuplicateEntities1() {
 
     Set<Entity> entities = new HashSet<Entity>();
-    entities.add(new Entity("George", 10, "person", "en"));
-    entities.add(new Entity("George", 25, "person", "en"));
-    entities.add(new Entity("Tom", 50, "person", "en"));
+    entities.add(new Entity("George", 10, "person", "en", "context", "documentid"));
+    entities.add(new Entity("George", 25, "person", "en", "context", "documentid"));
+    entities.add(new Entity("Tom", 50, "person", "en", "context", "documentid"));
 
     Set<Entity> noDuplicates = NerPipeline.removeDuplicateEntities(entities);
 
@@ -102,9 +102,9 @@ public class NerPipelineTest {
   public void removeDuplicateEntities2() {
 
     Set<Entity> entities = new HashSet<Entity>();
-    entities.add(new Entity("George", 10, "person", "en"));
-    entities.add(new Entity("George", 5, "person", "en"));
-    entities.add(new Entity("Tom", 50, "person", "en"));
+    entities.add(new Entity("George", 10, "person", "en", "context", "documentid"));
+    entities.add(new Entity("George", 5, "person", "en", "context", "documentid"));
+    entities.add(new Entity("Tom", 50, "person", "en", "context", "documentid"));
 
     Set<Entity> noDuplicates = NerPipeline.removeDuplicateEntities(entities);
 
@@ -128,9 +128,9 @@ public class NerPipelineTest {
   public void removeDuplicateEntities3() {
 
     Set<Entity> entities = new HashSet<Entity>();
-    entities.add(new Entity("Bill", 10, "person", "en"));
-    entities.add(new Entity("George", 5, "person", "en"));
-    entities.add(new Entity("Tom", 50, "person", "en"));
+    entities.add(new Entity("Bill", 10, "person", "en", "context", "documentid"));
+    entities.add(new Entity("George", 5, "person", "en", "context", "documentid"));
+    entities.add(new Entity("Tom", 50, "person", "en", "context", "documentid"));
 
     Set<Entity> noDuplicates = NerPipeline.removeDuplicateEntities(entities);
 
@@ -142,10 +142,10 @@ public class NerPipelineTest {
   public void removeDuplicateEntities4() {
 
     Set<Entity> entities = new HashSet<Entity>();
-    entities.add(new Entity("George", 10, "person", "en"));
-    entities.add(new Entity("George", 5, "person", "en"));
-    entities.add(new Entity("Tom", 50, "person", "en"));
-    entities.add(new Entity("George", 50, "person", "en"));
+    entities.add(new Entity("George", 10, "person", "en", "context", "documentid"));
+    entities.add(new Entity("George", 5, "person", "en", "context", "documentid"));
+    entities.add(new Entity("Tom", 50, "person", "en", "context", "documentid"));
+    entities.add(new Entity("George", 50, "person", "en", "context", "documentid"));
 
     Set<Entity> noDuplicates = NerPipeline.removeDuplicateEntities(entities);
 

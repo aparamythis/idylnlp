@@ -57,13 +57,15 @@ public class Entity implements Serializable {
    */
   public Entity(Entity entity) {
 
-    setConfidence(entity.getConfidence());
-    setMetadata(entity.getMetadata());
-    setType(entity.getType());
-    setLanguageCode(entity.getLanguageCode());
-    setSpan(entity.getSpan());
-    setText(entity.getText());
-    setUri(entity.getUri());
+	this.confidence = entity.getConfidence();
+    this.metadata = entity.getMetadata();
+	this.type = entity.getType();
+	this.languageCode = entity.getLanguageCode();
+	this.span = entity.getSpan();
+	this.text = entity.getText();
+	this.uri = entity.getUri();
+	this.context = entity.getContext();
+	this.documentId = entity.getDocumentId();
 
   }
 
@@ -73,15 +75,19 @@ public class Entity implements Serializable {
    * @param confidence The confidence the text as determined during the extraction. This will be a decimal value between 0 and 100. A higher value indicates a higher level of confidence.
    * @param type The type of entity.
    * @param languageCode The two-letter ISO language code of the entity.
+   * @param context The context.
+   * @param documentId The document ID.
    */
-  public Entity(String text, double confidence, String type, String languageCode) {
+  public Entity(String text, double confidence, String type, String languageCode, String context, String documentId) {
 
     this.text = text;
     this.confidence = confidence;
     this.type = type;
     this.metadata = new HashMap<String, String>();
     this.languageCode = languageCode;
-
+    this.context = context;
+    this.documentId = documentId;
+    
   }
 
   /**
@@ -91,8 +97,11 @@ public class Entity implements Serializable {
    * @param span The location of the entity in the text.
    * @param type The type of entity.
    * @param languageCode The two-letter ISO language code of the entity.
+   * @param context The context.
+   * @param documentId The document ID.
    */
-  public Entity(String text, double confidence, String type, Span span, String languageCode) {
+  public Entity(String text, double confidence, String type, Span span, String languageCode,
+		  String context, String documentId) {
 
     this.text = text;
     this.confidence = confidence;
@@ -100,7 +109,9 @@ public class Entity implements Serializable {
     this.type = type;
     this.metadata = new HashMap<String, String>();
     this.languageCode = languageCode;
-
+    this.context = context;
+    this.documentId = documentId;
+    
   }
 
   /**

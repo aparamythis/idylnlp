@@ -64,6 +64,7 @@ public class PhoneNumberEntityRecognizer implements EntityRecognizer {
         entity.setType(ENTITY_TYPE);
         entity.setConfidence(100.0);
         entity.setContext(request.getContext());
+        entity.setDocumentId(request.getDocumentId());;
         entity.setExtractionDate(System.currentTimeMillis());
 
         // TODO: Set the token-based span correctly.

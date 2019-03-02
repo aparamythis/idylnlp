@@ -33,9 +33,9 @@ public class EntityComparatorTest {
   public void sortByConfidence() {
 
     Set<Entity> entities = new HashSet<Entity>();
-    entities.add(new Entity("jeffrey", 40, "person", "[0,2)"));
-    entities.add(new Entity("george", 20, "person", "[0,2)"));
-    entities.add(new Entity("bob", 70, "person", "[0,2)"));
+    entities.add(new Entity("jeffrey", 40, "person", "[0,2)", "context", "documentid"));
+    entities.add(new Entity("george", 20, "person", "[0,2)", "context", "documentid"));
+    entities.add(new Entity("bob", 70, "person", "[0,2)", "context", "documentid"));
 
     Set<Entity> sortedEntities = EntityComparator.sort(entities, EntityComparator.Order.CONFIDENCE);
 
@@ -51,9 +51,9 @@ public class EntityComparatorTest {
   public void sortByText() {
 
     Set<Entity> entities = new HashSet<Entity>();
-    entities.add(new Entity("jeffrey", 40, "person", "[0,2)"));
-    entities.add(new Entity("george", 20, "person", "[0,2)"));
-    entities.add(new Entity("bob", 70, "person", "[0,2)"));
+    entities.add(new Entity("jeffrey", 40, "person", "[0,2)", "context", "documentid"));
+    entities.add(new Entity("george", 20, "person", "[0,2)", "context", "documentid"));
+    entities.add(new Entity("bob", 70, "person", "[0,2)", "context", "documentid"));
 
     Set<Entity> sortedEntities = EntityComparator.sort(entities, EntityComparator.Order.TEXT);
 
@@ -69,9 +69,9 @@ public class EntityComparatorTest {
   public void invalidSort() {
 
     Set<Entity> entities = new HashSet<Entity>();
-    entities.add(new Entity("jeffrey", 40, "person", "[0,2)"));
-    entities.add(new Entity("george", 20, "person", "[0,2)"));
-    entities.add(new Entity("bob", 70, "person", "[0,2)"));
+    entities.add(new Entity("jeffrey", 40, "person", "[0,2)", "context", "documentid"));
+    entities.add(new Entity("george", 20, "person", "[0,2)", "context", "documentid"));
+    entities.add(new Entity("bob", 70, "person", "[0,2)", "context", "documentid"));
 
     EntityComparator.sort(entities, EntityComparator.Order.valueOf("test"));
 

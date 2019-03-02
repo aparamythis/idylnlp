@@ -79,6 +79,7 @@ public class DateEntityRecognizer implements EntityRecognizer {
         entity.setType(ENTITY_TYPE);
         entity.getMetadata().put("time", String.valueOf(date.getTime()));
         entity.setContext(entityExtractionRequest.getContext());
+        entity.setDocumentId(entityExtractionRequest.getDocumentId());
         entity.setExtractionDate(System.currentTimeMillis());
         entity.setLanguageCode(LanguageCode.en.getAlpha3().toString());
         

@@ -166,9 +166,9 @@ public class DictionaryEntityRecognizer implements EntityRecognizer {
             int start = Collections.indexOfSubList(Arrays.asList(ngrams), Arrays.asList(d));
 
             // Create a new entity object.
-            final Entity entity = new Entity(ngram, 100.0, type, languageCode.getAlpha3().toString());
+            final Entity entity = new Entity(ngram, 100.0, type, languageCode.getAlpha3().toString(),
+            		request.getContext(), request.getDocumentId());
             entity.setSpan(new ai.idylnlp.model.entity.Span(start, start + d.length - 1));
-            entity.setContext(request.getContext());
             entity.setExtractionDate(System.currentTimeMillis());
 
             LOGGER.debug("Found entity with text: {}", ngram);

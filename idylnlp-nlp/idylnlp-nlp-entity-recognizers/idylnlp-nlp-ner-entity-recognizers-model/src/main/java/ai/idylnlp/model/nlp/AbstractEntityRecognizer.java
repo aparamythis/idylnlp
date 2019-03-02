@@ -121,44 +121,46 @@ public abstract class AbstractEntityRecognizer<T extends AbstractEntityRecognize
           for (opennlp.tools.util.Span name : reducedNames) {
 
             // Check the confidence threshold for extraction.
-              if(configuration.getConfidenceFilter().test(
-                  modelManifest.getModelId(), probabilities[x], normalizedConfidenceThreshold)) {
+            if(configuration.getConfidenceFilter().test(
+                modelManifest.getModelId(), probabilities[x], normalizedConfidenceThreshold)) {
 
-                String entityText = extractedEntities[x];
+              String entityText = extractedEntities[x];
 
-                  // Sanitize the entity.
-                  entityText = sentenceSanitizer.sanitize(entityText);
+                // Sanitize the entity.
+                entityText = sentenceSanitizer.sanitize(entityText);
 
-                  // Round the confidence value.
-          double roundedConfidence = Precision.round(probabilities[x], 2, BigDecimal.ROUND_HALF_DOWN);
+                // Round the confidence value.
+                double roundedConfidence = Precision.round(probabilities[x], 2, BigDecimal.ROUND_HALF_DOWN);
 
-                  // Create a new entity object.
-          Entity entity = new Entity(entityText, roundedConfidence, modelManifest.getType(), modelManifest.getLanguageCode().getAlpha3().toString());
+                // Create a new entity object.
+                Entity entity = new Entity(entityText, roundedConfidence, modelManifest.getType(), 
+                		modelManifest.getLanguageCode().getAlpha3().toString(), entityExtractionRequest.getContext(),
+                		entityExtractionRequest.getDocumentId());
 
-          // TODO: Remove last two arguments.
-          entity.setSpan(new ai.idylnlp.model.entity.Span(name.getStart(), name.getEnd()));
-          entity.setContext(entityExtractionRequest.getContext());
-          entity.setExtractionDate(System.currentTimeMillis());
+                // TODO: Remove last two arguments.
+                entity.setSpan(new ai.idylnlp.model.entity.Span(name.getStart(), name.getEnd()));
+                entity.setContext(entityExtractionRequest.getContext());
+                entity.setExtractionDate(System.currentTimeMillis());
 
-          if(entityExtractionRequest.isIncludeModelFileNameInMetadata()) {
+                if(entityExtractionRequest.isIncludeModelFileNameInMetadata()) {
 
-            // TODO: Put the model filename in the entity metadata.
-            entity.getMetadata().put(METADATA_MODEL_FILENAME_KEY, modelManifest.getModelFileName());
+                  // TODO: Put the model filename in the entity metadata.
+                  entity.getMetadata().put(METADATA_MODEL_FILENAME_KEY, modelManifest.getModelFileName());
 
-          }
+                }
 
-          LOGGER.debug("Found entity with text: " + entityText + "; confidence: " + probabilities[x] + "; language: " + modelManifest.getLanguageCode());
+                LOGGER.debug("Found entity with text: " + entityText + "; confidence: " + probabilities[x] + "; language: " + modelManifest.getLanguageCode());
 
-          // Process the statistics for the entity.
-          if(configuration.getStatsReporter() != null) {
-            configuration.getStatsReporter().recordEntityExtraction(entity, modelManifest);
-          }
+               // Process the statistics for the entity.
+               if(configuration.getStatsReporter() != null) {
+                 configuration.getStatsReporter().recordEntityExtraction(entity, modelManifest);
+               }
 
-          entities.add(entity);
+                entities.add(entity);
+
+            }
 
         }
-
-          }
 
     } catch (Exception ex) {
 
