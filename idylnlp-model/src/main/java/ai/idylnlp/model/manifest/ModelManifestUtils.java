@@ -49,7 +49,6 @@ public class ModelManifestUtils {
   public static final String MANIFEST_MODEL_SUBTYPE = "model.subtype";
   public static final String MANIFEST_MODEL_FILENAME = "model.filename";
   public static final String MANIFEST_LANGUAGE_CODE = "language.code";
-  public static final String MANIFEST_ENCRYPTION_KEY = "encryption.key";
   public static final String MANIFEST_CREATOR_VERSION = "creator.version";
   public static final String MANIFEST_MODEL_SOURCE = "model.source";
   public static final String MANIFEST_VECTORS_SOURCE = "vectors.source";
@@ -83,7 +82,6 @@ public class ModelManifestUtils {
     lines.add(MANIFEST_MODEL_SUBTYPE + "=" + modelManifest.getSubtype().toLowerCase());
     lines.add(MANIFEST_MODEL_FILENAME + "=" + modelManifest.getModelFileName());
     lines.add(MANIFEST_LANGUAGE_CODE + "=" + modelManifest.getLanguageCode());
-    lines.add(MANIFEST_ENCRYPTION_KEY + "=" + modelManifest.getEncryptionKey());
     lines.add(MANIFEST_CREATOR_VERSION + "=" + modelManifest.getCreatorVersion());
     lines.add(MANIFEST_MODEL_SOURCE + "=" + modelManifest.getSource());
     lines.add(MANIFEST_GENERATION + "=" + 1);
@@ -107,12 +105,11 @@ public class ModelManifestUtils {
    * @param subtype The model subtype (dictionary).
    * @param modelFile The filename of the model without any path.
    * @param languageCode The {@link LanguageCode}.
-   * @param encryptionKey The model's encryption key.
    * @param creatorVersion The version of the implementing application.
    * @param source A URL where the model can be downloaded.
    * @throws IOException Thrown if an existing file cannot be deleted or if the manifest file cannot be written.
    */
-  public static void generateStandardModelManifest(File manifestFile, String modelId, String name, String type, String subtype, String modelFile, LanguageCode languageCode, String encryptionKey, String creatorVersion, String source) throws IOException {
+  public static void generateStandardModelManifest(File manifestFile, String modelId, String name, String type, String subtype, String modelFile, LanguageCode languageCode, String creatorVersion, String source) throws IOException {
 
     // If the manifest file already exists delete it.
     if(manifestFile.exists()) {
@@ -129,7 +126,6 @@ public class ModelManifestUtils {
     lines.add(MANIFEST_MODEL_SUBTYPE + "=" + subtype.toLowerCase());
     lines.add(MANIFEST_MODEL_FILENAME + "=" + modelFile);
     lines.add(MANIFEST_LANGUAGE_CODE + "=" + languageCode.getAlpha3().toString().toLowerCase());
-    lines.add(MANIFEST_ENCRYPTION_KEY + "=" + encryptionKey);
     lines.add(MANIFEST_CREATOR_VERSION + "=" + creatorVersion);
     lines.add(MANIFEST_MODEL_SOURCE + "=" + source);
     lines.add(MANIFEST_GENERATION + "=" + ModelManifest.FIRST_GENERATION);
@@ -302,7 +298,6 @@ public class ModelManifestUtils {
 
         // Read the contents of the manifest.
         final String modelSubtype = properties.getProperty(MANIFEST_MODEL_SUBTYPE, StandardModelManifest.DEFAULT_SUBTYPE);
-        final String encryptionKey = properties.getProperty(MANIFEST_ENCRYPTION_KEY);
 
         int beamSize = Integer.valueOf(properties.getProperty(MANIFEST_BEAM_SIZE, String.valueOf(StandardModelManifest.DEFAULT_BEAM_SIZE)));
 
@@ -313,14 +308,13 @@ public class ModelManifestUtils {
         }
 
         // Validate properties specific to a standard model manifest.
-        // All properties except encryption.key are required. Make sure each one is present.
 
         if(beamSize <= 0) {
           LOGGER.warn("The beam size value of {} in {} is invalid.", beamSize, fullManifestPath);
           return null;
         }
 
-        return new StandardModelManifest.ModelManifestBuilder(modelId, name, modelFileName, code, encryptionKey, modelType,
+        return new StandardModelManifest.ModelManifestBuilder(modelId, name, modelFileName, code, modelType,
             modelSubtype, creatorVersion, source, beamSize, properties).build();
 
       } else if(generation == ModelManifest.SECOND_GENERATION) {

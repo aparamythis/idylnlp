@@ -33,7 +33,6 @@ public class ModelManifestTest extends ObjectTest<StandardModelManifest> {
     ModelManifestBuilder builder = new ModelManifestBuilder();
     builder.setBeamSize(5);
     builder.setCreatorVersion("version-1.2.0");
-    builder.setEncryptionKey("encryption");
     builder.setLanguageCode(LanguageCode.de);
     builder.setModelFileName("model.bin");
     builder.setModelId("model-id");
@@ -44,7 +43,6 @@ public class ModelManifestTest extends ObjectTest<StandardModelManifest> {
 
     assertEquals(5, modelManifest.getBeamSize());
     assertEquals("version-1.2.0", modelManifest.getCreatorVersion());
-    assertEquals("encryption", modelManifest.getEncryptionKey());
     assertEquals("deu", modelManifest.getLanguageCode().getAlpha3().toString());
     assertEquals("model.bin", modelManifest.getModelFileName());
     assertEquals("model-id", modelManifest.getModelId());
@@ -58,7 +56,6 @@ public class ModelManifestTest extends ObjectTest<StandardModelManifest> {
 
     ModelManifestBuilder builder = new ModelManifestBuilder();
     builder.setCreatorVersion("version-1.2.0");
-    builder.setEncryptionKey("encryption");
     builder.setLanguageCode(LanguageCode.de);
     builder.setModelFileName("model.bin");
     builder.setModelId("model-id");
@@ -69,7 +66,6 @@ public class ModelManifestTest extends ObjectTest<StandardModelManifest> {
 
     assertEquals(StandardModelManifest.DEFAULT_BEAM_SIZE, modelManifest.getBeamSize());
     assertEquals("version-1.2.0", modelManifest.getCreatorVersion());
-    assertEquals("encryption", modelManifest.getEncryptionKey());
     assertEquals("deu", modelManifest.getLanguageCode().getAlpha3().toString());
     assertEquals("model.bin", modelManifest.getModelFileName());
     assertEquals("model-id", modelManifest.getModelId());

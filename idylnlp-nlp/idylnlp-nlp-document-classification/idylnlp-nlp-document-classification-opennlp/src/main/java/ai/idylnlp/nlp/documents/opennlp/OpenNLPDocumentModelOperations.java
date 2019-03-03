@@ -26,8 +26,6 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ai.idylnlp.opennlp.custom.encryption.OpenNLPEncryptionFactory;
-
 import ai.idylnlp.model.Constants;
 import ai.idylnlp.model.nlp.documents.DocumentClassificationFile;
 import ai.idylnlp.model.nlp.documents.DocumentClassificationTrainingResponse;
@@ -71,9 +69,6 @@ public class OpenNLPDocumentModelOperations implements DocumentClassifierModelOp
 
       BufferedOutputStream modelOut = null;
 
-      // Set the encryption key.
-      OpenNLPEncryptionFactory.getDefault().setKey(request.getEncryptionKey());
-
       // The generated model's ID. Assigned during the training process.
       String modelId = "";
 
@@ -93,9 +88,6 @@ public class OpenNLPDocumentModelOperations implements DocumentClassifierModelOp
         if (modelOut != null) {
           modelOut.close();
         }
-
-        // Clear the encryption key.
-        OpenNLPEncryptionFactory.getDefault().clearKey();
 
       }
 

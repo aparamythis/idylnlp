@@ -57,7 +57,6 @@
 					<xs:complexType>
 						<xs:attribute name="name" type="xs:string" use="required" />
 						<xs:attribute name="file" type="xs:string" use="required" />
-						<xs:attribute name="encryptionkey" type="xs:string" default="none" />
 						<xs:attribute name="language" type="xs:string" use="required" />
 						<xs:attribute name="type" type="xs:string" use="required" />
 					</xs:complexType>

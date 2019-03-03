@@ -23,7 +23,6 @@ import java.io.IOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ai.idylnlp.opennlp.custom.encryption.OpenNLPEncryptionFactory;
 import com.neovisionaries.i18n.LanguageCode;
 
 import ai.idylnlp.model.Constants;
@@ -74,7 +73,6 @@ public class PartOfSpeechModelOperations implements ModelTrainingOperations, Mod
 
     final String modelFile = reader.getTrainingDefinition().getModel().getFile();
     final String language = reader.getTrainingDefinition().getModel().getLanguage();
-    final String encryptionKey = reader.getTrainingDefinition().getModel().getEncryptionkey();
     final int cutOff = reader.getTrainingDefinition().getAlgorithm().getCutoff().intValue();
     final int iterations = reader.getTrainingDefinition().getAlgorithm().getIterations().intValue();
     final int threads = reader.getTrainingDefinition().getAlgorithm().getThreads().intValue();
@@ -84,7 +82,7 @@ public class PartOfSpeechModelOperations implements ModelTrainingOperations, Mod
 
     if(algorithm.equalsIgnoreCase(TrainingAlgorithm.PERCEPTRON.getName())) {
 
-      return ops.trainPerceptron(subjectOfTraining, modelFile, languageCode, encryptionKey, cutOff, iterations);
+      return ops.trainPerceptron(subjectOfTraining, modelFile, languageCode, cutOff, iterations);
 
     } else if(algorithm.equalsIgnoreCase(TrainingAlgorithm.MAXENT_QN.getName())) {
 
@@ -93,7 +91,7 @@ public class PartOfSpeechModelOperations implements ModelTrainingOperations, Mod
       int m = reader.getTrainingDefinition().getAlgorithm().getM().intValue();
       int max = reader.getTrainingDefinition().getAlgorithm().getMax().intValue();
 
-      return ops.trainMaxEntQN(subjectOfTraining, modelFile, languageCode, encryptionKey, cutOff, iterations, threads, l1, l2, m, max);
+      return ops.trainMaxEntQN(subjectOfTraining, modelFile, languageCode, cutOff, iterations, threads, l1, l2, m, max);
 
     } else {
 
@@ -104,12 +102,9 @@ public class PartOfSpeechModelOperations implements ModelTrainingOperations, Mod
   }
 
   @Override
-  public AccuracyEvaluationResult separateDataEvaluate(SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluation, String modelFileName, String encryptionKey) throws IOException {
+  public AccuracyEvaluationResult separateDataEvaluate(SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluation, String modelFileName) throws IOException {
 
     LOGGER.info("Doing model evaluation using separate training data.");
-
-    // Set the encryption key.
-    OpenNLPEncryptionFactory.getDefault().setKey(encryptionKey);
 
     InputStreamFactory inputStreamFactory = new MarkableFileInputStreamFactory(new File(SubjectOfTrainingOrEvaluation.getInputFile()));
     ObjectStream<POSSample> sample = new WordTagSampleStream(new PlainTextByLineStream(inputStreamFactory, Constants.ENCODING_UTF8));
@@ -124,15 +119,12 @@ public class PartOfSpeechModelOperations implements ModelTrainingOperations, Mod
 
     evaluator.evaluate(sample);
 
-    // Clear the encryption key.
-    OpenNLPEncryptionFactory.getDefault().clearKey();
-
     return new AccuracyEvaluationResult(evaluator.getWordAccuracy(), evaluator.getWordCount());
 
   }
 
   @Override
-  public String trainMaxEntQN(SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluation, String modelFile, LanguageCode language, String encryptionKey, int cutOff, int iterations, int threads, double l1, double l2, int m, int max) throws IOException {
+  public String trainMaxEntQN(SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluation, String modelFile, LanguageCode language, int cutOff, int iterations, int threads, double l1, double l2, int m, int max) throws IOException {
 
     LOGGER.info("Beginning parts-of-speech model training. Output model will be: " + modelFile);
 
@@ -153,9 +145,6 @@ public class PartOfSpeechModelOperations implements ModelTrainingOperations, Mod
 
     POSTaggerFactory posTaggerFactory = new POSTaggerFactory();
 
-    // Set the encryption key.
-    OpenNLPEncryptionFactory.getDefault().setKey(encryptionKey);
-
     POSModel model = POSTaggerME.train(language.getAlpha3().toString(), sampleStream, trainParams, posTaggerFactory);
 
     BufferedOutputStream modelOut = null;
@@ -175,9 +164,6 @@ public class PartOfSpeechModelOperations implements ModelTrainingOperations, Mod
 
       lineStream.close();
 
-      // Clear the encryption key.
-      OpenNLPEncryptionFactory.getDefault().clearKey();
-
     }
 
     return modelId;
@@ -185,7 +171,7 @@ public class PartOfSpeechModelOperations implements ModelTrainingOperations, Mod
   }
 
   @Override
-  public String trainPerceptron(SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluation, String modelFile, LanguageCode language, String encryptionKey, int cutOff, int iterations) throws IOException {
+  public String trainPerceptron(SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluation, String modelFile, LanguageCode language, int cutOff, int iterations) throws IOException {
 
     LOGGER.info("Beginning parts-of-speech model training. Output model will be: " + modelFile);
 
@@ -200,9 +186,6 @@ public class PartOfSpeechModelOperations implements ModelTrainingOperations, Mod
 
     POSTaggerFactory posTaggerFactory = new POSTaggerFactory();
 
-    // Set the encryption key.
-    OpenNLPEncryptionFactory.getDefault().setKey(encryptionKey);
-
     POSModel model = POSTaggerME.train(language.getAlpha3().toString(), sampleStream, trainParams, posTaggerFactory);
 
     BufferedOutputStream modelOut = null;
@@ -221,9 +204,6 @@ public class PartOfSpeechModelOperations implements ModelTrainingOperations, Mod
       }
 
       lineStream.close();
-
-      // Clear the encryption key.
-      OpenNLPEncryptionFactory.getDefault().clearKey();
 
     }
 

@@ -2,7 +2,7 @@
 <trainingdefinition xmlns="http://www.mtnfog.com">
 	<algorithm name="perceptron" cutoff="1" iterations="1" threads="2" />
 	<trainingdata file="conll2003-eng.train" format="conll2003" />
-	<model file="/tmp/model-out.bin" encryptionkey="" language="en" type="person" />	
+	<model file="/tmp/model-out.bin" language="en" type="person" />	
 	<features>
 		<generators>
 			<cache>

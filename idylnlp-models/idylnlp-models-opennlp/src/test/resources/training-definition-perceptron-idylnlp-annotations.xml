@@ -2,7 +2,7 @@
 <trainingdefinition xmlns="http://www.mtnfog.com">
 	<algorithm name="perceptron" cutoff="1" iterations="1" threads="2" />
 	<trainingdata file="train-person-idyl-format.txt" format="idylnlp" annotations="train-person-idyl-format-annotations.txt" />
-	<model file="/tmp/model-out.bin" encryptionkey="" language="en" type="person" />	
+	<model file="/tmp/model-out.bin" language="en" type="person" />	
 	<features>
 		<generators>
 			<cache>

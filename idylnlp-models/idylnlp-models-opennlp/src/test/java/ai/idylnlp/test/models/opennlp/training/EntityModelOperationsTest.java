@@ -30,7 +30,6 @@ import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import ai.idylnlp.opennlp.custom.encryption.OpenNLPEncryptionFactory;
 import com.neovisionaries.i18n.LanguageCode;
 
 import ai.idylnlp.model.nlp.subjects.CoNLL2003SubjectOfTrainingOrEvaluation;
@@ -96,10 +95,8 @@ public class EntityModelOperationsTest {
     }
 
     // Verify that the UUID returned matches what's in the model's properties.
-    OpenNLPEncryptionFactory.getDefault().setKey(reader.getTrainingDefinition().getModel().getEncryptionkey());
     TokenNameFinderModel model = new TokenNameFinderModelLoader().load(new File(reader.getTrainingDefinition().getModel().getFile()));
     assertEquals(modelId, model.getManifestProperty("model.id"));
-    OpenNLPEncryptionFactory.getDefault().clearKey();
 
     // -------------
 
@@ -109,7 +106,7 @@ public class EntityModelOperationsTest {
 
     // Do the cross validation.
     EntityModelOperations ops = new EntityModelOperations("person", null);
-    FMeasureModelValidationResult result = ops.separateDataEvaluate(subjectOfTrainingOrEvaluationEvaluation, modelOutputFile, "");
+    FMeasureModelValidationResult result = ops.separateDataEvaluate(subjectOfTrainingOrEvaluationEvaluation, modelOutputFile);
 
     assertTrue(result.getFmeasure() != null);
     assertTrue(result.getFmeasure().getPrecision() > 0);
@@ -153,10 +150,8 @@ public class EntityModelOperationsTest {
     }
 
     // Verify that the UUID returned matches what's in the model's properties.
-    OpenNLPEncryptionFactory.getDefault().setKey(reader.getTrainingDefinition().getModel().getEncryptionkey());
     TokenNameFinderModel model = new TokenNameFinderModelLoader().load(new File(reader.getTrainingDefinition().getModel().getFile()));
     assertEquals(modelId, model.getManifestProperty("model.id"));
-    OpenNLPEncryptionFactory.getDefault().clearKey();
 
   }
 
@@ -170,7 +165,6 @@ public class EntityModelOperationsTest {
 
     reader.getTrainingDefinition().getTrainingdata().setFile(TRAINING_DATA_PATH + File.separator + reader.getTrainingDefinition().getTrainingdata().getFile());
     reader.getTrainingDefinition().getModel().setFile(File.createTempFile("model", ".bin").getAbsolutePath());
-    reader.getTrainingDefinition().getModel().setEncryptionkey("test");
 
     String modelId = EntityModelOperations.train(reader);
 
@@ -187,10 +181,8 @@ public class EntityModelOperationsTest {
     }
 
     // Verify that the UUID returned matches what's in the model's properties.
-    OpenNLPEncryptionFactory.getDefault().setKey(reader.getTrainingDefinition().getModel().getEncryptionkey());
     TokenNameFinderModel model = new TokenNameFinderModelLoader().load(new File(reader.getTrainingDefinition().getModel().getFile()));
     assertEquals(modelId, model.getManifestProperty("model.id"));
-    OpenNLPEncryptionFactory.getDefault().clearKey();
 
   }
 
@@ -220,10 +212,8 @@ public class EntityModelOperationsTest {
     }
 
     // Verify that the UUID returned matches what's in the model's properties.
-    OpenNLPEncryptionFactory.getDefault().setKey(reader.getTrainingDefinition().getModel().getEncryptionkey());
     TokenNameFinderModel model = new TokenNameFinderModelLoader().load(new File(reader.getTrainingDefinition().getModel().getFile()));
     assertEquals(modelId, model.getManifestProperty("model.id"));
-    OpenNLPEncryptionFactory.getDefault().clearKey();
 
   }
 
@@ -292,17 +282,16 @@ public class EntityModelOperationsTest {
     File temp = File.createTempFile("model", ".bin");
 
     final String modelOutputFile = temp.getAbsolutePath();
-    final String encryptionKey = "none";
 
     SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluation = new DefaultSubjectOfTrainingOrEvaluation(ENGLISH_PERSON_TRAINING_FILE);
 
     // First, create a model.
-    ops.trainPerceptron(SubjectOfTrainingOrEvaluation, modelOutputFile, LanguageCode.en, encryptionKey, 0, 5);
+    ops.trainPerceptron(SubjectOfTrainingOrEvaluation, modelOutputFile, LanguageCode.en, 0, 5);
 
     SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluationEvaluation = new DefaultSubjectOfTrainingOrEvaluation(ENGLISH_PERSON_SEPARATE_DATA_EVALUATION_FILE);
 
     // Do the cross validation.
-    FMeasureModelValidationResult result = ops.separateDataEvaluate(SubjectOfTrainingOrEvaluationEvaluation, modelOutputFile, encryptionKey);
+    FMeasureModelValidationResult result = ops.separateDataEvaluate(SubjectOfTrainingOrEvaluationEvaluation, modelOutputFile);
 
     // Output will be like: Precision: 0.7; Recall: 0.30434782608695654; F-Measure: 0.42424242424242425
     LOGGER.info(result.getFmeasure().toString());
@@ -324,18 +313,17 @@ public class EntityModelOperationsTest {
     File temp = File.createTempFile("model", ".bin");
 
     final String modelOutputFile = temp.getAbsolutePath();
-    final String encryptionKey = "none";
 
     SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluation = new DefaultSubjectOfTrainingOrEvaluation(ENGLISH_PERSON_TRAINING_FILE);
 
     // First, create a model.
-    ops.trainMaxEntQN(SubjectOfTrainingOrEvaluation, modelOutputFile, LanguageCode.en, encryptionKey, 0, 5, 1,
+    ops.trainMaxEntQN(SubjectOfTrainingOrEvaluation, modelOutputFile, LanguageCode.en, 0, 5, 1,
         QNTrainer.L1COST_DEFAULT, QNTrainer.L2COST_DEFAULT, QNTrainer.M_DEFAULT, QNTrainer.MAX_FCT_EVAL_DEFAULT);
 
     SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluationEvaluation = new DefaultSubjectOfTrainingOrEvaluation(ENGLISH_PERSON_SEPARATE_DATA_EVALUATION_FILE);
 
     // Do the cross validation.
-    FMeasureModelValidationResult result = ops.separateDataEvaluate(SubjectOfTrainingOrEvaluationEvaluation, modelOutputFile, encryptionKey);
+    FMeasureModelValidationResult result = ops.separateDataEvaluate(SubjectOfTrainingOrEvaluationEvaluation, modelOutputFile);
 
     // Output will be like: Precision: 0.7; Recall: 0.30434782608695654; F-Measure: 0.42424242424242425
     LOGGER.info(result.getFmeasure().toString());
@@ -397,8 +385,6 @@ public class EntityModelOperationsTest {
   @Test
   public void trainPerceptron() throws IOException {
 
-    String encryptionKey = "";
-
     String xmlFeatureGenerators = FileUtils.readFileToString(new File(DEFAULT_FEATURE_GENERATOR_XML));
 
     File temp = File.createTempFile("model", ".bin");
@@ -409,7 +395,7 @@ public class EntityModelOperationsTest {
     SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluation = new DefaultSubjectOfTrainingOrEvaluation(ENGLISH_PERSON_TRAINING_FILE);
 
     EntityModelOperations ops = new EntityModelOperations("person", xmlFeatureGenerators);
-    String modelId = ops.trainPerceptron(SubjectOfTrainingOrEvaluation, modelOutputFile, LanguageCode.en, encryptionKey, 0, 5);
+    String modelId = ops.trainPerceptron(SubjectOfTrainingOrEvaluation, modelOutputFile, LanguageCode.en, 0, 5);
 
     LOGGER.info("The generated model's ID is {}.", modelId);
 

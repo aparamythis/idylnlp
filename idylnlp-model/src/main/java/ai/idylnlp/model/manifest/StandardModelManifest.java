@@ -16,7 +16,6 @@
 package ai.idylnlp.model.manifest;
 
 import java.util.Properties;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import com.neovisionaries.i18n.LanguageCode;
@@ -41,7 +40,6 @@ public class StandardModelManifest extends ModelManifest implements Comparable<S
   public static final String POS = "pos";
   public static final String LEMMA = "lemma";
 
-  protected String encryptionKey = StringUtils.EMPTY;
   protected String subtype = DEFAULT_SUBTYPE;
   protected int beamSize = DEFAULT_BEAM_SIZE;
 
@@ -51,7 +49,6 @@ public class StandardModelManifest extends ModelManifest implements Comparable<S
     private String name;
     private String modelFileName;
     private LanguageCode languageCode;
-    private String encryptionKey;
     private String type;
     private String subtype;
     private String creatorVersion;
@@ -64,7 +61,7 @@ public class StandardModelManifest extends ModelManifest implements Comparable<S
     }
 
     public ModelManifestBuilder(String modelId, String name, String modelFileName, LanguageCode languageCode,
-        String encryptionKey, String type, String subtype, String creatorVersion, String source, int beamSize,
+        String type, String subtype, String creatorVersion, String source, int beamSize,
         Properties properties) {
 
       // TODO: Make sure none of these values are null.
@@ -73,7 +70,6 @@ public class StandardModelManifest extends ModelManifest implements Comparable<S
       this.name = name;
       this.modelFileName = modelFileName;
       this.languageCode = languageCode;
-      this.encryptionKey = encryptionKey;
       this.type = type;
       this.subtype = subtype;
       this.creatorVersion = creatorVersion;
@@ -84,7 +80,7 @@ public class StandardModelManifest extends ModelManifest implements Comparable<S
     }
 
     public ModelManifestBuilder(String modelId, String name, String modelFileName, LanguageCode languageCode,
-        String encryptionKey, String type, String subtype, String creatorVersion, String source,
+        String type, String subtype, String creatorVersion, String source,
         Properties properties) {
 
       // TODO: Make sure none of these values are null.
@@ -93,7 +89,6 @@ public class StandardModelManifest extends ModelManifest implements Comparable<S
       this.name = name;
       this.modelFileName = modelFileName;
       this.languageCode = languageCode;
-      this.encryptionKey = encryptionKey;
       this.type = type;
       this.subtype = subtype;
       this.creatorVersion = creatorVersion;
@@ -103,7 +98,7 @@ public class StandardModelManifest extends ModelManifest implements Comparable<S
     }
 
     public ModelManifestBuilder(String modelId, String name, String modelFileName, LanguageCode languageCode,
-        String encryptionKey, String type, String creatorVersion, String source,
+        String type, String creatorVersion, String source,
         Properties properties) {
 
       // TODO: Make sure none of these values are null.
@@ -112,7 +107,6 @@ public class StandardModelManifest extends ModelManifest implements Comparable<S
       this.name = name;
       this.modelFileName = modelFileName;
       this.languageCode = languageCode;
-      this.encryptionKey = encryptionKey;
       this.type = type;
       this.subtype = DEFAULT_SUBTYPE;
       this.creatorVersion = creatorVersion;
@@ -135,10 +129,6 @@ public class StandardModelManifest extends ModelManifest implements Comparable<S
 
     public void setLanguageCode(LanguageCode languageCode) {
       this.languageCode = languageCode;
-    }
-
-    public void setEncryptionKey(String encryptionKey) {
-      this.encryptionKey = encryptionKey;
     }
 
     public void setType(String type) {
@@ -171,19 +161,18 @@ public class StandardModelManifest extends ModelManifest implements Comparable<S
 
     public StandardModelManifest build() {
 
-      return new StandardModelManifest(modelId, modelFileName, languageCode, encryptionKey, type, subtype, name, creatorVersion, source, beamSize, properties);
+      return new StandardModelManifest(modelId, modelFileName, languageCode, type, subtype, name, creatorVersion, source, beamSize, properties);
 
     }
 
   }
 
   private StandardModelManifest(String modelId, String modelFileName, LanguageCode languageCode,
-      String encryptionKey, String type, String subtype, String name, String creatorVersion, String source, int beamSize,
+      String type, String subtype, String name, String creatorVersion, String source, int beamSize,
       Properties properties) {
 
     super(modelId, modelFileName, languageCode, type, name, creatorVersion, source, ModelManifest.FIRST_GENERATION, properties);
 
-    this.encryptionKey = encryptionKey;
     this.subtype = subtype;
     this.beamSize = beamSize;
     this.properties = properties;
@@ -197,7 +186,6 @@ public class StandardModelManifest extends ModelManifest implements Comparable<S
       .append(modelId)
       .append(modelFileName)
       .append(name)
-      .append(encryptionKey)
       .append(languageCode)
       .append(type)
       .append(subtype)
@@ -220,7 +208,6 @@ public class StandardModelManifest extends ModelManifest implements Comparable<S
             .append(modelId, other.getModelId())
             .append(modelFileName, other.getModelFileName())
             .append(name, other.getName())
-            .append(encryptionKey, other.getEncryptionKey())
             .append(languageCode, other.getLanguageCode())
             .append(type, other.getType())
             .append(subtype, other.getSubtype())
@@ -255,10 +242,6 @@ public class StandardModelManifest extends ModelManifest implements Comparable<S
 
   public LanguageCode getLanguageCode() {
     return languageCode;
-  }
-
-  public String getEncryptionKey() {
-    return encryptionKey;
   }
 
   public String getType() {

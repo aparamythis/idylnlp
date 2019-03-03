@@ -17,13 +17,12 @@
 
 package opennlp.tools.ml.model;
 
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.zip.GZIPOutputStream;
-
-import ai.idylnlp.opennlp.custom.EncryptedDataOutputStream;
 
 import opennlp.tools.ml.maxent.io.BinaryGISModelWriter;
 import opennlp.tools.ml.maxent.io.BinaryQNModelWriter;
@@ -46,14 +45,14 @@ public class GenericModelWriter extends AbstractModelWriter {
       os = new FileOutputStream(file);
     }
 
-    init(model, new EncryptedDataOutputStream(os));
+    init(model, new DataOutputStream(os));
   }
 
-  public GenericModelWriter(AbstractModel model, EncryptedDataOutputStream dos) {
+  public GenericModelWriter(AbstractModel model, DataOutputStream dos) {
     init(model, dos);
   }
 
-  private void init(AbstractModel model, EncryptedDataOutputStream dos) {
+  private void init(AbstractModel model, DataOutputStream dos) {
     if (model.getModelType() == ModelType.Perceptron) {
       delegateWriter = new BinaryPerceptronModelWriter(model, dos);
     } else if (model.getModelType() == ModelType.Maxent) {

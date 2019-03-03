@@ -18,6 +18,7 @@
 package opennlp.tools.util.model;
 
 import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -26,8 +27,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-
-import ai.idylnlp.opennlp.custom.EncryptedDataOutputStream;
 
 import opennlp.tools.ml.maxent.GISTrainer;
 import opennlp.tools.ml.model.AbstractModel;
@@ -62,7 +61,7 @@ public final class ModelUtil {
     Objects.requireNonNull(out, "out parameter must not be null");
 
     GenericModelWriter modelWriter = new GenericModelWriter((AbstractModel) model,
-        new EncryptedDataOutputStream(new OutputStream() {
+        new DataOutputStream(new OutputStream() {
           @Override
           public void write(int b) throws IOException {
             out.write(b);

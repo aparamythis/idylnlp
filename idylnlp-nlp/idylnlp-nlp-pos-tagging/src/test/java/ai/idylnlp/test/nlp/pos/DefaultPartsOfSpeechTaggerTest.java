@@ -54,7 +54,6 @@ public class DefaultPartsOfSpeechTaggerTest {
     builder.setModelId(UUID.randomUUID().toString());
     builder.setLanguageCode(LanguageCode.en);
     builder.setModelFileName(POS_MODEL);
-    builder.setEncryptionKey("");
     builder.setType(StandardModelManifest.POS);
 
     StandardModelManifest modelManifest = builder.build();
@@ -89,7 +88,6 @@ public class DefaultPartsOfSpeechTaggerTest {
     builder.setModelId(UUID.randomUUID().toString());
     builder.setLanguageCode(LanguageCode.en);
     builder.setModelFileName(POS_MODEL);
-    builder.setEncryptionKey("");
     builder.setType(StandardModelManifest.POS);
 
     StandardModelManifest modelManifest = builder.build();
@@ -123,7 +121,6 @@ public class DefaultPartsOfSpeechTaggerTest {
     builder.setModelId(UUID.randomUUID().toString());
     builder.setLanguageCode(LanguageCode.en);
     builder.setModelFileName(POS_MODEL);
-    builder.setEncryptionKey("");
     builder.setType(StandardModelManifest.POS);
 
     StandardModelManifest modelManifest = builder.build();

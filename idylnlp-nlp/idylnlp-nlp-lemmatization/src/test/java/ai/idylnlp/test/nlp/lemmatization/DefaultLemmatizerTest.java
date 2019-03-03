@@ -73,7 +73,6 @@ public class DefaultLemmatizerTest {
     builder.setModelId(UUID.randomUUID().toString());
     builder.setLanguageCode(LanguageCode.en);
     builder.setModelFileName(LEMMA_MODEL);
-    builder.setEncryptionKey("");
     builder.setType(StandardModelManifest.LEMMA);
 
     StandardModelManifest modelManifest = builder.build();

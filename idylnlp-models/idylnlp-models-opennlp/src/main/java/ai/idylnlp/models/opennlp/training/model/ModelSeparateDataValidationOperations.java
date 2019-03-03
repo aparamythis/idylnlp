@@ -33,10 +33,9 @@ public interface ModelSeparateDataValidationOperations<T extends EvaluationResul
    * Performs model validation using separate data. This validation requires a built model file.
    * @param subjectOfTraining The {@link SubjectOfTrainingOrEvaluation}.
    * @param modelFileName The full path to the model file.
-   * @param encryptionKey The model's encryption key.
    * @return The results of the validation as an {@link FMeasure}.
    * @throws IOException Thrown if any of the input files cannot be read.
    */
-  public T separateDataEvaluate(SubjectOfTrainingOrEvaluation subjectOfTraining, String modelFileName, String encryptionKey) throws IOException;
+  public T separateDataEvaluate(SubjectOfTrainingOrEvaluation subjectOfTraining, String modelFileNam) throws IOException;
 
 }

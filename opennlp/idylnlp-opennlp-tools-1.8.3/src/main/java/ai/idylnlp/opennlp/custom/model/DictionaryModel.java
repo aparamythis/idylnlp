@@ -23,7 +23,6 @@ import java.io.IOException;
 
 import org.apache.commons.lang3.StringUtils;
 
-import ai.idylnlp.opennlp.custom.encryption.OpenNLPEncryptionFactory;
 import ai.idylnlp.model.manifest.StandardModelManifest;
 import opennlp.tools.dictionary.Dictionary;
 import opennlp.tools.namefind.DictionaryNameFinder;
@@ -79,10 +78,6 @@ public class DictionaryModel extends BaseModel {
 
         String line;
         while ((line = br.readLine()) != null) {
-
-          if(!StringUtils.isEmpty(modelManifest.getEncryptionKey())) {
-            line = OpenNLPEncryptionFactory.getDefault().decrypt(line, modelManifest.getEncryptionKey());
-          }
 
           final String[] tokenized = tokenizer.tokenize(line);
 

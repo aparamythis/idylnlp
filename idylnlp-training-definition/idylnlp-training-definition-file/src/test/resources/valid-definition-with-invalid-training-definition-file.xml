@@ -2,7 +2,7 @@
 <trainingdefinition xmlns="http://www.mtnfog.com">
 	<algorithm name="perceptron" cutoff="1" iterations="1" threads="1" />
 	<trainingdata file="input.txt" format="idyl" annotations="does-not-exist.txt" />
-	<model file="model.bin" name="person-english" encryptionkey="enckey" language="en" type="person" />	
+	<model file="model.bin" name="person-english" language="en" type="person" />	
 	<features>
 		<generators>
 			<cache>

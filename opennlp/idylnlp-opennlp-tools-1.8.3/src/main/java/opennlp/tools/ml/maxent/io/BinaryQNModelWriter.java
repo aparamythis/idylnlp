@@ -17,17 +17,16 @@
 
 package opennlp.tools.ml.maxent.io;
 
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.zip.GZIPOutputStream;
 
-import ai.idylnlp.opennlp.custom.EncryptedDataOutputStream;
-
 import opennlp.tools.ml.model.AbstractModel;
 
 public class BinaryQNModelWriter extends QNModelWriter {
-  protected EncryptedDataOutputStream output;
+  protected DataOutputStream output;
 
   /**
    * Constructor which takes a GISModel and a File and prepares itself to write
@@ -44,9 +43,9 @@ public class BinaryQNModelWriter extends QNModelWriter {
     super(model);
 
     if (f.getName().endsWith(".gz")) {
-      output = new EncryptedDataOutputStream(new GZIPOutputStream(new FileOutputStream(f)));
+      output = new DataOutputStream(new GZIPOutputStream(new FileOutputStream(f)));
     } else {
-      output = new EncryptedDataOutputStream(new FileOutputStream(f));
+      output = new DataOutputStream(new FileOutputStream(f));
     }
   }
 
@@ -59,13 +58,13 @@ public class BinaryQNModelWriter extends QNModelWriter {
    * @param dos
    *          The stream which will be used to persist the model.
    */
-  public BinaryQNModelWriter(AbstractModel model, EncryptedDataOutputStream dos) {
+  public BinaryQNModelWriter(AbstractModel model, DataOutputStream dos) {
     super(model);
     output = dos;
   }
 
   public void writeUTF(String s) throws IOException {
-    output.writeEncryptedUTF(s);
+    output.writeUTF(s);
   }
 
   public void writeInt(int i) throws IOException {

@@ -17,12 +17,11 @@
 
 package opennlp.tools.ml.perceptron;
 
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.zip.GZIPOutputStream;
-
-import ai.idylnlp.opennlp.custom.EncryptedDataOutputStream;
 
 import opennlp.tools.ml.model.AbstractModel;
 
@@ -30,7 +29,7 @@ import opennlp.tools.ml.model.AbstractModel;
  * Model writer that saves models in binary format.
  */
 public class BinaryPerceptronModelWriter extends PerceptronModelWriter {
-  private EncryptedDataOutputStream output;
+  private DataOutputStream output;
 
   /**
    * Constructor which takes a GISModel and a File and prepares itself to
@@ -45,11 +44,11 @@ public class BinaryPerceptronModelWriter extends PerceptronModelWriter {
     super(model);
 
     if (f.getName().endsWith(".gz")) {
-      output = new EncryptedDataOutputStream(
+      output = new DataOutputStream(
           new GZIPOutputStream(new FileOutputStream(f)));
     }
     else {
-      output = new EncryptedDataOutputStream(new FileOutputStream(f));
+      output = new DataOutputStream(new FileOutputStream(f));
     }
   }
 
@@ -60,13 +59,13 @@ public class BinaryPerceptronModelWriter extends PerceptronModelWriter {
    * @param model The GISModel which is to be persisted.
    * @param dos The stream which will be used to persist the model.
    */
-  public BinaryPerceptronModelWriter(AbstractModel model, EncryptedDataOutputStream dos) {
+  public BinaryPerceptronModelWriter(AbstractModel model, DataOutputStream dos) {
     super(model);
     output = dos;
   }
 
   public void writeUTF(String s) throws java.io.IOException {
-    output.writeEncryptedUTF(s);
+    output.writeUTF(s);
   }
 
   public void writeInt(int i) throws java.io.IOException {

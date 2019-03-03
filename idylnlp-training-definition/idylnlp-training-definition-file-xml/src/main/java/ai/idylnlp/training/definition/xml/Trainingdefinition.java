@@ -68,7 +68,6 @@ import javax.xml.bind.annotation.XmlType;
  *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *                 &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *                 &lt;attribute name="file" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
- *                 &lt;attribute name="encryptionkey" type="{http://www.w3.org/2001/XMLSchema}string" default="none" /&gt;
  *                 &lt;attribute name="language" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *                 &lt;attribute name="type" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *               &lt;/restriction&gt;
@@ -904,7 +903,6 @@ public class Trainingdefinition {
      *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
      *       &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
      *       &lt;attribute name="file" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
-     *       &lt;attribute name="encryptionkey" type="{http://www.w3.org/2001/XMLSchema}string" default="none" /&gt;
      *       &lt;attribute name="language" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
      *       &lt;attribute name="type" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
      *     &lt;/restriction&gt;
@@ -922,8 +920,6 @@ public class Trainingdefinition {
         protected String name;
         @XmlAttribute(name = "file", required = true)
         protected String file;
-        @XmlAttribute(name = "encryptionkey")
-        protected String encryptionkey;
         @XmlAttribute(name = "language", required = true)
         protected String language;
         @XmlAttribute(name = "type", required = true)
@@ -975,34 +971,6 @@ public class Trainingdefinition {
          */
         public void setFile(String value) {
             this.file = value;
-        }
-
-        /**
-         * Gets the value of the encryptionkey property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
-         */
-        public String getEncryptionkey() {
-            if (encryptionkey == null) {
-                return "none";
-            } else {
-                return encryptionkey;
-            }
-        }
-
-        /**
-         * Sets the value of the encryptionkey property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
-         */
-        public void setEncryptionkey(String value) {
-            this.encryptionkey = value;
         }
 
         /**

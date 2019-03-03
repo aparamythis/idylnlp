@@ -33,7 +33,7 @@ public class OpenNLPEntityRecognizerConfigurationTest {
   @Test
   public void test1() {
 
-    StandardModelManifest modelManifest = new StandardModelManifest.ModelManifestBuilder("modelId", "name", "modelFileName", LanguageCode.en, "", StandardModelManifest.ENTITY, StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
+    StandardModelManifest modelManifest = new StandardModelManifest.ModelManifestBuilder("modelId", "name", "modelFileName", LanguageCode.en, StandardModelManifest.ENTITY, StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
 
     OpenNLPEntityRecognizerConfiguration config = new Builder().build();
     config.addEntityModel("person", LanguageCode.en, modelManifest);
@@ -52,8 +52,8 @@ public class OpenNLPEntityRecognizerConfigurationTest {
   @Test
   public void test2() {
 
-    StandardModelManifest modelManifest1 = new StandardModelManifest.ModelManifestBuilder("modelId1", "name", "modelFileName1", LanguageCode.en, "", StandardModelManifest.ENTITY, StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
-    StandardModelManifest modelManifest2 = new StandardModelManifest.ModelManifestBuilder("modelId2", "name", "modelFileName2", LanguageCode.en, "", StandardModelManifest.ENTITY, StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
+    StandardModelManifest modelManifest1 = new StandardModelManifest.ModelManifestBuilder("modelId1", "name", "modelFileName1", LanguageCode.en, StandardModelManifest.ENTITY, StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
+    StandardModelManifest modelManifest2 = new StandardModelManifest.ModelManifestBuilder("modelId2", "name", "modelFileName2", LanguageCode.en, StandardModelManifest.ENTITY, StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
 
     OpenNLPEntityRecognizerConfiguration config = new Builder().build();
     config.addEntityModel("person", LanguageCode.en, modelManifest1);
@@ -73,8 +73,8 @@ public class OpenNLPEntityRecognizerConfigurationTest {
   @Test
   public void test3() {
 
-    StandardModelManifest modelManifest1 = new StandardModelManifest.ModelManifestBuilder("modelId1", "name", "modelFileName1", LanguageCode.en, "", StandardModelManifest.ENTITY, StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
-    StandardModelManifest modelManifest2 = new StandardModelManifest.ModelManifestBuilder("modelId1", "name", "modelFileName1", LanguageCode.en, "", StandardModelManifest.ENTITY, StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
+    StandardModelManifest modelManifest1 = new StandardModelManifest.ModelManifestBuilder("modelId1", "name", "modelFileName1", LanguageCode.en, StandardModelManifest.ENTITY, StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
+    StandardModelManifest modelManifest2 = new StandardModelManifest.ModelManifestBuilder("modelId1", "name", "modelFileName1", LanguageCode.en, StandardModelManifest.ENTITY, StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
 
     OpenNLPEntityRecognizerConfiguration config = new Builder().build();
     config.addEntityModel("person", LanguageCode.en, modelManifest1);

@@ -40,7 +40,7 @@ public class ModelManifestUtilsTest {
     File manifestFile = File.createTempFile("model", "manifest");
 
     StandardModelManifest modelManifest = new StandardModelManifest.ModelManifestBuilder("modelid", "name", "filename", LanguageCode.en,
-        "encryptionkey", "type", "entity", "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
+        "type", "entity", "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
 
     ModelManifestUtils.generateStandardModelManifest(modelManifest, manifestFile);
 
@@ -52,7 +52,6 @@ public class ModelManifestUtilsTest {
     assertTrue(lines.contains(ModelManifestUtils.MANIFEST_MODEL_TYPE + "=" + "type"));
     assertTrue(lines.contains(ModelManifestUtils.MANIFEST_MODEL_FILENAME + "=" + "filename"));
     assertTrue(lines.contains(ModelManifestUtils.MANIFEST_LANGUAGE_CODE + "=" + "en"));
-    assertTrue(lines.contains(ModelManifestUtils.MANIFEST_ENCRYPTION_KEY + "=" + "encryptionkey"));
 
     IOUtils.closeQuietly(is);
 
@@ -64,7 +63,7 @@ public class ModelManifestUtilsTest {
     File manifestFile = File.createTempFile("model", "manifest");
 
     ModelManifestUtils.generateStandardModelManifest(manifestFile, "modelid", "name", "type", "entity", "filename", LanguageCode.en,
-        "encryptionkey", "1.0.0", "");
+        "1.0.0", "");
 
     InputStream is = new FileInputStream(manifestFile);
 
@@ -74,7 +73,6 @@ public class ModelManifestUtilsTest {
     assertTrue(lines.contains(ModelManifestUtils.MANIFEST_MODEL_TYPE + "=" + "type"));
     assertTrue(lines.contains(ModelManifestUtils.MANIFEST_MODEL_FILENAME + "=" + "filename"));
     assertTrue(lines.contains(ModelManifestUtils.MANIFEST_LANGUAGE_CODE + "=" + "eng"));
-    assertTrue(lines.contains(ModelManifestUtils.MANIFEST_ENCRYPTION_KEY + "=" + "encryptionkey"));
 
     IOUtils.closeQuietly(is);
 
@@ -86,7 +84,7 @@ public class ModelManifestUtilsTest {
     File manifestFile = File.createTempFile("model", "manifest");
 
     StandardModelManifest modelManifest = new StandardModelManifest.ModelManifestBuilder("modelid", "name", "filename", LanguageCode.en,
-        "encryptionkey", "type", "entity", "1.0.0", "source", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();;
+        "type", "entity", "1.0.0", "source", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();;
 
     ModelManifestUtils.generateStandardModelManifest(modelManifest, manifestFile);
 
@@ -106,7 +104,7 @@ public class ModelManifestUtilsTest {
     File manifestFile = File.createTempFile("model", "manifest");
 
     StandardModelManifest modelManifest = new StandardModelManifest.ModelManifestBuilder("modelid", "", "filename", LanguageCode.en,
-        "encryptionkey", "type", "entity", "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();;
+        "type", "entity", "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();;
 
     ModelManifestUtils.generateStandardModelManifest(modelManifest, manifestFile);
 

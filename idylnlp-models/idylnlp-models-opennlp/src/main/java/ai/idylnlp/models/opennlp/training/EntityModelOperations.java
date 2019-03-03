@@ -29,7 +29,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ai.idylnlp.opennlp.custom.encryption.OpenNLPEncryptionFactory;
 import com.neovisionaries.i18n.LanguageCode;
 
 import ai.idylnlp.model.Constants;
@@ -87,7 +86,6 @@ public class EntityModelOperations implements ModelTrainingOperations, ModelSepa
 
     final String modelFile = reader.getTrainingDefinition().getModel().getFile();
     final String language = reader.getTrainingDefinition().getModel().getLanguage();
-    final String encryptionKey = reader.getTrainingDefinition().getModel().getEncryptionkey();
     final int cutOff = reader.getTrainingDefinition().getAlgorithm().getCutoff().intValue();
     final int iterations = reader.getTrainingDefinition().getAlgorithm().getIterations().intValue();
     final int threads = reader.getTrainingDefinition().getAlgorithm().getThreads().intValue();
@@ -97,7 +95,7 @@ public class EntityModelOperations implements ModelTrainingOperations, ModelSepa
 
     if(algorithm.equalsIgnoreCase(TrainingAlgorithm.PERCEPTRON.getName())) {
 
-      return ops.trainPerceptron(subjectOfTraining, modelFile, languageCode, encryptionKey, cutOff, iterations);
+      return ops.trainPerceptron(subjectOfTraining, modelFile, languageCode, cutOff, iterations);
 
     } else if(algorithm.equalsIgnoreCase(TrainingAlgorithm.MAXENT_QN.getName())) {
 
@@ -106,7 +104,7 @@ public class EntityModelOperations implements ModelTrainingOperations, ModelSepa
       int m = reader.getTrainingDefinition().getAlgorithm().getM().intValue();
       int max = reader.getTrainingDefinition().getAlgorithm().getMax().intValue();
 
-      return ops.trainMaxEntQN(subjectOfTraining, modelFile, languageCode, encryptionKey, cutOff, iterations, threads, l1, l2, m, max);
+      return ops.trainMaxEntQN(subjectOfTraining, modelFile, languageCode, cutOff, iterations, threads, l1, l2, m, max);
 
     } else {
 
@@ -253,14 +251,11 @@ public class EntityModelOperations implements ModelTrainingOperations, ModelSepa
   }
 
   @Override
-  public FMeasureModelValidationResult separateDataEvaluate(SubjectOfTrainingOrEvaluation subjectOfTraining, String modelFileName, String encryptionKey) throws IOException {
+  public FMeasureModelValidationResult separateDataEvaluate(SubjectOfTrainingOrEvaluation subjectOfTraining, String modelFileName) throws IOException {
 
     LOGGER.info("Doing model evaluation using separate training data.");
 
     ObjectStream<NameSample> sampleStream = ObjectStreamUtils.getObjectStream(subjectOfTraining);
-
-    // Set the encryption key.
-    OpenNLPEncryptionFactory.getDefault().setKey(encryptionKey);
 
     TokenNameFinderModel model = new TokenNameFinderModel(new File(modelFileName));
     NameFinderME nameFinderME = new NameFinderME(model);
@@ -268,9 +263,6 @@ public class EntityModelOperations implements ModelTrainingOperations, ModelSepa
     TokenNameFinderEvaluator evaluator = new TokenNameFinderEvaluator(nameFinderME);
 
     evaluator.evaluate(sampleStream);
-
-    // Clear the encryption key.
-    OpenNLPEncryptionFactory.getDefault().clearKey();
 
     final FMeasure fmeasure = new FMeasure(evaluator.getFMeasure().getPrecisionScore(),
         evaluator.getFMeasure().getRecallScore(), evaluator.getFMeasure().getFMeasure());
@@ -280,7 +272,7 @@ public class EntityModelOperations implements ModelTrainingOperations, ModelSepa
   }
 
   @Override
-  public String trainPerceptron(SubjectOfTrainingOrEvaluation subjectOfTraining, String modelFile, LanguageCode language, String encryptionKey, int cutOff, int iterations) throws IOException {
+  public String trainPerceptron(SubjectOfTrainingOrEvaluation subjectOfTraining, String modelFile, LanguageCode language, int cutOff, int iterations) throws IOException {
 
     LOGGER.info("Beginning entity model training. Output model will be: {}", modelFile);
 
@@ -299,9 +291,6 @@ public class EntityModelOperations implements ModelTrainingOperations, ModelSepa
 
     TokenNameFinderFactory tokenNameFinderFactory = TokenNameFinderFactory.create(
             TokenNameFinderFactory.class.getName(), featureGeneratorBytes, resources, sequenceCodec);
-
-    // Set the encryption key.
-    OpenNLPEncryptionFactory.getDefault().setKey(encryptionKey);
 
     // Create the model.
     TokenNameFinderModel model = NameFinderME.train(language.getAlpha3().toString(), type, sampleStream, trainParams, tokenNameFinderFactory);
@@ -326,9 +315,6 @@ public class EntityModelOperations implements ModelTrainingOperations, ModelSepa
         modelOut.close();
       }
 
-      // Clear the encryption key.
-      OpenNLPEncryptionFactory.getDefault().clearKey();
-
     }
 
     return modelId;
@@ -336,7 +322,7 @@ public class EntityModelOperations implements ModelTrainingOperations, ModelSepa
   }
 
   @Override
-  public String trainMaxEntQN(SubjectOfTrainingOrEvaluation subjectOfTraining, String modelFile, LanguageCode language, String encryptionKey, int cutOff, int iterations, int threads, double l1, double l2, int m, int max) throws IOException {
+  public String trainMaxEntQN(SubjectOfTrainingOrEvaluation subjectOfTraining, String modelFile, LanguageCode language, int cutOff, int iterations, int threads, double l1, double l2, int m, int max) throws IOException {
 
     LOGGER.info("Beginning entity model training with {} threads. Output model will be: {}", threads, modelFile);
 
@@ -362,9 +348,6 @@ public class EntityModelOperations implements ModelTrainingOperations, ModelSepa
     TokenNameFinderFactory tokenNameFinderFactory = TokenNameFinderFactory.create(
             TokenNameFinderFactory.class.getName(), featureGeneratorBytes, resources, sequenceCodec);
 
-    // Set the encryption key.
-    OpenNLPEncryptionFactory.getDefault().setKey(encryptionKey);
-
     // Create the model.
     TokenNameFinderModel model = NameFinderME.train(language.getAlpha3().toString(), type, sampleStream, trainParams, tokenNameFinderFactory);
 
@@ -387,9 +370,6 @@ public class EntityModelOperations implements ModelTrainingOperations, ModelSepa
       if (modelOut != null) {
         modelOut.close();
       }
-
-      // Clear the encryption key.
-      OpenNLPEncryptionFactory.getDefault().clearKey();
 
     }
 

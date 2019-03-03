@@ -46,7 +46,7 @@ public class LocalModelLoaderTest {
     final String modelId = "53121889-2d0f-412a-be67-476ce4a69843";
 
     StandardModelManifest modelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MODEL_FILE_NAME,
-        LanguageCode.en, "", "person", "entity", "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
+        LanguageCode.en, "person", "entity", "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
 
     LocalModelLoader<TokenNameFinderModel> loader = new LocalModelLoader<TokenNameFinderModel>(modelValidator, MODEL_PATH);
     TokenNameFinderModel model = loader.getModel(modelManifest, TokenNameFinderModel.class);

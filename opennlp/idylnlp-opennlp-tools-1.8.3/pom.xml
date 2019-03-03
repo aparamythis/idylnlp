@@ -56,12 +56,6 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
-
-		<dependency>
-			<groupId>ai.idylnlp</groupId>
-			<artifactId>idylnlp-opennlp-custom</artifactId>
-			<version>${project.version}</version>
-		</dependency>
 		
 		<dependency>
 			<groupId>commons-io</groupId>

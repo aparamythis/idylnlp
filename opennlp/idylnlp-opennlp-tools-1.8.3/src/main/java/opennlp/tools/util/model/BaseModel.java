@@ -19,6 +19,7 @@ package opennlp.tools.util.model;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -38,8 +39,6 @@ import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
-
-import ai.idylnlp.opennlp.custom.EncryptedDataOutputStream;
 
 import opennlp.tools.util.BaseToolFactory;
 import opennlp.tools.util.InvalidFormatException;
@@ -654,8 +653,8 @@ public abstract class BaseModel implements ArtifactProvider, Serializable {
   // Serializable and remove the writeObject and readObject methods.
   // This will allow the usage of final for fields that should not change.
 
-  private void writeObject(EncryptedDataOutputStream out) throws IOException {
-    out.writeEncryptedUTF(componentName);
+  private void writeObject(DataOutputStream out) throws IOException {
+    out.writeUTF(componentName);
     this.serialize(out);
   }
 

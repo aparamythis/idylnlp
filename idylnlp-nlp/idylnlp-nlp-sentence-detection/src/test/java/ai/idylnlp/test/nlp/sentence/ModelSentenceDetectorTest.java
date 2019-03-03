@@ -48,7 +48,7 @@ public class ModelSentenceDetectorTest {
     String sentenceModelPath = new File("src/test/resources/").getAbsolutePath();
 
     StandardModelManifest modelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", "/en-sent.bin",
-        LanguageCode.en, "", StandardModelManifest.SENTENCE, "", "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
+        LanguageCode.en, StandardModelManifest.SENTENCE, "", "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
 
     SentenceDetectorModelLoader modelLoader = new SentenceDetectorModelLoader(modelValidator, sentenceModelPath, modelManifest);
 
@@ -78,7 +78,7 @@ public class ModelSentenceDetectorTest {
     String sentenceModelPath = new File("src/test/resources/").getAbsolutePath();
 
     StandardModelManifest modelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", "/en-sent.bin",
-        LanguageCode.en, "", StandardModelManifest.SENTENCE, "", "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
+        LanguageCode.en, StandardModelManifest.SENTENCE, "", "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
 
     SentenceDetectorModelLoader modelLoader = new SentenceDetectorModelLoader(modelValidator, sentenceModelPath, modelManifest);
 
