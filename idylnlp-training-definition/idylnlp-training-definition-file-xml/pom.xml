@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>ai.idylnlp</groupId>
 		<artifactId>idylnlp-training-definition</artifactId>
-		<version>1.2.0</version>
+		<version>1.3.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>idylnlp-training-definition-file-xml</artifactId>
 	<name>idylnlp-training-definition-file-xml</name>
