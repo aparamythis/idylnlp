@@ -1,9 +1,0 @@
-# person model manifest
-# Copyright 2016 Mountain Fog, Inc.
-# Contact support@mtnfog.com or visit www.mtnfog.com for assistance.
-entity.class=person
-model.filename=mtnfog-en-person-test.bin
-model.version=1.0
-language.code=en
-license.key=testing
-encryption.key=idylami589012347

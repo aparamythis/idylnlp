@@ -61,7 +61,7 @@ public class OpenNLPEntityRecognizerTest {
 
   private static final LocalConfidenceFilterSerializer serializer = new LocalConfidenceFilterSerializer();
   private static final ConfidenceFilter confidenceFilter = new HeuristicConfidenceFilter(serializer);
-
+  
   @Test
   public void extract() throws EntityFinderException, ModelLoaderException, LanguageDetectionException, ValidationException {
 
@@ -69,16 +69,10 @@ public class OpenNLPEntityRecognizerTest {
 
     when(modelValidator.validate(any(ModelManifest.class))).thenReturn(true);
 
-    // Adding two language models here but should only get an English entity back.
-
     StandardModelManifest englishModelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MTNFOG_EN_PERSON_MODEL, LanguageCode.en, "person", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
-    StandardModelManifest germanModelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MTNFOG_DE_PERSON_MODEL, LanguageCode.de, "person", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
 
     Set<StandardModelManifest> englishModelManifests = new HashSet<StandardModelManifest>();
     englishModelManifests.add(englishModelManifest);
-
-    Set<StandardModelManifest> germanModelManifests = new HashSet<StandardModelManifest>();
-    germanModelManifests.add(germanModelManifest);
 
     LocalModelLoader<TokenNameFinderModel> entityModelLoader = new LocalModelLoader<TokenNameFinderModel>(modelValidator, MODEL_PATH);
 
@@ -86,7 +80,6 @@ public class OpenNLPEntityRecognizerTest {
 
     Map<LanguageCode, Set<StandardModelManifest>> languagesToManifests = new HashMap<>();
     languagesToManifests.put(LanguageCode.en, englishModelManifests);
-    languagesToManifests.put(LanguageCode.de, germanModelManifests);
 
     models.put("person", languagesToManifests);
 
@@ -101,7 +94,7 @@ public class OpenNLPEntityRecognizerTest {
     final String input = "George Washington was president.";
     final String[] text = input.split(" ");
 
-    // EntityExtractionRequest defaults to English if not explicity set.
+    // EntityExtractionRequest defaults to English if not explicitly set.
     EntityExtractionRequest request = new EntityExtractionRequest(text);
 
     EntityExtractionResponse response = recognizer.extractEntities(request);
