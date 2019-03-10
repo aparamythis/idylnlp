@@ -80,8 +80,6 @@ public class TokenModelOperationsTest {
   @Test
   public void trainMaxEntQN() throws IOException {
 
-    String encryptionKey = "";
-
     File temp = File.createTempFile("model", ".bin");
     String modelOutputFile = temp.getAbsolutePath();
 
@@ -90,7 +88,7 @@ public class TokenModelOperationsTest {
     SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluation = new DefaultSubjectOfTrainingOrEvaluation(INPUT_FILE);
 
     TokenModelOperations ops = new TokenModelOperations();
-    String modelId = ops.trainMaxEntQN(SubjectOfTrainingOrEvaluation, modelOutputFile, LanguageCode.en, encryptionKey, 5, 1, 1, 1, 1, 1, 1);
+    String modelId = ops.trainMaxEntQN(SubjectOfTrainingOrEvaluation, modelOutputFile, LanguageCode.en, 5, 1, 1, 1, 1, 1, 1);
 
     LOGGER.info("The generated model's ID is {}.", modelId);
 
@@ -113,8 +111,6 @@ public class TokenModelOperationsTest {
   @Test
   public void trainPerceptron() throws IOException {
 
-    String encryptionKey = "";
-
     File temp = File.createTempFile("model", ".bin");
     String modelOutputFile = temp.getAbsolutePath();
 
@@ -123,7 +119,7 @@ public class TokenModelOperationsTest {
     SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluation = new DefaultSubjectOfTrainingOrEvaluation(INPUT_FILE);
 
     TokenModelOperations ops = new TokenModelOperations();
-    String modelId = ops.trainPerceptron(SubjectOfTrainingOrEvaluation, modelOutputFile, LanguageCode.en, encryptionKey, 0, 1);
+    String modelId = ops.trainPerceptron(SubjectOfTrainingOrEvaluation, modelOutputFile, LanguageCode.en, 0, 1);
 
     LOGGER.info("The generated model's ID is {}.", modelId);
 

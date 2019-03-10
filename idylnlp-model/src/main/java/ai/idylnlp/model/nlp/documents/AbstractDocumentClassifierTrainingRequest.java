@@ -28,7 +28,6 @@ import com.neovisionaries.i18n.LanguageCode;
 public class AbstractDocumentClassifierTrainingRequest {
 
   private File trainingFile;
-  private String encryptionKey;
   private LanguageCode languageCode;
 
   public AbstractDocumentClassifierTrainingRequest(File trainingFile, LanguageCode languageCode) {
@@ -44,14 +43,6 @@ public class AbstractDocumentClassifierTrainingRequest {
 
   public void setTrainingFile(File trainingFile) {
     this.trainingFile = trainingFile;
-  }
-
-  public String getEncryptionKey() {
-    return encryptionKey;
-  }
-
-  public void setEncryptionKey(String encryptionKey) {
-    this.encryptionKey = encryptionKey;
   }
 
   public LanguageCode getLanguageCode() {

@@ -19,14 +19,13 @@ package opennlp.tools.ml.maxent.quasinewton;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import ai.idylnlp.opennlp.custom.EncryptedDataOutputStream;
 
 import opennlp.tools.ml.AbstractTrainer;
 import opennlp.tools.ml.model.AbstractModel;
@@ -106,7 +105,7 @@ public class QNTrainerTest {
 
     ByteArrayOutputStream modelBytes = new ByteArrayOutputStream();
     GenericModelWriter modelWriter = new GenericModelWriter(trainedModel,
-        new EncryptedDataOutputStream(modelBytes));
+        new DataOutputStream(modelBytes));
     modelWriter.persist();
     modelWriter.close();
 

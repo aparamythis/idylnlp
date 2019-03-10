@@ -24,10 +24,6 @@ import java.io.InputStream;
 import java.util.StringTokenizer;
 import java.util.zip.GZIPInputStream;
 
-import org.apache.commons.lang3.StringUtils;
-
-import ai.idylnlp.opennlp.custom.encryption.OpenNLPEncryptionFactory;
-
 public abstract class AbstractModelReader {
 
   /**
@@ -81,20 +77,7 @@ public abstract class AbstractModelReader {
    */
   public String readUTF() throws java.io.IOException {
 
-    String s = dataReader.readUTF();
-
-    if(StringUtils.isNotEmpty(OpenNLPEncryptionFactory.getDefault().getKey())) {
-
-      try {
-        // Decrypt the read string.
-        s = OpenNLPEncryptionFactory.getDefault().decrypt(s);
-      } catch (Exception ex) {
-        throw new RuntimeException("Unable to load the model. Verify that your license key and encryption key are correct.", ex);
-      }
-
-    }
-
-    return s;
+    return dataReader.readUTF();
 
   }
 

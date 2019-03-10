@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <trainingdefinition language="en" type="person">
-	<encryptionkey>enckey</encryptionkey>
 	<trainingdata file="" format="opennlp" annotations="ann.txt" />
 	<model file="" />
 	<algorithm>

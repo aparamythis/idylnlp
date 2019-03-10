@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <trainingdefinition xmlns="http://www.mtnfog.com">
 	<language>en</language>
-	<type>person</type>
-	<encryptionkey>enckey</encryptionkey>
+	<type>person</type>>
 	<trainingdata file="" format="opennlp" annotations="ann.txt" />
 	<model file="" />
 	<algorithm>

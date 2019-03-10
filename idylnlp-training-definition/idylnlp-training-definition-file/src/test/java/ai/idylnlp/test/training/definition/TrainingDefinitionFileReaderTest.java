@@ -36,21 +36,6 @@ public class TrainingDefinitionFileReaderTest {
   private static final String PATH = new File("src/test/resources/").getAbsolutePath();
 
   @Test
-  public void validDefinition1Test() throws TrainingDefinitionException {
-
-    final String DEFINITION_FILE = PATH + File.separator + "valid-definition-1.xml";
-    final File file = new File(DEFINITION_FILE);
-
-    TrainingDefinitionFileReader reader = new TrainingDefinitionFileReader(file);
-
-    assertEquals("enckey", reader.getTrainingDefinition().getModel().getEncryptionkey());
-
-    String features = reader.getFeatures();
-    LOGGER.info(features);
-
-  }
-
-  @Test
   public void defaultValuesTest() throws TrainingDefinitionException {
 
     final String DEFINITION_FILE = PATH + File.separator + "valid-definition-2.xml";
@@ -64,7 +49,6 @@ public class TrainingDefinitionFileReaderTest {
     assertEquals(100, reader.getTrainingDefinition().getAlgorithm().getIterations().intValue());
     assertEquals(2, reader.getTrainingDefinition().getAlgorithm().getThreads().intValue());
     assertEquals("opennlp", reader.getTrainingDefinition().getTrainingdata().getFormat());
-    assertEquals("none", reader.getTrainingDefinition().getModel().getEncryptionkey());
 
   }
 

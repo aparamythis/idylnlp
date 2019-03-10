@@ -11,6 +11,5 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>idylnlp-opennlp-tools-1.8.3</module>
-		<module>idylnlp-opennlp-custom</module>
 	</modules>
 </project>

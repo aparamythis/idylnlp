@@ -57,11 +57,10 @@ public class OpenNLPEntityRecognizerTest {
 
   private static final String MODEL_PATH = new File("src/test/resources/models/").getAbsolutePath();
   private static final String MTNFOG_EN_PERSON_MODEL = "mtnfog-en-person-test.bin";
-  private static final String MTNFOG_DE_PERSON_MODEL = "mtnfog-de-person-test.bin";
 
   private static final LocalConfidenceFilterSerializer serializer = new LocalConfidenceFilterSerializer();
   private static final ConfidenceFilter confidenceFilter = new HeuristicConfidenceFilter(serializer);
-
+  
   @Test
   public void extract() throws EntityFinderException, ModelLoaderException, LanguageDetectionException, ValidationException {
 
@@ -69,16 +68,10 @@ public class OpenNLPEntityRecognizerTest {
 
     when(modelValidator.validate(any(ModelManifest.class))).thenReturn(true);
 
-    // Adding two language models here but should only get an English entity back.
-
-    StandardModelManifest englishModelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MTNFOG_EN_PERSON_MODEL, LanguageCode.en, "idylami589012347", "person", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
-    StandardModelManifest germanModelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MTNFOG_DE_PERSON_MODEL, LanguageCode.de, "idylami589012347", "person", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
+    StandardModelManifest englishModelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MTNFOG_EN_PERSON_MODEL, LanguageCode.en, "person", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
 
     Set<StandardModelManifest> englishModelManifests = new HashSet<StandardModelManifest>();
     englishModelManifests.add(englishModelManifest);
-
-    Set<StandardModelManifest> germanModelManifests = new HashSet<StandardModelManifest>();
-    germanModelManifests.add(germanModelManifest);
 
     LocalModelLoader<TokenNameFinderModel> entityModelLoader = new LocalModelLoader<TokenNameFinderModel>(modelValidator, MODEL_PATH);
 
@@ -86,7 +79,6 @@ public class OpenNLPEntityRecognizerTest {
 
     Map<LanguageCode, Set<StandardModelManifest>> languagesToManifests = new HashMap<>();
     languagesToManifests.put(LanguageCode.en, englishModelManifests);
-    languagesToManifests.put(LanguageCode.de, germanModelManifests);
 
     models.put("person", languagesToManifests);
 
@@ -101,68 +93,8 @@ public class OpenNLPEntityRecognizerTest {
     final String input = "George Washington was president.";
     final String[] text = input.split(" ");
 
-    // EntityExtractionRequest defaults to English if not explicity set.
+    // EntityExtractionRequest defaults to English if not explicitly set.
     EntityExtractionRequest request = new EntityExtractionRequest(text);
-
-    EntityExtractionResponse response = recognizer.extractEntities(request);
-
-    assertEquals(1, response.getEntities().size());
-
-    Entity entity = response.getEntities().iterator().next();
-    assertEquals("[0..2)", entity.getSpan().toString());
-    assertEquals(LanguageCode.en.getAlpha3().toString(), entity.getLanguageCode());
-    assertEquals(englishModelManifest.getModelFileName(), entity.getMetadata().get(AbstractEntityRecognizer.METADATA_MODEL_FILENAME_KEY));
-
-    // Show the response as JSON.
-    Gson gson = new Gson();
-    String json = gson.toJson(response);
-
-    LOGGER.info(json);
-
-  }
-
-  @Test
-  public void extractPersonAndPlace() throws EntityFinderException, ModelLoaderException, LanguageDetectionException, ValidationException {
-
-    ModelValidator modelValidator = Mockito.mock(ModelValidator.class);
-
-    StandardModelManifest englishModelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MTNFOG_EN_PERSON_MODEL, LanguageCode.en, "idylami589012347", "person", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
-
-    // Not really a place model but we just want to make sure both person and place models are looked at.
-    StandardModelManifest germanModelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MTNFOG_DE_PERSON_MODEL, LanguageCode.de, "idylami589012347", "place", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
-
-    Set<StandardModelManifest> englishModelManifests = new HashSet<StandardModelManifest>();
-    englishModelManifests.add(englishModelManifest);
-
-    Set<StandardModelManifest> germanModelManifests = new HashSet<StandardModelManifest>();
-    germanModelManifests.add(germanModelManifest);
-
-    LocalModelLoader<TokenNameFinderModel> entityModelLoader = new LocalModelLoader<TokenNameFinderModel>(modelValidator, MODEL_PATH);
-
-    Map<String, Map<LanguageCode, Set<StandardModelManifest>>> models = new HashMap<>();
-
-    Map<LanguageCode, Set<StandardModelManifest>> personLanguagesToManifests = new HashMap<>();
-    personLanguagesToManifests.put(LanguageCode.en, englishModelManifests);
-    models.put("person", personLanguagesToManifests);
-
-    Map<LanguageCode, Set<StandardModelManifest>> placeLanguagesToManifests = new HashMap<>();
-    placeLanguagesToManifests.put(LanguageCode.de, germanModelManifests);
-    models.put("place", placeLanguagesToManifests);
-
-    OpenNLPEntityRecognizerConfiguration config = new Builder()
-      .withEntityModelLoader(entityModelLoader)
-      .withConfidenceFilter(confidenceFilter)
-      .withEntityModels(models)
-      .build();
-
-    OpenNLPEntityRecognizer recognizer = new OpenNLPEntityRecognizer(config);
-
-    final String input = "George Washington was president.";
-    final String[] text = input.split(" ");
-
-    // EntityExtractionRequest defaults to English if not explicity set.
-    EntityExtractionRequest request = new EntityExtractionRequest(text);
-    request.setType("person,place");
 
     EntityExtractionResponse response = recognizer.extractEntities(request);
 
@@ -190,7 +122,7 @@ public class OpenNLPEntityRecognizerTest {
 
     // Adding two language models here but should only get an English entity back.
 
-    StandardModelManifest englishModelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MTNFOG_EN_PERSON_MODEL, LanguageCode.en, "idylami589012347", "person", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
+    StandardModelManifest englishModelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MTNFOG_EN_PERSON_MODEL, LanguageCode.en, "person", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
 
     Set<StandardModelManifest> englishModelManifests = new HashSet<StandardModelManifest>();
     englishModelManifests.add(englishModelManifest);
@@ -245,7 +177,7 @@ public class OpenNLPEntityRecognizerTest {
 
     // Adding two language models here but should only get an English entity back.
 
-    StandardModelManifest englishModelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MTNFOG_EN_PERSON_MODEL, LanguageCode.en, "idylami589012347", "person", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
+    StandardModelManifest englishModelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MTNFOG_EN_PERSON_MODEL, LanguageCode.en, "person", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
 
     Set<StandardModelManifest> englishModelManifests = new HashSet<StandardModelManifest>();
     englishModelManifests.add(englishModelManifest);
@@ -286,16 +218,11 @@ public class OpenNLPEntityRecognizerTest {
 
     when(modelValidator.validate(any(ModelManifest.class))).thenReturn(true);
 
-    // Adding two language models here but should only get an English entity back.
-
-    StandardModelManifest englishModelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MTNFOG_EN_PERSON_MODEL, LanguageCode.en, "idylami589012347", "person", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
-    StandardModelManifest germanModelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MTNFOG_DE_PERSON_MODEL, LanguageCode.de, "idylami589012347", "person", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
-
+    StandardModelManifest englishModelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MTNFOG_EN_PERSON_MODEL, LanguageCode.en, "person", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
     Set<StandardModelManifest> englishModelManifests = new HashSet<StandardModelManifest>();
     englishModelManifests.add(englishModelManifest);
 
     Set<StandardModelManifest> germanModelManifests = new HashSet<StandardModelManifest>();
-    germanModelManifests.add(germanModelManifest);
 
     LocalModelLoader<TokenNameFinderModel> entityModelLoader = new LocalModelLoader<TokenNameFinderModel>(modelValidator, MODEL_PATH);
 
@@ -350,7 +277,7 @@ public class OpenNLPEntityRecognizerTest {
 
     when(modelValidator.validate(any(ModelManifest.class))).thenReturn(true);
 
-    StandardModelManifest modelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MTNFOG_EN_PERSON_MODEL, LanguageCode.en, "idylami589012347", "person", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
+    StandardModelManifest modelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", MTNFOG_EN_PERSON_MODEL, LanguageCode.en, "person", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", "", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
 
     Set<StandardModelManifest> manifests = new HashSet<StandardModelManifest>();
     manifests.add(modelManifest);
@@ -376,7 +303,7 @@ public class OpenNLPEntityRecognizerTest {
 
     EntityExtractionRequest request = new EntityExtractionRequest(text);
 
-    EntityExtractionResponse response = recognizer.extractEntities(request);
+    recognizer.extractEntities(request);
 
   }
 
@@ -387,7 +314,7 @@ public class OpenNLPEntityRecognizerTest {
 
     when(modelValidator.validate(any(ModelManifest.class))).thenReturn(true);
 
-    StandardModelManifest modelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name",  MTNFOG_EN_PERSON_MODEL, LanguageCode.en, "idylami589012347", "person", "", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
+    StandardModelManifest modelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name",  MTNFOG_EN_PERSON_MODEL, LanguageCode.en, "person", "", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
 
     Set<StandardModelManifest> manifests = new HashSet<StandardModelManifest>();
     manifests.add(modelManifest);
@@ -415,7 +342,7 @@ public class OpenNLPEntityRecognizerTest {
     EntityExtractionRequest request = new EntityExtractionRequest(text);
     request.setConfidenceThreshold(150);
 
-    EntityExtractionResponse response = recognizer.extractEntities(request);
+    recognizer.extractEntities(request);
 
   }
 
@@ -426,7 +353,7 @@ public class OpenNLPEntityRecognizerTest {
 
     when(modelValidator.validate(any(ModelManifest.class))).thenReturn(true);
 
-    StandardModelManifest modelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", "not-exist", LanguageCode.en, "idylami589012347", "person", "", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
+    StandardModelManifest modelManifest = new StandardModelManifest.ModelManifestBuilder(UUID.randomUUID().toString(), "name", "not-exist", LanguageCode.en, "person", "", StandardModelManifest.DEFAULT_SUBTYPE, "1.0.0", StandardModelManifest.DEFAULT_BEAM_SIZE, new Properties()).build();
 
     Set<StandardModelManifest> manifests = new HashSet<StandardModelManifest>();
     manifests.add(modelManifest);

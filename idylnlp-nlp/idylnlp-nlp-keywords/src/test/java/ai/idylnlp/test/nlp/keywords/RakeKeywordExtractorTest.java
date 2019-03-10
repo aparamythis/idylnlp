@@ -54,7 +54,6 @@ public class RakeKeywordExtractorTest {
     builder.setModelId(UUID.randomUUID().toString());
     builder.setLanguageCode(LanguageCode.en);
     builder.setModelFileName("en-pos-perceptron.bin");
-    builder.setEncryptionKey("");
     builder.setType(StandardModelManifest.POS);
 
     StandardModelManifest modelManifest = builder.build();

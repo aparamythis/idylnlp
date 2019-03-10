@@ -29,7 +29,6 @@ import org.apache.logging.log4j.Logger;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import ai.idylnlp.opennlp.custom.encryption.OpenNLPEncryptionFactory;
 import com.neovisionaries.i18n.LanguageCode;
 
 import ai.idylnlp.model.nlp.subjects.DefaultSubjectOfTrainingOrEvaluation;
@@ -55,19 +54,18 @@ public class PartOfSpeechTokenModelOperationsTest {
     File temp = File.createTempFile("model", ".bin");
 
     final String modelOutputFile = temp.getAbsolutePath();
-    final String encryptionKey = "test";
 
     SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluation = new DefaultSubjectOfTrainingOrEvaluation(INPUT_FILE);
 
     // First, create a model.
-    final String modelId = ops.trainPerceptron(SubjectOfTrainingOrEvaluation, modelOutputFile, LanguageCode.en, encryptionKey, 0, 5);
+    final String modelId = ops.trainPerceptron(SubjectOfTrainingOrEvaluation, modelOutputFile, LanguageCode.en, 0, 5);
 
     assertNotNull(modelId);
 
     SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluationEvaluation = new DefaultSubjectOfTrainingOrEvaluation(SEPARATE_DATE_INPUT_FILE);
 
     // Do the cross validation.
-    AccuracyEvaluationResult result = ops.separateDataEvaluate(SubjectOfTrainingOrEvaluationEvaluation, modelOutputFile, encryptionKey);
+    AccuracyEvaluationResult result = ops.separateDataEvaluate(SubjectOfTrainingOrEvaluationEvaluation, modelOutputFile);
 
     // Output will be like: Precision: 0.7; Recall: 0.30434782608695654; F-Measure: 0.42424242424242425
     LOGGER.info(result.toString());
@@ -82,8 +80,6 @@ public class PartOfSpeechTokenModelOperationsTest {
   @Ignore("This test fails to complete.")
   public void trainMaxEntQN() throws IOException {
 
-    final String encryptionKey = "test";
-
     File temp = File.createTempFile("pos-model", ".bin");
     String modelOutputFile = temp.getAbsolutePath();
 
@@ -92,7 +88,7 @@ public class PartOfSpeechTokenModelOperationsTest {
     SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluation = new DefaultSubjectOfTrainingOrEvaluation(INPUT_FILE);
 
     PartOfSpeechModelOperations ops = new PartOfSpeechModelOperations();
-    String modelId = ops.trainMaxEntQN(SubjectOfTrainingOrEvaluation, modelOutputFile, LanguageCode.en, encryptionKey, 5, 1, 1, 1, 1, 1, 1);
+    String modelId = ops.trainMaxEntQN(SubjectOfTrainingOrEvaluation, modelOutputFile, LanguageCode.en, 5, 1, 1, 1, 1, 1, 1);
 
     LOGGER.info("The generated model's ID is {}.", modelId);
 
@@ -105,8 +101,6 @@ public class PartOfSpeechTokenModelOperationsTest {
       fail("The generated model ID is not a valid UUID.");
 
     }
-
-    OpenNLPEncryptionFactory.getDefault().setKey(encryptionKey);
 
     // Verify that the UUID returned matches what's in the model's properties.
     POSModel model = new POSModelLoader().load(new File(modelOutputFile));
@@ -117,8 +111,6 @@ public class PartOfSpeechTokenModelOperationsTest {
   @Test
   public void trainPerceptron() throws IOException {
 
-    final String encryptionKey = "test";
-
     File temp = File.createTempFile("pos-model", ".bin");
     String modelOutputFile = temp.getAbsolutePath();
 
@@ -127,7 +119,7 @@ public class PartOfSpeechTokenModelOperationsTest {
     SubjectOfTrainingOrEvaluation SubjectOfTrainingOrEvaluation = new DefaultSubjectOfTrainingOrEvaluation(INPUT_FILE);
 
     PartOfSpeechModelOperations ops = new PartOfSpeechModelOperations();
-    String modelId = ops.trainPerceptron(SubjectOfTrainingOrEvaluation, modelOutputFile, LanguageCode.en, encryptionKey, 0, 1);
+    String modelId = ops.trainPerceptron(SubjectOfTrainingOrEvaluation, modelOutputFile, LanguageCode.en, 0, 1);
 
     LOGGER.info("The generated model's ID is {}.", modelId);
 
@@ -140,8 +132,6 @@ public class PartOfSpeechTokenModelOperationsTest {
       fail("The generated model ID is not a valid UUID.");
 
     }
-
-    OpenNLPEncryptionFactory.getDefault().setKey(encryptionKey);
 
     // Verify that the UUID returned matches what's in the model's properties.
     POSModel model = new POSModelLoader().load(new File(modelOutputFile));

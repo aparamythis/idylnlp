@@ -28,7 +28,6 @@ import com.neovisionaries.i18n.LanguageCode;
 public class OpenNLPDocumentClassifierTrainingRequest extends DocumentClassifierTrainingRequest {
 
   private File trainingFile;
-  private String encryptionKey;
   private LanguageCode languageCode;
 
   /**
@@ -49,14 +48,6 @@ public class OpenNLPDocumentClassifierTrainingRequest extends DocumentClassifier
 
   public void setTrainingFile(File trainingFile) {
     this.trainingFile = trainingFile;
-  }
-
-  public String getEncryptionKey() {
-    return encryptionKey;
-  }
-
-  public void setEncryptionKey(String encryptionKey) {
-    this.encryptionKey = encryptionKey;
   }
 
   public LanguageCode getLanguageCode() {

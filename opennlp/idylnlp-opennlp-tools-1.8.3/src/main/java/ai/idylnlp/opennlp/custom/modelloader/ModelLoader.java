@@ -40,7 +40,6 @@ import ai.idylnlp.model.ModelValidator;
 import ai.idylnlp.model.exceptions.ModelLoaderException;
 import ai.idylnlp.model.exceptions.ValidationException;
 import ai.idylnlp.model.manifest.StandardModelManifest;
-import ai.idylnlp.opennlp.custom.encryption.OpenNLPEncryptionFactory;
 import ai.idylnlp.opennlp.custom.model.DictionaryModel;
 import ai.idylnlp.zoo.IdylNLPModelZoo;
 import opennlp.tools.cmdline.namefind.TokenNameFinderModelLoader;
@@ -200,8 +199,6 @@ public abstract class ModelLoader<T extends BaseModel> {
 
     LOGGER.debug("Loading model from disk: " + modelFile.getAbsolutePath());
 
-    OpenNLPEncryptionFactory.getDefault().setKey(modelManifest.getEncryptionKey());
-
     T model = null;
 
     // Load the model into memory based on the type.
@@ -278,8 +275,6 @@ public abstract class ModelLoader<T extends BaseModel> {
       model = null;
 
     }
-
-    OpenNLPEncryptionFactory.getDefault().clearKey();
 
     return model;
 

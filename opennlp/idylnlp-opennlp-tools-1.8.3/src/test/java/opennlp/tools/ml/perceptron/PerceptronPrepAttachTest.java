@@ -20,14 +20,13 @@ package opennlp.tools.ml.perceptron;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
-
-import ai.idylnlp.opennlp.custom.EncryptedDataOutputStream;
 
 import opennlp.tools.ml.AbstractTrainer;
 import opennlp.tools.ml.EventTrainer;
@@ -113,7 +112,7 @@ public class PerceptronPrepAttachTest {
     // serialize and load model, then check if it still works as expected
     ByteArrayOutputStream modelBytes = new ByteArrayOutputStream();
     BinaryPerceptronModelWriter writer = new BinaryPerceptronModelWriter(model,
-        new EncryptedDataOutputStream(modelBytes));
+        new DataOutputStream(modelBytes));
     writer.persist();
     writer.close();
 
