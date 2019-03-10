@@ -17,7 +17,10 @@ package ai.idylnlp.nlp.recognizer.configuration;
 
 import java.io.File;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
+
+import com.neovisionaries.i18n.LanguageCode;
 
 import ai.idylnlp.model.manifest.SecondGenModelManifest;
 import ai.idylnlp.model.nlp.ConfidenceFilter;
@@ -40,7 +43,8 @@ public class DeepLearningEntityRecognizerConfiguration extends AbstractEntityRec
 
     private ConfidenceFilter confidenceFilter;
     private Set<String> blacklistedModelIDs;
-
+    private Map<String, Map<LanguageCode, Set<SecondGenModelManifest>>> entityModels;
+    
     public Builder withConfidenceFilter(ConfidenceFilter confidenceFilter) {
       this.confidenceFilter = confidenceFilter;
       return this;
@@ -50,6 +54,11 @@ public class DeepLearningEntityRecognizerConfiguration extends AbstractEntityRec
       this.blacklistedModelIDs = blacklistedModelIDs;
       return this;
     }
+    
+    public Builder withEntityModels(Map<String, Map<LanguageCode, Set<SecondGenModelManifest>>> entityModels) {
+        this.entityModels = entityModels;
+        return this;
+      }
 
     /**
      * Creates the configuration.
@@ -69,8 +78,8 @@ public class DeepLearningEntityRecognizerConfiguration extends AbstractEntityRec
       if(blacklistedModelIDs == null) {
         blacklistedModelIDs = new LinkedHashSet<String>();
       }
-
-      return new DeepLearningEntityRecognizerConfiguration(entityModelDirectory, confidenceFilter, blacklistedModelIDs);
+      
+      return new DeepLearningEntityRecognizerConfiguration(entityModelDirectory, confidenceFilter, blacklistedModelIDs, entityModels);
 
     }
 
@@ -79,14 +88,16 @@ public class DeepLearningEntityRecognizerConfiguration extends AbstractEntityRec
   private DeepLearningEntityRecognizerConfiguration(
       String entityModelDirectory,
       ConfidenceFilter confidenceFilter,
-      Set<String> blacklistedModelIDs) {
+      Set<String> blacklistedModelIDs,
+      Map<String, Map<LanguageCode, Set<SecondGenModelManifest>>> entityModels) {
 
     super(blacklistedModelIDs);
 
     this.entityModelDirectory = entityModelDirectory;
     this.blacklistedModelIDs = blacklistedModelIDs;
     this.confidenceFilter = confidenceFilter;
-
+    this.entityModels = entityModels;
+    
   }
 
   public String getEntityModelDirectory() {
