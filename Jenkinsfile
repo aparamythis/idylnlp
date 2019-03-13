@@ -5,7 +5,7 @@ pipeline {
     }
     tools {
         maven 'Maven 3.5.0'
-        jdk 'OpenJDK8'
+        jdk 'jdk8u192'
     }
     options {
         buildDiscarder(logRotator(numToKeepStr: '3'))
