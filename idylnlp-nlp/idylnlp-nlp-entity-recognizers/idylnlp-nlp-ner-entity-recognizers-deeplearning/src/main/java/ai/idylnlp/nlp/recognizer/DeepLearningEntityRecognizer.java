@@ -71,62 +71,66 @@ public class DeepLearningEntityRecognizer extends AbstractEntityRecognizer<DeepL
 
     loadedModels = new HashMap<LanguageCode, Map<String, ImmutablePair<MultiLayerNetwork, WordVectors>>>();
 
-    for(String type : configuration.getEntityModels().keySet()) {
-
-      Map<LanguageCode, Set<SecondGenModelManifest>> types = configuration.getEntityModels().get(type);
-
-      for(LanguageCode language : types.keySet()) {
-
-        for(SecondGenModelManifest modelManifest : types.get(language)) {
-
-          if(!configuration.getBlacklistedModelIDs().contains(modelManifest.getModelId())) {
-
-            try {
-
-              final String modelFileName = new File(configuration.getEntityModelDirectory(), modelManifest.getModelFileName()).getAbsolutePath();
-
-              // Load the network from the model file.
-              LOGGER.info("Loading {} {} model from file: {}", language.getAlpha3().toString(), type, modelFileName);
-
-              final File modelFile = new File(modelFileName);
-
-              final MultiLayerNetwork multiLayerNetwork = ModelSerializer.restoreMultiLayerNetwork(modelFile.getAbsolutePath());
-
-              final String vectorsFileName = new File(configuration.getEntityModelDirectory(), modelManifest.getVectorsFileName()).getAbsolutePath();
-
-              // Verify the vectors file exists.
-              final File vectorsFile = new File(vectorsFileName);
-
-              // Load the word vectors from the file.
-              LOGGER.info("Loading vectors from file: {}", vectorsFileName);
-              final WordVectors wordVectors = WordVectorSerializer.loadStaticModel(vectorsFile);
-
-              final Map<String, ImmutablePair<MultiLayerNetwork, WordVectors>> t = new HashMap<>();
-              t.put(type, new ImmutablePair<MultiLayerNetwork, WordVectors>(multiLayerNetwork, wordVectors));
-
-              loadedModels.put(language, t);
-
-            } catch (Exception ex) {
-
-              LOGGER.error("Unable to load model: " + modelManifest.getModelFileName(), ex);
-
-              getConfiguration().getBlacklistedModelIDs().add(modelManifest.getModelId());
-              LOGGER.warn("Model {} is blacklisted. Loading will not be attempted until restart.", modelManifest.getModelFileName());
-
-              // TODO: This should probably be made visible to the user somehow - maybe through the API?
-
-            }
-
-          } else {
-
-            LOGGER.info("Model {} is blacklisted. Loading will not be attempted until restart.", modelManifest.getModelFileName());
-
-          }
-
-        }
-
-      }
-
+    if(configuration.getEntityModels() != null) {
+    
+	    for(String type : configuration.getEntityModels().keySet()) {
+	
+	      Map<LanguageCode, Set<SecondGenModelManifest>> types = configuration.getEntityModels().get(type);
+	
+	      for(LanguageCode language : types.keySet()) {
+	
+	        for(SecondGenModelManifest modelManifest : types.get(language)) {
+	
+	          if(!configuration.getBlacklistedModelIDs().contains(modelManifest.getModelId())) {
+	
+	            try {
+	
+	              final String modelFileName = new File(configuration.getEntityModelDirectory(), modelManifest.getModelFileName()).getAbsolutePath();
+	
+	              // Load the network from the model file.
+	              LOGGER.info("Loading {} {} model from file: {}", language.getAlpha3().toString(), type, modelFileName);
+	
+	              final File modelFile = new File(modelFileName);
+	
+	              final MultiLayerNetwork multiLayerNetwork = ModelSerializer.restoreMultiLayerNetwork(modelFile.getAbsolutePath());
+	
+	              final String vectorsFileName = new File(configuration.getEntityModelDirectory(), modelManifest.getVectorsFileName()).getAbsolutePath();
+	
+	              // Verify the vectors file exists.
+	              final File vectorsFile = new File(vectorsFileName);
+	
+	              // Load the word vectors from the file.
+	              LOGGER.info("Loading vectors from file: {}", vectorsFileName);
+	              final WordVectors wordVectors = WordVectorSerializer.loadStaticModel(vectorsFile);
+	
+	              final Map<String, ImmutablePair<MultiLayerNetwork, WordVectors>> t = new HashMap<>();
+	              t.put(type, new ImmutablePair<MultiLayerNetwork, WordVectors>(multiLayerNetwork, wordVectors));
+	
+	              loadedModels.put(language, t);
+	
+	            } catch (Exception ex) {
+	
+	              LOGGER.error("Unable to load model: " + modelManifest.getModelFileName(), ex);
+	
+	              getConfiguration().getBlacklistedModelIDs().add(modelManifest.getModelId());
+	              LOGGER.warn("Model {} is blacklisted. Loading will not be attempted until restart.", modelManifest.getModelFileName());
+	
+	              // TODO: This should probably be made visible to the user somehow - maybe through the API?
+	
+	            }
+	
+	          } else {
+	
+	            LOGGER.info("Model {} is blacklisted. Loading will not be attempted until restart.", modelManifest.getModelFileName());
+	
+	          }
+	
+	        }
+	
+	      }
+	
+	    }
+    
     }
 
   }
