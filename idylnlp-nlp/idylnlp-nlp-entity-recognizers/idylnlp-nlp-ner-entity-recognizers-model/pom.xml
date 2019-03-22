@@ -8,12 +8,6 @@
 	</parent>
 	<artifactId>idylnlp-nlp-entity-recognizers-model</artifactId>
 	<name>idylnlp-nlp-entity-recognizers-model</name>
-	<licenses>
-		<license>
-			<name>${license.name}</name>
-			<url>${license.url}</url>
-		</license>
-	</licenses>
 	<build>
 		<testResources>
 			<testResource>
@@ -27,7 +21,7 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-collections4</artifactId>
 			<version>${commons.collections.version}</version>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>ai.idylnlp</groupId>
 			<artifactId>idylnlp-nlp-utils</artifactId>
@@ -62,7 +56,7 @@
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>${commons.io.version}</version>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-math3</artifactId>

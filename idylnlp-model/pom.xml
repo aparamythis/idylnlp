@@ -8,12 +8,6 @@
 	</parent>
 	<artifactId>idylnlp-model</artifactId>
 	<name>idylnlp-model</name>
-	<licenses>
-		<license>
-			<name>${license.name}</name>
-			<url>${license.url}</url>
-		</license>
-	</licenses>
 	<dependencies>
 		<dependency>
 			<groupId>com.google.code.gson</groupId>

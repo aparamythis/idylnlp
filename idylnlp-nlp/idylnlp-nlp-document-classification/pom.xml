@@ -10,7 +10,7 @@
 	<name>idylnlp-nlp-document-classification</name>
 	<packaging>pom</packaging>
 	<modules>
-    		<module>idylnlp-nlp-document-classification-opennlp</module>
+		<module>idylnlp-nlp-document-classification-opennlp</module>
 		<module>idylnlp-nlp-document-classification-dl4j</module>
 	</modules>
 </project>

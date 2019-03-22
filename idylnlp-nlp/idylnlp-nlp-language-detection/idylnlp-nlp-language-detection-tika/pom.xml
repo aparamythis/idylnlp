@@ -8,12 +8,6 @@
 	</parent>
 	<artifactId>idylnlp-nlp-language-detection-tika</artifactId>
 	<name>idylnlp-nlp-language-detection-tika</name>
-	<licenses>
-		<license>
-			<name>${license.name}</name>
-			<url>${license.url}</url>
-		</license>
-	</licenses>
 	<build>
 		<testResources>
 			<testResource>

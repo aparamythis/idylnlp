@@ -8,12 +8,6 @@
 	</parent>
 	<artifactId>idylnlp-nlp-entity-recognizers-opennlp</artifactId>
 	<name>idylnlp-nlp-entity-recognizers-opennlp</name>
-	<licenses>
-		<license>
-			<name>${license.name}</name>
-			<url>${license.url}</url>
-		</license>
-	</licenses>
 	<build>
 		<plugins>
 			<plugin>

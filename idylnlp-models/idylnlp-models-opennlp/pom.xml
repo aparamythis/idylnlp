@@ -8,12 +8,6 @@
 	</parent>
 	<artifactId>idylnlp-models-opennlp</artifactId>
 	<name>idylnlp-models-opennlp</name>
-	<licenses>
-		<license>
-			<name>${license.name}</name>
-			<url>${license.url}</url>
-		</license>
-	</licenses>
 	<dependencies>
 		<dependency>
 			<groupId>ai.idylnlp</groupId>

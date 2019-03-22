@@ -8,12 +8,6 @@
 	</parent>
 	<artifactId>idylnlp-nlp-language-detection-opennlp</artifactId>
 	<name>idylnlp-nlp-language-detection-opennlp</name>
-	<licenses>
-		<license>
-			<name>${license.name}</name>
-			<url>${license.url}</url>
-		</license>
-	</licenses>
 	<properties>
 		<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
 	</properties>

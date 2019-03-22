@@ -8,12 +8,6 @@
 	</parent>
 	<artifactId>idylnlp-nlp-entity-recognizers-standard</artifactId>
 	<name>idylnlp-nlp-entity-recognizers-standard</name>
-	<licenses>
-		<license>
-			<name>${license.name}</name>
-			<url>${license.url}</url>
-		</license>
-	</licenses>
 	<build>
 		<testResources>
 			<testResource>

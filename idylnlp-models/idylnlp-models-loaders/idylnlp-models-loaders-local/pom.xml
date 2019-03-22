@@ -8,12 +8,6 @@
 	</parent>
 	<artifactId>idylnlp-models-loaders-local</artifactId>
 	<name>idylnlp-models-loaders-local</name>
-	<licenses>
-		<license>
-			<name>${license.name}</name>
-			<url>${license.url}</url>
-		</license>
-	</licenses>
 	<dependencies>
 		<dependency>
 			<groupId>ai.idylnlp</groupId>
