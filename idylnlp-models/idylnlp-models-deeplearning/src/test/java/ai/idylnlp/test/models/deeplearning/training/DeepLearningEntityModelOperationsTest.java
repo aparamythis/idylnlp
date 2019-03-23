@@ -41,8 +41,6 @@ import ai.idylnlp.models.deeplearning.training.DeepLearningEntityModelOperations
 import ai.idylnlp.models.deeplearning.training.model.DeepLearningTrainingDefinition;
 import ai.idylnlp.models.deeplearning.training.model.EvaluationData;
 import ai.idylnlp.models.deeplearning.training.model.HyperParameters;
-import ai.idylnlp.models.deeplearning.training.model.Layer;
-import ai.idylnlp.models.deeplearning.training.model.Layers;
 import ai.idylnlp.models.deeplearning.training.model.Monitoring;
 import ai.idylnlp.models.deeplearning.training.model.NetworkConfigurationParameters;
 import ai.idylnlp.models.deeplearning.training.model.Output;
@@ -71,7 +69,7 @@ public class DeepLearningEntityModelOperationsTest {
 
     long startTime = System.currentTimeMillis();
 
-    String modelId = ops.train(definition);
+    final String modelId = ops.train(definition);
 
     LOGGER.info("Elapsed time: {}", (System.currentTimeMillis() - startTime));
 
@@ -90,7 +88,7 @@ public class DeepLearningEntityModelOperationsTest {
 
     when(modelValidator.validate(any(ModelManifest.class))).thenReturn(true);
 
-    DeepLearningEntityRecognizerConfiguration configuration = new  DeepLearningEntityRecognizerConfiguration.Builder().build(TRAINING_DATA_PATH);
+    DeepLearningEntityRecognizerConfiguration configuration = new DeepLearningEntityRecognizerConfiguration.Builder().build(TRAINING_DATA_PATH);
 
     configuration.addEntityModel("person", LanguageCode.en, manifest);
 
@@ -130,23 +128,12 @@ public class DeepLearningEntityModelOperationsTest {
     learningRateSchedule.put("3000", 0.0001);
     learningRateSchedule.put("4000", 0.00001);
 
-    Layer layer1 = new Layer();
-    layer1.setLearningRate(0.00001);
-    layer1.setLearningRateSchedule(learningRateSchedule);
-
-    Layer layer2 = new Layer();
-    layer2.setLearningRate(0.00001);
-    layer2.setLearningRateSchedule(learningRateSchedule);
-
-    Layers layers = new Layers(layer1, layer2);
-
     NetworkConfigurationParameters networkConfigurationParameters = new NetworkConfigurationParameters();
     networkConfigurationParameters.setOptimizationAlgorithm("stochastic_gradient_descent");
     networkConfigurationParameters.setGradientNormalization("clipelementwiseabsolutevalue");
     networkConfigurationParameters.setGradientNormalizationThreshold(1.0);
     networkConfigurationParameters.setUpdaterParameters(updaterParameters);
     networkConfigurationParameters.setRegularizationParameters(regularizationParameters);
-    networkConfigurationParameters.setLayers(layers);
     networkConfigurationParameters.setPretrain(false);
     networkConfigurationParameters.setBackprop(true);
     networkConfigurationParameters.setWeightInit("xavier");
@@ -161,12 +148,11 @@ public class DeepLearningEntityModelOperationsTest {
     Monitoring monitoring = new Monitoring();
     monitoring.setScoreIteration(100);
 
-    //hyperParameters.setWordVectorsFile(TRAINING_DATA_PATH + "/glove.6B.50d.glv");
-    String wordVectorsFile = TRAINING_DATA_PATH + "/reuters-vectors.txt";
+    String wordVectorsFile = TRAINING_DATA_PATH + "/glove.6B.50d.txt";
 
     DeepLearningTrainingDefinition definition = new DeepLearningTrainingDefinition();
-    definition.setTrainingData(new TrainingData(AnnotationTypes.CONLL2003.getName(), TRAINING_DATA_PATH + "/conll2003-eng.train", wordVectorsFile));
-    definition.setEvaluationData(new EvaluationData(AnnotationTypes.CONLL2003.getName(), TRAINING_DATA_PATH + "/conll2003-eng.testa"));
+    definition.setTrainingData(new TrainingData(AnnotationTypes.OPENNLP.getName(), TRAINING_DATA_PATH + "/person-train.txt", wordVectorsFile));
+    definition.setEvaluationData(new EvaluationData(AnnotationTypes.OPENNLP.getName(), TRAINING_DATA_PATH + "/opennlp_person.eval"));
     definition.setOutput(new Output(File.createTempFile("multilayernetwork", ".zip").getAbsolutePath(), "/tmp/stats.dl4j"));
     //definition.setEarlyTermination(new EarlyTermination(20, 180));
     definition.setEntityType("person");

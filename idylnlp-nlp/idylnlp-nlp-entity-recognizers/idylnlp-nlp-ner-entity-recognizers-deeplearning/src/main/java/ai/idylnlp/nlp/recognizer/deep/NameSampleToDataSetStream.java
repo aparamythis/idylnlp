@@ -37,7 +37,6 @@ public class NameSampleToDataSetStream extends FilterObjectStream<NameSample, Da
     private final WordVectors wordVectors;
     private final String[] labels;
     private int windowSize;
-    private int vectorSize;
 
     private Iterator<DataSet> dataSets = Collections.emptyListIterator();
 
@@ -47,7 +46,6 @@ public class NameSampleToDataSetStream extends FilterObjectStream<NameSample, Da
 
       this.wordVectors = wordVectors;
       this.windowSize = windowSize;
-      this.vectorSize = vectorSize;
       this.labels = labels;
 
     }
@@ -80,31 +78,34 @@ public class NameSampleToDataSetStream extends FilterObjectStream<NameSample, Da
     private Iterator<DataSet> createDataSets(NameSample sample) {
 
       TokenizerFactory tokenizerFactory = new DefaultTokenizerFactory();
-        tokenizerFactory.setTokenPreProcessor(new CommonPreprocessor());
+      tokenizerFactory.setTokenPreProcessor(new CommonPreprocessor());
+      
+      String s = String.join(" ", sample.getSentence());
+      List<String> tokens = tokenizerFactory.create(s).getTokens();
 
-        String s = String.join(" ", sample.getSentence());
-        List<String> tokens = tokenizerFactory.create(s).getTokens();
+      String[] t = tokens.toArray(new String[tokens.size()]);
 
-        String[] t = tokens.toArray(new String[tokens.size()]);
+      // sample and t are different tokens at this point due to removing punctuation
 
-        // sample and t are different tokens at this point due to removing punctuation
+      /*System.out.println("t = " + t.length);
+      System.out.println(String.join(" ", t));
+      System.out.println("sample = " + sample.getSentence().length);
+      System.out.println(String.join(" ", sample.getSentence()));
+      System.out.println("--------");*/
 
-        /*System.out.println("t = " + t.length);
-        System.out.println(String.join(" ", t));
-        System.out.println("sample = " + sample.getSentence().length);
-        System.out.println(String.join(" ", sample.getSentence()));
-        System.out.println("--------");*/
+      List<INDArray> features = DeepLearningUtils.mapToFeatureMatrices(wordVectors, t, windowSize);
+      List<INDArray> l = DeepLearningUtils.mapToLabelVectors(sample, windowSize, labels);
 
-        List<INDArray> features = DeepLearningUtils.mapToFeatureMatrices(wordVectors, t, windowSize);
-        List<INDArray> labels = DeepLearningUtils.mapToLabelVectors(sample, windowSize, this.labels);
+      if(features == null) {System.out.println("features is null"); }
+      if(l == null) {System.out.println("l is null"); }
+      
+      List<DataSet> dataSetList = new ArrayList<>();
 
-        List<DataSet> dataSetList = new ArrayList<>();
+      for (int i = 0; i < features.size(); i++) {
+        dataSetList.add(new DataSet(features.get(i), l.get(i)));
+      }
 
-        for (int i = 0; i < features.size(); i++) {
-          dataSetList.add(new DataSet(features.get(i), labels.get(i)));
-        }
-
-        return dataSetList.iterator();
+      return dataSetList.iterator();
 
   }
 

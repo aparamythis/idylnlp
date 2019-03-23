@@ -39,10 +39,6 @@ public class NetworkConfigurationParameters {
   @Expose
   private String convolutionMode;
 
-  @SerializedName("UseDropConnect")
-  @Expose
-  private boolean useDropConnect = false;
-
   @SerializedName("DropOut")
   @Expose
   private double dropOut = 0.0;
@@ -75,10 +71,6 @@ public class NetworkConfigurationParameters {
   @Expose
   private UpdaterParameters updaterParameters;
 
-  @SerializedName("Layers")
-  @Expose
-  private Layers layers;
-
   @SerializedName("GradientNormalization")
   @Expose
   private String gradientNormalization;
@@ -91,15 +83,14 @@ public class NetworkConfigurationParameters {
 
   }
 
-  public NetworkConfigurationParameters(double biasInit, int biasLearningRate, String convolutionMode, boolean useDropConnect,
+  public NetworkConfigurationParameters(double biasInit, int biasLearningRate, String convolutionMode,
       int dropOut, int iterations, String optimizationAlgorithm, String weightInit, double learningRate,
       boolean pretrain, boolean backprop, RegularizationParameters regularizationParameters,
-      UpdaterParameters updaterParameters, Layers layers, String gradientNormalization, double gradientNormalizationThreshold) {
+      UpdaterParameters updaterParameters, String gradientNormalization, double gradientNormalizationThreshold) {
 
     this.biasInit = biasInit;
     this.biasLearningRate = biasLearningRate;
     this.convolutionMode = convolutionMode;
-    this.useDropConnect = useDropConnect;
     this.iterations = iterations;
     this.optimizationAlgorithm = optimizationAlgorithm;
     this.weightInit = weightInit;
@@ -107,7 +98,6 @@ public class NetworkConfigurationParameters {
     this.backprop = backprop;
     this.regularizationParameters = regularizationParameters;
     this.updaterParameters = updaterParameters;
-    this.layers = layers;
     this.gradientNormalization = gradientNormalization;
     this.gradientNormalizationThreshold = gradientNormalizationThreshold;
 
@@ -257,14 +247,6 @@ public class NetworkConfigurationParameters {
     this.convolutionMode = convolutionMode;
   }
 
-  public Boolean isUseDropConnect() {
-    return useDropConnect;
-  }
-
-  public void setUseDropConnect(boolean useDropConnect) {
-    this.useDropConnect = useDropConnect;
-  }
-
   public double getDropOut() {
     return dropOut;
   }
@@ -327,14 +309,6 @@ public class NetworkConfigurationParameters {
 
   public void setUpdaterParameters(UpdaterParameters updaterParameters) {
     this.updaterParameters = updaterParameters;
-  }
-
-  public Layers getLayers() {
-    return layers;
-  }
-
-  public void setLayers(Layers layers) {
-    this.layers = layers;
   }
 
   public String getGradientNormalization() {

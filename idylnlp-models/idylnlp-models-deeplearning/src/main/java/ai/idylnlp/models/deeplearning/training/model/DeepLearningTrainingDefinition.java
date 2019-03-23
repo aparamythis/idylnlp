@@ -61,14 +61,6 @@ public class DeepLearningTrainingDefinition {
   @Expose
   private Monitoring monitoring;
 
-  @SerializedName("ParallelTraining")
-  @Expose
-  private ParallelTraining parallelTraining;
-
-  @SerializedName("SparkTraining")
-  @Expose
-  private SparkTraining sparkTraining = new SparkTraining();
-
   public DeepLearningTrainingDefinition() throws IOException {
 
     monitoring = new Monitoring();
@@ -77,8 +69,7 @@ public class DeepLearningTrainingDefinition {
 
   public DeepLearningTrainingDefinition(Output output, TrainingData trainingData,
       EvaluationData evaluationData, HyperParameters hyperParameters, EarlyTermination earlyTermination,
-      String entityType, SparkTraining sparkTraining, Monitoring monitoring, ParallelTraining parallelTraining,
-      String name, String language) {
+      String entityType, Monitoring monitoring, String name, String language) {
 
     this.output = output;
     this.trainingData = trainingData;
@@ -86,9 +77,7 @@ public class DeepLearningTrainingDefinition {
     this.hyperParameters = hyperParameters;
     this.earlyTermination = earlyTermination;
     this.entityType = entityType;
-    this.sparkTraining = sparkTraining;
     this.monitoring = monitoring;
-    this.parallelTraining = parallelTraining;
     this.name = name;
     this.language = language;
 
@@ -156,28 +145,12 @@ public class DeepLearningTrainingDefinition {
     this.entityType = entityType;
   }
 
-  public SparkTraining getSparkTraining() {
-    return sparkTraining;
-  }
-
-  public void setSparkTraining(SparkTraining sparkTraining) {
-    this.sparkTraining = sparkTraining;
-  }
-
   public Monitoring getMonitoring() {
     return monitoring;
   }
 
   public void setMonitoring(Monitoring monitoring) {
     this.monitoring = monitoring;
-  }
-
-  public ParallelTraining getParallelTraining() {
-    return parallelTraining;
-  }
-
-  public void setParallelTraining(ParallelTraining parallelTraining) {
-    this.parallelTraining = parallelTraining;
   }
 
   public String getLanguage() {

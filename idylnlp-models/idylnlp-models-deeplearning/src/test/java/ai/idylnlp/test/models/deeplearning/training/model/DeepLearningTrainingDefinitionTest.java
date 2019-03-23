@@ -31,8 +31,6 @@ import ai.idylnlp.models.deeplearning.training.model.DeepLearningTrainingDefinit
 import ai.idylnlp.models.deeplearning.training.model.EarlyTermination;
 import ai.idylnlp.models.deeplearning.training.model.EvaluationData;
 import ai.idylnlp.models.deeplearning.training.model.HyperParameters;
-import ai.idylnlp.models.deeplearning.training.model.Layer;
-import ai.idylnlp.models.deeplearning.training.model.Layers;
 import ai.idylnlp.models.deeplearning.training.model.Monitoring;
 import ai.idylnlp.models.deeplearning.training.model.NetworkConfigurationParameters;
 import ai.idylnlp.models.deeplearning.training.model.Output;
@@ -76,23 +74,12 @@ public class DeepLearningTrainingDefinitionTest {
     learningRateSchedule.put("3000", 0.0001);
     learningRateSchedule.put("4000", 0.00001);
 
-    Layer layer1 = new Layer();
-    layer1.setLearningRate(0.00001);
-    layer1.setLearningRateSchedule(learningRateSchedule);
-
-    Layer layer2 = new Layer();
-    layer2.setLearningRate(0.00001);
-    layer2.setLearningRateSchedule(learningRateSchedule);
-
-    Layers layers = new Layers(layer1, layer2);
-
     NetworkConfigurationParameters networkConfigurationParameters = new NetworkConfigurationParameters();
     networkConfigurationParameters.setOptimizationAlgorithm("stochastic_gradient_descent");
     networkConfigurationParameters.setGradientNormalization("clipelementwiseabsolutevalue");
     networkConfigurationParameters.setGradientNormalizationThreshold(1.0);
     networkConfigurationParameters.setUpdaterParameters(updaterParameters);
     networkConfigurationParameters.setRegularizationParameters(regularizationParameters);
-    networkConfigurationParameters.setLayers(layers);
     networkConfigurationParameters.setPretrain(false);
     networkConfigurationParameters.setBackprop(true);
     networkConfigurationParameters.setWeightInit("xavier");

@@ -41,7 +41,7 @@ import opennlp.tools.namefind.NameSample;
 public class DeepLearningUtils {
 
   public synchronized static List<INDArray> mapToLabelVectors(NameSample sample, int windowSize, String[] labelStrings) {
-
+	  
     Map<String, Integer> labelToIndex = IntStream.range(0, labelStrings.length).boxed()
         .collect(Collectors.toMap(i -> labelStrings[i], i -> i));
 
@@ -49,7 +49,7 @@ public class DeepLearningUtils {
 
     // encode the outcome as one-hot-representation
     String outcomes[] = new BioCodec().encode(sample.getNames(), sample.getSentence().length);
-
+    
     for (int i = 0; i < sample.getSentence().length; i++) {
 
       INDArray labels = Nd4j.create(1, labelStrings.length, windowSize);

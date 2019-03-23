@@ -15,7 +15,7 @@
  ******************************************************************************/
 package ai.idylnlp.nlp.documents.dl4j.utils;
 
-import org.deeplearning4j.berkeley.Pair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.deeplearning4j.models.embeddings.inmemory.InMemoryLookupTable;
 import org.deeplearning4j.models.word2vec.VocabWord;
 import org.nd4j.linalg.api.ndarray.INDArray;
@@ -66,7 +66,7 @@ public class LabelSeeker {
             }
 
             double sim = Transforms.cosineSim(vector, vecLabel);
-            result.add(new Pair<String, Double>(label, sim));
+            result.add(Pair.of(label, sim));
 
         }
 

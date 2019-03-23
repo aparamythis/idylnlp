@@ -36,16 +36,13 @@ import org.deeplearning4j.earlystopping.trainer.EarlyStoppingTrainer;
 import org.deeplearning4j.eval.Evaluation;
 import org.deeplearning4j.models.embeddings.loader.WordVectorSerializer;
 import org.deeplearning4j.models.embeddings.wordvectors.WordVectors;
-import org.deeplearning4j.nn.api.Classifier;
-import org.deeplearning4j.nn.conf.LearningRatePolicy;
 import org.deeplearning4j.nn.conf.MultiLayerConfiguration;
 import org.deeplearning4j.nn.conf.NeuralNetConfiguration;
-import org.deeplearning4j.nn.conf.layers.GravesLSTM;
+import org.deeplearning4j.nn.conf.layers.LSTM;
 import org.deeplearning4j.nn.conf.layers.RnnOutputLayer;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
-import org.deeplearning4j.optimize.api.IterationListener;
+import org.deeplearning4j.optimize.api.TrainingListener;
 import org.deeplearning4j.optimize.listeners.ScoreIterationListener;
-import org.deeplearning4j.parallelism.ParallelWrapper;
 import org.deeplearning4j.ui.stats.StatsListener;
 import org.deeplearning4j.ui.storage.FileStatsStorage;
 import org.deeplearning4j.util.ModelSerializer;
@@ -140,92 +137,46 @@ public class DeepLearningEntityModelOperations {
       esConf.modelSaver(new LocalFileModelSaver(System.getProperty("java.io.tmpdir")));
       EarlyStoppingConfiguration<MultiLayerNetwork> earlyStoppingConfiguration = esConf.build();
 
-          EarlyStoppingTrainer trainer = new EarlyStoppingTrainer(earlyStoppingConfiguration, multiLayerNetwork, trainDataSetIterator);
-          EarlyStoppingResult<MultiLayerNetwork> result = trainer.fit();
+      EarlyStoppingTrainer trainer = new EarlyStoppingTrainer(earlyStoppingConfiguration, multiLayerNetwork, trainDataSetIterator);
+      EarlyStoppingResult<MultiLayerNetwork> result = trainer.fit();
 
-          multiLayerNetwork = result.getBestModel();
+      multiLayerNetwork = result.getBestModel();
 
-          LOGGER.info("Termination reason: " + result.getTerminationReason());
-          LOGGER.info("Termination details: " + result.getTerminationDetails());
-          LOGGER.info("Total epochs: " + result.getTotalEpochs());
-          LOGGER.info("Best epoch number: " + result.getBestModelEpoch());
-          LOGGER.info("Score at best epoch: " + result.getBestModelScore());
+      LOGGER.info("Termination reason: " + result.getTerminationReason());
+      LOGGER.info("Termination details: " + result.getTerminationDetails());
+      LOGGER.info("Total epochs: " + result.getTotalEpochs());
+      LOGGER.info("Best epoch number: " + result.getBestModelEpoch());
+      LOGGER.info("Score at best epoch: " + result.getBestModelScore());
 
     } else {
 
-      if(definition.getParallelTraining() != null) {
+      LOGGER.info("Doing single node training.");
 
-        LOGGER.info("Doing parallel training.");
+      for (int i = 1; i <= definition.getHyperParameters().getEpochs(); i++) {
 
-        final ParallelWrapper wrapper = new ParallelWrapper.Builder<Classifier>(multiLayerNetwork)
-              .prefetchBuffer(definition.getParallelTraining().getPrefetchBuffer())
-              .workers(definition.getParallelTraining().getWorkers())
-              .reportScoreAfterAveraging(definition.getParallelTraining().isReportScoreAfterAveraging())
-              .averagingFrequency(definition.getParallelTraining().getAveragingFrequency())
-              .useLegacyAveraging(definition.getParallelTraining().isLegacyAveraging())
-              .build();
+        multiLayerNetwork.fit(trainDataSetIterator);
+        trainDataSetIterator.reset();
+        LOGGER.info("Finished epoch {}", i);
 
-        for (int i = 1; i <= definition.getHyperParameters().getEpochs(); i++) {
+        Evaluation evaluation = new Evaluation();
 
-          // Do parallel training based on the ParallelTraining properties.
+        while (evaluationDataSetIterator.hasNext()) {
 
-          wrapper.fit(trainDataSetIterator);
-          trainDataSetIterator.reset();
-          LOGGER.info("Finished epoch {}", i);
+          DataSet t = evaluationDataSetIterator.next();
 
-                Evaluation evaluation = new Evaluation();
+          INDArray features = t.getFeatures();
+          INDArray lables = t.getLabels();
+          INDArray inMask = t.getFeaturesMaskArray();
+          INDArray outMask = t.getLabelsMaskArray();
+          INDArray predicted = multiLayerNetwork.output(features, false, inMask, outMask);
 
-                while (evaluationDataSetIterator.hasNext()) {
-
-                  DataSet t = evaluationDataSetIterator.next();
-
-                    INDArray features = t.getFeatureMatrix();
-                    INDArray lables = t.getLabels();
-                    INDArray inMask = t.getFeaturesMaskArray();
-                    INDArray outMask = t.getLabelsMaskArray();
-                    INDArray predicted = multiLayerNetwork.output(features, false, inMask, outMask);
-
-                    evaluation.evalTimeSeries(lables, predicted, outMask);
-
-                }
-
-                evaluationDataSetIterator.reset();
-
-                LOGGER.info("Evaluation statistics:\n{}", evaluation.stats());
+          evaluation.evalTimeSeries(lables, predicted, outMask);
 
         }
 
-      } else {
+        evaluationDataSetIterator.reset();
 
-        LOGGER.info("Doing single node training.");
-
-        for (int i = 1; i <= definition.getHyperParameters().getEpochs(); i++) {
-
-          multiLayerNetwork.fit(trainDataSetIterator);
-          trainDataSetIterator.reset();
-          LOGGER.info("Finished epoch {}", i);
-
-                Evaluation evaluation = new Evaluation();
-
-                while (evaluationDataSetIterator.hasNext()) {
-
-                  DataSet t = evaluationDataSetIterator.next();
-
-                    INDArray features = t.getFeatureMatrix();
-                    INDArray lables = t.getLabels();
-                    INDArray inMask = t.getFeaturesMaskArray();
-                    INDArray outMask = t.getLabelsMaskArray();
-                    INDArray predicted = multiLayerNetwork.output(features, false, inMask, outMask);
-
-                    evaluation.evalTimeSeries(lables, predicted, outMask);
-
-                }
-
-                evaluationDataSetIterator.reset();
-
-                LOGGER.info("Evaluation statistics:\n{}", evaluation.stats());
-
-        }
+        LOGGER.info("Evaluation statistics:\n{}", evaluation.stats());
 
       }
 
@@ -233,8 +184,8 @@ public class DeepLearningEntityModelOperations {
 
     // Serialize the model to a file.
     final File serializedModelFile = new File(definition.getOutput().getOutputFile());
-        ModelSerializer.writeModel(multiLayerNetwork, serializedModelFile, false);
-        LOGGER.info("Model serialized to {}", serializedModelFile.getAbsolutePath());
+    ModelSerializer.writeModel(multiLayerNetwork, serializedModelFile, false);
+    LOGGER.info("Model serialized to {}", serializedModelFile.getAbsolutePath());
 
     return UUID.randomUUID().toString();
 
@@ -245,9 +196,7 @@ public class DeepLearningEntityModelOperations {
   }
 
   public DeepLearningTrainingDefinition deserializeDefinition(String json) throws IOException {
-
     return gson.fromJson(json, DeepLearningTrainingDefinition.class);
-
   }
 
   private MultiLayerNetwork buildNetwork(MultiLayerConfiguration multiLayerConfiguration, DeepLearningTrainingDefinition definition) {
@@ -255,20 +204,20 @@ public class DeepLearningEntityModelOperations {
     MultiLayerNetwork multiLayerNetwork = new MultiLayerNetwork(multiLayerConfiguration);
     multiLayerNetwork.init();
 
-    List<IterationListener> listeners = new ArrayList<IterationListener>();
+    List<TrainingListener> listeners = new ArrayList<>();
 
     if(StringUtils.isNotEmpty(definition.getOutput().getStatsFile())) {
 
       File statsFile = new File(definition.getOutput().getStatsFile());
-          StatsStorage statsStorage = new FileStatsStorage(statsFile);
+      StatsStorage statsStorage = new FileStatsStorage(statsFile);
 
-          listeners.add(new StatsListener(statsStorage));
+      listeners.add(new StatsListener(statsStorage));
 
     }
 
     listeners.add(new ScoreIterationListener(definition.getMonitoring().getScoreIteration()));
 
-        multiLayerNetwork.setListeners(listeners);
+    multiLayerNetwork.setListeners(listeners);
 
     return multiLayerNetwork;
 
@@ -276,43 +225,31 @@ public class DeepLearningEntityModelOperations {
 
   private MultiLayerConfiguration buildNetworkConfiguration(HyperParameters hp, int vectorSize) {
 
-    // https://deeplearning4j.org/neuralnet-configuration
-
     NeuralNetConfiguration.Builder builder = new NeuralNetConfiguration.Builder();
 
     builder.seed(hp.getSeed());
     builder.biasInit(hp.getNetworkConfigurationParameters().getBiasInit());
     builder.convolutionMode(hp.getConvolutionModeParam());
     builder.dropOut(hp.getNetworkConfigurationParameters().getDropOut());
-    builder.iterations(hp.getNetworkConfigurationParameters().getIterations());
 
-    builder.regularization(hp.getNetworkConfigurationParameters().getRegularizationParameters().getRegularization());
-    builder.l1(hp.getNetworkConfigurationParameters().getRegularizationParameters().getL1());
-    builder.l1Bias(hp.getNetworkConfigurationParameters().getRegularizationParameters().getL1Bias());
-    builder.l2(hp.getNetworkConfigurationParameters().getRegularizationParameters().getL2());
-    builder.l2Bias(hp.getNetworkConfigurationParameters().getRegularizationParameters().getL2Bias());
+    if(hp.getNetworkConfigurationParameters().getRegularizationParameters().getRegularization()) {
+	    builder.l1(hp.getNetworkConfigurationParameters().getRegularizationParameters().getL1());
+	    builder.l1Bias(hp.getNetworkConfigurationParameters().getRegularizationParameters().getL1Bias());
+	    builder.l2(hp.getNetworkConfigurationParameters().getRegularizationParameters().getL2());
+	    builder.l2Bias(hp.getNetworkConfigurationParameters().getRegularizationParameters().getL2Bias());
+    }
 
     builder.updater(hp.getNetworkConfigurationParameters().getUpdaterParameters().getUpdaterParam());
-    //builder.adamMeanDecay(adamMeanDecay);
-    //builder.adamVarDecay(adamVarDecay);
-
-    builder.useDropConnect(hp.getNetworkConfigurationParameters().isUseDropConnect());
     builder.optimizationAlgo(hp.getNetworkConfigurationParameters().getOptimizationAlgorithmParam());
     builder.gradientNormalization(hp.getNetworkConfigurationParameters().getGradientNormalizationParam());
     builder.gradientNormalizationThreshold(hp.getNetworkConfigurationParameters().getGradientNormalizationThreshold());
-
     builder.weightInit(hp.getNetworkConfigurationParameters().getWeightInitParam());
-    //builder.dist(dist);
 
     MultiLayerConfiguration multiLayerConfiguration = builder.list()
-        .layer(0, new GravesLSTM.Builder()
+        .layer(0, new LSTM.Builder()
             .nIn(vectorSize)
             .nOut(256)
             .activation(Activation.TANH)
-            //.learningRate(hp.getNetworkConfigurationParameters().getLayers().getLayer1().getLearningRate())
-            .learningRateDecayPolicy(LearningRatePolicy.Schedule)
-            .learningRateSchedule(hp.getNetworkConfigurationParameters().getLayers().getLayer1().getLearningRateScheduleParam())
-            .biasLearningRate(hp.getNetworkConfigurationParameters().getLayers().getLayer1().getBiasLearningRate())
             .build())
         .layer(1, new RnnOutputLayer.Builder()
             .nIn(256)
@@ -323,11 +260,8 @@ public class DeepLearningEntityModelOperations {
             // of multinomial logistic regression.
             .activation(Activation.SOFTMAX)
             .lossFunction(LossFunctions.LossFunction.MCXENT)
-            //.learningRate(hp.getNetworkConfigurationParameters().getLayers().getLayer2().getLearningRate())
-            .learningRateDecayPolicy(LearningRatePolicy.Schedule)
-            .learningRateSchedule(hp.getNetworkConfigurationParameters().getLayers().getLayer2().getLearningRateScheduleParam())
-            .biasLearningRate(hp.getNetworkConfigurationParameters().getLayers().getLayer2().getBiasLearningRate())
         .build())
+        
         .pretrain(hp.getNetworkConfigurationParameters().isPretrain())
         .backprop(hp.getNetworkConfigurationParameters().isBackprop())
         .build();

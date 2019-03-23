@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>ai.idylnlp</groupId>
@@ -22,7 +24,7 @@
 				<dependency>
 					<groupId>org.nd4j</groupId>
 					<artifactId>nd4j-native-platform</artifactId>
-					<version>${nd4j.version}</version>
+					<version>${dl4j.version}</version>
 					<scope>test</scope>
 				</dependency>
 			</dependencies>
@@ -40,7 +42,7 @@
 				<dependency>
 					<groupId>org.deeplearning4j</groupId>
 					<artifactId>deeplearning4j-cuda-8.0</artifactId>
-					<version>${nd4j.version}</version>
+					<version>${dl4j.version}</version>
 					<scope>test</scope>
 				</dependency>
 			</dependencies>
@@ -51,7 +53,7 @@
 				<dependency>
 					<groupId>org.nd4j</groupId>
 					<artifactId>nd4j-native-platform</artifactId>
-					<version>${nd4j.version}</version>
+					<version>${dl4j.version}</version>
 				</dependency>
 			</dependencies>
 			<build>
@@ -78,7 +80,8 @@
 										</filter>
 									</filters>
 									<transformers>
-										<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+										<transformer
+											implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 											<mainClass>ai.idylnlp.models.deeplearning.training.DeepLearningEntityModelOperations</mainClass>
 										</transformer>
 									</transformers>
@@ -95,7 +98,7 @@
 				<dependency>
 					<groupId>org.deeplearning4j</groupId>
 					<artifactId>deeplearning4j-cuda-8.0</artifactId>
-					<version>${nd4j.version}</version>
+					<version>${dl4j.version}</version>
 				</dependency>
 			</dependencies>
 			<build>
@@ -122,7 +125,8 @@
 										</filter>
 									</filters>
 									<transformers>
-										<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+										<transformer
+											implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 											<mainClass>ai.idylnlp.models.deeplearning.training.DeepLearningEntityModelOperations</mainClass>
 										</transformer>
 									</transformers>
@@ -135,11 +139,6 @@
 		</profile>
 	</profiles>
 	<dependencies>
-		<dependency>
-			<groupId>org.deeplearning4j</groupId>
-			<artifactId>dl4j-spark_${scala.version}</artifactId>
-			<version>${dl4j.spark.version}</version>
-		</dependency>
 		<dependency>
 			<groupId>ai.idylnlp</groupId>
 			<artifactId>idylnlp-training-definition-file</artifactId>
@@ -158,7 +157,7 @@
 		<dependency>
 			<groupId>org.deeplearning4j</groupId>
 			<artifactId>deeplearning4j-nn</artifactId>
-			<version>${nd4j.version}</version>
+			<version>${dl4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>ai.idylnlp</groupId>
@@ -176,24 +175,24 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.nd4j</groupId>
+			<artifactId>nd4j-api</artifactId>
+			<version>${dl4j.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.deeplearning4j</groupId>
 			<artifactId>deeplearning4j-core</artifactId>
-			<version>${nd4j.version}</version>
+			<version>${dl4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.deeplearning4j</groupId>
 			<artifactId>deeplearning4j-nlp</artifactId>
-			<version>${nd4j.version}</version>
+			<version>${dl4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.deeplearning4j</groupId>
-			<artifactId>deeplearning4j-ui_${scala.version}</artifactId>
-			<version>${nd4j.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.deeplearning4j</groupId>
-			<artifactId>deeplearning4j-parallel-wrapper</artifactId>
-			<version>${dl4j.parallel.wrapper.version}</version>
+			<artifactId>deeplearning4j-ui_2.11</artifactId>
+			<version>${dl4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-cli</groupId>

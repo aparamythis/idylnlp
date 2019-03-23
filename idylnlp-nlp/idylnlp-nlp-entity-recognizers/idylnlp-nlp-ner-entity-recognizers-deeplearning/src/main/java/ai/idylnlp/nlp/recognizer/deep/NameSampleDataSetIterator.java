@@ -37,7 +37,6 @@ public class NameSampleDataSetIterator implements DataSetIterator {
   private static final long serialVersionUID = 1L;
 
   private final int windowSize;
-  private final String[] labels;
   private final int batchSize;
   private final int vectorSize;
   private final int totalSamples;
@@ -48,14 +47,13 @@ public class NameSampleDataSetIterator implements DataSetIterator {
       int windowSize, String labels[], int batchSize) throws IOException {
 
     this.windowSize = windowSize;
-    this.labels = labels;
     this.vectorSize = vectorSize;
     this.batchSize = batchSize;
 
     this.samples = new NameSampleToDataSetStream(samples, wordVectors, windowSize, vectorSize, labels);
 
     int total = 0;
-
+    
     DataSet sample;
     while ((sample = this.samples.read()) != null) {
       total++;
@@ -70,7 +68,7 @@ public class NameSampleDataSetIterator implements DataSetIterator {
   @Override
   public DataSet next(int num) {
 
-    if (cursor >= totalExamples()) {
+    if (cursor >= totalSamples) {
       throw new NoSuchElementException();
     }
 
@@ -94,7 +92,7 @@ public class NameSampleDataSetIterator implements DataSetIterator {
 
       if (sample != null) {
 
-        INDArray feature = sample.getFeatureMatrix();
+        INDArray feature = sample.getFeatures();
         features.put(new INDArrayIndex[] { NDArrayIndex.point(i) }, feature.get(NDArrayIndex.point(0)));
 
         feature.get(new INDArrayIndex[] { NDArrayIndex.point(0), NDArrayIndex.all(), NDArrayIndex.point(0) });
@@ -115,11 +113,6 @@ public class NameSampleDataSetIterator implements DataSetIterator {
 
     return new DataSet(features, labels, featuresMask, labelsMask);
 
-  }
-
-  @Override
-  public int totalExamples() {
-    return totalSamples;
   }
 
   @Override
@@ -160,16 +153,6 @@ public class NameSampleDataSetIterator implements DataSetIterator {
   }
 
   @Override
-  public int cursor() {
-    return cursor;
-  }
-
-  @Override
-  public int numExamples() {
-    return totalExamples();
-  }
-
-  @Override
   public void setPreProcessor(DataSetPreProcessor dataSetPreProcessor) {
     throw new UnsupportedOperationException();
   }
@@ -186,7 +169,7 @@ public class NameSampleDataSetIterator implements DataSetIterator {
 
   @Override
   public boolean hasNext() {
-    return cursor < numExamples();
+    return cursor < totalSamples;
   }
 
   @Override
