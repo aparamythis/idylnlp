@@ -15,8 +15,8 @@
     "AnnotationsFile": ""
   },
   "Monitoring": {
-  	"IterationScore": 100,
-  	"StatsFile": "/tmp/stats.dl4j"
+    "IterationScore": 100,
+    "StatsFile": "/tmp/stats.dl4j"
   },
   "ParallelTraining": {
     "PrefetchBuffer": 24,
@@ -33,14 +33,14 @@
     "Master": "local[*]"
   },
   "EarlyTermination": {
-  	"MaxEpochs": 10,
-  	"MaxMinutes": 180
+    "MaxEpochs": 10,
+    "MaxMinutes": 180
   },
   "HyperParameters": {
-  	"BatchSize": 1,
+    "BatchSize": 1,
     "WindowSize": 5,
     "Seed": 1497630814976308,
-    "WordVectorsFile": "",
+    "WordVectorsFile": "/path/to/vectors",
     "Epochs": 1,
     "NetworkConfigurationParameters": {
       "BiasInit": 0.0,
@@ -56,30 +56,30 @@
       "Pretrain": false,
       "Backprop": true,
       "Layers": {
-      	"Layer1": {
-      		"LearningRate": 0.0001,
-      		"LearningRateDecayPolicy": "schedule",
-      		"LearningRateSchedule": {
-      			"0": 0.01,
-      			"1000": 0.005,
-				"2000": 0.001,
-				"3000": 0.0001,
-				"4000": 0.00001
-      		},
-      		"BiasLearningRate": NaN
-      	},
-      	"Layer2": {
-      		"LearningRate": 0.0001,
-      		"LearningRateDecayPolicy": "schedule",
-      		"LearningRateSchedule": {
-      			"0": 0.01,
-      			"1000": 0.005,
-				"2000": 0.001,
-				"3000": 0.0001,
-				"4000": 0.00001
-      		},
-      		"BiasLearningRate": NaN
-      	}
+        "Layer1": {
+          "LearningRate": 0.0001,
+          "LearningRateDecayPolicy": "schedule",
+          "LearningRateSchedule": {
+            "0": 0.01,
+            "1000": 0.005,
+            "2000": 0.001,
+            "3000": 0.0001,
+            "4000": 0.00001
+          },
+          "BiasLearningRate": NaN
+        },
+        "Layer2": {
+          "LearningRate": 0.0001,
+          "LearningRateDecayPolicy": "schedule",
+          "LearningRateSchedule": {
+            "0": 0.01,
+            "1000": 0.005,
+            "2000": 0.001,
+            "3000": 0.0001,
+            "4000": 0.00001
+          },
+          "BiasLearningRate": NaN
+        }
       },
       "RegularizationParameters": {
         "Regularization": false,
