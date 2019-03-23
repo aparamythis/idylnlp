@@ -32,11 +32,11 @@
 	</developers>
 	<distributionManagement>
 		<snapshotRepository>
-			<id>ossrh</id>
+			<id>ossrh-idylnlp</id>
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</snapshotRepository>
 		<repository>
-			<id>ossrh</id>
+			<id>ossrh-idylnlp</id>
 			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 		</repository>
 	</distributionManagement>
@@ -78,6 +78,7 @@
 		<commons.text.version>1.6</commons.text.version>
 		<commons.validator.version>1.6</commons.validator.version>
 		<coveralls.maven.plugin>4.3.0</coveralls.maven.plugin>
+		<cuda.version>10.0</cuda.version>
 		<dl4j.version>1.0.0-beta2</dl4j.version>
 		<equalsverifier.version>2.3.2</equalsverifier.version>
 		<guava.version>23.0</guava.version>

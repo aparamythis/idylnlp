@@ -150,7 +150,7 @@ public class DeepLearningEntityModelOperations {
 
     } else {
 
-      LOGGER.info("Doing single node training.");
+      LOGGER.info("Beginning training.");
 
       for (int i = 1; i <= definition.getHyperParameters().getEpochs(); i++) {
 

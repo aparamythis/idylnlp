@@ -41,7 +41,7 @@
 			<dependencies>
 				<dependency>
 					<groupId>org.deeplearning4j</groupId>
-					<artifactId>deeplearning4j-cuda-8.0</artifactId>
+					<artifactId>deeplearning4j-cuda-${cuda.version}</artifactId>
 					<version>${dl4j.version}</version>
 					<scope>test</scope>
 				</dependency>
@@ -97,7 +97,7 @@
 			<dependencies>
 				<dependency>
 					<groupId>org.deeplearning4j</groupId>
-					<artifactId>deeplearning4j-cuda-8.0</artifactId>
+					<artifactId>deeplearning4j-cuda-${cuda.version}</artifactId>
 					<version>${dl4j.version}</version>
 				</dependency>
 			</dependencies>
