@@ -2,7 +2,8 @@
   "EntityType": "person",
   "TrainingData": {
     "Format": "OpenNLP",
-    "InputFile": "/path/to/file.txt"
+    "InputFile": "/path/to/file.txt",
+    "WordVectorsFile": "/path/to/vectors"
   },
   "EvaluationData": {
     "Format": "OpenNLP",
@@ -40,7 +41,6 @@
     "BatchSize": 1,
     "WindowSize": 5,
     "Seed": 1497630814976308,
-    "WordVectorsFile": "/path/to/vectors",
     "Epochs": 1,
     "NetworkConfigurationParameters": {
       "BiasInit": 0.0,
