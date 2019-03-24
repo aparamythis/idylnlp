@@ -115,32 +115,32 @@ public class DeepLearningEntityModelOperations {
 
     // Build the networks.
     final MultiLayerConfiguration multiLayerConfiguration = buildNetworkConfiguration(definition.getHyperParameters(), vectorSize);
-    MultiLayerNetwork multiLayerNetwork = buildNetwork(multiLayerConfiguration, definition);
+    MultiLayerNetwork model = buildNetwork(multiLayerConfiguration, definition);
 
     // Get the early stopping parameters.
     if(definition.getEarlyTermination() != null) {
 
       LOGGER.info("Enabling early-termination training.");
 
-      EarlyStoppingConfiguration.Builder<MultiLayerNetwork> esConf = new EarlyStoppingConfiguration.Builder<MultiLayerNetwork>();
+      EarlyStoppingConfiguration.Builder<MultiLayerNetwork> builder = new EarlyStoppingConfiguration.Builder<MultiLayerNetwork>();
 
+      builder.scoreCalculator(new DataSetLossCalculator(evaluationDataSetIterator, true));
+      builder.evaluateEveryNEpochs(1);
+      
       if(definition.getEarlyTermination().getMaxEpochs() != null) {
-        esConf.epochTerminationConditions(new ScoreImprovementEpochTerminationCondition(definition.getEarlyTermination().getMaxEpochs()));
+        builder.epochTerminationConditions(new ScoreImprovementEpochTerminationCondition(definition.getEarlyTermination().getMaxEpochs()));
       }
 
       if(definition.getEarlyTermination().getMaxMinutes() != null) {
-        esConf.iterationTerminationConditions(new MaxTimeIterationTerminationCondition(definition.getEarlyTermination().getMaxMinutes(), TimeUnit.MINUTES));
+        builder.iterationTerminationConditions(new MaxTimeIterationTerminationCondition(definition.getEarlyTermination().getMaxMinutes(), TimeUnit.MINUTES));
       }
 
-      esConf.scoreCalculator(new DataSetLossCalculator(evaluationDataSetIterator, true));
-      esConf.evaluateEveryNEpochs(1);
-      esConf.modelSaver(new LocalFileModelSaver(System.getProperty("java.io.tmpdir")));
-      EarlyStoppingConfiguration<MultiLayerNetwork> earlyStoppingConfiguration = esConf.build();
+      EarlyStoppingConfiguration<MultiLayerNetwork> earlyStoppingConfiguration = builder.build();
 
-      EarlyStoppingTrainer trainer = new EarlyStoppingTrainer(earlyStoppingConfiguration, multiLayerNetwork, trainDataSetIterator);
+      EarlyStoppingTrainer trainer = new EarlyStoppingTrainer(earlyStoppingConfiguration, model, trainDataSetIterator);
       EarlyStoppingResult<MultiLayerNetwork> result = trainer.fit();
 
-      multiLayerNetwork = result.getBestModel();
+      model = result.getBestModel();
 
       LOGGER.info("Termination reason: " + result.getTerminationReason());
       LOGGER.info("Termination details: " + result.getTerminationDetails());
@@ -154,7 +154,7 @@ public class DeepLearningEntityModelOperations {
 
       for (int i = 1; i <= definition.getHyperParameters().getEpochs(); i++) {
 
-        multiLayerNetwork.fit(trainDataSetIterator);
+        model.fit(trainDataSetIterator);
         trainDataSetIterator.reset();
         LOGGER.info("Finished epoch {}", i);
 
@@ -168,7 +168,7 @@ public class DeepLearningEntityModelOperations {
           INDArray lables = t.getLabels();
           INDArray inMask = t.getFeaturesMaskArray();
           INDArray outMask = t.getLabelsMaskArray();
-          INDArray predicted = multiLayerNetwork.output(features, false, inMask, outMask);
+          INDArray predicted = model.output(features, false, inMask, outMask);
 
           evaluation.evalTimeSeries(lables, predicted, outMask);
 
@@ -184,7 +184,7 @@ public class DeepLearningEntityModelOperations {
 
     // Serialize the model to a file.
     final File serializedModelFile = new File(definition.getOutput().getOutputFile());
-    ModelSerializer.writeModel(multiLayerNetwork, serializedModelFile, false);
+    ModelSerializer.writeModel(model, serializedModelFile, false);
     LOGGER.info("Model serialized to {}", serializedModelFile.getAbsolutePath());
 
     return UUID.randomUUID().toString();
