@@ -182,12 +182,27 @@ public class DeepLearningEntityModelOperations {
 
     }
 
-    // Serialize the model to a file.
-    final File serializedModelFile = new File(definition.getOutput().getOutputFile());
-    ModelSerializer.writeModel(model, serializedModelFile, false);
-    LOGGER.info("Model serialized to {}", serializedModelFile.getAbsolutePath());
-
-    return UUID.randomUUID().toString();
+    if(model != null) {
+    
+    	// The model can be null if early-stopping halted training before 
+    	// a successful epoch, e.g. hit an early-stopping time limit.
+    	// Make sure it is not null before trying to save.
+    	
+	    // Serialize the model to a file.
+	    final File serializedModelFile = new File(definition.getOutput().getOutputFile());
+	    ModelSerializer.writeModel(model, serializedModelFile, false);
+	    LOGGER.info("Model serialized to {}", serializedModelFile.getAbsolutePath());
+	
+	    return UUID.randomUUID().toString();
+	    
+    } else {
+    	
+    	LOGGER.info("Model is null. Ensure model training completed successfully.");
+    	LOGGER.info("If using early-stopping make sure the time limit is not too low.");
+    	
+    	throw new IOException("Model is null. Ensure model training completed successfully.");
+    	
+    }
 
   }
 
