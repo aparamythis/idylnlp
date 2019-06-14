@@ -21,7 +21,7 @@ pipeline {
         }
         stage ('Build') {
             steps {
-                sh 'mvn clean install deploy'
+                sh 'mvn clean install deploy -Dmaven.javadoc.skip=true'
             }
         }
     }
