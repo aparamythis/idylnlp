@@ -66,10 +66,10 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<!-- Artifact versions -->
-		<aws.s3.version>1.11.508</aws.s3.version>
-		<beanutils.version>1.9.2</beanutils.version>
+		<aws.s3.version>1.11.572</aws.s3.version>
+		<beanutils.version>1.9.3</beanutils.version>
 		<commons.cli.version>1.4</commons.cli.version>
-		<commons.collections.version>4.2</commons.collections.version>
+		<commons.collections.version>4.3</commons.collections.version>
 		<commons.compress.version>1.9</commons.compress.version>
 		<commons.configuration.version>2.0</commons.configuration.version>
 		<commons.io.version>2.4</commons.io.version>
@@ -80,10 +80,11 @@
 		<coveralls.maven.plugin>4.3.0</coveralls.maven.plugin>
 		<cuda.version>10.0</cuda.version>
 		<dl4j.version>1.0.0-beta3</dl4j.version>
-		<equalsverifier.version>2.3.2</equalsverifier.version>
+		<equalsverifier.version>3.1.9</equalsverifier.version>
 		<guava.version>23.0</guava.version>
 		<icu4j.version>63.1</icu4j.version>
 		<jacoco.maven.plugin>0.7.9</jacoco.maven.plugin>
+		<jaxb.version>2.3.2</jaxb.version>
 		<joshua.version>6.1</joshua.version>
 		<jsoup.version>1.8.1</jsoup.version>
 		<libphonenumber.version>8.7.1</libphonenumber.version>
@@ -95,12 +96,12 @@
 		<nv.version>1.22</nv.version>
 		<opennlp.tools.version>1.8.3</opennlp.tools.version>
 		<powermock.version>1.7.0</powermock.version>
-		<retrofit.version>2.5.0</retrofit.version>
+		<retrofit.version>2.6.0</retrofit.version>
 		<segment.version>2.0.0</segment.version>
-		<spring.boot.version>2.1.1.RELEASE</spring.boot.version>
+		<spring.boot.version>2.1.5.RELEASE</spring.boot.version>
 		<syllable.counter.version>3.0.0</syllable.counter.version>
-		<tika.version>1.15</tika.version>
-		<tika.langdetect.version>1.16</tika.langdetect.version>
+		<tika.version>1.21</tika.version>
+		<tika.langdetect.version>1.21</tika.langdetect.version>
 	</properties>
 	<profiles>
 		<profile>
@@ -331,28 +332,6 @@
 					<source>1.8</source>
 					<target>1.8</target>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>net.alchim31.maven</groupId>
-				<artifactId>scala-maven-plugin</artifactId>
-				<version>3.4.6</version>
-				<executions>
-					<execution>
-						<id>scala-compile-first</id>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>add-source</goal>
-							<goal>compile</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>scala-test-compile</id>
-						<phase>process-test-resources</phase>
-						<goals>
-							<goal>testCompile</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
